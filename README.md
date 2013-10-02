@@ -1,7 +1,7 @@
 HiggsAnalysis-ZZMatrixElement
 =============================
 
-[Wiki page for MELA](https://twiki.cern.ch/twiki/bin/viewauth/CMS/MELAProject)
+[Wiki page for the MEM packages](https://twiki.cern.ch/twiki/bin/viewauth/CMS/HZZ4lME)
 
 
 Checking out on top of other CMSSW packages
@@ -15,6 +15,12 @@ git clone https://github.com/cms-analysis/HiggsAnalysis-ZZMatrixElement.git ZZMa
 
 At this point, git commands apply to this repository if issued inside the ZZMatrixElement folder; or to the cmssw repository if issued outside (and in this case ZZMatrixElement is reported as an untracked folder by git status).
 
+
+The package depends on:
+```
+cvs co -r V02-06-00 HiggsAnalysis/CombinedLimit
+cvs co -r V00-03-01 -d Higgs/Higgs_CS_and_Width UserCode/Snowball/Higgs/Higgs_CS_and_Width
+```
 
 Mixing with packages from cvs
 -------------------------------------------
