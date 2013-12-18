@@ -22,7 +22,7 @@ ClassImp(TEvtProb)
 // Constructors and Destructor
 //-----------------------------------------------------------------------------
 TEvtProb::TEvtProb(const char* path, double ebeam):EBEAM(ebeam){
-  mcfm_init_();
+  mcfm_init_((char *)"input.DAT",(char *)"./");
   SetEwkCoupligParameters();
   coupling_();
   myCSW_ = new HiggsCSandWidth(path);
@@ -39,14 +39,19 @@ TEvtProb::~TEvtProb() {
 // WARNING: in development
 // 
 double TEvtProb::XsecCalc(TVar::Process proc, TVar::Production production, const hzz4l_event_type &hzz4l_event,
-			  TVar::VerbosityLevel verbosity){
+			  TVar::VerbosityLevel verbosity, double couplingvals[2], double selfDHvvcoupl[20][2],double selfDZqqcoupl[2][2],
+     double selfDZvvcoupl[2][2],
+     double selfDGqqcoupl[2][2],
+     double selfDGggcoupl[5][2],
+     double selfDGvvcoupl[10][2] ){
 
     //Initialize Process
     SetProcess(proc);
     SetProduction(production);
-    
-    if ( _matrixElement == TVar::MCFM) 
-      My_choose(proc);
+   
+		int flavor = abs(hzz4l_event.PdgCode[0]) == abs(hzz4l_event.PdgCode[2]) ? 1 :3;   
+    if ( _matrixElement == TVar::MCFM || proc == TVar::bkgZZ_SMHiggs) 
+      My_choose(proc, production, flavor);
     
     //constants
     double sqrts = 2.*EBEAM;
@@ -96,14 +101,13 @@ double TEvtProb::XsecCalc(TVar::Process proc, TVar::Production production, const
     }
     //event selections in Lab Frame
     double flavor_msq[nmsq][nmsq];
-    double msqjk=0; 
-    if ( _matrixElement == TVar::MCFM ) 
-      msqjk = SumMatrixElementPDF(proc, &mcfm_event, flavor_msq, &flux, EBEAM);
-    if ( _matrixElement == TVar::JHUGen ) {
+    double msqjk=0;
+    if ( _matrixElement == TVar::MCFM || proc == TVar::bkgZZ_SMHiggs) msqjk = SumMatrixElementPDF(proc, production,&mcfm_event, flavor_msq, &flux, EBEAM,couplingvals);
+    else if ( _matrixElement == TVar::JHUGen ) {
 
       // all the possible couplings
       double Hggcoupl[3][2];
-      double Hvvcoupl[4][2];
+      double Hvvcoupl[20][2];
       double Zqqcoupl[2][2];
       double Zvvcoupl[2][2];
       double Gqqcoupl[2][2];
@@ -123,7 +127,11 @@ double TEvtProb::XsecCalc(TVar::Process proc, TVar::Production production, const
       Hvvcoupl[1][0]=0.0;  Hvvcoupl[1][1]=0.0;  
       Hvvcoupl[2][0]=0.0;  Hvvcoupl[2][1]=0.0;  
       Hvvcoupl[3][0]=0.0;  Hvvcoupl[3][1]=0.0;        
-      
+      for(int i = 4; i<20; i++){
+				for(int j=0; j<2; j++){
+					Hvvcoupl[i][j]=0.;
+				}
+			} 
       // 
       // set spin 2 default numbers (2m+)
       // 
@@ -158,22 +166,66 @@ double TEvtProb::XsecCalc(TVar::Process proc, TVar::Production production, const
       
 
       // 0-
-      if ( proc == TVar::PSHZZ_4l ) {
+      if ( proc == TVar::H0minus) {
 	Hvvcoupl[0][0] = 0.0;
 	Hvvcoupl[1][0] = 0.0;
 	Hvvcoupl[2][0] = 0.0;
 	  Hvvcoupl[3][0] = 1.0;
       }
+
+if ( proc == TVar::SelfDefine_spin0){
+for(int i=0; i<20; i++){
+	for(int j=0;j<2;j++){
+		Hvvcoupl [i][j] = selfDHvvcoupl[i][j];
+}
+}
+}
+if ( proc == TVar::SelfDefine_spin1){
+for(int i=0; i<2; i++){
+  for(int j=0;j<2;j++){
+    Zvvcoupl [i][j] = selfDZvvcoupl[i][j];
+}
+}
+}
+if ( proc == TVar::SelfDefine_spin2){
+for(int i=0; i<5; i++){
+  for(int j=0;j<2;j++){
+    Gggcoupl [i][j] = selfDGggcoupl[i][j];
+}
+}
+for(int i=0; i<10; i++){
+  for(int j=0;j<2;j++){
+    Gvvcoupl [i][j] = selfDGvvcoupl[i][j];
+}
+}
+}
       // 0h+
-      if ( proc == TVar::HDHZZ_4l ) {
+      if ( proc == TVar::H0hplus) {
 	Hvvcoupl[0][0] = 0.0;
 	Hvvcoupl[1][0] = 1.0;
 	Hvvcoupl[2][0] = 0.0;
 	Hvvcoupl[3][0] = 0.0;
       }
-      
+//      // 0-mixture complex cp                                                                                                    
+//      // g1 = 1
+//      // g2 = g4 = 1 + 2.5 i
+//      if ( proc == TVar::HZZ_4l_MIXCP ) {
+//        Hvvcoupl[0][0] = 1.0;
+//        Hvvcoupl[1][0] = 1.0;
+//        Hvvcoupl[2][0] = 0.0;
+//	Hvvcoupl[3][0] = 1.0;
+//
+//        Hvvcoupl[0][1] = 0.0;
+//        Hvvcoupl[1][1] = 2.5;
+//        Hvvcoupl[2][1] = 0.0;
+//        Hvvcoupl[3][1] = 2.5;
+//      }
+	if( proc == TVar::H0_g1prime2){
+				Hvvcoupl[0][0] = 0.;
+				Hvvcoupl[5][0] = -12046.01;
+	}
       // 2h-
-      if ( proc == TVar::PTZZ_2hminus_4l ) {
+      if ( proc == TVar::H2_g8 && production == TVar::ZZGG) {
 	// gg production coupling constants
 	Gggcoupl[0][0]=0.0;  Gggcoupl[0][1]=0.0;
 	Gggcoupl[1][0]=0.0;  Gggcoupl[1][1]=0.0;
@@ -195,7 +247,7 @@ double TEvtProb::XsecCalc(TVar::Process proc, TVar::Production production, const
       }
       
       // 2h+
-      if ( proc == TVar::TZZ_2hplus_4l ) {
+      if ( proc == TVar::H2_g4 && production == TVar::ZZGG) {
 	// gg production coupling constants
 	Gggcoupl[0][0]=0.0;  Gggcoupl[0][1]=0.0;
 	Gggcoupl[1][0]=0.0;  Gggcoupl[1][1]=0.0;
@@ -217,7 +269,7 @@ double TEvtProb::XsecCalc(TVar::Process proc, TVar::Production production, const
       }
       
       // 2b+
-      if ( proc == TVar::TZZ_2bplus_4l ) {
+      if ( proc == TVar::H2_g5 && production == TVar::ZZGG ) {
 	// gg production coupling constants
 	Gggcoupl[0][0]=1.0;  Gggcoupl[0][1]=0.0;  // 2b+
 	Gggcoupl[1][0]=0.0;  Gggcoupl[1][1]=0.0;
@@ -238,7 +290,7 @@ double TEvtProb::XsecCalc(TVar::Process proc, TVar::Production production, const
 	Gvvcoupl[9][0]=0.0;  Gvvcoupl[9][1]=0.0;
       }
       
-      if ( proc == TVar::AVZZ_4l ) {
+      if ( proc == TVar::H1plus) {
 	// z->vv coupling constants
 	Zvvcoupl[0][0]=0.0;  Zvvcoupl[0][1]=0.0;
 	Zvvcoupl[1][0]=1.0;  Zvvcoupl[1][1]=0.0; // 1+
@@ -266,6 +318,78 @@ double TEvtProb::XsecCalc(TVar::Process proc, TVar::Production production, const
       
     return dXsec;
     
+}
+
+// Cross-section calculations for H+2j
+double TEvtProb::XsecCalcXJJ(TVar::Process proc, TVar::Production production, TLorentzVector p4[3], TVar::VerbosityLevel verbosity){
+  
+  // Initialize Process
+  SetProcess(proc);
+  SetProduction(production);
+  //constants
+  //double sqrts = 2.*EBEAM;
+  //double W=sqrts*sqrts;
+  
+  double Hggcoupl[3][2];
+  // first/second number is the real/imaginary part  
+  Hggcoupl[0][0]=1.0;  Hggcoupl[0][1]=0.0; // g2 
+  Hggcoupl[1][0]=0.0;  Hggcoupl[1][1]=0.0; // g3
+  Hggcoupl[2][0]=0.0;  Hggcoupl[2][1]=0.0; // g4  
+
+  double Hvvcoupl[20][2];
+  // first/second number is the real/imaginary part
+  Hvvcoupl[0][0]=1.0;  Hvvcoupl[0][1]=0.0; // g1  
+  Hvvcoupl[1][0]=0.0;  Hvvcoupl[1][1]=0.0; // g2 
+  Hvvcoupl[2][0]=0.0;  Hvvcoupl[2][1]=0.0; // g3 
+  Hvvcoupl[3][0]=0.0;  Hvvcoupl[3][1]=0.0; // g4   
+     for(int i = 4; i<20; i++){
+        for(int j=0; j<2; j++){
+          Hvvcoupl[i][j]=0.;
+        }
+      }
+	if( proc == TVar::H0minus){
+    Hggcoupl[0][0] = 0.0;
+    Hggcoupl[1][0] = 0.0;
+    Hggcoupl[2][0] = 1.0;
+    Hvvcoupl[0][0] = 0.0;
+    Hvvcoupl[1][0] = 0.0;
+    Hvvcoupl[2][0] = 0.0;
+    Hvvcoupl[3][0] = 1.0;	
+	}
+
+
+  // input kinematics 
+  //  !----- p1 and p2 used to get hadronic s
+  //  !----- P(p1)+P(p2) -> j(p3) + j(p4) + H(p5)
+  // p[0] -> p1
+  // p[1] -> p2
+  // p[2] -> p3
+  // p[3] -> p4
+  // p[4] -> p5
+  TLorentzVector p[5];
+  p[2].SetPxPyPzE ( p4[0].Px(), p4[0].Py(), p4[0].Pz(), p4[0].E() );
+  p[3].SetPxPyPzE ( p4[1].Px(), p4[1].Py(), p4[1].Pz(), p4[1].E() );
+  p[4].SetPxPyPzE ( p4[2].Px(), p4[2].Py(), p4[2].Pz(), p4[2].E() );
+
+  // assign the right initial momentum
+  // assumes the events are boosted to have 0 transverse momenta
+  double sysPz= ( p[2] + p[3] + p[4] ).Pz(); 
+  double sysE = ( p[2] + p[3] + p[4] ).Energy(); 
+  double pz0 = (sysE+sysPz)/2.; 
+  double pz1 = -(sysE-sysPz)/2.;
+  p[0].SetPxPyPzE   (0., 0., pz0, TMath::Abs(pz0));
+  p[1].SetPxPyPzE   (0., 0., pz1, TMath::Abs(pz1));
+    
+  
+  // calculate the matrix element squared
+  double dXsec = 0;
+  dXsec = HJJMatEl(proc, production, p, Hggcoupl, Hvvcoupl, verbosity, EBEAM);
+  if (verbosity >= TVar::DEBUG)
+    {
+      std::cout <<"Process " << TVar::ProcessName(proc) << 
+	" TEvtProb::XsecCalc(): dXsec=" << dXsec << "\n";
+    }
+  return dXsec;
 }
 
 // this appears to be some kind of 

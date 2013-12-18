@@ -34,6 +34,22 @@ RooXZsZs_5D::RooXZsZs_5D(const char *name, const char *title,
 			 RooAbsReal& _g2Val,
 			 RooAbsReal& _g3Val,
 			 RooAbsReal& _g4Val,
+			 RooAbsReal& _g1_primeVal,
+			 RooAbsReal& _g2_primeVal,
+			 RooAbsReal& _g3_primeVal,
+			 RooAbsReal& _g4_primeVal,
+			 RooAbsReal& _g1_prime2Val,
+			 RooAbsReal& _g2_prime2Val,
+			 RooAbsReal& _g3_prime2Val,
+			 RooAbsReal& _g4_prime2Val,
+			 RooAbsReal& _g1_prime3Val,
+			 RooAbsReal& _g2_prime3Val,
+			 RooAbsReal& _g3_prime3Val,
+			 RooAbsReal& _g4_prime3Val,
+			 RooAbsReal& _g1_prime4Val,
+			 RooAbsReal& _g2_prime4Val,
+			 RooAbsReal& _g3_prime4Val,
+			 RooAbsReal& _g4_prime4Val,
                          RooAbsReal& _mZ,
                          RooAbsReal& _gamZ,
                          RooAbsReal& _mX,
@@ -56,12 +72,33 @@ g1Val("g1Val","g1Val",this,_g1Val),
 g2Val("g2Val","g2Val",this,_g2Val),
 g3Val("g3Val","g3Val",this,_g3Val),
 g4Val("g4Val","g4Val",this,_g4Val),
+g1_primeVal("g1_primeVal","g1_primeVal",this,_g1_primeVal),
+g2_primeVal("g2_primeVal","g2_primeVal",this,_g2_primeVal),
+g3_primeVal("g3_primeVal","g3_primeVal",this,_g3_primeVal),
+g4_primeVal("g4_primeVal","g4_primeVal",this,_g4_primeVal),
+g1_prime2Val("g1_prime2Val","g1_prime2Val",this,_g1_prime2Val),
+g2_prime2Val("g2_prime2Val","g2_prime2Val",this,_g2_prime2Val),
+g3_prime2Val("g3_prime2Val","g3_prime2Val",this,_g3_prime2Val),
+g4_prime2Val("g4_prime2Val","g4_prime2Val",this,_g4_prime2Val),
+g1_prime3Val("g1_prime3Val","g1_prime3Val",this,_g1_prime3Val),
+g2_prime3Val("g2_prime3Val","g2_prime3Val",this,_g2_prime3Val),
+g3_prime3Val("g3_prime3Val","g3_prime3Val",this,_g3_prime3Val),
+g4_prime3Val("g4_prime3Val","g4_prime3Val",this,_g4_prime3Val),
+g1_prime4Val("g1_prime4Val","g1_prime4Val",this,_g1_prime4Val),
+g2_prime4Val("g2_prime4Val","g2_prime4Val",this,_g2_prime4Val),
+g3_prime4Val("g3_prime4Val","g3_prime4Val",this,_g3_prime4Val),
+g4_prime4Val("g4_prime4Val","g4_prime4Val",this,_g4_prime4Val),
 mZ("mZ","mZ",this,_mZ),
 gamZ("gamZ","gamZ",this,_gamZ),
 mX("mX","mX",this,_mX),
 R1Val("R1Val","R1Val",this,_R1Val),
 R2Val("R2Val","R2Val",this,_R2Val)
+
 { 
+	   Lambda_z1 =10000.;
+     Lambda_z2 =10000.;
+     Lambda_z3 =10000.;
+     Lambda_z4 =10000.;
 } 
 
 
@@ -83,12 +120,32 @@ g1Val("g1Val",this,other.g1Val),
 g2Val("a2Val",this,other.g2Val),
 g3Val("g3Val",this,other.g3Val),
 g4Val("g4Val",this,other.g4Val),
+g1_primeVal("g1_primeVal",this,other.g1_primeVal),
+g2_primeVal("a2_primeVal",this,other.g2_primeVal),
+g3_primeVal("g3_primeVal",this,other.g3_primeVal),
+g4_primeVal("g4_primeVal",this,other.g4_primeVal),
+g1_prime2Val("g1_prime2Val",this,other.g1_prime2Val),
+g2_prime2Val("a2_prime2Val",this,other.g2_prime2Val),
+g3_prime2Val("g3_prime2Val",this,other.g3_prime2Val),
+g4_prime2Val("g4_prime2Val",this,other.g4_prime2Val),
+g1_prime3Val("g1_prime3Val",this,other.g1_prime3Val),
+g2_prime3Val("a2_prime3Val",this,other.g2_prime3Val),
+g3_prime3Val("g3_prime3Val",this,other.g3_prime3Val),
+g4_prime3Val("g4_prime3Val",this,other.g4_prime3Val),
+g1_prime4Val("g1_prime4Val",this,other.g1_prime4Val),
+g2_prime4Val("a2_prime4Val",this,other.g2_prime4Val),
+g3_prime4Val("g3_prime4Val",this,other.g3_prime4Val),
+g4_prime4Val("g4_prime4Val",this,other.g4_prime4Val),
 mZ("mZ",this,other.mZ),
 gamZ("gamZ",this,other.gamZ),
 mX("mX",this,other.mX),
 R1Val("R1Val",this,other.R1Val),
 R2Val("R2Val",this,other.R2Val)
 { 
+     Lambda_z1 =10000.;
+     Lambda_z2 =10000.;
+     Lambda_z3 =10000.;
+     Lambda_z4 =10000.;
 } 
 
 
@@ -120,11 +177,28 @@ Double_t RooXZsZs_5D::evaluate() const
     phi1=phi1; phi2=phi2; phi3=phi3;
 
     if(useGTerm>0.0){
-      a1 = g1Val*mZ*mZ/(mX*mX) + g2Val*2.*s/(mX*mX) + g3Val*kappa*s/(mX*mX);
+			
+		double g1_dyn = g1Val   +   g1_primeVal * pow(Lambda_z1,4)/( pow(Lambda_z1,2) + m1*m1 )/( pow(Lambda_z1,2) + m2*m2) 
+                    		    +   g1_prime2Val* ( m1*m1+m2*m2 )/pow(Lambda_z1,2)                                  
+                    		    +   g1_prime3Val* pow( ( m1*m1+m2*m2 ),2)/pow(Lambda_z1,4)                               
+                    		    +   g1_prime4Val* ( m1*m1*m2*m2 )/pow(Lambda_z1,4);
+		double g2_dyn = g2Val   +   g2_primeVal * pow(Lambda_z2,4)/( pow(Lambda_z2,2) + m1*m1 )/( pow(Lambda_z2,2) + m2*m2) 
+                     		    +   g2_prime2Val* ( m1*m1+m2*m2 )/pow(Lambda_z2,2)                                  
+                     		    +   g2_prime3Val* pow( ( m1*m1+m2*m2 ),2)/pow(Lambda_z2,4)                               
+                     		    +   g2_prime4Val* ( m1*m1*m2*m2 )/pow(Lambda_z2,4);
+		double g3_dyn = g3Val   +   g3_primeVal * pow(Lambda_z3,4)/( pow(Lambda_z3,2) + m1*m1 )/( pow(Lambda_z3,2) + m2*m2) 
+                   		      +   g3_prime2Val* ( m1*m1+m2*m2 )/pow(Lambda_z3,2)                                  
+                   		      +   g3_prime3Val* pow( ( m1*m1+m2*m2 ),2)/pow(Lambda_z3,4)                               
+                   		      +   g3_prime4Val* ( m1*m1*m2*m2 )/pow(Lambda_z3,4);
+		double g4_dyn = g4Val   +   g4_primeVal * pow(Lambda_z4,4)/( pow(Lambda_z4,2) + m1*m1 )/( pow(Lambda_z4,2) + m2*m2) 
+                   		      +   g4_prime2Val* ( m1*m1+m2*m2 )/pow(Lambda_z4,2)                                  
+                   		      +   g4_prime3Val* pow( ( m1*m1+m2*m2 ),2)/pow(Lambda_z4,4)                               
+                   		      +   g4_prime4Val* ( m1*m1*m2*m2 )/pow(Lambda_z4,4);
+      a1 = g1_dyn*mZ*mZ/(mX*mX) + g2_dyn*2.*s/(mX*mX) + g3_dyn*kappa*s/(mX*mX);
       phi1 = atan2(0., a1);
-      a2 = -2.*g2Val - g3Val*kappa;
+      a2 = -2.*g2_dyn - g3_dyn*kappa;
       phi2 = atan2(0.,a2);
-      a3 = -2.*g4Val;
+      a3 = -2.*g4_dyn;
       phi3 = atan2(0.,a3);
       
     }else{
@@ -245,13 +319,36 @@ Double_t RooXZsZs_5D::analyticalIntegral(Int_t code, const char* rangeName) cons
   sh1=sh1; sh2=sh2;
 
   if(useGTerm>0.0){
-    a1 = g1Val*mZ*mZ/(mX*mX) + g2Val*2.*s/(mX*mX) + g3Val*kappa*s/(mX*mX);
-    phi1 = atan2(0., a1);
-    a2 = -2.*g2Val - g3Val*kappa;
-    phi2 = atan2(0.,a2);
-    a3 = -2.*g4Val;
-    // phi3 = atan2(0.,a3);    
-    phi3 = 0.;
+    double g1_dyn = g1Val  +   g1_primeVal * pow(Lambda_z1,4)/( pow(Lambda_z1,2) + m1*m1 )/( pow(Lambda_z1,2) + m2*m2)
+                           +   g1_prime2Val* ( m1*m1+m2*m2 )/pow(Lambda_z1,2)
+                           +   g1_prime3Val* pow( ( m1*m1+m2*m2 ),2)/pow(Lambda_z1,4)
+                           +   g1_prime4Val* ( m1*m1*m2*m2 )/pow(Lambda_z1,4);
+    double g2_dyn = g2Val  +   g2_primeVal * pow(Lambda_z2,4)/( pow(Lambda_z2,2) + m1*m1 )/( pow(Lambda_z2,2) + m2*m2)
+      		                 +   g2_prime2Val* ( m1*m1+m2*m2 )/pow(Lambda_z2,2)
+      		                 +   g2_prime3Val* pow( ( m1*m1+m2*m2 ),2)/pow(Lambda_z2,4)
+      		                 +   g2_prime4Val* ( m1*m1*m2*m2 )/pow(Lambda_z2,4);
+    double g3_dyn = g3Val  +   g3_primeVal * pow(Lambda_z3,4)/( pow(Lambda_z3,2) + m1*m1 )/( pow(Lambda_z3,2) + m2*m2)
+       		                 +   g3_prime2Val* ( m1*m1+m2*m2 )/pow(Lambda_z3,2)
+       		                 +   g3_prime3Val* pow( ( m1*m1+m2*m2 ),2)/pow(Lambda_z3,4)
+       		                 +   g3_prime4Val* ( m1*m1*m2*m2 )/pow(Lambda_z3,4);
+    double g4_dyn = g4Val  +   g4_primeVal * pow(Lambda_z4,4)/( pow(Lambda_z4,2) + m1*m1 )/( pow(Lambda_z4,2) + m2*m2)
+       		                 +   g4_prime2Val* ( m1*m1+m2*m2 )/pow(Lambda_z4,2)
+       		                 +   g4_prime3Val* pow( ( m1*m1+m2*m2 ),2)/pow(Lambda_z4,4)
+       		                 +   g4_prime4Val* ( m1*m1*m2*m2 )/pow(Lambda_z4,4);
+      a1 = g1_dyn*mZ*mZ/(mX*mX) + g2_dyn*2.*s/(mX*mX) + g3_dyn*kappa*s/(mX*mX);
+      phi1 = atan2(0., a1);
+      a2 = -2.*g2_dyn - g3_dyn*kappa;
+      phi2 = atan2(0.,a2);
+      a3 = -2.*g4_dyn;
+      phi3 = atan2(0.,a3);
+
+//    a1 = g1Val*mZ*mZ/(mX*mX) + g2Val*2.*s/(mX*mX) + g3Val*kappa*s/(mX*mX);
+//    phi1 = atan2(0., a1);
+//    a2 = -2.*g2Val - g3Val*kappa;
+//    phi2 = atan2(0.,a2);
+//    a3 = -2.*g4Val;
+//    // phi3 = atan2(0.,a3);    
+//    phi3 = 0.;
   }else{
     a1=a1Val;
     phi1=phi1Val;

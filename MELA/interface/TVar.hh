@@ -20,34 +20,57 @@ public:
   };
   enum MatrixElement{
     MCFM = 0,
-    MadGraph = 1,
-    JHUGen = 2,
-    ANALYTICAL = 3
+    JHUGen = 1,
+    ANALYTICAL = 2
   };
   enum Production{
-    GG = 0,
-    QQB = 1,
-    INDEPENDENT=2
+    ZZGG = 0,
+    ZZQQB = 1,
+    ZZINDEPENDENT=2,
+    JJGG =3,
+    JJVBF =4,
+    JJVH =5//analytical
   };
 
   enum Process{
-    ZZ_2e2m  =0, // eemm
-    HZZ_4l   =1, // 0+
-    PSHZZ_4l =2, // 0-
-    TZZ_4l =3,   // spin 2 couplings have to set in TEvtProb.cc
-    VZZ_4l =4,   // spin 1 couplings have to set in TEvtProb.cc
-    ZZ_4e    =5,
-    GGZZ_4l = 6,
-    AVZZ_4l = 7,
-    QQB_TZZ_4l = 8,
-    HDHZZ_4l = 9, // 0h+
-    TZZ_DECAY_4l = 10,
-    VZZ_DECAY_4l = 11,
-    AVZZ_DECAY_4l = 12,
-    PTZZ_2hminus_4l = 13, // 2h-
-    TZZ_2hplus_4l = 14, // 2h+
-    TZZ_2bplus_4l = 15, // 2b+
-    SummedBackgrounds = 16, // SuperMela Background standin process.
+
+    HSMHiggs          = 0,    //0+, replacing HZZ_4l, when production is ZZGG, replacing HJJNONVBF/HJJVBF/HJJVH, when production is JJGG/JJVBF/JJVH 
+    H0minus           = 1,    //0-, replacing PSHZZ_4l, when production is ZZGG, replacing PSHJJNONVBF/PSHJJVBF/PSHJJVH when production is JJGG/JJVBF/JJVH
+    H0hplus           = 2,    //0h+, replacing HDHZZ_4l
+
+    H1minus           = 3,    //1-, replacing VZZ_4l
+    H1plus            = 4,    //1+, replacing AVZZ_4l
+
+    H2_g8             = 5,    //2h-, replacing PTZZ_2hminus_4l	
+    H2_g4             = 6,    //2h+, replacing TZZ_2hplus_4l
+    H2_g5             = 7,    //2b+, replacing TZZ_2bplus_4l 
+    H2_g1g5           = 8,    //2m+, replacing TZZ_4l 
+
+
+    bkgZZ              = 9,    //qq->ZZ, replacing ZZ_2e2m & ZZ_4e, when production is ZZQQB, replacing GGZZ_4l when production is ggZZ, replacing SummedBackgrounds for superMela calculation 
+		bkgZZ_SMHiggs      =10,    //ggZZ+SMHiggs, ggZZ always calculated by MCFM, ME stands for SMHiggs ME, JHUGen: MCFM ggZZ + JHUGen SMHiggs, MCFM: MCFM (ggZZ+ SMHiggs) 
+
+    H0_g1prime2       = 11,   //g1=0, g1prime2=-12046.01, replacing H_g1prime2	
+
+    /***For interaction terms **/
+    D_g1g4            = 12,   //D_CP
+    D_g1g4_pi_2       = 13,   //D_CP_T
+    D_g1g2            = 14,   //D_int
+    D_g1g2_pi_2       = 15,   //D_int_T
+    D_g1g1prime2      = 16,   //D_int_lambda1	
+
+    /***** Self Defined******/
+    SelfDefine_spin0  = 17,
+    SelfDefine_spin1  = 18,
+    SelfDefine_spin2  = 19,
+
+    /*** Are these ones still used? ***/
+    //  QQB_TZZ_4l = 8,
+    //  TZZ_DECAY_4l = 10,
+    //  VZZ_DECAY_4l = 11,
+    //  AVZZ_DECAY_4l = 12,
+    //  HZZ_4l_MIXCP = 17,
+
     Null
   };
   enum LeptonFlavor{
@@ -69,40 +92,35 @@ public:
   // Function
   //---------------------------------
   static TString ProcessName(int temp){ 
-    if(temp==TVar::ZZ_2e2m   ) 
-      return TString("ZZ_2e2m");
-    if(temp==TVar::ZZ_4e   ) 
-      return TString("ZZ_4e");
-    if(temp==TVar::GGZZ_4l   ) 
-      return TString("GGZZ_4l");
-    else if(temp==TVar::HZZ_4l   ) 
-      return TString("HZZ_4l");
-    else if(temp==TVar::PSHZZ_4l   ) 
-      return TString("PSHZZ_4l");
-    else if(temp==TVar::HDHZZ_4l   ) 
-      return TString("HDHZZ_4l");
-    else if(temp==TVar::TZZ_4l   ) 
-      return TString("TZZ_2mplus_4l");
-    else if(temp==TVar::QQB_TZZ_4l   ) 
-      return TString("QQB_TZZ_2mplus_4l");
-    else if(temp==TVar::TZZ_DECAY_4l   ) 
-      return TString("TZZ_decay_2mplus_4l");
-    else if(temp==TVar::VZZ_4l   ) 
-      return TString("VZZ_4l");
-    else if(temp==TVar::AVZZ_4l   ) 
-      return TString("AVZZ_4l");
-    else if(temp==TVar::VZZ_DECAY_4l   ) 
-      return TString("VZZ_decay_4l");
-    else if(temp==TVar::AVZZ_DECAY_4l   ) 
-      return TString("AVZZ_decay_4l");
-    else if(temp==TVar::PTZZ_2hminus_4l   ) 
-      return TString("PTZZ_2hminus_4l");
-    else if(temp==TVar::TZZ_2hplus_4l   ) 
-      return TString("TZZ_2hplus_4l");
-    else if(temp==TVar::TZZ_2bplus_4l   ) 
-      return TString("TZZ_2bplus_4l");
-    else if(temp==TVar::SummedBackgrounds   ) 
-      return TString("SummedBackgrounds");
+    if(temp==TVar::HSMHiggs) 
+      return TString("HSMHiggs");
+    else if(temp==TVar::H0minus           ) return TString ("H0minus");           
+    else if(temp==TVar::H0hplus           ) return TString ("H0hplus");          
+                                                                               
+    else if(temp==TVar::H1minus           ) return TString ("H1minus");           
+    else if(temp==TVar::H1plus            ) return TString ("H1plus");            
+                                                                               
+    else if(temp==TVar::H2_g8             ) return TString ("H2_g8");             
+    else if(temp==TVar::H2_g4             ) return TString ("H2_g4");             
+    else if(temp==TVar::H2_g5             ) return TString ("H2_g5");             
+    else if(temp==TVar::H2_g1g5           ) return TString ("H2_g1g5");           
+                                                                               
+                                                                               
+    else if(temp==TVar::bkgZZ             ) return TString ("bkgZZ");             
+		else if(temp==TVar::bkgZZ_SMHiggs     ) return TString ("bkgZZ_SMHiggs");     
+                                                                               
+    else if(temp==TVar::H0_g1prime2       ) return TString ("H0_g1prime2");       
+                                                                               
+    else if(temp==TVar::D_g1g4            ) return TString ("D_g1g4");            
+    else if(temp==TVar::D_g1g4_pi_2       ) return TString ("D_g1g4_pi_2");       
+    else if(temp==TVar::D_g1g2            ) return TString ("D_g1g2");            
+    else if(temp==TVar::D_g1g2_pi_2       ) return TString ("D_g1g2_pi_2");       
+    else if(temp==TVar::D_g1g1prime2      ) return TString ("D_g1g1prime2");      
+                                                                               
+    else if(temp==TVar::SelfDefine_spin0  ) return TString ("SelfDefine_spin0");  
+    else if(temp==TVar::SelfDefine_spin1  ) return TString ("SelfDefine_spin1");  
+    else if(temp==TVar::SelfDefine_spin2  ) return TString ("SelfDefine_spin2");  
+
     else 
       return TString("UnKnown");
   };
@@ -121,14 +139,14 @@ struct branch_particle {
 
 };
 static const TString branch_format_particle =
- "PdgCode/I:"
- "Charge/I:"
- "Px/D:"
- "Py/D:"
- "Pz/D:"
- "E/D:"
- "Eta/D:"
- "Phi/D";
+  "PdgCode/I:"
+  "Charge/I:"
+  "Px/D:"
+  "Py/D:"
+  "Pz/D:"
+  "E/D:"
+  "Eta/D:"
+  "Phi/D";
 
 // in development
 struct hzz4l_event_type{
@@ -147,7 +165,7 @@ struct event_type{
   double PSWeight;
 };
 struct anomcoup{
-	   double delg1_z, delg1_g, lambda_g, lambda_z, delk_g, delk_z_,tevscale;
+  double delg1_z, delg1_g, lambda_g, lambda_z, delk_g, delk_z_,tevscale;
 };
 
 struct EffHist{

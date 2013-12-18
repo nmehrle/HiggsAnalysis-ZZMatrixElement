@@ -151,8 +151,10 @@ if ( useGTerm > 0. ) {
 double Lambda = 1000.; // the new physics cutoff
 double s = (mzz*mzz-m1*m1-m2*m2)/2.;
 double kappa =  s / (Lambda*Lambda);
-c1 = 2*g1Val + 2*g2Val*kappa*pow((1+mZ*mZ/s),2) + 2*g5Val*(mZ*mZ)/s;
-c2 = -0.5*g1Val + g3Val*kappa*(1-mZ*mZ/s) + 2*g4Val*kappa + g7Val*kappa*mZ*mZ/s;
+//c1 = 2*g1Val + 2*g2Val*kappa*pow((1+mZ*mZ/s),2) + 2*g5Val*(mZ*mZ)/s;
+//c2 = -0.5*g1Val + g3Val*kappa*(1-mZ*mZ/s) + 2*g4Val*kappa + g7Val*kappa*mZ*mZ/s;
+c1 = 2*g1Val + 2*g2Val*kappa*(1+m1*m1/s)*(1+m2*m2/s) + 2*g5Val*(mZ*mZ)/s;
+c2 = -0.5*g1Val + g3Val*kappa*(1-(m1*m1+m2*m2)/(2*s)) + 2*g4Val*kappa + g7Val*kappa*mZ*mZ/s;
 c3 = -1.0*(g2Val/2.0+g3Val+2.0*g4Val)*kappa*mzz*mzz/s;
 c4 = -g1Val - g2Val*kappa - (g2Val+g3Val+g6Val)*kappa*(mZ*mZ/s);
 c5 = 2*g8Val*kappa*(mzz*mzz)/s;

@@ -33,6 +33,22 @@ public:
 		RooAbsReal& _g2Val,
 		RooAbsReal& _g3Val,
 		RooAbsReal& _g4Val,
+    RooAbsReal& _g1_primeVal,
+    RooAbsReal& _g2_primeVal,
+    RooAbsReal& _g3_primeVal,
+    RooAbsReal& _g4_primeVal,
+    RooAbsReal& _g1_prime2Val,
+    RooAbsReal& _g2_prime2Val,
+    RooAbsReal& _g3_prime2Val,
+    RooAbsReal& _g4_prime2Val,
+    RooAbsReal& _g1_prime3Val,
+    RooAbsReal& _g2_prime3Val,
+    RooAbsReal& _g3_prime3Val,
+    RooAbsReal& _g4_prime3Val,
+    RooAbsReal& _g1_prime4Val,
+    RooAbsReal& _g2_prime4Val,
+    RooAbsReal& _g3_prime4Val,
+    RooAbsReal& _g4_prime4Val,
                 RooAbsReal& _mZ,
                 RooAbsReal& _gamZ,
                 RooAbsReal& _mX,
@@ -63,6 +79,22 @@ protected:
     RooRealProxy g2Val ;
     RooRealProxy g3Val ;
     RooRealProxy g4Val ;
+    RooRealProxy g1_primeVal;
+    RooRealProxy g2_primeVal;
+    RooRealProxy g3_primeVal;
+    RooRealProxy g4_primeVal;
+    RooRealProxy g1_prime2Val;
+    RooRealProxy g2_prime2Val;
+    RooRealProxy g3_prime2Val;
+    RooRealProxy g4_prime2Val;
+    RooRealProxy g1_prime3Val;
+    RooRealProxy g2_prime3Val;
+    RooRealProxy g3_prime3Val;
+    RooRealProxy g4_prime3Val;
+    RooRealProxy g1_prime4Val;
+    RooRealProxy g2_prime4Val;
+    RooRealProxy g3_prime4Val;
+    RooRealProxy g4_prime4Val;
     RooRealProxy mZ ;
     RooRealProxy gamZ ;
     RooRealProxy mX ;
@@ -72,7 +104,10 @@ protected:
     Double_t evaluate() const ;
     
 private:
-    
+    double Lambda_z1 ; 
+    double Lambda_z2 ; 
+    double Lambda_z3 ; 
+    double Lambda_z4 ; 
     //ClassDef(RooXZsZs_5D,1) // Your description goes here...
 };
 

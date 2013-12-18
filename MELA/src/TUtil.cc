@@ -18,11 +18,10 @@ void SetEwkCoupligParameters(){
 }
 
 
-void My_choose(TVar::Process process){
+void My_choose(TVar::Process process, TVar::Production production, int flavor){
  
 //ZZ_4l
-if(process==TVar::ZZ_2e2m || process == TVar::GGZZ_4l ){ 
- 
+if(process==TVar::bkgZZ && (production == TVar::ZZGG || ( (production == TVar::ZZQQB || production == TVar::ZZINDEPENDENT) && flavor==3) )){ 
     //81 '  f(p1)+f(p2) --> Z^0(-->mu^-(p3)+mu^+(p4)) + Z^0(-->e^-(p5)+e^+(p6))'
     //86 '  f(p1)+f(p2) --> Z^0(-->e^-(p5)+e^+(p6))+Z^0(-->mu^-(p3)+mu^+(p4)) (NO GAMMA*)'
     //    nproc_.nproc=81;  
@@ -55,7 +54,7 @@ if(process==TVar::ZZ_2e2m || process == TVar::GGZZ_4l ){
     zcouple_.r2=zcouple_.re;
 
 
- }  else if ( process == TVar::ZZ_4e) {
+ }  else if ( process == TVar::bkgZZ && ((production == TVar::ZZQQB  || production == TVar::ZZINDEPENDENT)&& flavor==1)) {
 
     // 90 '  f(p1)+f(p2) --> Z^0(-->e^-(p3)+e^+(p4)) + Z^0(-->e^-(p5)+e^+(p6))' 'L'
     // nproc_.nproc=90;
@@ -89,7 +88,7 @@ if(process==TVar::ZZ_2e2m || process == TVar::GGZZ_4l ){
     zcouple_.r2=zcouple_.re;
 
     
- }  else if ( process == TVar::HZZ_4l) {
+ }  else if ( process == TVar::bkgZZ_SMHiggs) {
 
     // 114 '  f(p1)+f(p2) --> H(--> Z^0(mu^-(p3)+mu^+(p4)) + Z^0(e^-(p5)+e^+(p6))' 'N'
     // nproc_.nproc=114;
@@ -99,7 +98,8 @@ if(process==TVar::ZZ_2e2m || process == TVar::GGZZ_4l ){
      nqcdjets_.nqcdjets=0;
 
      bveg1_mcfm_.ndim=10;
-     masses_mcfm_.mb=0;
+     //masses_mcfm_.mb=0;
+     masses_mcfm_.mb=4.75;
 
      breit_.n2=1;
      breit_.n3=1;
@@ -125,7 +125,7 @@ bool My_masscuts(double s[][12],TVar::Process process){
 
  double minZmassSqr=10*10;
 
- if(process==TVar::ZZ_2e2m || process==TVar::ZZ_4e || process==TVar::GGZZ_4l){
+ if(process==TVar::bkgZZ){
    if(s[2][3]< minZmassSqr) return true;
    if(s[4][5]< minZmassSqr) return true;
  }
@@ -180,7 +180,7 @@ bool My_smalls(double s[][12],int npart){
 // 2. PartonEnergy Fraction minimum<x0,x1<1
 // 3. number of final state particle is defined
 //
-double SumMatrixElementPDF(TVar::Process process, mcfm_event_type* mcfm_event,double flavor_msq[nmsq][nmsq],double* flux, double EBEAM){
+double SumMatrixElementPDF(TVar::Process process, TVar::Production production, mcfm_event_type* mcfm_event,double flavor_msq[nmsq][nmsq],double* flux, double EBEAM, double coupling[2]){
 
   int NPart=npart_.npart+2;
   double p4[4][12];
@@ -248,9 +248,13 @@ double SumMatrixElementPDF(TVar::Process process, mcfm_event_type* mcfm_event,do
   fdist_ (&density_.ih1, &xx[0], &scale_.scale, fx1); 
   fdist_ (&density_.ih2, &xx[1], &scale_.scale, fx2); 
   
-  if( process==TVar::ZZ_2e2m || process==TVar::ZZ_4e )      qqb_zz_(p4[0],msq[0]);
-  if( process==TVar::HZZ_4l)     qqb_hzz_(p4[0],msq[0]);
-  if( process==TVar::GGZZ_4l)    gg_zz_  (p4[0],&msqgg);                     
+  if( (production == TVar::ZZINDEPENDENT ||production == TVar::ZZQQB ) && process == TVar::bkgZZ)      qqb_zz_(p4[0],msq[0]);
+  //if( process==TVar::HZZ_4l)     qqb_hzz_(p4[0],msq[0]);
+  // the subroutine for the calculations including the interfenrence             
+  // ME =  sig + inter (sign, bkg)              
+  // 1161 '  f(p1)+f(p2) --> H(--> Z^0(mu^-(p3)+mu^+(p4)) + Z^0(e^-(p5)+e^+(p6)) [including gg->ZZ intf.]' 'L'  
+  if( process==TVar::bkgZZ_SMHiggs)     gg_zz_int_freenorm_(p4[0],coupling,msq[0]);
+  if( production==TVar::ZZGG && process == TVar::bkgZZ)    gg_zz_  (p4[0],&msqgg);                     
 
   /*
     // Below code sums over all production parton flavors according to PDF 
@@ -277,9 +281,9 @@ double SumMatrixElementPDF(TVar::Process process, mcfm_event_type* mcfm_event,do
   // C++ convention     0     1   2    3    4   5 6 7 8 9 10
   //
   msqjk=msq[5][5];
-  if( process==TVar::ZZ_2e2m || process == TVar::ZZ_4e) msqjk=msq[3][7]+msq[7][3];
+  if( process==TVar::bkgZZ && (production == TVar::ZZQQB || production ==TVar::ZZINDEPENDENT)) msqjk=msq[3][7]+msq[7][3];
   // special for the GGZZ 
-  if( process==TVar::GGZZ_4l) msqjk=msqgg;      
+  if( process==TVar::bkgZZ && production == TVar::ZZGG) msqjk=msqgg;      
   
   (*flux)=fbGeV2/(8*xx[0]*xx[1]*EBEAM*EBEAM);
 
@@ -296,7 +300,7 @@ double SumMatrixElementPDF(TVar::Process process, mcfm_event_type* mcfm_event,do
 // Test code from Markus to calculate the HZZ cross-section
 // 
 double JHUGenMatEl(TVar::Process process, TVar::Production production, mcfm_event_type* mcfm_event, double MReso, double GaReso, 
-		   double Hggcoupl[3][2], double Hvvcoupl[4][2], double Zqqcoupl[2][2], double Zvvcoupl[2][2],
+		   double Hggcoupl[3][2], double Hvvcoupl[20][2], double Zqqcoupl[2][2], double Zvvcoupl[2][2],
 		   double Gqqcoupl[2][2], double Gggcoupl[5][2], double Gvvcoupl[10][2])
 {
   // input unit = GeV/100 such that 125GeV is 1.25 in the code
@@ -351,15 +355,17 @@ double JHUGenMatEl(TVar::Process process, TVar::Production production, mcfm_even
       MYIDUP[2]=+8;
       MYIDUP[3]=-8;
   }
-  if ( process == TVar::HZZ_4l || process == TVar::PSHZZ_4l || process == TVar::HDHZZ_4l  ) {
+
+  //if ( process == TVar::HZZ_4l || process == TVar::PSHZZ_4l || process == TVar::HDHZZ_4l || process == TVar::HZZ_4l_MIXCP   || process == TVar::CPMixHZZ_4l || process == TVar::PSHZZ_g4star || process == TVar::HDHZZ_4l_g2star || process == TVar::HDMixHZZ_4l_pi_2|| process== TVar::HDMixHZZ_4l || process == TVar::CPMixHZZ_4l_pi_2 || process == TVar::SelfDefine || process == TVar::H_g1prime2) {
+  if ( process == TVar::HSMHiggs || process == TVar::H0minus || process == TVar::H0hplus || process == TVar::SelfDefine_spin0 || process == TVar::H0_g1prime2) {
     __modhiggs_MOD_evalamp_gg_h_vv(p4, &MReso,  &GaReso, Hggcoupl, Hvvcoupl, MYIDUP, &MatElSq);
   }
-  if ( production == TVar::GG ) {
-    if ( process == TVar::TZZ_4l || process == TVar::PTZZ_2hminus_4l || process == TVar::TZZ_2hplus_4l || process == TVar::TZZ_2bplus_4l ) {
+  if ( production == TVar::ZZGG ) {
+    if ( process == TVar::H2_g1g5 || process == TVar::H2_g8 || process == TVar::H2_g4 || process == TVar::H2_g5 || process == TVar::SelfDefine_spin2) {
       __modgraviton_MOD_evalamp_gg_g_vv(p4, &MReso,  &GaReso, Gggcoupl, Gvvcoupl, MYIDUP, &MatElSq);
     }
   }
-  if ( production == TVar::INDEPENDENT ) {
+  if ( production == TVar::ZZINDEPENDENT ) {
 
     // special treatment of the 4-vectors
     // From Markus: 
@@ -386,18 +392,18 @@ double JHUGenMatEl(TVar::Process process, TVar::Production production, mcfm_even
       P[ipar][3] = mcfm_event->p[ipar].Pz()/100.;
     }
     
-    if ( process == TVar::TZZ_4l ) 
+    if ( process == TVar::H2_g1g5 || process == TVar::SelfDefine_spin2) 
       __modgraviton_MOD_evalamp_g_vv(P, &MReso,  &GaReso, Gvvcoupl, MYIDUP, &MatElSq);
 
-    if ( process == TVar::VZZ_4l || process == TVar::AVZZ_4l )
+    if ( process == TVar::H1minus || process == TVar::H1plus || process == TVar::SelfDefine_spin1)
       __modzprime_MOD_evalamp_zprime_vv(P, &MReso,  &GaReso, Zvvcoupl, MYIDUP, &MatElSq);
   } 
   
-  if ( production == TVar::QQB ) {
-    if ( process == TVar::TZZ_4l ) {
+  if ( production == TVar::ZZQQB ) {
+    if ( process == TVar::H2_g1g5 || process == TVar::SelfDefine_spin2) {
       __modgraviton_MOD_evalamp_qqb_g_vv(p4, &MReso,  &GaReso, Gqqcoupl, Gvvcoupl, MYIDUP, &MatElSq);
     }
-    if ( process == TVar::VZZ_4l || process == TVar::AVZZ_4l ) {
+    if ( process == TVar::H1minus || process == TVar::H1plus || process == TVar::SelfDefine_spin1) {
       __modzprime_MOD_evalamp_qqb_zprime_vv(p4, &MReso,  &GaReso, Zqqcoupl, Zvvcoupl, MYIDUP, &MatElSq);
     }
   }
@@ -420,3 +426,129 @@ double JHUGenMatEl(TVar::Process process, TVar::Production production, mcfm_even
 }
 
 
+double HJJMatEl(TVar::Process process, TVar::Production production, const TLorentzVector p[5], double Hggcoupl[3][2], double Hvvcoupl[20][2], TVar::VerbosityLevel verbosity, double EBEAM)
+{
+
+  // by default assume only gg productions 
+  // FOTRAN convention -5    -4   -3  -2    -1  0 1 2 3 4 5 
+  //     parton flavor bbar cbar sbar ubar dbar g d u s c b
+  // C++ convention     0     1   2    3    4   5 6 7 8 9 10
+  //2-D matrix is reversed in fortran                                                                                                           
+  // msq[ parton2 ] [ parton1 ]      
+  //      flavor_msq[jj][ii] = fx1[ii]*fx2[jj]*msq[jj][ii];   
+  double MatElsq[nmsq][nmsq];
+  for ( int i = 0; i < nmsq; i++) {
+    for ( int j = 0; j < nmsq; j++ ) {
+      MatElsq[i][j] = 0;
+    }
+  }
+  // input unit = GeV/100 such that 125GeV is 1.25 in the code
+  // this needs to be applied for all the p4
+  double p4[5][4];
+  for (int i = 0; i < 5; i++) {
+    p4[i][0] = p[i].Energy()/100.;
+    p4[i][1] = p[i].Px()/100.;
+    p4[i][2] = p[i].Py()/100.;
+    p4[i][3] = p[i].Pz()/100.;
+
+    // use out-going convention for the incoming particles
+    if ( i < 2 ) {
+      for ( int j = 0; j < 4; j++ ) {
+	p4[i][j] = - p4[i][j];
+      }
+    }
+  }      
+  if ( verbosity >= TVar::DEBUG ) {
+    std::cout << "p4[0] = "  << p4[0][0] << ", " <<  p4[0][1] << ", "  <<  p4[0][2] << ", "  <<  p4[0][3] << "\n";   
+    std::cout << "p4[1] = "  << p4[1][0] << ", " <<  p4[1][1] << ", "  <<  p4[1][2] << ", "  <<  p4[1][3] << "\n";   
+    std::cout << "p4[2] = "  << p4[2][0] << ", " <<  p4[2][1] << ", "  <<  p4[2][2] << ", "  <<  p4[2][3] << "\n"; 
+    std::cout << "p4[3] = "  << p4[3][0] << ", " <<  p4[3][1] << ", "  <<  p4[3][2] << ", "  <<  p4[3][3] << "\n";   
+    std::cout << "p4[4] = "  << p4[4][0] << ", " <<  p4[4][1] << ", "  <<  p4[4][2] << ", "  <<  p4[4][3] << "\n";   
+  }
+
+  
+  if ( production == TVar::JJGG ) {
+    __modhiggsjj_MOD_evalamp_sbfh(p4, Hggcoupl, MatElsq);
+  }
+  if ( production == TVar::JJVBF) {
+    __modhiggsjj_MOD_evalamp_wbfh(p4, Hvvcoupl, MatElsq);
+  }
+
+  //    FOTRAN convention    -5    -4   -3   -2   -1    0   1   2   3  4  5
+  //     parton flavor      bbar  cbar  sbar ubar dbar  g   d   u   s  c  b
+  //      C++ convention     0      1    2    3    4    5   6   7   8  9  10
+
+  for(int ii = 0; ii < nmsq; ii++){
+    for(int jj = 0; jj < nmsq; jj++){
+      if ( verbosity >= TVar::DEBUG ) {
+	std::cout<< "MatElsq: " << ii-5 << " " << jj-5 << " " << MatElsq[jj][ii] << "\n" ;
+      }
+    }
+  }
+  
+  if ( production == TVar::JJGG ){ 
+    return SumMEPDF(p[0], p[1], MatElsq, verbosity, EBEAM);
+    //return MatElsq[5][5];
+  }
+  
+  if ( production == TVar::JJVBF) {
+    //return MatElsq[6][7]+MatElsq[7][6];
+    return SumMEPDF(p[0], p[1], MatElsq, verbosity, EBEAM);
+  }
+
+  return 0.;
+}
+
+// Below code sums over all production parton flavors according to PDF 
+double SumMEPDF(const TLorentzVector p0, const TLorentzVector p1, double msq[nmsq][nmsq],  TVar::VerbosityLevel verbosity, double EBEAM)
+{
+  //Calculate Pdf
+  //Parton Density Function is always evalualted at pT=0 frame
+  //Make sure parton Level Energy fraction is [0,1]
+  //phase space function already makes sure the parton energy fraction between [min,1]
+  //  x0 EBeam =>   <= -x1 EBeam
+  double sysPz=p0.Pz()    + p1.Pz();
+  double sysE =p0.Energy()+ p1.Energy();
+  
+  //Ignore the Pt doesn't make significant effect
+  //double sysPt_sqr=sysPx*sysPx+sysPy*sysPy;
+  //if(sysPt_sqr>=1.0E-10)  sysE=TMath::Sqrt(sysE*sysE-sysPt_sqr);
+  double xx[2]={(sysE+sysPz)/EBEAM/2,(sysE-sysPz)/EBEAM/2};
+
+  if ( verbosity >= TVar::DEBUG ) {
+    std::cout << "xx[0]: " << xx[0] << "\t xx[1] = " << xx[1] << "\n";
+  }
+
+
+  if(xx[0] > 1.0 || xx[0]<=xmin_.xmin) return 0.0;
+  if(xx[1] > 1.0 || xx[1]<=xmin_.xmin) return 0.0;
+  double fx1[nmsq];
+  double fx2[nmsq];
+
+  //Always pass address through fortran function
+  fdist_ (&density_.ih1, &xx[0], &scale_.scale, fx1); 
+  fdist_ (&density_.ih2, &xx[1], &scale_.scale, fx2); 
+
+  if ( verbosity >= TVar::DEBUG ) {
+    for ( int i = 0; i < nmsq; i++ ) {
+      std::cout << "fx1[" << i << "]: " <<  fx1[i] << "\t"
+	"fx2[" << i << "]: " <<  fx2[i] << "\n";
+    }
+  }
+  
+  double msqjk(0.);
+  double flavor_msq[nmsq][nmsq];
+  
+  for(int ii=0;ii<nmsq;ii++){
+    for(int jj=0;jj<nmsq;jj++){
+      flavor_msq[jj][ii] = 0.;
+      //2-D matrix is reversed in fortran
+      // msq[ parton2 ] [ parton1 ]
+      flavor_msq[jj][ii] = fx1[ii]*fx2[jj]*msq[jj][ii];
+      msqjk+=flavor_msq[jj][ii];
+    }//ii
+  }//jj
+  
+  return msqjk;
+
+}

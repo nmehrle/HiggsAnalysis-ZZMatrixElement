@@ -26,8 +26,23 @@ public:
 		 TVar::Process process, 
 		 TVar::MatrixElement memethod,
 		 TVar::Production prodmode,
-		 float &mevalue);
+		 double couplingvals[2],
+     double selfDHvvcoupl[20][2],
+     double selfDZqqcoupl[2][2],
+     double selfDZvvcoupl[2][2],
+     double selfDGqqcoupl[2][2],
+     double selfDGggcoupl[5][2],
+     double selfDGvvcoupl[10][2],
+		 float &mevalue
+		 );
 
+  void computeProdXS(TLorentzVector jet1,
+		     TLorentzVector jet2,
+		     TLorentzVector higgs,
+		     TVar::Process myModel,
+		     TVar::Production myProduction,
+		     float &mevalue
+		     );
 
   //compute four-momenta from angles only 
   // Nota bene: angles, not cos(theta)...

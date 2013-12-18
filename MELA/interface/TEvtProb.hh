@@ -67,7 +67,14 @@ public:
   double XsecCalc(TVar::Process proc,
 		  TVar::Production production,
 		  const hzz4l_event_type &hzz4l_event,
-		  TVar::VerbosityLevel verbosity);
+		  TVar::VerbosityLevel verbosity, double couplingvals[2], double selfDHvvcoupl[20][2],double selfDZqqcoupl[2][2],
+     double selfDZvvcoupl[2][2],
+     double selfDGqqcoupl[2][2],
+     double selfDGggcoupl[5][2],
+     double selfDGvvcoupl[10][2]);
+  double XsecCalcXJJ(TVar::Process proc, TVar::Production production, TLorentzVector p4[3],
+		     TVar::VerbosityLevel verbosity);
+
   // this appears to be some kind of 
   // way of setting MCFM parameters through
   // an interface defined in TMCFM.hh

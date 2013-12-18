@@ -70,8 +70,9 @@ public:
   int configure(TVar::Process model_){
 
     switch (model_){
-    case TVar::AVZZ_4l: makePseudoZprime(); return 0; break;
-    case TVar::VZZ_4l : makeZprime(); return 0; break;
+    case TVar::H1plus: makePseudoZprime(); return 0; break;
+    case TVar::H1minus: makeZprime(); return 0; break;
+    case TVar::SelfDefine_spin1 : return 0; break;
     default: makeZprime(); return 1; break;
     }
 

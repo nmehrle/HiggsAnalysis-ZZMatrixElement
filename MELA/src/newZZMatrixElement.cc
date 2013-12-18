@@ -71,17 +71,24 @@ std::vector<TLorentzVector> newZZMatrixElement::Calculate4Momentum(double Mx,dou
 
 
 void newZZMatrixElement::computeXS(float mZZ, float mZ1, float mZ2,
-				float costhetastar,
-				float costheta1,
-				float costheta2,
-				float phi,
-				float phistar1,
-				int flavor,
-  			        TVar::Process myModel,
-  			        TVar::MatrixElement myME,
-  			        TVar::Production myProduction,
-  			        float &mevalue
-				){
+				   float costhetastar,
+				   float costheta1,
+				   float costheta2,
+				   float phi,
+				   float phistar1,
+				   int flavor,
+				   TVar::Process myModel,
+				   TVar::MatrixElement myME,
+				   TVar::Production myProduction,
+				   double couplingvals[2],
+					 double selfDHvvcoupl[20][2],
+					 double selfDZqqcoupl[2][2], 
+					 double selfDZvvcoupl[2][2], 
+					 double selfDGqqcoupl[2][2], 
+					 double selfDGggcoupl[5][2],
+					 double selfDGvvcoupl[10][2],
+				   float &mevalue
+				   ){
   std::vector<TLorentzVector> p;
   p=Calculate4Momentum(mZZ,mZ1,mZ2,acos(costhetastar),acos(costheta1),acos(costheta2),phistar1,phi);
   TLorentzVector Z1_lept1 = p[0];
@@ -149,7 +156,24 @@ void newZZMatrixElement::computeXS(float mZZ, float mZ1, float mZ2,
   Xcal2.SetHiggsMass(zzmass);
   Xcal2.SetMatrixElement(myME);
   Xcal2.SetProduction(myProduction);
-  mevalue  = Xcal2.XsecCalc(myModel,myProduction,hzz4l_event,verb);
+  mevalue = Xcal2.XsecCalc(myModel,myProduction,hzz4l_event,verb,couplingvals,selfDHvvcoupl,selfDZqqcoupl,selfDZvvcoupl,selfDGqqcoupl,selfDGggcoupl,selfDGvvcoupl);
+  return;
+}
+
+
+void newZZMatrixElement::computeProdXS(TLorentzVector jet1,
+				       TLorentzVector jet2,
+				       TLorentzVector higgs,
+				       TVar::Process myModel,
+				       TVar::Production myProduction,
+				       float &mevalue){
+
+  TLorentzVector p4[3];
+  p4[0]=jet1;
+  p4[1]=jet2;
+  p4[2]=higgs;
+  mevalue  = Xcal2.XsecCalcXJJ(myModel,myProduction, p4,verb);
   
   return;
+
 }

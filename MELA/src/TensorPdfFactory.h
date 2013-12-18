@@ -125,29 +125,39 @@ public:
 
   int configure(TVar::Process model_,TVar::Production prod_){
 
+		switch (prod_){
+			case TVar::ZZGG :
+					makeGG(); break;
+			case TVar::ZZQQB :
+					makeQQB(); break;
+			case TVar::ZZINDEPENDENT:
+					makeGG(); break;
+			default:
+					makeGG(); return 1; break;
+		}
     switch (model_){
-    case TVar::TZZ_4l          : 
-      if(prod_==TVar::GG || prod_==TVar::INDEPENDENT){
-	makeMinGrav(); 
-	return 0; break;
-      }else if(prod_==TVar::QQB){
-	makeqqMinGrav();
-	return 0; break;
-      }else{
-	return 2; break;
-      }
-    case TVar::TZZ_2hplus_4l   : make2hPlus();  return 0; break;
-    case TVar::PTZZ_2hminus_4l : make2hMinus(); return 0; break;
-    case TVar::TZZ_2bplus_4l   : make2bPlus();  return 0; break;
+    case TVar::H2_g1g5 : 		makeMinGrav(); 	 	return 0; break;
+    case TVar::H2_g4: make2hPlus();  return 0; break;
+    case TVar::H2_g8: make2hMinus(); return 0; break;
+    case TVar::H2_g5: make2bPlus();  return 0; break;
+    case TVar::SelfDefine_spin2 : return 0; break;
     default: makeMinGrav(); return 1; break;
     }
 
   };
 
+	void makeGG(){
+					fz1Val->setVal(0.);
+					fz2Val->setVal(1.);
+	}
+	void makeQQB(){
+					fz1Val->setVal(1.);
+					fz2Val->setVal(0.);
+	}
   void makeMinGrav(){      // Minimal coupling graviton produced through 
                            // gluon-gluon fusion
-    fz1Val->setVal(0.0);
-    fz2Val->setVal(1.0);
+  //  fz1Val->setVal(0.0);
+  //  fz2Val->setVal(1.0);
 
     g1Val->setVal(1.0); 
     g2Val->setVal(0.0); 
@@ -157,13 +167,16 @@ public:
     g6Val->setVal(0.0); 
     g7Val->setVal(0.0); 
     g8Val->setVal(0.0); 
+    g9Val->setVal(0.0); 
+    g10Val->setVal(0.0); 
 
+    calculatefz2();
   };
 
   void makeqqMinGrav(){   // Minimal coupling graviton produced through 
                           // quark-anti-quark annihilation
-    fz1Val->setVal(1.0);
-    fz2Val->setVal(0.0);
+  //  fz1Val->setVal(1.0);
+  //  fz2Val->setVal(0.0);
 
     g1Val->setVal(1.0); 
     g2Val->setVal(0.0); 
@@ -173,7 +186,10 @@ public:
     g6Val->setVal(0.0); 
     g7Val->setVal(0.0); 
     g8Val->setVal(0.0); 
+    g9Val->setVal(0.0); 
+    g10Val->setVal(0.0); 
 
+    calculatefz2();
   };
 
   void makeUnpolMinGrav(){  // unpolarized minimal coupling graviton
@@ -189,13 +205,15 @@ public:
     g6Val->setVal(0.0); 
     g7Val->setVal(0.0); 
     g8Val->setVal(0.0); 
+    g9Val->setVal(0.0); 
+    g10Val->setVal(0.0); 
 
   };
 
   void make2hPlus(){      // exotic CP-even spin-2 resonance produced through 
                           // gluon-gluon fusion
-    fz1Val->setVal(0.0);
-    fz2Val->setVal(0.0);
+  //  fz1Val->setVal(0.0);
+  //  fz2Val->setVal(0.0);
 
     g1Val->setVal(0.0); 
     g2Val->setVal(0.0); 
@@ -205,13 +223,16 @@ public:
     g6Val->setVal(0.0); 
     g7Val->setVal(0.0); 
     g8Val->setVal(0.0); 
+    g9Val->setVal(0.0); 
+    g10Val->setVal(0.0); 
 
+    calculatefz2();
   };
 
   void make2hMinus(){     // exotic CP-odd spin-2 resonance produced through 
                           // gluon-gluon fusion
-    fz1Val->setVal(0.0);
-    fz2Val->setVal(0.0);
+//    fz1Val->setVal(0.0);
+//    fz2Val->setVal(0.0);
 
     g1Val->setVal(0.0); 
     g2Val->setVal(0.0); 
@@ -221,13 +242,16 @@ public:
     g6Val->setVal(0.0); 
     g7Val->setVal(0.0); 
     g8Val->setVal(1.0); 
+    g9Val->setVal(0.0); 
+    g10Val->setVal(0.0); 
 
+    calculatefz2();
   };
 
   void make2bPlus(){     // spin-2 with bulk
                           // gluon-gluon fusion
-    fz1Val->setVal(0.0);
-    fz2Val->setVal(1.0);
+//    fz1Val->setVal(0.0);
+//    fz2Val->setVal(1.0);
 
     g1Val->setVal(0.0); 
     g2Val->setVal(0.0); 
@@ -237,7 +261,32 @@ public:
     g6Val->setVal(0.0); 
     g7Val->setVal(0.0); 
     g8Val->setVal(0.0); 
+    g9Val->setVal(0.0); 
+    g10Val->setVal(0.0); 
+	
+		calculatefz2();
+  };
 
+	void calculatefz2(){
+    double c1 = 2*g1Val->getVal() + 2.*g2Val->getVal() ;
+    double c2 = -0.5*g1Val->getVal() + g3Val->getVal() + 2.*g4Val->getVal();
+    double c5 = 4*g8Val->getVal();
+    double c6 = 0.;
+    Double_t fppReal = 1./sqrt(6.) * (c1/4.*2. + 2.*c2);
+    Double_t fppImag = 1./sqrt(6.) * (c5-2.*c6);
+    Double_t fmmReal = 1./sqrt(6.) * (c1/4.*2. + 2.*c2);
+    Double_t fmmImag = 1./sqrt(6.)* (c5-2.*c6);
+    Double_t fmpReal = 1./4.*c1*2.;
+    Double_t fmpImag = 0;
+    Double_t fpp = fppImag*fppImag + fppReal*fppReal;
+    Double_t fmm = fmmImag*fmmImag + fmmReal*fmmReal;
+    Double_t fmp = fmpImag*fmpImag + fmpReal*fmpReal;
+    double fz2= fz2Val->getVal();
+    if (fmm==0 && fmp==0)
+    fz2*=1.;
+    else
+    fz2*= 2.*fmp/(fmm+fpp+fmp+fmp);
+    fz2Val->setVal(fz2);
   };
 
   void makeParamsConst(bool yesNo=true){

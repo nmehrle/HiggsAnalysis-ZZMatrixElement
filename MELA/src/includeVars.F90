@@ -1,18 +1,4 @@
-real(8),  parameter :: GeV=1d0/100d0
-real(8),  parameter :: M_Z     = 91.1876d0 *GeV      ! Z boson mass (PDG-2011)
-real(8),  parameter :: Ga_Z    = 2.4952d0  *GeV      ! Z boson width(PDG-2011)
-real(8),  parameter :: M_W     = 80.399d0  *GeV      ! W boson mass (PDG-2011)
-real(8),  parameter :: Ga_W    = 2.085d0   *GeV      ! W boson width(PDG-2011)
-! ! ! real(8),  parameter :: M_Reso  = 125d0     *GeV      ! X resonance mass (spin 0, spin 1, spin 2)
-! ! ! real(8),  parameter :: Ga_Reso = 0.1d0     *GeV      ! X resonance width
-real(8),  parameter :: Lambda  = 1000d0    *GeV      ! Lambda coupling enters in two places
-                                                            ! overal scale for x-section and in power suppressed
-                                                            ! operators/formfactors (former r).
-
-real(8),  parameter :: m_tau = 1.8d0  *GeV           ! tau lepton mass
-
-real(8),  parameter :: alpha_QED = 1d0/128.0d0       ! el.magn. coupling
-real(8),  parameter :: sitW = dsqrt(0.23119d0)       ! sin(Theta_Weinberg) (PDG-2008)
+include './variables.F90'
 
 !-- parameters that define on-shell spin 0 coupling to SM fields, see note
    logical,  parameter :: generate_as = .false.! this cannot be changed
@@ -31,6 +17,8 @@ real(8),  parameter :: sitW = dsqrt(0.23119d0)       ! sin(Theta_Weinberg) (PDG-
    complex(8) :: ghz2
    complex(8) :: ghz3
    complex(8) :: ghz4  ! pseudoscalar
+
+
 
 
 !---parameters that define spin 1 coupling to SM fields, see note
@@ -66,7 +54,7 @@ real(8),  parameter :: sitW = dsqrt(0.23119d0)       ! sin(Theta_Weinberg) (PDG-
   complex(8) :: b10  ! this coupling does not contribute to gamma+gamma final states
 
 
-  complex(8),  parameter  :: c1 = (1.0d0,0d0)! this parameters are not used
+  complex(8),  parameter  :: c1 = (1.0d0,0d0)! these parameters are not used
   complex(8),  parameter  :: c2 = (0.0d0,0d0)
   complex(8),  parameter  :: c3 = (0.0d0,0d0)
   complex(8),  parameter  :: c41= (0.0d0,0d0)
@@ -139,15 +127,9 @@ complex(8), parameter :: ci=(0.0d0,1.0d0)
 complex(8), parameter :: ne=(0.0d0,1.0d0)
 
 
-integer,parameter :: DecayMode1=0
-integer,parameter :: DecayMode2=0
-logical,parameter :: includeInterference=.true.
-logical,parameter :: OffShellReson=.true.
 real(8) :: M_V,Ga_V
-! real(8) :: scr
-! complex(8) :: sc,et1,pol_mless2,POL_DK2MOM
-integer, parameter  :: dp = selected_real_kind(15)
 real(8), parameter :: tol = 0.0000001d0
+
 
     if( DecayMode1.le.3 ) then
        M_V = M_Z

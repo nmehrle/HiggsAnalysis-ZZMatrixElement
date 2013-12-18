@@ -38,6 +38,16 @@ public:
   
   void setProcess(TVar::Process myModel, TVar::MatrixElement myME, TVar::Production myProduction);
   
+ void computeP(float mZZ, float mZ1, float mZ2, // input kinematics
+    float costhetastar,
+    float costheta1,
+    float costheta2,
+    float phi,
+    float phi1,
+    int flavor,
+    float& prob                   // output probability
+    );
+
   void computeP(float mZZ, float mZ1, float mZ2, // input kinematics
 		float costhetastar,
 		float costheta1, 
@@ -45,14 +55,73 @@ public:
 		float phi,
 		float phi1,
 		int flavor,
-		float& prob);                   // output probability
+    double selfDHvvcoupl[20][2],
+		float& prob                   // output probability
+		);
+
+void computeD_CP(float mZZ, float mZ1, float mZ2, // input kinematics
+           float costhetastar,
+           float costheta1,
+           float costheta2,
+           float phi,
+           float phi1,
+           int flavor,
+           TVar::MatrixElement myME,
+           TVar::Process myType ,
+           float& prob);
+
+void computeP_selfDspin2(float mZZ, float mZ1, float mZ2, // spin 2 arbitray coupling 
+        float costhetastar,
+        float costheta1,
+        float costheta2,
+        float phi,
+        float phi1,
+        int flavor,
+        double selfDGggcoupl[5][2], double selfDGvvcoupl[10][2],
+        float& prob);
+
+void computeP_selfDspin1(float mZZ, float mZ1, float mZ2, // arbitrary spin 1 coupling 
+        float costhetastar,
+        float costheta1,
+        float costheta2,
+        float phi,
+        float phi1,
+        int flavor,
+        double selfDZvvcoupl[2][2],
+        float& prob);
+
+  void computeP(float mZZ, float mZ1, float mZ2, // input kinematics
+		float costhetastar,
+		float costheta1, 
+		float costheta2,
+		float phi,
+		float phi1,
+		int flavor,
+		double couplingvals[2],
+		float& prob                   // output probability
+		);
     
   void computeP(TLorentzVector Z1_lept1, int Z1_lept1Id,  // input 4-vectors
 		TLorentzVector Z1_lept2, int Z1_lept2Id,  // 
 		TLorentzVector Z2_lept1, int Z2_lept1Id,
-		TLorentzVector Z2_lept2, int Z2_lept2Id,  
-		float& prob);                             // output probability
+		TLorentzVector Z2_lept2, int Z2_lept2Id,
+		float& prob                             // output probability
+		);
+
+  void computeP(TLorentzVector Z1_lept1, int Z1_lept1Id,  // input 4-vectors
+		TLorentzVector Z1_lept2, int Z1_lept2Id,  // 
+		TLorentzVector Z2_lept1, int Z2_lept1Id,
+		TLorentzVector Z2_lept2, int Z2_lept2Id,
+		double couplingvals[2],
+		float& prob                             // output probability
+		);
   
+  void computeProdP(TLorentzVector Jet1, int Jet1_Id,
+		    TLorentzVector Jet2, int Jet2_Id,
+		    TLorentzVector Decay1, int Decay1_Id,
+		    TLorentzVector Decay2, int Decay2_Id,
+		    float& prob);
+
   void computePM4l(float mZZ,
 		   TVar::LeptonFlavor flavor,
 		   TVar::SuperMelaSyst syst, 
@@ -76,6 +145,16 @@ public:
 		     float costheta2,
 		     float phi,
 		     float phi1,
+		     // return variables:
+		     float& w
+		     );
+  void computeWeight(float mZZ, float mZ1, float mZ2, 
+		     float costhetastar,
+		     float costheta1, 
+		     float costheta2,
+		     float phi,
+		     float phi1,
+		     double couplingvals[2],
 		     // return variables:
 		     float& w
 		     );

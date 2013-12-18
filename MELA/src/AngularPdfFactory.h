@@ -28,6 +28,23 @@ public:
   RooRealVar* g3Val;
   RooRealVar* g4Val;
       
+  RooRealVar* g1_primeVal;
+  RooRealVar* g2_primeVal;
+  RooRealVar* g3_primeVal;
+  RooRealVar* g4_primeVal;
+  RooRealVar* g1_prime2Val;
+  RooRealVar* g2_prime2Val;
+  RooRealVar* g3_prime2Val;
+  RooRealVar* g4_prime2Val;
+  RooRealVar* g1_prime3Val;
+  RooRealVar* g2_prime3Val;
+  RooRealVar* g3_prime3Val;
+  RooRealVar* g4_prime3Val;
+  RooRealVar* g1_prime4Val;
+  RooRealVar* g2_prime4Val;
+  RooRealVar* g3_prime4Val;
+  RooRealVar* g4_prime4Val;
+	
   RooRealVar* R1Val;  
   RooRealVar* R2Val;  
   
@@ -57,10 +74,31 @@ public:
     g3Val = new RooRealVar("g3Val","g3Val",0.);
     g4Val = new RooRealVar("g4Val","g4Val",0.);
 
+    g1_primeVal =  new RooRealVar("g1_primeVal", "g1_primeVal",0.);
+    g1_prime2Val = new RooRealVar("g1_prime2Val","g1_prime2Val",0.);
+    g1_prime3Val = new RooRealVar("g1_prime3Val","g1_prime3Val",0.);
+    g1_prime4Val = new RooRealVar("g1_prime4Val","g1_prime4Val",0.);
+
+
+    g2_primeVal =  new RooRealVar("g2_primeVal", "g2_primeVal",0.);
+    g2_prime2Val = new RooRealVar("g2_prime2Val","g2_prime2Val",0.);
+    g2_prime3Val = new RooRealVar("g2_prime3Val","g2_prime3Val",0.);
+    g2_prime4Val = new RooRealVar("g2_prime4Val","g2_prime4Val",0.);
+
+    g3_primeVal =  new RooRealVar("g3_primeVal", "g3_primeVal",0.);
+    g3_prime2Val = new RooRealVar("g3_prime2Val","g3_prime2Val",0.);
+    g3_prime3Val = new RooRealVar("g3_prime3Val","g3_prime3Val",0.);
+    g3_prime4Val = new RooRealVar("g3_prime4Val","g3_prime4Val",0.);
+
+    g4_primeVal =  new RooRealVar("g4_primeVal", "g4_primeVal",0.);
+    g4_prime2Val = new RooRealVar("g4_prime2Val","g4_prime2Val",0.);
+    g4_prime3Val = new RooRealVar("g4_prime3Val","g4_prime3Val",0.);
+    g4_prime4Val = new RooRealVar("g4_prime4Val","g4_prime4Val",0.);
+
     R1Val  = new RooRealVar("R1Val","R1Val",0.15);
     R2Val  = new RooRealVar("R2Val","R2Val",0.15);
 
-    PDF = new RooXZsZs_5D("PDF","PDF",*m1,*m2,*h1,*h2,*Phi,*a1Val,*phi1Val,*a2Val,*phi2Val,*a3Val,*phi3Val,*useGTerm,*g1Val,*g2Val,*g3Val,*g4Val,*mZ,*gamZ,*mZZ,*R1Val,*R2Val);
+    PDF = new RooXZsZs_5D("PDF","PDF",*m1,*m2,*h1,*h2,*Phi,*a1Val,*phi1Val,*a2Val,*phi2Val,*a3Val,*phi3Val,*useGTerm,*g1Val,*g2Val,*g3Val,*g4Val,*g1_primeVal,*g2_primeVal,*g3_primeVal,*g4_primeVal,	*g1_prime2Val,*g2_prime2Val,*g3_prime2Val,*g4_prime2Val,*g1_prime3Val,*g2_prime3Val,*g3_prime3Val,*g4_prime3Val,*g1_prime4Val,*g2_prime4Val,*g3_prime4Val,*g4_prime4Val,*mZ,*gamZ,*mZZ,*R1Val,*R2Val);
 
   };
 
@@ -83,6 +121,22 @@ public:
     delete g3Val;
     delete g4Val;
 
+		delete  g1_primeVal;
+		delete  g2_primeVal;
+		delete  g3_primeVal;
+		delete  g4_primeVal;
+		delete  g1_prime2Val;
+		delete  g2_prime2Val;
+		delete  g3_prime2Val;
+		delete  g4_prime2Val;
+		delete  g1_prime3Val;
+		delete  g2_prime3Val;
+		delete  g3_prime3Val;
+		delete  g4_prime3Val;
+		delete  g1_prime4Val;
+		delete  g2_prime4Val;
+		delete  g3_prime4Val;
+		delete  g4_prime4Val;
     delete PDF;
 
   };
@@ -90,9 +144,15 @@ public:
   int configure(TVar::Process model_){
 
     switch (model_){
-    case TVar::HZZ_4l: makeSMHiggs(); return 0; break;
-    case TVar::HDHZZ_4l : makeLGHiggs(); return 0; break;
-    case TVar::PSHZZ_4l : makePSHiggs(); return 0; break;
+    case TVar::HSMHiggs : makeSMHiggs(); return 0; break;
+    case TVar::H0hplus : makeLGHiggs(); return 0; break;
+    case TVar::H0minus : makePSHiggs(); return 0; break;
+    case TVar::H0_g1prime2 : makeSMq2Higgs(); return 0; break;
+    case TVar::SelfDefine_spin0 : return 0; break;
+//    case TVar::PSHZZ_g4star: makeCustom(0.,0.,0.,2.521); return 0; break;
+//    case TVar::CPMixHZZ_4l: makeCustom(1.,0.,0.,2.521); return 0; break;
+//    case TVar::HDHZZ_4l_g2star: makeCustom(0.,1.6385,0.,0.); return 0; break;
+//    case TVar::HDMixHZZ_4l: makeCustom(1.,1.6385,0.,0.); return 0; break;
     default: makeSMHiggs(); return 1; break;
     }
 
@@ -105,6 +165,8 @@ public:
     g2Val->setVal(0.0);
     g3Val->setVal(0.0);
     g4Val->setVal(0.0);
+    g1_prime2Val->setVal(0.);
+    setRestConst();
     modelIndex=0;
   };
 
@@ -114,6 +176,8 @@ public:
     g2Val->setVal(1.0);
     g3Val->setVal(0.0);
     g4Val->setVal(0.0);
+    g1_prime2Val->setVal(0.);
+    setRestConst();
     // need to calculate the proper normalizations
     modelIndex=2;
   };
@@ -125,9 +189,43 @@ public:
     g2Val->setVal(0.0);
     g3Val->setVal(0.0);
     g4Val->setVal(1.0);
+    g1_prime2Val->setVal(0.);
+    setRestConst();
     modelIndex=1;
   };
+ 	
+	 void makeSMq2Higgs(){
+    useGTerm->setVal(1.0);
+    g1Val->setVal(0.0);
+    g2Val->setVal(0.0);
+    g3Val->setVal(0.0);
+    g4Val->setVal(0.0);
+    g1_prime2Val->setVal(-12046.01);
+ 		setRestConst();
+    modelIndex=-1;
+  };
 
+	void setRestConst(){
+    g1_primeVal ->setVal(0.);
+    g1_prime3Val->setVal(0.);
+    g1_prime4Val->setVal(0.);
+
+
+    g2_primeVal ->setVal(0.);
+    g2_prime2Val->setVal(0.);
+    g2_prime3Val->setVal(0.);
+    g2_prime4Val->setVal(0.);
+
+    g3_primeVal ->setVal(0.);
+    g3_prime2Val->setVal(0.);
+    g3_prime3Val->setVal(0.);
+    g3_prime4Val->setVal(0.);
+
+    g4_primeVal ->setVal(0.);
+    g4_prime2Val->setVal(0.);
+    g4_prime3Val->setVal(0.);
+    g4_prime4Val->setVal(0.);
+	};
   void makeCustom(double a1, double a2, double a3,
 		  double phi1, double phi2, double phi3){
     a1Val->setVal(a1);
