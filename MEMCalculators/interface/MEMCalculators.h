@@ -71,6 +71,7 @@ public:
     /// \param[in]  calculator              name of the calculator tool to be used.
     /// \param[in]  partP                   the input vector with TLorentzVectors for 4 leptons and 1 photon.
     /// \param[in]  partId                  the input vecor with IDs (PDG) for 4 leptons and 1 photon.
+    /// \param[in]  coupling                coupling strength, used only for ggMELA calculations
     /// \param[out] me2process              retrieved |ME|^2 for the specified process and calculator.
     /// \return                             error code of the computation: 0 = NO_ERR, 1 = ERR_PROCESS, 2 = ERR_COMPUTE
     ///
@@ -84,12 +85,14 @@ public:
     /// \param[in]  calculator              name of the calculator tool to be used.
     /// \param[in]  partP                   the input vector with TLorentzVectors for 4 leptons and 1 photon.
     /// \param[in]  partId                  the input vecor with IDs (PDG) for 4 leptons and 1 photon.
+    /// \param[in]  coupling                coupling strength, used only for ggMELA calculations
     /// \param[out] kd                      computed KD value for discrimination of processes A and B.
     /// \param[out] me2processA             computed |ME|^2 for process A.
     /// \param[out] me2processB             computed |ME|^2 for process B.
     /// \return                             error code of the computation: 0 = NO_ERR, 1 = ERR_PROCESS, 2 = ERR_COMPUTE
     ///
     int computeKD(Processes processA, Processes processB, MEMCalcs calculator, vector<TLorentzVector> partP, vector<int> partId, double& kd, double& me2processA, double& me2processB );
+    int computeKD(Processes processA, Processes processB, MEMCalcs calculator, vector<TLorentzVector> partP, vector<int> partId, double coupling[2], double& kd, double& me2processA, double& me2processB );
 
     ///
     /// Compute MEs for all supported processes.

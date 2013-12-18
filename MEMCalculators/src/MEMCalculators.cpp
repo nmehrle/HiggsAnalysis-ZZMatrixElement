@@ -169,52 +169,66 @@ int MEMs::computeME(Processes process, MEMCalcs calculator, vector<TLorentzVecto
 ///----------------------------------------------------------------------------------------------
 int MEMs::computeKD(Processes processA, Processes processB, MEMCalcs calculator, vector<TLorentzVector> partP, vector<int> partId, double& kd, double& me2processA, double& me2processB )
 {    
-    /// check if processes are supported
-    if (!isProcSupported[processA][calculator]) return ERR_PROCESS;
-    if (!isProcSupported[processB][calculator]) return ERR_PROCESS;
+  /// check if processes are supported
+  if (!isProcSupported[processA][calculator]) return ERR_PROCESS;
+  if (!isProcSupported[processB][calculator]) return ERR_PROCESS;
+  
+  /// perform computation according to the specified process and MEM package
+  switch ( calculator ) {
+  case kMEKD:         /// compute KD with MEKD
+    //std::cout << m_processNameMEKD[processA] << " " << m_processNameMEKD[processB] << std::endl;
+    if( (m_MEKD->computeKD(m_processNameMEKD[processA], m_processNameMEKD[processB], partP, partId, kd, me2processA, me2processB)) != 0 ) return ERR_COMPUTE;
+    break;
+  case kAnalytical:   /// compute KD with MELA
+    if(cacheMELAcalculation(processA,calculator,partP,partId,me2processA) || 
+       cacheMELAcalculation(processB,calculator,partP,partId,me2processB) )
+      return ERR_COMPUTE;
+    else{
+      kd=me2processA/(me2processA+me2processB);
+      return NO_ERR;
+    }
+    break;
+  case kJHUGen:       /// compute KD with JHUGen
+    if(cacheMELAcalculation(processA,calculator,partP,partId,me2processA) || 
+       cacheMELAcalculation(processB,calculator,partP,partId,me2processB) )
+      return ERR_COMPUTE;
+    else{
+      kd=me2processA/(me2processA+me2processB);
+      return NO_ERR;
+    }
+    break;
+  case kMCFM:         /// compute KD with MCFM
+    if(cacheMELAcalculation(processA,calculator,partP,partId,me2processA) || 
+       cacheMELAcalculation(processB,calculator,partP,partId,me2processB) )
+      return ERR_COMPUTE;
+    else{
+      kd=me2processA/(me2processA+me2processB);
+      return NO_ERR;
+    }
+    break;
+  case kMELA_HCP:         /// compute KD with MCFM
+    return ERR_PROCESS;
+    break;
+  default:
+    return ERR_PROCESS;
+    break;
+  }
+  return NO_ERR;
+}
 
-    /// perform computation according to the specified process and MEM package
-    switch ( calculator ) {
-    case kMEKD:         /// compute KD with MEKD
-      //std::cout << m_processNameMEKD[processA] << " " << m_processNameMEKD[processB] << std::endl;
-      if( (m_MEKD->computeKD(m_processNameMEKD[processA], m_processNameMEKD[processB], partP, partId, kd, me2processA, me2processB)) != 0 ) return ERR_COMPUTE;
-      break;
-    case kAnalytical:   /// compute KD with MELA
-      if(cacheMELAcalculation(processA,calculator,partP,partId,me2processA) || 
-	 cacheMELAcalculation(processA,calculator,partP,partId,me2processA) )
-	return ERR_COMPUTE;
-      else{
-	kd=me2processA/(me2processA+me2processB);
-	return NO_ERR;
-      }
-      break;
-    case kJHUGen:       /// compute KD with JHUGen
-      if(cacheMELAcalculation(processA,calculator,partP,partId,me2processA) || 
-	 cacheMELAcalculation(processA,calculator,partP,partId,me2processA) )
-	return ERR_COMPUTE;
-      else{
-	kd=me2processA/(me2processA+me2processB);
-	return NO_ERR;
-      }
-      break;
-    case kMCFM:         /// compute KD with MCFM
-      if(cacheMELAcalculation(processA,calculator,partP,partId,me2processA) || 
-	 cacheMELAcalculation(processA,calculator,partP,partId,me2processA) )
-	return ERR_COMPUTE;
-      else{
-	kd=me2processA/(me2processA+me2processB);
-	return NO_ERR;
-      }
-      break;
-    case kMELA_HCP:         /// compute KD with MCFM
-      return ERR_PROCESS;
-      break;
-    default:
-      return ERR_PROCESS;
-      break;
+int MEMs::computeKD(Processes processA, Processes processB, MEMCalcs calculator, vector<TLorentzVector> partP, vector<int> partId, double coupling[2], double& kd, double& me2processA, double& me2processB ){
+  if(MELAprocMap[processA]!=TVar::HZZ_4l || MELAprocMap[processB]!=TVar::HZZ_4l || MELAcalcMap[calculator]!=TVar::MCFM)computeKD(processA,processB,calculator,partP,partId,kd,me2processA,me2processB);
+  if(MELAprocMap[processA]==TVar::HZZ_4l && MELAprocMap[processB]==TVar::HZZ_4l && MELAcalcMap[calculator]==TVar::MCFM){
+    if(cacheMELAcalculation(processA,calculator,partP,partId,coupling,me2processA) || 
+       cacheMELAcalculation(processB,calculator,partP,partId,coupling,me2processB) )
+      return ERR_COMPUTE;
+    else{
+      kd=me2processA/(me2processA+me2processB);
+      return NO_ERR;
     }
-    return NO_ERR;
-    }
+  }
+  return NO_ERR;
+}
 
 ///----------------------------------------------------------------------------------------------
 /// MEMs::computeMEs - Compute MEs for the supported set of processes.
@@ -284,7 +298,7 @@ int MEMs::computeKD(Processes processA, MEMCalcs calculatorA, Processes processB
 ///----------------------------------------------------------------------------------------------
 /// MEMs::computeKD - Compute KD for process A and process B, for specified calculator.
 ///----------------------------------------------------------------------------------------------
- int MEMs::computeKD(Processes processA, MEMCalcs calculatorA, Processes processB, MEMCalcs calculatorB, double (MEMs::*funcKD)(Processes, MEMCalcs, Processes, MEMCalcs), double& kd, double& me2processA, double& me2processB )
+int MEMs::computeKD(Processes processA, MEMCalcs calculatorA, Processes processB, MEMCalcs calculatorB, double (MEMs::*funcKD)(Processes, MEMCalcs, Processes, MEMCalcs), double& kd, double& me2processA, double& me2processB )
 {
     /// check if processes are supported
     if (!isProcSupported[processA][calculatorA]) return ERR_PROCESS;
