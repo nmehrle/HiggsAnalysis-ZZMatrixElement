@@ -18,8 +18,13 @@ At this point, git commands apply to this repository if issued inside the ZZMatr
 
 The package depends on:
 ```
+## >>> CombinedLimit <<<
 cvs co -r V02-06-00 HiggsAnalysis/CombinedLimit
-cvs co -r V00-03-01 -d Higgs/Higgs_CS_and_Width UserCode/Snowball/Higgs/Higgs_CS_and_Width
+## >>> Higgs_CS_and_Width <<<
+git clone https://github.com/msnowball/HCSaW Higgs/Higgs_CS_and_Width
+cd Higgs/Higgs_CS_and_Width
+git filter-branch --subdirectory-filter Higgs_CS_and_Width
+cd -
 ```
 
 Mixing with packages from cvs
