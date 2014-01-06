@@ -83,7 +83,7 @@ public:
 	/// \param[out] me2process              retrieved |ME|^2 for the specified process and calculator.
 	/// \return                             error code of the computation: 0 = NO_ERR, 1 = ERR_PROCESS, 2 = ERR_COMPUTE
 	///
-	int computeME(Processes process, MEMCalcs calculator, vector<TLorentzVector> partP, vector<int> partId, double& me2process);
+  int computeME(Processes process, MEMCalcs calculator, vector<TLorentzVector> partP, vector<int> partId, double& me2process);
 	
 	///
 	/// Compute individual mixed MEs for the specified "model".

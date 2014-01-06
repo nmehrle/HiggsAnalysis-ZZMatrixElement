@@ -12,10 +12,17 @@ using namespace std;
 
 vector<TLorentzVector> Calculate4Momentum(double Mx,double M1,double M2,double theta,double theta1,double theta2,double Phi1,double Phi,double pt4l, double Y4l);
 
+//<<<<<<< testMEMCalc.C
+//void testMEMCalc(TString fileName,int channel){
+//int main(){
+//TString fileName="../../../../../../MELA/test/ggtoHtoZZ4l_VariousKDs_0+m0+h_withDisc_withMELA.root";
+//int channel=3;
+//=======
 //void testMEMCalc(TString fileName,int channel){
 int main(){
 TString fileName="/afs/cern.ch/work/c/chmartin/private/Fa2stuff/MC_from_JHU/SMHiggsToZZTo4L_M-126_8TeV_powheg15-JHUgenV4-pythia6_false.root";
 int channel=3;
+//>>>>>>> 1.8
   TChain* t = new TChain("SelectedTree");
   t->Add(fileName);
   
@@ -45,6 +52,7 @@ int channel=3;
   double dummy1,dummy2;
 	
 	double pg1g4_mela, pg1g4_VAJHU, pg1g2_mela, pg1g2_VAJHU, pg1g4_pi2_VAJHU, pg1g2_pi2_VAJHU;
+	double ggzz_VAMCFM, ggzz_c5_VAMCFM, ggzz_c1_VAMCFM,ggzz_ci_VAMCFM;
   // new branches
   tree->Branch("p0plus_mela_test",&p0plus_mela_test,"p0plus_mela_test/D");
   tree->Branch("p0hplus_mela_test",&p0hplus_mela_test,"p0hplus_mela_test/D");
@@ -61,6 +69,11 @@ int channel=3;
   tree->Branch("qqZZ_VAMCFM_test",&qqZZ_VAMCFM_test,"qqZZ_VAMCFM_test/D");
   tree->Branch("qqZZ_VAMCFMNorm_test",&qqZZ_VAMCFMNorm_test,"qqZZ_VAMCFMNorm_test/D");
   tree->Branch("ggZZ_VAMCFM_test",&ggZZ_VAMCFM_test,"ggZZ_VAMCFM_test/D");
+
+  tree->Branch("ggzz_VAMCFM_test",&ggzz_VAMCFM,"ggzz_VAMCFM_test/D");
+  tree->Branch("ggzz_c5_VAMCFM_test",&ggzz_c5_VAMCFM,"ggzz_c5_VAMCFM_test/D");
+  tree->Branch("ggzz_c1_VAMCFM_test",&ggzz_c1_VAMCFM,"ggzz_c1_VAMCFM_test/D");
+  tree->Branch("ggzz_ci_VAMCFM_test",&ggzz_ci_VAMCFM,"ggzz_ci_VAMCFM_test/D");
 
   tree->Branch("p0plus_VAJHU_test",&p0plus_VAJHU_test,"p0plus_VAJHU_test/D");
   tree->Branch("p0minus_VAJHU_test",&p0minus_VAJHU_test,"p0minus_VAJHU_test/D");
@@ -80,12 +93,15 @@ int channel=3;
   tree->Branch("KD0hplus",&KD0hplus,"KD0hplus/D");
   tree->Branch("KD2mplus",&KD2mplus,"KD2mplus/D");
 
-  tree->Branch("pg1g4_mela",&pg1g4_mela,"pg1g4_mela/D");
-  tree->Branch("pg1g4_VAJHU",&pg1g4_VAJHU,"pg1g4_VAJHU/D");
-  tree->Branch("pg1g2_mela",&pg1g2_mela,"pg1g2_mela/D");
-  tree->Branch("pg1g2_VAJHU",&pg1g2_VAJHU,"pg1g2_VAJHU/D");
-  tree->Branch("pg1g2_pi2_VAJHU",&pg1g2_pi2_VAJHU,"pg1g2_pi2_VAJHU/D");
-  tree->Branch("pg1g4_pi2_VAJHU",&pg1g4_pi2_VAJHU,"pg1g4_pi2_VAJHU/D");
+  tree->Branch("pg1g4_mela_test",&pg1g4_mela,"pg1g4_mela_test/D");
+  tree->Branch("pg1g4_VAJHU_test",&pg1g4_VAJHU,"pg1g4_VAJHU_test/D");
+  tree->Branch("pg1g2_mela_test",&pg1g2_mela,"pg1g2_mela_test/D");
+  tree->Branch("pg1g2_VAJHU_test",&pg1g2_VAJHU,"pg1g2_VAJHU_test/D");
+  tree->Branch("pg1g2_pi2_VAJHU_test",&pg1g2_pi2_VAJHU,"pg1g2_pi2_VAJHU_test/D");
+  tree->Branch("pg1g4_pi2_VAJHU_test",&pg1g4_pi2_VAJHU,"pg1g4_pi2_VAJHU_test/D");
+	
+	double p0_self_VAJHU;
+  tree->Branch("p0_self_VAJHU",&p0_self_VAJHU,"p0_self_VAJHU/D");
   // old branches
 
   float mzz,m1,m2,h1,h2,hs,phi,phi1,pt4l,Y4l;
@@ -147,7 +163,8 @@ int channel=3;
     test.computeME(k2mplus_qqbar,kAnalytical,p4,id,p2qqb_mela_test);
    
     test.computeME(kggZZ,kMCFM,p4,id,ggZZ_VAMCFM_test);
-    test.computeME(kSMHiggs,kMCFM,p4,id,p0plus_VAMCFM_test);
+    //test.computeME(kSMHiggs,kMCFM,p4,id,p0plus_VAMCFM_test);
+    test.computeME(kggZZ_SMHiggs,kMCFM,p4,id,p0plus_VAMCFM_test);
     test.computeME(kqqZZ,kMCFM,p4,id,qqZZ_VAMCFM_test);
 
     test.computeME(kSMHiggs,kJHUGen,p4,id,p0plus_VAJHU_test);
@@ -163,16 +180,40 @@ int channel=3;
     test.computeME(k0minus,kMEKD,p4,id,p0minus_mad);
     test.computeME(kqqZZ,kMEKD,p4,id,qqZZ_mad);
 
-    test.computeME(kg1g4,kAnalytical,p4,id,pg1g4_mela);
-    test.computeME(kg1g4,kJHUGen,p4,id,pg1g4_VAJHU);
-    test.computeME(kg1g4_pi_2,kJHUGen,p4,id,pg1g4_pi2_VAJHU);
-    test.computeME(kg1g2_pi_2,kJHUGen,p4,id,pg1g2_pi2_VAJHU);
-    test.computeME(kg1g2,kAnalytical,p4,id,pg1g2_mela);
-    test.computeME(kg1g2,kJHUGen,p4,id,pg1g2_VAJHU);
-
+    test.computeME_Interference(kg1g4,kAnalytical,p4,id,pg1g4_mela);
+    test.computeME_Interference(kg1g4,kJHUGen,p4,id,pg1g4_VAJHU);
+    test.computeME_Interference(kg1g4_pi_2,kJHUGen,p4,id,pg1g4_pi2_VAJHU);
+    test.computeME_Interference(kg1g2_pi_2,kJHUGen,p4,id,pg1g2_pi2_VAJHU);
+    test.computeME_Interference(kg1g2,kAnalytical,p4,id,pg1g2_mela);
+    test.computeME_Interference(kg1g2,kJHUGen,p4,id,pg1g2_VAJHU);
+   	vector<complex<double> > *prod = new vector<complex<double> >;
+   	vector<complex<double> >* decay = new vector<complex<double> >;
+		decay->push_back(1.0);
+		decay->push_back(0.0);
+		decay->push_back(0.0);
+		decay->push_back(0.0);
+    test.computeME(kSpin0_gg,kJHUGen,p4,id,prod,decay, p0_self_VAJHU);
     qqZZ_VAMCFMNorm_test=test.qqZZ_MCFMNorm;
 
-    test.computeMEs(p4,id);
+    //test.computeMEs(p4,id);
+
+    vector<complex<double> > *coupling = new vector<complex<double> >;
+    vector<complex<double> > *couplingprod= new vector<complex<double> >;
+    test.computeME(MEMNames::kggZZ, MEMNames::kMCFM, p4, id, ggzz_VAMCFM);
+    complex<double> coup(1.,0.);
+    coupling->push_back(coup);
+    //cout<<(*coupling).size()<<endl;
+
+    test.computeME(MEMNames::kggZZ_SMHiggs, MEMNames::kJHUGen, p4, id, couplingprod,coupling, ggzz_c1_VAMCFM);
+    coupling->clear();
+    coup=5.;
+    coupling->push_back(coup);
+    test.computeME(MEMNames::kggZZ_SMHiggs, MEMNames::kJHUGen, p4, id, couplingprod,coupling, ggzz_c5_VAMCFM);
+    coupling->clear();
+    coup.real(0.);
+    coup.imag(1.);
+    coupling->push_back(coup);
+    test.computeME(MEMNames::kggZZ_SMHiggs, MEMNames::kJHUGen, p4, id, couplingprod,coupling, ggzz_ci_VAMCFM);
 
     test.computeKD(kSMHiggs,kJHUGen,kqqZZ,kMCFM,&MEMs::probRatio,KDsigbkg,dummy1,dummy2);
     test.computeKD(kSMHiggs,kJHUGen,k0minus,kJHUGen,&MEMs::probRatio,KD0minus,dummy1,dummy2);

@@ -219,10 +219,17 @@ int MEMs::computeME(Processes process, MEMCalcs calculator, vector<TLorentzVecto
 			else
 				return cacheMELAcalculation(process,calculator,partP,partId,me2process);
 			break;
+
+    case kMCFM:       /// compute ME with JHUGen
+      if( debug )
+        cout << "MEMs::computeME. kMCFM-> process: " << process << endl;
+      if (ProdCouplings!=(vector<complex<double>>*) NULL || DecayCouplings!=(vector<complex<double>>*) NULL){
+        if ( cacheMELAcalculation(process,calculator,partP,partId,ProdCouplings, DecayCouplings,me2process) != 0) return ERR_COMPUTE;
+      }
+      else
+        return cacheMELAcalculation(process,calculator,partP,partId,me2process);
+      break;
 			
-		case kMCFM:         /// compute ME with MCFM
-			return cacheMELAcalculation(process,calculator,partP,partId,me2process);  
-			break;
 			
 		case kMELA_HCP:     /// compute ME with MELA_HCP
 			if( debug )
@@ -612,6 +619,7 @@ int MEMs::Check_Couplings( Processes process, vector<complex<double>> *ProdCoupl
 		return 0;
 	}
 	
+	
 	return 1;
 }
 
@@ -789,7 +797,7 @@ int MEMs::cacheMELAcalculation(int process, MEMCalcs calculator, vector<TLorentz
 		
 		if( process==kSpin0_gg || process==kSpin0_prodIndep ||
 			process==kSpin1_qqbar || process==kSpin1_prodIndep ||
-			process==kSpin2_gg || process==kSpin2_qqbar || process==kSpin2_prodIndep )
+			process==kSpin2_gg || process==kSpin2_qqbar || process==kSpin2_prodIndep || process==kggZZ_SMHiggs )
 		{
 			if( process==kSpin0_gg || process==kSpin0_prodIndep )
 			{
@@ -872,6 +880,29 @@ int MEMs::cacheMELAcalculation(int process, MEMCalcs calculator, vector<TLorentz
 												me2process_float );
 				}
 			} 
+		else if (process==kggZZ_SMHiggs)
+		{
+          m_MELA->setProcess( MELAprocMap[static_cast<Processes>(process)], MELAcalcMap[calculator], MELAprodMap[static_cast<Processes>(process)] );
+			double translation[2];
+       if(DecayCouplings!= (vector<complex<double>>*) NULL  )
+        {
+					translation[0] = (*DecayCouplings)[0].real();
+					translation[1] = (*DecayCouplings)[0].imag();
+				
+          m_MELA->computeP( mzz, m1, m2,
+                        costhetastar,costheta1,costheta2,phi,phi1,
+                        flavor,
+                        translation,
+                        me2process_float );
+			}
+			else
+			{
+				          m_MELA->computeP( mzz, m1, m2,
+                        costhetastar,costheta1,costheta2,phi,phi1,
+                        flavor,
+                        me2process_float );
+			}
+		}
 			
 			else return ERR_PROCESS;	// not yet implemented
 		}
