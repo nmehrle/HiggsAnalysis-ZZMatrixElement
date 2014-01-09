@@ -156,7 +156,7 @@ MEMs::MEMs(double collisionEnergy, double sKD_mass, string PDFName, bool debug_)
 
     m_weight = 0.0;
 	
-	m_VCbuffer = new vector<complex<double>>;
+	m_VCbuffer = new vector<complex<double> >;
 }
 
 
@@ -166,7 +166,7 @@ MEMs::MEMs(double collisionEnergy, double sKD_mass, string PDFName, bool debug_)
 ///----------------------------------------------------------------------------------------------
 int MEMs::computeME(Processes process, MEMCalcs calculator, vector<TLorentzVector> partP, vector<int> partId, double& me2process)
 {
-	return computeME(process, calculator, partP, partId, (vector<complex<double>>*) NULL, (vector<complex<double>>*) NULL, me2process);
+	return computeME(process, calculator, partP, partId, (vector<complex<double> >*) NULL, (vector<complex<double> >*) NULL, me2process);
 }
 
 
@@ -174,7 +174,7 @@ int MEMs::computeME(Processes process, MEMCalcs calculator, vector<TLorentzVecto
 ///----------------------------------------------------------------------------------------------
 /// MEMs::computeME - Compute ME for the specified process. A generic case
 ///----------------------------------------------------------------------------------------------
-int MEMs::computeME(Processes process, MEMCalcs calculator, vector<TLorentzVector> partP, vector<int> partId, vector<complex<double>> *ProdCouplings, vector<complex<double>> *DecayCouplings, double& me2process)
+int MEMs::computeME(Processes process, MEMCalcs calculator, vector<TLorentzVector> partP, vector<int> partId, vector<complex<double> > *ProdCouplings, vector<complex<double> > *DecayCouplings, double& me2process)
 {
 	if( debug ) cout << "MEMs::computeME started.\n";
 	if( debug ) cout << "MEMs::computeME. Selected calculator: " << calculator << "\n";
@@ -196,7 +196,7 @@ int MEMs::computeME(Processes process, MEMCalcs calculator, vector<TLorentzVecto
 	switch ( calculator )
 	{
 		case kMEKD:			/// compute ME with MEKD
-			if( ProdCouplings!=(vector<complex<double>>*) NULL || DecayCouplings!=(vector<complex<double>>*) NULL )
+			if( ProdCouplings!=(vector<complex<double> >*) NULL || DecayCouplings!=(vector<complex<double> >*) NULL )
 				if( (m_err=MEKD_Mixed_State( m_processNameMEKD[process], ProdCouplings, DecayCouplings )) != 0 ) return ERR_COMPUTE;
 			if( (m_MEKD->computeME(m_processNameMEKD[process], partP, partId, me2process)) != 0 ) return ERR_COMPUTE;
 			break;
@@ -204,7 +204,7 @@ int MEMs::computeME(Processes process, MEMCalcs calculator, vector<TLorentzVecto
 		case kAnalytical:	/// compute ME with MELA
 			if( debug )
 				cout << "MEMs::computeME. Analytical -> process: " << process << endl;
-			if (ProdCouplings!=(vector<complex<double>>*) NULL || DecayCouplings!=(vector<complex<double>>*) NULL){
+			if (ProdCouplings!=(vector<complex<double> >*) NULL || DecayCouplings!=(vector<complex<double> >*) NULL){
 				if ( cacheMELAcalculation(process,calculator,partP,partId,ProdCouplings, DecayCouplings,me2process) != 0) return ERR_COMPUTE;
 			}
 			else	return cacheMELAcalculation(process,calculator,partP,partId,me2process); 
@@ -213,7 +213,7 @@ int MEMs::computeME(Processes process, MEMCalcs calculator, vector<TLorentzVecto
 		case kJHUGen:       /// compute ME with JHUGen
 			if( debug )
 				cout << "MEMs::computeME. JHUGen -> process: " << process << endl;
-			if (ProdCouplings!=(vector<complex<double>>*) NULL || DecayCouplings!=(vector<complex<double>>*) NULL){
+			if (ProdCouplings!=(vector<complex<double> >*) NULL || DecayCouplings!=(vector<complex<double> >*) NULL){
 				if ( cacheMELAcalculation(process,calculator,partP,partId,ProdCouplings, DecayCouplings,me2process) != 0) return ERR_COMPUTE;
 			}
 			else
@@ -223,7 +223,7 @@ int MEMs::computeME(Processes process, MEMCalcs calculator, vector<TLorentzVecto
     case kMCFM:       /// compute ME with JHUGen
       if( debug )
         cout << "MEMs::computeME. kMCFM-> process: " << process << endl;
-      if (ProdCouplings!=(vector<complex<double>>*) NULL || DecayCouplings!=(vector<complex<double>>*) NULL){
+      if (ProdCouplings!=(vector<complex<double> >*) NULL || DecayCouplings!=(vector<complex<double> >*) NULL){
         if ( cacheMELAcalculation(process,calculator,partP,partId,ProdCouplings, DecayCouplings,me2process) != 0) return ERR_COMPUTE;
       }
       else
@@ -252,12 +252,12 @@ int MEMs::computeME(Processes process, MEMCalcs calculator, vector<TLorentzVecto
 ///----------------------------------------------------------------------------------------------
 /// MEMs::computeME_Interference - Compute individual mixed MEs interference term for the specified "model". Intended for the production-independent models PLUS gg -> Spin 0
 ///----------------------------------------------------------------------------------------------
-int MEMs::computeME_Interference(Processes process, MEMCalcs calculator, vector<TLorentzVector> partP, vector<int> partId, vector<complex<double>> *DecayCouplings, double& me2process)
+int MEMs::computeME_Interference(Processes process, MEMCalcs calculator, vector<TLorentzVector> partP, vector<int> partId, vector<complex<double> > *DecayCouplings, double& me2process)
 {
 	if( debug ) cout << "MEMs::computeME_Interference started.\n";
 	
 	/// Calculate the full term
-	if( (m_err=computeME( process, calculator, partP, partId, (vector<complex<double>>*) NULL, DecayCouplings, me2process))!=0 ) return m_err;
+	if( (m_err=computeME( process, calculator, partP, partId, (vector<complex<double> >*) NULL, DecayCouplings, me2process))!=0 ) return m_err;
 	
 	/// Prepare a buffer vector (pointer)
 	(*m_VCbuffer).resize( (*DecayCouplings).size(), complex<double>( 0, 0 ) );	// should be a vector (pointer) of zeroes
@@ -268,7 +268,7 @@ int MEMs::computeME_Interference(Processes process, MEMCalcs calculator, vector<
 		if( norm((*DecayCouplings)[m_uIbuffer]) > 0 ) 
 		{
 			(*m_VCbuffer)[m_uIbuffer] = (*DecayCouplings)[m_uIbuffer];	// load a current coupling
-			if( (m_err=computeME( process, calculator, partP, partId, (vector<complex<double>>*) NULL, m_VCbuffer, m_Dbuffer))!=0 ) return m_err;	// pure term(s)
+			if( (m_err=computeME( process, calculator, partP, partId, (vector<complex<double> >*) NULL, m_VCbuffer, m_Dbuffer))!=0 ) return m_err;	// pure term(s)
 			me2process -= m_Dbuffer;	// subtracting a pure term
 			
 			(*m_VCbuffer)[m_uIbuffer] = complex<double>( 0, 0 );	// reverting back to 0 coupling
@@ -284,7 +284,7 @@ int MEMs::computeME_Interference(Processes process, MEMCalcs calculator, vector<
 int MEMs::computeME_Interference(Processes_int process, MEMCalcs calculator, vector<TLorentzVector> partP, vector<int> partId,  double& me2process)
 {
 	if( calculator == kJHUGen || calculator ==kAnalytical )
-		cacheMELAcalculation( static_cast<int>(process), calculator, partP, partId, (vector<complex<double>>*) NULL, (vector<complex<double>>*) NULL, me2process);
+		cacheMELAcalculation( static_cast<int>(process), calculator, partP, partId, (vector<complex<double> >*) NULL, (vector<complex<double> >*) NULL, me2process);
 	else 
 		return ERR_COMPUTE;
 	return NO_ERR;
@@ -297,7 +297,7 @@ int MEMs::computeME_Interference(Processes_int process, MEMCalcs calculator, vec
 ///----------------------------------------------------------------------------------------------
 int MEMs::computeKD(Processes processA, Processes processB, MEMCalcs calculator, vector<TLorentzVector> partP, vector<int> partId, double& kd, double& me2processA, double& me2processB )
 {    
-	return computeKD( processA, processB, calculator, partP, partId, (vector<complex<double>>*) NULL, (vector<complex<double>>*) NULL, (vector<complex<double>>*) NULL, (vector<complex<double>>*) NULL, kd, me2processA, me2processB );
+	return computeKD( processA, processB, calculator, partP, partId, (vector<complex<double> >*) NULL, (vector<complex<double> >*) NULL, (vector<complex<double> >*) NULL, (vector<complex<double> >*) NULL, kd, me2processA, me2processB );
 }
 
 
@@ -305,7 +305,7 @@ int MEMs::computeKD(Processes processA, Processes processB, MEMCalcs calculator,
 ///----------------------------------------------------------------------------------------------
 /// MEMs::computeKD - Compute KD and MEs for the specified processes and MEM calculator. A generic case
 ///----------------------------------------------------------------------------------------------
-int MEMs::computeKD(Processes processA, Processes processB, MEMCalcs calculator, vector<TLorentzVector> partP, vector<int> partId, vector<complex<double>> *ProdCouplingsA, vector<complex<double>> *DecayCouplingsA, vector<complex<double>> *ProdCouplingsB, vector<complex<double>> *DecayCouplingsB, double& kd, double& me2processA, double& me2processB )
+int MEMs::computeKD(Processes processA, Processes processB, MEMCalcs calculator, vector<TLorentzVector> partP, vector<int> partId, vector<complex<double> > *ProdCouplingsA, vector<complex<double> > *DecayCouplingsA, vector<complex<double> > *ProdCouplingsB, vector<complex<double> > *DecayCouplingsB, double& kd, double& me2processA, double& me2processB )
 {    
 	/// check if processes are supported
 	if (!isProcSupported[processA][calculator]) return ERR_PROCESS;
@@ -329,11 +329,11 @@ int MEMs::computeKD(Processes processA, Processes processB, MEMCalcs calculator,
 	switch ( calculator )
 	{
 		case kMEKD:			/// compute KD with MEKD
-			if( ProdCouplingsA!=(vector<complex<double>>*) NULL || DecayCouplingsA!=(vector<complex<double>>*) NULL )
+			if( ProdCouplingsA!=(vector<complex<double> >*) NULL || DecayCouplingsA!=(vector<complex<double> >*) NULL )
 				if( (m_err=MEKD_Mixed_State( m_processNameMEKD[processA], ProdCouplingsA, DecayCouplingsA )) != 0 ) return ERR_COMPUTE;
 			if( (m_MEKD->computeME(m_processNameMEKD[processA], partP, partId, me2processA)) != 0 ) return ERR_COMPUTE;
 			
-			if( ProdCouplingsB!=(vector<complex<double>>*) NULL || DecayCouplingsB!=(vector<complex<double>>*) NULL )
+			if( ProdCouplingsB!=(vector<complex<double> >*) NULL || DecayCouplingsB!=(vector<complex<double> >*) NULL )
 				if( (m_err=MEKD_Mixed_State( m_processNameMEKD[processB], ProdCouplingsB, DecayCouplingsB )) != 0 ) return ERR_COMPUTE;
 			if( (m_MEKD->computeME(m_processNameMEKD[processB], partP, partId, me2processB)) != 0 ) return ERR_COMPUTE;
 			
@@ -571,11 +571,11 @@ double MEMs::PDFm4lRatio(double me2processA, double me2processB, SuperKDsyst sys
 
 
 
-int MEMs::Check_Couplings( Processes process, vector<complex<double>> *ProdCouplings, vector<complex<double>> *DecayCouplings )
+int MEMs::Check_Couplings( Processes process, vector<complex<double> > *ProdCouplings, vector<complex<double> > *DecayCouplings )
 {
 	if( process==kSpin0_gg || process==kSpin0_prodIndep )	// checking Spin-0 case
 	{
-		if( ProdCouplings!=(vector<complex<double>>*) NULL && (*DecayCouplings).size() != 4 && (*DecayCouplings).size() != 20)
+		if( ProdCouplings!=(vector<complex<double> >*) NULL && (*DecayCouplings).size() != 4 && (*DecayCouplings).size() != 20)
 		{
 			if( debug ) cout << "MEMs::Check_Couplings. Error in provided couplings decay. Expected size: 4 or 20 (form-factor case), provided: "  << (*DecayCouplings).size() << endl;
 			return 1;
@@ -628,7 +628,7 @@ int MEMs::Check_Couplings( Processes process, vector<complex<double>> *ProdCoupl
 ///----------------------------------------------------------------------------------------------
 /// MEMs::MEKD_Mixed_State - Sets up a mixed state in the MEKD
 ///----------------------------------------------------------------------------------------------
-int MEMs::MEKD_Mixed_State( TString Model, vector<complex<double>> *ProdCouplings, vector<complex<double>> *DecayCouplings )
+int MEMs::MEKD_Mixed_State( TString Model, vector<complex<double> > *ProdCouplings, vector<complex<double> > *DecayCouplings )
 {
 	/// Setting couplings inside of MEKD
 	if( Model=="ggSpin0" || Model=="Spin0" )
@@ -688,7 +688,7 @@ int MEMs::MEKD_Mixed_State( TString Model, vector<complex<double>> *ProdCoupling
 ///----------------------------------------------------------------------------------------------
 int MEMs::cacheMELAcalculation(Processes process, MEMCalcs calculator,vector<TLorentzVector> partP, vector<int> partId, double& me2process)
 {
-	return MEMs::cacheMELAcalculation( static_cast<int>(process), calculator, partP, partId, (vector<complex<double>>*) NULL, (vector<complex<double>>*) NULL, me2process);
+	return MEMs::cacheMELAcalculation( static_cast<int>(process), calculator, partP, partId, (vector<complex<double> >*) NULL, (vector<complex<double> >*) NULL, me2process);
 }
 
 
@@ -696,7 +696,7 @@ int MEMs::cacheMELAcalculation(Processes process, MEMCalcs calculator,vector<TLo
 ///----------------------------------------------------------------------------------------------
 /// MEMCalculators::cacheMELAcalculation - method to interface with Mela::computeP and cache results. A transfer function
 ///----------------------------------------------------------------------------------------------
-int MEMs::cacheMELAcalculation(Processes process, MEMCalcs calculator, vector<TLorentzVector> partP, vector<int> partId, vector<complex<double>> *ProdCouplings, vector<complex<double>> *DecayCouplings, double& me2process)
+int MEMs::cacheMELAcalculation(Processes process, MEMCalcs calculator, vector<TLorentzVector> partP, vector<int> partId, vector<complex<double> > *ProdCouplings, vector<complex<double> > *DecayCouplings, double& me2process)
 {
 	return cacheMELAcalculation( static_cast<int>(process), calculator, partP, partId, ProdCouplings, DecayCouplings, me2process);
 }
@@ -706,7 +706,7 @@ int MEMs::cacheMELAcalculation(Processes process, MEMCalcs calculator, vector<TL
 ///----------------------------------------------------------------------------------------------
 /// MEMCalculators::cacheMELAcalculation - method to interface with Mela::computeP and cache results. A generic case
 ///----------------------------------------------------------------------------------------------
-int MEMs::cacheMELAcalculation(int process, MEMCalcs calculator, vector<TLorentzVector> partP, vector<int> partId, vector<complex<double>> *ProdCouplings, vector<complex<double>> *DecayCouplings, double& me2process){
+int MEMs::cacheMELAcalculation(int process, MEMCalcs calculator, vector<TLorentzVector> partP, vector<int> partId, vector<complex<double> > *ProdCouplings, vector<complex<double> > *DecayCouplings, double& me2process){
 
   if( debug ){
     std::cout << "MEMs::cacheMELAcalculation started." << std::endl;
@@ -884,7 +884,7 @@ int MEMs::cacheMELAcalculation(int process, MEMCalcs calculator, vector<TLorentz
 		{
           m_MELA->setProcess( MELAprocMap[static_cast<Processes>(process)], MELAcalcMap[calculator], MELAprodMap[static_cast<Processes>(process)] );
 			double translation[2];
-       if(DecayCouplings!= (vector<complex<double>>*) NULL  )
+       if(DecayCouplings!= (vector<complex<double> >*) NULL  )
         {
 					translation[0] = (*DecayCouplings)[0].real();
 					translation[1] = (*DecayCouplings)[0].imag();
