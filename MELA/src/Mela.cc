@@ -35,6 +35,8 @@ Mela::Mela(int LHCsqrts, float mh)
   edm::FileInPath mcfmInput1("ZZMatrixElement/MELA/data/input.DAT");
   edm::FileInPath mcfmInput2("ZZMatrixElement/MELA/data/process.DAT");
   edm::FileInPath mcfmInput3("ZZMatrixElement/MELA/data/Pdfdata/cteq6l1.tbl");  
+  edm::FileInPath mcfmWarning("ZZMatrixElement/MELA/data/ffwarn.dat");
+  symlink(mcfmWarning.fullPath().c_str(), "ffwarn.dat");
   symlink(mcfmInput1.fullPath().c_str(), "input.DAT");
   symlink(mcfmInput2.fullPath().c_str(), "process.DAT");
   mkdir("Pdfdata",S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
