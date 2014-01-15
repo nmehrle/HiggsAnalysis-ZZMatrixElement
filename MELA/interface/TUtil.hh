@@ -26,8 +26,9 @@ using namespace std;
 TString DbnEventLepSelName(int i);
 void My_choose(TVar::Process process, TVar::Production production, int flavor);
 void SetEwkCoupligParameters();
+void SetAlphaS(double Q, int mynloop, int mynflav, string mypartons);
 bool My_smalls(double s[][12], int npart);
-double SumMatrixElementPDF(TVar::Process procees, TVar::Production production,mcfm_event_type* mcfm_event,double flavor_msq[][11],double* flux,double EBEAM, double coupling[2]);
+double SumMatrixElementPDF(TVar::Process procees, TVar::Production production,TVar::MatrixElement myME,mcfm_event_type* mcfm_event,double flavor_msq[][11],double* flux,double EBEAM, double coupling[2]);
 double JHUGenMatEl(TVar::Process process, TVar::Production production, mcfm_event_type* mcfm_event, double MReso, double GaReso, 
 		   double Hggcoupl[3][2], double Hvvcoupl[20][2], double Zqqcoupl[2][2], double Zvvcoupl[2][2],
 		   double Gqqcoupl[2][2], double Gggcoupl[5][2], double Gvvcoupl[10][2]);

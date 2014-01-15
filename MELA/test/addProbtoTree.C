@@ -11,7 +11,7 @@ bool includePathIsSet = false;
   //flavor: 1:4e, 2:4mu, 3:2e2mu
 //void addProbtoTree(char* inputFile= "ggtoHtoZZ4l_VariousKDs_0+h",int flavor=3, int max=5000, int LHCsqrts=8){
 
-void addProbtoTree(char* inputFile= "4e/HZZ4lTree_powheg15jhuGenV3H126_withDisc_new",int flavor=1, int max=5000, int LHCsqrts=8){
+void addProbtoTree(char* inputFile= "/afs/cern.ch/work/x/xiaomeng/test/myWorkingArea/CMSSW_5_2_5/src/ZZMatrixElement/MELA/test/2e2mu/HZZ4lTree_powheg15jhuGenV3H126_withDisc_new",int flavor=3, int max=-1, int LHCsqrts=8){
 //void addProbtoTree(char* inputFile= "ggtoHtoZZ4l_VariousKDs_0+m0+h",int flavor=3, int max=5000, int LHCsqrts=8){
 
 
@@ -41,7 +41,7 @@ void addProbtoTree(char* inputFile= "4e/HZZ4lTree_powheg15jhuGenV3H126_withDisc_
   char inputFileName[500];
   char outputFileName[500];
   sprintf(inputFileName,"%s.root",inputFile);
-  sprintf(outputFileName,"%s_withMELA_new.root",inputFile);
+  sprintf(outputFileName,"%s_withMELA_new_3.root",inputFile);
 
   TFile* sigFile = new TFile(inputFileName);
   TTree* sigTree=0;
@@ -60,7 +60,7 @@ void addProbtoTree(char* inputFile= "4e/HZZ4lTree_powheg15jhuGenV3H126_withDisc_
   float m1,m2,mzz,h1,h2,hs,phi,phi1;                                    //angles
   float psig,pbkg,D;
   double oldD;                                                    //legacy probabilities
-  float	p0plus_melaNorm,p0plus_mela,p0minus_mela,p0hplus_mela,p0plus_VAJHU,p0minus_VAJHU,p0plus_VAMCFM,p0plus_JHU_VAMCFM,p0hplus_VAJHU,p1_mela,p1_self_mela, p1_self_jhu,p1plus_mela,p1_VAJHU,p1plus_VAJHU,p2_mela,p2_self_mela,p2_self_jhu,p2qqb_mela,p2_VAJHU,p2qqb_VAJHU; // new signal probablities
+  float	p0plus_melaNorm,p0plus_mela,p0minus_mela,p0hplus_mela,p0plus_VAJHU,p0minus_VAJHU,p0plus_VAMCFM,p0plus_JHU_VAMCFM,p0plus_c5_VAMCFM,p0plus_VAMCFM_p,p0hplus_VAJHU,p1_mela,p1_self_mela, p1_self_jhu,p1plus_mela,p1_VAJHU,p1plus_VAJHU,p2_mela,p2_self_mela,p2_self_jhu,p2qqb_mela,p2_VAJHU,p2qqb_VAJHU; // new signal probablities
   float bkg_mela, bkg_VAMCFM, bkg_VAMCFMNorm, ggzz_VAMCFM, bkg_decay_VAMCFM;    // background probabilities
 
 float D_mela_CP, D_mela_0m, D_VAJHU_CP, D_VAJHU_0m; 
@@ -104,8 +104,10 @@ float p0plus_m4l, bkg_m4l;
   newTree->Branch("p0plus_VAJHU_NEW",&p0plus_VAJHU,"p0plus_VAJHU_NEW/F");  // higgs, vector algebra, JHUgen
   newTree->Branch("p0minus_VAJHU_NEW",&p0minus_VAJHU,"p0minus_VAJHU_NEW/F");  // pseudoscalar, vector algebra, JHUgen
   newTree->Branch("p0plus_VAMCFM",&p0plus_VAMCFM,"p0plus_VAMCFM/F");  // higgs, vector algebra, MCFM
+  newTree->Branch("p0plus_c5_VAMCFM",&p0plus_c5_VAMCFM,"p0plus_c5_VAMCFM/F");  // higgs, vector algebra, MCFM
   newTree->Branch("p0plus_JHU_VAMCFM",&p0plus_JHU_VAMCFM,"p0plus_JHU_VAMCFM/F");  // higgs, vector algebra, MCFM
   newTree->Branch("p0hplus_VAJHU_NEW",&p0hplus_VAJHU,"p0hplus_VAJHU_NEW/F");  // 0h+(high order dimension operator) , vector algebra, JHUgen
+  newTree->Branch("p0plus_VAMCFM_p",&p0plus_VAMCFM_p,"p0plus_VAMCFM_p/F");  // higgs, vector algebra, MCFM
 
 
   newTree->Branch("D_mela_CP",&D_mela_CP,"D_mela_CP/F");  // p(0+,0-)-p(0-)-p(0+)/(p(0+)+p(0-)) MELA 
@@ -462,6 +464,13 @@ float d_g1g1prime2_mela;
   myMELA.setProcess(TVar::bkgZZ_SMHiggs, TVar::MCFM, TVar::ZZGG);
   myMELA.computeP(mzz, m1, m2, 
 	    hs,h1,h2,phi,phi1,flavor, coupling,p0plus_VAMCFM);
+coupling[0]=5.;
+ myMELA.setProcess(TVar::bkgZZ_SMHiggs, TVar::MCFM, TVar::ZZGG);
+  myMELA.computeP(mzz, m1, m2,
+      hs,h1,h2,phi,phi1,flavor, coupling,p0plus_c5_VAMCFM);
+ myMELA.setProcess(TVar::HSMHiggs, TVar::MCFM, TVar::ZZGG);
+  myMELA.computeP(mzz, m1, m2,
+      hs,h1,h2,phi,phi1,flavor, p0plus_VAMCFM_p);
 
   // 
   // JHU Gen based signal calculations 

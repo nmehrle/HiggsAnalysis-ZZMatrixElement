@@ -1,6 +1,8 @@
 #ifndef EvtProb_VAR
 #define EvtProb_VAR
 
+#include <cstring>
+#include <string>
 #include <TLorentzVector.h>
 #include "TH2F.h"
 #include "TH1F.h"
@@ -11,6 +13,7 @@
 #define sixteen_2Pi_to_8 3.88650230418250561e+07
 #define   eight_2Pi_to_5 7.83410393050320417e+04
 #define    four_2Pi_to_2 39.478417604357432
+
 class TVar{
 public:
   enum VerbosityLevel {
@@ -34,7 +37,7 @@ public:
 
   enum Process{
 
-    HSMHiggs          = 0,    //0+, replacing HZZ_4l, when production is ZZGG, replacing HJJNONVBF/HJJVBF/HJJVH, when production is JJGG/JJVBF/JJVH 
+    HSMHiggs          = 0,    //0+, replacing HZZ_4l, when production is ZZGG, replacing HJJNONVBF/HJJVBF/HJJVH, when production is JJGG/JJVBF/JJVH. Call this for MCFM |H|**2.
     H0minus           = 1,    //0-, replacing PSHZZ_4l, when production is ZZGG, replacing PSHJJNONVBF/PSHJJVBF/PSHJJVH when production is JJGG/JJVBF/JJVH
     H0hplus           = 2,    //0h+, replacing HDHZZ_4l
 
@@ -48,7 +51,7 @@ public:
 
 
     bkgZZ              = 9,    //qq->ZZ, replacing ZZ_2e2m & ZZ_4e, when production is ZZQQB, replacing GGZZ_4l when production is ggZZ, replacing SummedBackgrounds for superMela calculation 
-		bkgZZ_SMHiggs      =10,    //ggZZ+SMHiggs, ggZZ always calculated by MCFM, ME stands for SMHiggs ME, JHUGen: MCFM ggZZ + JHUGen SMHiggs, MCFM: MCFM (ggZZ+ SMHiggs) 
+	bkgZZ_SMHiggs      =10,    //ggZZ+SMHiggs, ggZZ always calculated by MCFM, ME stands for SMHiggs ME, JHUGen: MCFM ggZZ + JHUGen SMHiggs, MCFM: MCFM (ggZZ+ SMHiggs) 
 
     H0_g1prime2       = 11,   //g1=0, g1prime2=-12046.01, replacing H_g1prime2	
 
@@ -91,9 +94,8 @@ public:
   //---------------------------------
   // Function
   //---------------------------------
-  static TString ProcessName(int temp){ 
-    if(temp==TVar::HSMHiggs) 
-      return TString("HSMHiggs");
+  static TString ProcessName(int temp){
+    if     (temp==TVar::HSMHiggs          ) return TString("HSMHiggs");
     else if(temp==TVar::H0minus           ) return TString ("H0minus");           
     else if(temp==TVar::H0hplus           ) return TString ("H0hplus");          
                                                                                
@@ -107,7 +109,7 @@ public:
                                                                                
                                                                                
     else if(temp==TVar::bkgZZ             ) return TString ("bkgZZ");             
-		else if(temp==TVar::bkgZZ_SMHiggs     ) return TString ("bkgZZ_SMHiggs");     
+	else if(temp==TVar::bkgZZ_SMHiggs     ) return TString ("bkgZZ_SMHiggs");     
                                                                                
     else if(temp==TVar::H0_g1prime2       ) return TString ("H0_g1prime2");       
                                                                                
@@ -121,11 +123,11 @@ public:
     else if(temp==TVar::SelfDefine_spin1  ) return TString ("SelfDefine_spin1");  
     else if(temp==TVar::SelfDefine_spin2  ) return TString ("SelfDefine_spin2");  
 
-    else 
-      return TString("UnKnown");
+    else                                    return TString ("UnKnown");
   };
   ClassDef(TVar,0)
 };
+
 
 struct branch_particle {
   int   PdgCode   ;
@@ -167,10 +169,10 @@ struct event_type{
 struct anomcoup{
   double delg1_z, delg1_g, lambda_g, lambda_z, delk_g, delk_z_,tevscale;
 };
-
 struct EffHist{
   TH2F* els_eff_mc;
   TH2F* mus_eff_mc;
 };
+
 
 #endif

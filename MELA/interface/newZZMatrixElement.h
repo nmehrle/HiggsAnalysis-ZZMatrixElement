@@ -44,6 +44,8 @@ public:
 		     float &mevalue
 		     );
 
+  void set_mHiggs(float myPoleMass);
+
   //compute four-momenta from angles only 
   // Nota bene: angles, not cos(theta)...
   std::vector<TLorentzVector> Calculate4Momentum(double Mx,double M1,double M2,double theta,double theta1,double theta2,double Phi1,double Phi);
@@ -53,6 +55,7 @@ private:
   TVar::VerbosityLevel verb;
   TEvtProb Xcal2;
   hzz4l_event_type hzz4l_event;
+  float mHiggs;
   double EBEAM;
   TVar::Process myModel;
   TVar::MatrixElement myME;

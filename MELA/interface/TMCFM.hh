@@ -30,6 +30,10 @@ extern "C" {
    int nproc;
  } nproc_;
 
+ extern struct {
+   bool verbose;
+ } verbose_;
+
 
  #define bveg1_mcfm_ bveg1_
  extern struct{
@@ -75,12 +79,17 @@ extern "C" {
         double cutoff;
  } cutoff_;
 
+ extern struct{
+        double amz;
+ } couple_;
 
  extern struct{
    double Gf_inp,aemmz_inp,xw_inp,wmass_inp,zmass_inp;
  } ewinput_;
 
-
+ extern struct {
+   double gsq, as, ason2pi, ason4pi;
+ } qcdcouple_;
 
  extern   struct {
    double delg1_z, delg1_g, lambda_g, lambda_z, delk_g, delk_z,tevscale;
@@ -98,7 +107,7 @@ extern "C" {
            twidth,
            tauwidth,
            mtausq,mcsq,mbsq;
-  } masses_mcfm_;
+ } masses_mcfm_;
 
 //mcfm/src/Inc/zcouple.F
 
@@ -106,10 +115,10 @@ extern "C" {
     double l[nf],r[nf],q1,l1,r1,q2,l2,r2,le,ln,re,rn,sin2w;
   } zcouple_;
 
-
   extern struct{
     int nwz;
   } nwz_;
+
   extern  struct {
     double taumin;
   } taumin_;
@@ -117,6 +126,19 @@ extern "C" {
   extern  struct {
     double sqrts;
   } energy_;
+
+  extern  struct {
+    int nlooprun;
+  } nlooprun_;
+
+  extern  struct {
+    int nflav;
+  } nflav_;
+
+  extern  struct {
+    char pdlabel[7];
+  } pdlabel_;
+
 //---------------------------------
 // function
 //---------------------------------
@@ -129,10 +151,13 @@ extern "C" {
   void   mcfm_init_(char* inputfile, char* workdir);
   void   chooser_();
   void   coupling_();
+  void   coupling2_();
   
   //mcfm/src/Need/boost.F
   void boost_mcfm_(double* mass,double* p1,double* p_in,double* p_out);
 
+// Dynamic alpha_s calculator
+  double alphas_(double* q, double* amz, int* nloop);
 
   //##############
   // ME calculator
@@ -159,6 +184,12 @@ extern "C" {
   #define gg_zz_int_freenorm_ gg_zz_int_freenorm_
   void gg_zz_int_freenorm_(double* p, double hcoupl[2], double *msq); 
 
+  #define gg_hzz_tb_ gg_hzz_tb_
+  void gg_hzz_tb_(double* p, double* msq);
+  #define gg_zz_hpi_ gg_zz_hpi_ // Only H+interf, no |gg->ZZ|**2
+  void gg_zz_hpi_(double* p, double* msq);
+  #define gg_zz_all_ gg_zz_all_
+  void gg_zz_all_(double* p, double* msq);
   #define gg_zz_ gg_zz_
   void gg_zz_(double* p, double* msq);
 
@@ -202,8 +233,6 @@ extern "C" {
 
   #define qqb_w_g_ qqb_w_g_
   void qqb_w_g_(double* p, double* msq);
-
-
   
 }
 

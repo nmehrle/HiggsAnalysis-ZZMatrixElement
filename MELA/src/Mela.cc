@@ -35,12 +35,14 @@ Mela::Mela(int LHCsqrts, float mh)
   edm::FileInPath mcfmInput1("ZZMatrixElement/MELA/data/input.DAT");
   edm::FileInPath mcfmInput2("ZZMatrixElement/MELA/data/process.DAT");
   edm::FileInPath mcfmInput3("ZZMatrixElement/MELA/data/Pdfdata/cteq6l1.tbl");  
+  edm::FileInPath mcfmInput4("ZZMatrixElement/MELA/data/Pdfdata/cteq6l.tbl");  
   edm::FileInPath mcfmWarning("ZZMatrixElement/MELA/data/ffwarn.dat");
   symlink(mcfmWarning.fullPath().c_str(), "ffwarn.dat");
   symlink(mcfmInput1.fullPath().c_str(), "input.DAT");
   symlink(mcfmInput2.fullPath().c_str(), "process.DAT");
   mkdir("Pdfdata",S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
   symlink(mcfmInput3.fullPath().c_str(), "Pdfdata/cteq6l1.tbl");
+  symlink(mcfmInput4.fullPath().c_str(), "Pdfdata/cteq6l.tbl");
 
   mzz_rrv = new RooRealVar("mzz","m_{ZZ}",0.,1000.);
   z1mass_rrv = new RooRealVar("z1mass","m_{Z1}",0.,180.);
@@ -62,6 +64,7 @@ Mela::Mela(int LHCsqrts, float mh)
   std::string path = HiggsWidthFile.fullPath();
   //std::cout << path.substr(0,path.length()-12) << std::endl;
   ZZME = new  newZZMatrixElement(path.substr(0,path.length()-12 ).c_str(),1000.*LHCsqrts/2.,TVar::INFO);
+  ZZME->set_mHiggs(mh);
 
   // 
   // configure the JHUGEn and MCFM calculations 

@@ -10,13 +10,13 @@
 // K. Burkett (burkett@fnal.gov)
 //-----------------------------------------------------------------------------
 
-#include "ZZMatrixElement/MELA/interface/TEvtProb.hh"
 #include "ZZMatrixElement/MELA/interface/TVar.hh"
+#include "ZZMatrixElement/MELA/interface/TEvtProb.hh"
 
 
 ClassImp(TEvtProb)
 
-  using namespace std;
+using namespace std;
 
 //-----------------------------------------------------------------------------
 // Constructors and Destructor
@@ -24,6 +24,7 @@ ClassImp(TEvtProb)
 TEvtProb::TEvtProb(const char* path, double ebeam):EBEAM(ebeam){
   mcfm_init_((char *)"input.DAT",(char *)"./");
   SetEwkCoupligParameters();
+  energy_.sqrts = 2.*EBEAM;
   coupling_();
   myCSW_ = new HiggsCSandWidth(path);
   //std::cout << path << std::endl;
@@ -49,9 +50,8 @@ double TEvtProb::XsecCalc(TVar::Process proc, TVar::Production production, const
     SetProcess(proc);
     SetProduction(production);
    
-		int flavor = abs(hzz4l_event.PdgCode[0]) == abs(hzz4l_event.PdgCode[2]) ? 1 :3;   
-    if ( _matrixElement == TVar::MCFM || proc == TVar::bkgZZ_SMHiggs) 
-      My_choose(proc, production, flavor);
+	int flavor = abs(hzz4l_event.PdgCode[0]) == abs(hzz4l_event.PdgCode[2]) ? 1 :3;   
+    if ( _matrixElement == TVar::MCFM || proc == TVar::bkgZZ_SMHiggs) My_choose(proc, production, flavor);
     
     //constants
     double sqrts = 2.*EBEAM;
@@ -102,10 +102,10 @@ double TEvtProb::XsecCalc(TVar::Process proc, TVar::Production production, const
     //event selections in Lab Frame
     double flavor_msq[nmsq][nmsq];
     double msqjk=0;
-    if ( _matrixElement == TVar::MCFM || proc == TVar::bkgZZ_SMHiggs) msqjk = SumMatrixElementPDF(proc, production,&mcfm_event, flavor_msq, &flux, EBEAM,couplingvals);
+    if ( _matrixElement == TVar::MCFM || proc == TVar::bkgZZ_SMHiggs) msqjk = SumMatrixElementPDF(proc, production, _matrixElement, &mcfm_event, flavor_msq, &flux, EBEAM,couplingvals);
     else if ( _matrixElement == TVar::JHUGen ) {
 
-      // all the possible couplings
+	// all the possible couplings
       double Hggcoupl[3][2];
       double Hvvcoupl[20][2];
       double Zqqcoupl[2][2];
@@ -126,12 +126,13 @@ double TEvtProb::XsecCalc(TVar::Process proc, TVar::Production production, const
       Hvvcoupl[0][0]=1.0;  Hvvcoupl[0][1]=0.0;  
       Hvvcoupl[1][0]=0.0;  Hvvcoupl[1][1]=0.0;  
       Hvvcoupl[2][0]=0.0;  Hvvcoupl[2][1]=0.0;  
-      Hvvcoupl[3][0]=0.0;  Hvvcoupl[3][1]=0.0;        
-      for(int i = 4; i<20; i++){
-				for(int j=0; j<2; j++){
-					Hvvcoupl[i][j]=0.;
-				}
-			} 
+      Hvvcoupl[3][0]=0.0;  Hvvcoupl[3][1]=0.0;
+
+		for(int i = 4; i<20; i++){
+			for(int j=0; j<2; j++){
+				Hvvcoupl[i][j]=0.;
+			}
+		} 
       // 
       // set spin 2 default numbers (2m+)
       // 
@@ -167,44 +168,44 @@ double TEvtProb::XsecCalc(TVar::Process proc, TVar::Production production, const
 
       // 0-
       if ( proc == TVar::H0minus) {
-	Hvvcoupl[0][0] = 0.0;
-	Hvvcoupl[1][0] = 0.0;
-	Hvvcoupl[2][0] = 0.0;
-	  Hvvcoupl[3][0] = 1.0;
+		Hvvcoupl[0][0] = 0.0;
+		Hvvcoupl[1][0] = 0.0;
+		Hvvcoupl[2][0] = 0.0;
+		Hvvcoupl[3][0] = 1.0;
       }
 
-if ( proc == TVar::SelfDefine_spin0){
-for(int i=0; i<20; i++){
-	for(int j=0;j<2;j++){
-		Hvvcoupl [i][j] = selfDHvvcoupl[i][j];
-}
-}
-}
-if ( proc == TVar::SelfDefine_spin1){
-for(int i=0; i<2; i++){
-  for(int j=0;j<2;j++){
-    Zvvcoupl [i][j] = selfDZvvcoupl[i][j];
-}
-}
-}
-if ( proc == TVar::SelfDefine_spin2){
-for(int i=0; i<5; i++){
-  for(int j=0;j<2;j++){
-    Gggcoupl [i][j] = selfDGggcoupl[i][j];
-}
-}
-for(int i=0; i<10; i++){
-  for(int j=0;j<2;j++){
-    Gvvcoupl [i][j] = selfDGvvcoupl[i][j];
-}
-}
-}
+	if ( proc == TVar::SelfDefine_spin0){
+		for(int i=0; i<20; i++){
+			for(int j=0;j<2;j++){
+				Hvvcoupl [i][j] = selfDHvvcoupl[i][j];
+			}
+		}
+	}
+	if ( proc == TVar::SelfDefine_spin1){
+		for(int i=0; i<2; i++){
+		  for(int j=0;j<2;j++){
+			Zvvcoupl [i][j] = selfDZvvcoupl[i][j];
+			}
+		}
+	}
+	if ( proc == TVar::SelfDefine_spin2){
+		for(int i=0; i<5; i++){
+			for(int j=0;j<2;j++){
+				Gggcoupl [i][j] = selfDGggcoupl[i][j];
+			}
+		}
+		for(int i=0; i<10; i++){
+			for(int j=0;j<2;j++){
+				Gvvcoupl [i][j] = selfDGvvcoupl[i][j];
+			}
+		}
+	}
       // 0h+
       if ( proc == TVar::H0hplus) {
-	Hvvcoupl[0][0] = 0.0;
-	Hvvcoupl[1][0] = 1.0;
-	Hvvcoupl[2][0] = 0.0;
-	Hvvcoupl[3][0] = 0.0;
+		Hvvcoupl[0][0] = 0.0;
+		Hvvcoupl[1][0] = 1.0;
+		Hvvcoupl[2][0] = 0.0;
+		Hvvcoupl[3][0] = 0.0;
       }
 //      // 0-mixture complex cp                                                                                                    
 //      // g1 = 1
@@ -220,10 +221,10 @@ for(int i=0; i<10; i++){
 //        Hvvcoupl[2][1] = 0.0;
 //        Hvvcoupl[3][1] = 2.5;
 //      }
-	if( proc == TVar::H0_g1prime2){
-				Hvvcoupl[0][0] = 0.;
-				Hvvcoupl[5][0] = -12046.01;
-	}
+		if( proc == TVar::H0_g1prime2){
+			Hvvcoupl[0][0] = 0.;
+			Hvvcoupl[5][0] = -12046.01;
+		}
       // 2h-
       if ( proc == TVar::H2_g8 && production == TVar::ZZGG) {
 	// gg production coupling constants
@@ -297,8 +298,8 @@ for(int i=0; i<10; i++){
       }
       
       msqjk = JHUGenMatEl(proc, production, &mcfm_event, _hmass, _hwidth, Hggcoupl, Hvvcoupl, Zqqcoupl, Zvvcoupl, Gqqcoupl, Gggcoupl, Gvvcoupl);
-      
-    } // end of JHUGen matrix element calculations
+
+	} // end of JHUGen matrix element calculations
     
     if(msqjk<=0){ mcfm_event.pswt=0; }
     
@@ -342,19 +343,19 @@ double TEvtProb::XsecCalcXJJ(TVar::Process proc, TVar::Production production, TL
   Hvvcoupl[1][0]=0.0;  Hvvcoupl[1][1]=0.0; // g2 
   Hvvcoupl[2][0]=0.0;  Hvvcoupl[2][1]=0.0; // g3 
   Hvvcoupl[3][0]=0.0;  Hvvcoupl[3][1]=0.0; // g4   
-     for(int i = 4; i<20; i++){
-        for(int j=0; j<2; j++){
-          Hvvcoupl[i][j]=0.;
-        }
-      }
+    for(int i = 4; i<20; i++){
+       for(int j=0; j<2; j++){
+         Hvvcoupl[i][j]=0.;
+       }
+    }
 	if( proc == TVar::H0minus){
-    Hggcoupl[0][0] = 0.0;
-    Hggcoupl[1][0] = 0.0;
-    Hggcoupl[2][0] = 1.0;
-    Hvvcoupl[0][0] = 0.0;
-    Hvvcoupl[1][0] = 0.0;
-    Hvvcoupl[2][0] = 0.0;
-    Hvvcoupl[3][0] = 1.0;	
+		Hggcoupl[0][0] = 0.0;
+		Hggcoupl[1][0] = 0.0;
+		Hggcoupl[2][0] = 1.0;
+		Hvvcoupl[0][0] = 0.0;
+		Hvvcoupl[1][0] = 0.0;
+		Hvvcoupl[2][0] = 0.0;
+		Hvvcoupl[3][0] = 1.0;
 	}
 
 

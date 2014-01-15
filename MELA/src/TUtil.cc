@@ -11,19 +11,67 @@ void SetEwkCoupligParameters(){
   
   ewinput_.Gf_inp=1.16639E-05;
   ewinput_.aemmz_inp=7.81751E-03;
-  ewinput_.wmass_inp=79.956049884402844;
+  ewinput_.wmass_inp=80.385;
   ewinput_.zmass_inp=91.1876;
   ewinput_.xw_inp=0.23116864;
 
+}
+
+void SetAlphaS (double Q, int mynloop, int mynflav, string mypartons){
+	if(Q<=1 || mynloop<=0 || mypartons.compare("Default")==0){
+		if(Q<0) cout << "Invalid QCD scale for alpha_s, setting to mH/2..." << endl;
+		Q = (masses_mcfm_.hmass)*0.5;
+		mynloop = 1;
+	};
+	if(mypartons.compare("Default")!=0 && mypartons.compare("cteq6_l")!=0 && mypartons.compare("cteq6l1")!=0){
+		cout << "Only default :: cteq6l1 or cteq6_l are supported. Modify mela.cc symlinks, put the pdf table into data/Pdfdata and retry. Setting to Default..." << endl;
+		mypartons = "Default";
+	};
+
+	bool nflav_is_same = (nflav_.nflav == mynflav);
+	scale_.scale = Q;
+	scale_.musq = Q*Q;
+	nlooprun_.nlooprun = mynloop;
+
+// From pdfwrapper_linux.f:
+	if(mypartons.compare("cteq6_l")==0) couple_.amz = 0.118;
+	else if(mypartons.compare("cteq6l1")==0 || mypartons.compare("Default")==0) couple_.amz = 0.130;
+	else couple_.amz = 0.118; // Add pdf as appropriate
+
+// For proper pdfwrapper_linux.f execution (alpha_s computation does not use pdf but examines the pdf name to initialize amz.)
+	if(!nflav_is_same){
+		nflav_.nflav = mynflav;
+
+		if(mypartons.compare("Default")!=0) sprintf(pdlabel_.pdlabel,"%s",mypartons.c_str());
+		else sprintf(pdlabel_.pdlabel,"%s","cteq6l1"); // Default pdf is cteq6l1
+		coupling2_();
+	}
+	else{
+		qcdcouple_.as = alphas_(&(scale_.scale),&(couple_.amz),&(nlooprun_.nlooprun));
+	};
+
+	qcdcouple_.gsq = 4.0*TMath::Pi()*qcdcouple_.as;
+	qcdcouple_.ason2pi = qcdcouple_.as/(2.0*TMath::Pi());
+	qcdcouple_.ason4pi = qcdcouple_.as/(4.0*TMath::Pi());
+
+// TEST RUNNING SCALE PER EVENT:
+/*
+	if(verbosity >= TVar::DEBUG){
+		cout << "My pdf is: " << pdlabel_.pdlabel << endl;
+		cout << "My Q: " << Q << " | My alpha_s: " << qcdcouple_.as << " at order " << nlooprun_.nlooprun << " with a(m_Z): " << couple_.amz << '\t'
+			<< "Nflav: " << nflav_.nflav << endl;
+*/
 }
 
 
 void My_choose(TVar::Process process, TVar::Production production, int flavor){
  
 //ZZ_4l
-if(process==TVar::bkgZZ && (production == TVar::ZZGG || ( (production == TVar::ZZQQB || production == TVar::ZZINDEPENDENT) && flavor==3) )){ 
+//if(process==TVar::bkgZZ && (production == TVar::ZZGG || ( (production == TVar::ZZQQB || production == TVar::ZZINDEPENDENT) && flavor==3) )){ 
+if(process==TVar::bkgZZ && (production == TVar::ZZQQB || production == TVar::ZZINDEPENDENT) ){ 
     //81 '  f(p1)+f(p2) --> Z^0(-->mu^-(p3)+mu^+(p4)) + Z^0(-->e^-(p5)+e^+(p6))'
     //86 '  f(p1)+f(p2) --> Z^0(-->e^-(p5)+e^+(p6))+Z^0(-->mu^-(p3)+mu^+(p4)) (NO GAMMA*)'
+    //90 '  f(p1)+f(p2) --> Z^0(-->e^-(p3)+e^+(p4)) + Z^0(-->e^-(p5)+e^+(p6))' 'L'
     //    nproc_.nproc=81;  
     //    chooser_();
   
@@ -34,9 +82,15 @@ if(process==TVar::bkgZZ && (production == TVar::ZZGG || ( (production == TVar::Z
     vsymfact_.vsymfact=1.0;                                                                                                               
     interference_.interference=false;
 
+	if( flavor == 1 || flavor == 0 ){
+    //90 '  f(p1)+f(p2) --> Z^0(-->e^-(p3)+e^+(p4)) + Z^0(-->e^-(p5)+e^+(p6))' 'L'
+		vsymfact_.vsymfact=0.25;
+		interference_.interference=true;
+	}
+
     nwz_.nwz=0;
     bveg1_mcfm_.ndim=10;
-    masses_mcfm_.mb=0;
+//    masses_mcfm_.mb=0;
     breit_.n2=1;
     breit_.n3=1;
 
@@ -54,52 +108,23 @@ if(process==TVar::bkgZZ && (production == TVar::ZZGG || ( (production == TVar::Z
     zcouple_.r2=zcouple_.re;
 
 
- }  else if ( process == TVar::bkgZZ && ((production == TVar::ZZQQB  || production == TVar::ZZINDEPENDENT)&& flavor==1)) {
-
-    // 90 '  f(p1)+f(p2) --> Z^0(-->e^-(p3)+e^+(p4)) + Z^0(-->e^-(p5)+e^+(p6))' 'L'
-    // nproc_.nproc=90;
-    //  chooser_();
-
-    // these settings are  from 
-    // ProdHep/chooser.f
-    npart_.npart=4;
-    nqcdjets_.nqcdjets=0;
-
-    vsymfact_.vsymfact=0.25;                                                                                                               
-    interference_.interference=true;
-
-    nwz_.nwz=0;
-    bveg1_mcfm_.ndim=10;
-    masses_mcfm_.mb=0;
-    breit_.n2=1;
-    breit_.n3=1;
-
-    breit_.mass2=masses_mcfm_.zmass;
-    breit_.width2=masses_mcfm_.zwidth;
-    breit_.mass3=masses_mcfm_.zmass;
-    breit_.width3=masses_mcfm_.zwidth;
-
-    zcouple_.q1=-1.0;
-    zcouple_.l1=zcouple_.le;
-    zcouple_.r1=zcouple_.re;
-
-    zcouple_.q2=-1.0;
-    zcouple_.l2=zcouple_.le;
-    zcouple_.r2=zcouple_.re;
-
-    
- }  else if ( process == TVar::bkgZZ_SMHiggs) {
+} else if( ( (process==TVar::bkgZZ || process==TVar::HSMHiggs) && production == TVar::ZZGG) || process == TVar::bkgZZ_SMHiggs) {
 
     // 114 '  f(p1)+f(p2) --> H(--> Z^0(mu^-(p3)+mu^+(p4)) + Z^0(e^-(p5)+e^+(p6))' 'N'
-    // nproc_.nproc=114;
-    // chooser_();
+/*
+c--- 128 '  f(p1)+f(p2) --> H(--> Z^0(e^-(p3)+e^+(p4)) + Z^0(mu^-(p5)+mu^+(p6)) [top, bottom loops, exact]' 'L'
+c--- 129 '  f(p1)+f(p2) --> H(--> Z^0(e^-(p3)+e^+(p4)) + Z^0(mu^-(p5)+mu^+(p6)) [only H, gg->ZZ intf.]' 'L' -> NOT IMPLEMENTED
+c--- 130 '  f(p1)+f(p2) --> H(--> Z^0(e^-(p3)+e^+(p4)) + Z^0(mu^-(p5)+mu^+(p6)) [H squared and H, gg->ZZ intf.]' 'L'
+c--- 131 '  f(p1)+f(p2) --> Z^0(e^-(p3)+e^+(p4)) + Z^0(mu^-(p5)+mu^+(p6) [gg only, (H + gg->ZZ) squared]' 'L'
+c--- 132 '  f(p1)+f(p2) --> Z^0(e^-(p3)+e^+(p4)) + Z^0(mu^-(p5)+mu^+(p6) [(gg->ZZ) squared]' 'L'
+*/
+// nproc_.nproc=any of the above;
      
      npart_.npart=4;
      nqcdjets_.nqcdjets=0;
 
      bveg1_mcfm_.ndim=10;
-     //masses_mcfm_.mb=0;
-     masses_mcfm_.mb=4.75;
+//     masses_mcfm_.mb=4.75;
 
      breit_.n2=1;
      breit_.n3=1;
@@ -109,11 +134,13 @@ if(process==TVar::bkgZZ && (production == TVar::ZZGG || ( (production == TVar::Z
      breit_.mass3 =masses_mcfm_.zmass;
      breit_.width3=masses_mcfm_.zwidth;
      
-     zcouple_.l1=zcouple_.le;
-     zcouple_.r1=zcouple_.re;
-     
-     zcouple_.l2=zcouple_.le;
-     zcouple_.r2=zcouple_.re;
+    zcouple_.q1=-1.0;
+    zcouple_.l1=zcouple_.le;
+    zcouple_.r1=zcouple_.re;
+
+    zcouple_.q2=-1.0;
+    zcouple_.l2=zcouple_.le;
+    zcouple_.r2=zcouple_.re;
 
  } 
  else{
@@ -180,7 +207,7 @@ bool My_smalls(double s[][12],int npart){
 // 2. PartonEnergy Fraction minimum<x0,x1<1
 // 3. number of final state particle is defined
 //
-double SumMatrixElementPDF(TVar::Process process, TVar::Production production, mcfm_event_type* mcfm_event,double flavor_msq[nmsq][nmsq],double* flux, double EBEAM, double coupling[2]){
+double SumMatrixElementPDF(TVar::Process process, TVar::Production production, TVar::MatrixElement myME, mcfm_event_type* mcfm_event,double flavor_msq[nmsq][nmsq],double* flux, double EBEAM, double coupling[2]){
 
   int NPart=npart_.npart+2;
   double p4[4][12];
@@ -215,6 +242,7 @@ double SumMatrixElementPDF(TVar::Process process, TVar::Production production, m
       p4[3][ipar] = -mcfm_event->p[ipar].Energy();
     }
   }
+  double invariantP[5] = {0};
   //initialize decayed particles
   for(int ipar=2;ipar<NPart;ipar++){
     
@@ -222,9 +250,24 @@ double SumMatrixElementPDF(TVar::Process process, TVar::Production production, m
     p4[1][ipar] = mcfm_event->p[ipar].Py();
     p4[2][ipar] = mcfm_event->p[ipar].Pz();
     p4[3][ipar] = mcfm_event->p[ipar].Energy();
-    
+
+	invariantP[1] += p4[3][ipar];
+	invariantP[2] += p4[0][ipar];
+	invariantP[3] += p4[1][ipar];
+	invariantP[4] += p4[2][ipar];
+
   }
-  
+
+  invariantP[0] = pow(invariantP[1],2.0);
+  for(int iq=2;iq<5;iq++) invariantP[0] -= pow(invariantP[iq],2.0);
+  invariantP[0] = sqrt(abs(invariantP[0]));
+
+  double defaultScale = scale_.scale;
+  int defaultNloop = nlooprun_.nlooprun;
+  int defaultNflav = nflav_.nflav;
+  string defaultPdflabel = pdlabel_.pdlabel;
+  SetAlphaS( invariantP[0]*0.5 , 1 , 5 , "cteq6_l"); // Set AlphaS(|Q|/2, mynloop, mynflav, mypartonPDF) for MCFM ME-related calculations
+
   //calculate invariant masses between partons/final state particles
   double s[12][12];
   for(int jdx=0;jdx< NPart ;jdx++){
@@ -253,18 +296,20 @@ double SumMatrixElementPDF(TVar::Process process, TVar::Production production, m
   // the subroutine for the calculations including the interfenrence             
   // ME =  sig + inter (sign, bkg)              
   // 1161 '  f(p1)+f(p2) --> H(--> Z^0(mu^-(p3)+mu^+(p4)) + Z^0(e^-(p5)+e^+(p6)) [including gg->ZZ intf.]' 'L'  
-  if( process==TVar::bkgZZ_SMHiggs)     gg_zz_int_freenorm_(p4[0],coupling,msq[0]);
-  if( production==TVar::ZZGG && process == TVar::bkgZZ)    gg_zz_  (p4[0],&msqgg);                     
+  if( process==TVar::bkgZZ_SMHiggs && myME==TVar::JHUGen)     gg_zz_int_freenorm_(p4[0],coupling,msq[0]); // |ggZZ + ggHZZ|**2 MCFM 6.6 version
+  if( process==TVar::bkgZZ_SMHiggs && myME==TVar::MCFM)     gg_zz_all_ (p4[0],msq[0]); // |ggZZ + ggHZZ|**2
+  if( process==TVar::HSMHiggs && production == TVar::ZZGG ) gg_hzz_tb_ (p4[0],msq[0]); // |ggHZZ|**2
+  if( process==TVar::bkgZZ && production==TVar::ZZGG )    gg_zz_  (p4[0],&msqgg); // |ggZZ|**2
 
   /*
     // Below code sums over all production parton flavors according to PDF 
     // This is disabled as we are not using the intial production information
-    // the blow code is fine for the particle produced by single favor of incoming partons
+    // the below code is fine for the particle produced by single flavor of incoming partons
 
   for(int ii=0;ii<nmsq;ii++){
     for(int jj=0;jj<nmsq;jj++){
       
-      //2-D matrix is reversed in fortran
+      //2-D matrix is transposed in fortran
       // msq[ parton2 ] [ parton1 ]
       //      flavor_msq[jj][ii] = fx1[ii]*fx2[jj]*msq[jj][ii];
 
@@ -283,7 +328,7 @@ double SumMatrixElementPDF(TVar::Process process, TVar::Production production, m
   msqjk=msq[5][5];
   if( process==TVar::bkgZZ && (production == TVar::ZZQQB || production ==TVar::ZZINDEPENDENT)) msqjk=msq[3][7]+msq[7][3];
   // special for the GGZZ 
-  if( process==TVar::bkgZZ && production == TVar::ZZGG) msqjk=msqgg;      
+  if( process==TVar::bkgZZ && production == TVar::ZZGG ) msqjk=msqgg;      
   
   (*flux)=fbGeV2/(8*xx[0]*xx[1]*EBEAM*EBEAM);
 
@@ -292,6 +337,8 @@ double SumMatrixElementPDF(TVar::Process process, TVar::Production production, m
     msqjk=0;
     flux=0;
   }
+
+  SetAlphaS( defaultScale , defaultNloop , defaultNflav , defaultPdflabel); // Protection for other probabilities
   return msqjk;
   
 }
@@ -316,6 +363,7 @@ double JHUGenMatEl(TVar::Process process, TVar::Production production, mcfm_even
   // i=0,1: glu1,glu2 (outgoing convention)
   // i=2,3: correspond to MY_IDUP(1),MY_IDUP(0)
   // i=4,5: correspond to MY_IDUP(3),MY_IDUP(2)
+
   for(int ipar=0;ipar<2;ipar++){   
     if(mcfm_event->p[ipar].Energy()>0){
       p4[ipar][0] = -mcfm_event->p[ipar].Energy()/100.;
@@ -359,6 +407,7 @@ double JHUGenMatEl(TVar::Process process, TVar::Production production, mcfm_even
   //if ( process == TVar::HZZ_4l || process == TVar::PSHZZ_4l || process == TVar::HDHZZ_4l || process == TVar::HZZ_4l_MIXCP   || process == TVar::CPMixHZZ_4l || process == TVar::PSHZZ_g4star || process == TVar::HDHZZ_4l_g2star || process == TVar::HDMixHZZ_4l_pi_2|| process== TVar::HDMixHZZ_4l || process == TVar::CPMixHZZ_4l_pi_2 || process == TVar::SelfDefine || process == TVar::H_g1prime2) {
   if ( process == TVar::HSMHiggs || process == TVar::H0minus || process == TVar::H0hplus || process == TVar::SelfDefine_spin0 || process == TVar::H0_g1prime2) {
     __modhiggs_MOD_evalamp_gg_h_vv(p4, &MReso,  &GaReso, Hggcoupl, Hvvcoupl, MYIDUP, &MatElSq);
+
   }
   if ( production == TVar::ZZGG ) {
     if ( process == TVar::H2_g1g5 || process == TVar::H2_g8 || process == TVar::H2_g4 || process == TVar::H2_g5 || process == TVar::SelfDefine_spin2) {
@@ -420,7 +469,7 @@ double JHUGenMatEl(TVar::Process process, TVar::Production production, mcfm_even
   // This constant is needed to account for the different units used in 
   // JHUGen compared to the MCFM
   // 
-  double constant = 1.45/pow(10, 8);
+  double constant = 1.45e-8;
   return MatElSq*constant;
 
 }
@@ -481,13 +530,13 @@ double HJJMatEl(TVar::Process process, TVar::Production production, const TLoren
   for(int ii = 0; ii < nmsq; ii++){
     for(int jj = 0; jj < nmsq; jj++){
       if ( verbosity >= TVar::DEBUG ) {
-	std::cout<< "MatElsq: " << ii-5 << " " << jj-5 << " " << MatElsq[jj][ii] << "\n" ;
+		std::cout<< "MatElsq: " << ii-5 << " " << jj-5 << " " << MatElsq[jj][ii] << "\n" ;
       }
     }
   }
   
-  if ( production == TVar::JJGG ){ 
-    return SumMEPDF(p[0], p[1], MatElsq, verbosity, EBEAM);
+  if ( production == TVar::JJGG ){
+	return SumMEPDF(p[0], p[1], MatElsq, verbosity, EBEAM);
     //return MatElsq[5][5];
   }
   
