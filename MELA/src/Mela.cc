@@ -303,7 +303,7 @@ switch (myType){
  		    float phi,
  		    float phi1,
  		    int flavor,
- 		    float& prob){                   // output probability    
+ 		    float& prob, bool useConstant){                   // output probability    
   
    //cout << "Mela::computeP - begin" << endl;
    //cout << "calculator: " << myME_ << " model: " << myModel_ << " production: " << myProduction_ << endl;
@@ -513,7 +513,7 @@ switch (myType){
     // included inorder to cancel those in the qqZZ ME calc
 
     // 4e scale factors
-
+if (useConstant){
     if(flavor==1 && myME_ == TVar::MCFM){
 
       // for ggZZ 
@@ -593,7 +593,7 @@ switch (myType){
       }// end qqZZ
 
     }// end 2e2mu scale factors
-
+ }
     //cout << "Mela::computeP() - getting JHUGen c-constants" << endl;
 
     // 
@@ -736,7 +736,7 @@ switch (myType){
       
 	// adding scale factors for MCMF calculation
 	// -- taken from old code --
-	
+if(useConstant){	
 	if(flavor==1){
 	  if(mZZ > 900)                   
 	    prob *= vaScale_4e->Eval(900.);
@@ -763,10 +763,11 @@ switch (myType){
 	  else
 	    prob *= vaScale_2e2mu->Eval(mZZ);
 	}
-	
+}	
       }
   }
 
+if(useConstant)
   prob *= constant; 
 
 }
