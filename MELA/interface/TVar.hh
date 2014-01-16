@@ -48,24 +48,30 @@ public:
     H2_g4             = 6,    //2h+, replacing TZZ_2hplus_4l
     H2_g5             = 7,    //2b+, replacing TZZ_2bplus_4l 
     H2_g1g5           = 8,    //2m+, replacing TZZ_4l 
+		H2_g2					= 9, // 2h2+
+		H2_g3					= 10, // 2h3+
+		H2_g6					= 11, // 2h6+
+		H2_g7					= 12, // 2h7+
+		H2_g9					= 13, // 2h9-
+		H2_g10				= 14, // 2h10-
 
 
-    bkgZZ              = 9,    //qq->ZZ, replacing ZZ_2e2m & ZZ_4e, when production is ZZQQB, replacing GGZZ_4l when production is ggZZ, replacing SummedBackgrounds for superMela calculation 
-	bkgZZ_SMHiggs      =10,    //ggZZ+SMHiggs, ggZZ always calculated by MCFM, ME stands for SMHiggs ME, JHUGen: MCFM ggZZ + JHUGen SMHiggs, MCFM: MCFM (ggZZ+ SMHiggs) 
+    bkgZZ              = 15,    //qq->ZZ, replacing ZZ_2e2m & ZZ_4e, when production is ZZQQB, replacing GGZZ_4l when production is ggZZ, replacing SummedBackgrounds for superMela calculation 
+	bkgZZ_SMHiggs      =16,    //ggZZ+SMHiggs, ggZZ always calculated by MCFM, ME stands for SMHiggs ME, JHUGen: MCFM ggZZ + JHUGen SMHiggs, MCFM: MCFM (ggZZ+ SMHiggs) 
 
-    H0_g1prime2       = 11,   //g1=0, g1prime2=-12046.01, replacing H_g1prime2	
+    H0_g1prime2       = 17,   //g1=0, g1prime2=-12046.01, replacing H_g1prime2	
 
     /***For interaction terms **/
-    D_g1g4            = 12,   //D_CP
-    D_g1g4_pi_2       = 13,   //D_CP_T
-    D_g1g2            = 14,   //D_int
-    D_g1g2_pi_2       = 15,   //D_int_T
-    D_g1g1prime2      = 16,   //D_int_lambda1	
+    D_g1g4            = 18,   //D_CP
+    D_g1g4_pi_2       = 19,   //D_CP_T
+    D_g1g2            = 20,   //D_int
+    D_g1g2_pi_2       = 21,   //D_int_T
+    D_g1g1prime2      = 22,   //D_int_lambda1	
 
     /***** Self Defined******/
-    SelfDefine_spin0  = 17,
-    SelfDefine_spin1  = 18,
-    SelfDefine_spin2  = 19,
+    SelfDefine_spin0  = 23,
+    SelfDefine_spin1  = 24,
+    SelfDefine_spin2  = 25,
 
     /*** Are these ones still used? ***/
     //  QQB_TZZ_4l = 8,
@@ -106,6 +112,12 @@ public:
     else if(temp==TVar::H2_g4             ) return TString ("H2_g4");             
     else if(temp==TVar::H2_g5             ) return TString ("H2_g5");             
     else if(temp==TVar::H2_g1g5           ) return TString ("H2_g1g5");           
+    else if(temp == TVar::H2_g2 					) return TString ("H2_g2");
+    else if(temp == TVar::H2_g3 					) return TString ("H2_g3");
+    else if(temp == TVar::H2_g6 					) return TString ("H2_g6");
+    else if(temp == TVar::H2_g7 					) return TString ("H2_g7");
+    else if(temp == TVar::H2_g9 					) return TString ("H2_g9");
+    else if(temp == TVar::H2_g10    		  ) return TString ("H2_g10");
                                                                                
                                                                                
     else if(temp==TVar::bkgZZ             ) return TString ("bkgZZ");             

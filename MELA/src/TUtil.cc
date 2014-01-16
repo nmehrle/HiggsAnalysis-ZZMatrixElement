@@ -410,7 +410,7 @@ double JHUGenMatEl(TVar::Process process, TVar::Production production, mcfm_even
 
   }
   if ( production == TVar::ZZGG ) {
-    if ( process == TVar::H2_g1g5 || process == TVar::H2_g8 || process == TVar::H2_g4 || process == TVar::H2_g5 || process == TVar::SelfDefine_spin2) {
+    if ( process == TVar::H2_g1g5 || process == TVar::H2_g8 || process == TVar::H2_g4 || process == TVar::H2_g5 || process == TVar::H2_g2 || process == TVar::H2_g3 || process == TVar::H2_g6 || process == TVar::H2_g7 || process == TVar::H2_g9 || process == TVar::H2_g10 || process == TVar::SelfDefine_spin2) {
       __modgraviton_MOD_evalamp_gg_g_vv(p4, &MReso,  &GaReso, Gggcoupl, Gvvcoupl, MYIDUP, &MatElSq);
     }
   }
@@ -441,7 +441,7 @@ double JHUGenMatEl(TVar::Process process, TVar::Production production, mcfm_even
       P[ipar][3] = mcfm_event->p[ipar].Pz()/100.;
     }
     
-    if ( process == TVar::H2_g1g5 || process == TVar::SelfDefine_spin2) 
+    if ( process == TVar::H2_g1g5 || process == TVar::H2_g8 || process == TVar::H2_g4 || process == TVar::H2_g5 || process == TVar::H2_g2 || process == TVar::H2_g3 || process == TVar::H2_g6 || process == TVar::H2_g7 || process == TVar::H2_g9 || process == TVar::H2_g10 || process == TVar::SelfDefine_spin2) 
       __modgraviton_MOD_evalamp_g_vv(P, &MReso,  &GaReso, Gvvcoupl, MYIDUP, &MatElSq);
 
     if ( process == TVar::H1minus || process == TVar::H1plus || process == TVar::SelfDefine_spin1)
@@ -449,7 +449,7 @@ double JHUGenMatEl(TVar::Process process, TVar::Production production, mcfm_even
   } 
   
   if ( production == TVar::ZZQQB ) {
-    if ( process == TVar::H2_g1g5 || process == TVar::SelfDefine_spin2) {
+    if ( process == TVar::H2_g1g5 || process == TVar::H2_g8 || process == TVar::H2_g4 || process == TVar::H2_g5 || process == TVar::H2_g2 || process == TVar::H2_g3 || process == TVar::H2_g6 || process == TVar::H2_g7 || process == TVar::H2_g9 || process == TVar::H2_g10 || process == TVar::SelfDefine_spin2) {
       __modgraviton_MOD_evalamp_qqb_g_vv(p4, &MReso,  &GaReso, Gqqcoupl, Gvvcoupl, MYIDUP, &MatElSq);
     }
     if ( process == TVar::H1minus || process == TVar::H1plus || process == TVar::SelfDefine_spin1) {

@@ -136,10 +136,16 @@ public:
 					makeGG(); return 1; break;
 		}
     switch (model_){
-    case TVar::H2_g1g5 : 		makeMinGrav(); 	 	return 0; break;
-    case TVar::H2_g4: make2hPlus();  return 0; break;
-    case TVar::H2_g8: make2hMinus(); return 0; break;
-    case TVar::H2_g5: make2bPlus();  return 0; break;
+    case TVar::H2_g1g5 : 		makeMinGrav();     return 0;  		 break;
+    case TVar::H2_g4: 			make2hPlus(); 		 return 0;  		 break;
+    case TVar::H2_g8: 			make2hMinus();		 return 0;  		 break;
+    case TVar::H2_g5: 			make2bPlus(); 		 return 0;  		 break;
+		case TVar::H2_g2:				make2h2Plus();		 return 0;       break;
+		case TVar::H2_g3:				make2h3Plus();		 return 0;  		 break;
+		case TVar::H2_g6:				make2h6Plus();		 return 0;  		 break;
+		case TVar::H2_g7:				make2h7Plus();		 return 0;  		 break;
+		case TVar::H2_g9:				make2h9Minus();		 return 0;  		 break;
+		case TVar::H2_g10:			make2h10Minus();			return 0;		 break;
     case TVar::SelfDefine_spin2 : return 0; break;
     default: makeMinGrav(); return 1; break;
     }
@@ -267,6 +273,125 @@ public:
 		calculatefz2();
   };
 
+// New spin 2 models
+	void make2h2Plus()
+	{
+//		fz1Val->setVal(0.0);
+//		fz2Val->setVal(0.86);
+				
+		g1Val->setVal(0.0);
+		g2Val->setVal(1.0);
+		g3Val->setVal(0.0);
+		g4Val->setVal(0.0);
+		g5Val->setVal(0.0);
+		g6Val->setVal(0.0);
+		g7Val->setVal(0.0);
+		g8Val->setVal(0.0);
+		g9Val->setVal(0.0);
+		g10Val->setVal(0.0);
+		
+		calculatefz2();
+		
+//		cout << fz2Val->getValV() << endl;
+	};
+	
+	void make2h3Plus()
+	{
+//		fz1Val->setVal(0.0);
+//		fz2Val->setVal(0.0);
+		
+		g1Val->setVal(0.0);
+		g2Val->setVal(0.0);
+		g3Val->setVal(1.0);
+		g4Val->setVal(0.0);
+		g5Val->setVal(0.0);
+		g6Val->setVal(0.0);
+		g7Val->setVal(0.0);
+		g8Val->setVal(0.0);
+		g9Val->setVal(0.0);
+		g10Val->setVal(0.0);
+		
+		calculatefz2();
+		
+//		cout << fz2Val->getValV() << endl;
+	};
+	
+	void make2h6Plus()
+	{
+//		fz1Val->setVal(0.0);
+//		fz2Val->setVal(1.0);
+		
+		g1Val->setVal(0.0);
+		g2Val->setVal(0.0);
+		g3Val->setVal(0.0);
+		g4Val->setVal(0.0);
+		g5Val->setVal(0.0);
+		g6Val->setVal(1.0);
+		g7Val->setVal(0.0);
+		g8Val->setVal(0.0);
+		g9Val->setVal(0.0);
+		g10Val->setVal(0.0);
+		
+		calculatefz2();
+	};
+	
+	void make2h7Plus()
+	{
+//		fz1Val->setVal(0.0);
+//		fz2Val->setVal(1.0);
+		
+		g1Val->setVal(0.0);
+		g2Val->setVal(0.0);
+		g3Val->setVal(0.0);
+		g4Val->setVal(0.0);
+		g5Val->setVal(0.0);
+		g6Val->setVal(0.0);
+		g7Val->setVal(1.0);
+		g8Val->setVal(0.0);
+		g9Val->setVal(0.0);
+		g10Val->setVal(0.0);
+		
+		calculatefz2();
+	};
+	
+	void make2h9Minus()
+	{
+//		fz1Val->setVal(0.0);
+//		fz2Val->setVal(0.0);
+		
+		g1Val->setVal(0.0);
+		g2Val->setVal(0.0);
+		g3Val->setVal(0.0);
+		g4Val->setVal(0.0);
+		g5Val->setVal(0.0);
+		g6Val->setVal(0.0);
+		g7Val->setVal(0.0);
+		g8Val->setVal(0.0);
+		g9Val->setVal(1.0);
+		g10Val->setVal(0.0);
+		
+		calculatefz2();
+	};
+	
+	void make2h10Minus()
+	{
+//		fz1Val->setVal(0.0);
+//		fz2Val->setVal(0.0);
+		
+		g1Val->setVal(0.0);
+		g2Val->setVal(0.0);
+		g3Val->setVal(0.0);
+		g4Val->setVal(0.0);
+		g5Val->setVal(0.0);
+		g6Val->setVal(0.0);
+		g7Val->setVal(0.0);
+		g8Val->setVal(0.0);
+		g9Val->setVal(0.0);
+		g10Val->setVal(1.0);
+		
+		calculatefz2();
+	};
+	
 	void calculatefz2(){
     double c1 = 2*g1Val->getVal() + 2.*g2Val->getVal() ;
     double c2 = -0.5*g1Val->getVal() + g3Val->getVal() + 2.*g4Val->getVal();
@@ -282,6 +407,8 @@ public:
     Double_t fmm = fmmImag*fmmImag + fmmReal*fmmReal;
     Double_t fmp = fmpImag*fmpImag + fmpReal*fmpReal;
     double fz2= fz2Val->getVal();
+		if(g9Val->getVal()!=0 || g10Val->getVal()!=0)
+			fz2=0;
     if (fmm==0 && fmp==0)
     fz2*=1.;
     else
