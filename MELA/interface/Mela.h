@@ -45,7 +45,8 @@ public:
     float phi,
     float phi1,
     int flavor,
-    float& prob                   // output probability
+    float& prob       ,            // output probability
+		bool useConstant=1
     );
 
   void computeP(float mZZ, float mZ1, float mZ2, // input kinematics

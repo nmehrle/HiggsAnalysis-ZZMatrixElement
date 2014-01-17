@@ -226,7 +226,8 @@ double TEvtProb::XsecCalc(TVar::Process proc, TVar::Production production, const
 			Hvvcoupl[5][0] = -12046.01;
 		}
       // 2h-
-      if ( proc == TVar::H2_g8 && production == TVar::ZZGG) {
+      if ( proc == TVar::H2_g8 ) //&& production == TVar::ZZGG) {
+ {
 	// gg production coupling constants
 	Gggcoupl[0][0]=0.0;  Gggcoupl[0][1]=0.0;
 	Gggcoupl[1][0]=0.0;  Gggcoupl[1][1]=0.0;
@@ -248,7 +249,8 @@ double TEvtProb::XsecCalc(TVar::Process proc, TVar::Production production, const
       }
       
       // 2h+
-      if ( proc == TVar::H2_g4 && production == TVar::ZZGG) {
+      if ( proc == TVar::H2_g4 )//&& production == TVar::ZZGG) {
+{
 	// gg production coupling constants
 	Gggcoupl[0][0]=0.0;  Gggcoupl[0][1]=0.0;
 	Gggcoupl[1][0]=0.0;  Gggcoupl[1][1]=0.0;
@@ -270,7 +272,8 @@ double TEvtProb::XsecCalc(TVar::Process proc, TVar::Production production, const
       }
       
       // 2b+
-      if ( proc == TVar::H2_g5 && production == TVar::ZZGG ) {
+      if ( proc == TVar::H2_g5 ) //&& production == TVar::ZZGG ) {
+{
 	// gg production coupling constants
 	Gggcoupl[0][0]=1.0;  Gggcoupl[0][1]=0.0;  // 2b+
 	Gggcoupl[1][0]=0.0;  Gggcoupl[1][1]=0.0;
@@ -291,6 +294,142 @@ double TEvtProb::XsecCalc(TVar::Process proc, TVar::Production production, const
 	Gvvcoupl[9][0]=0.0;  Gvvcoupl[9][1]=0.0;
       }
       
+		if ( proc == TVar::H2_g2 ) // && production == TVar::ZZGG )
+		{			
+			// gg production coupling constants
+			Gggcoupl[0][0]=0.0;  Gggcoupl[0][1]=0.0;
+			Gggcoupl[1][0]=1.0;  Gggcoupl[1][1]=0.0;
+			Gggcoupl[2][0]=0.0;  Gggcoupl[2][1]=0.0;
+			Gggcoupl[3][0]=0.0;  Gggcoupl[3][1]=0.0;
+			Gggcoupl[4][0]=0.0;  Gggcoupl[4][1]=0.0;
+			
+			// Graviton->ZZ coupling constants
+			Gvvcoupl[0][0]=0.0;  Gvvcoupl[0][1]=0.0;
+			Gvvcoupl[1][0]=1.0;  Gvvcoupl[1][1]=0.0;
+			Gvvcoupl[2][0]=0.0;  Gvvcoupl[2][1]=0.0;
+			Gvvcoupl[3][0]=0.0;  Gvvcoupl[3][1]=0.0;
+			Gvvcoupl[4][0]=0.0;  Gvvcoupl[4][1]=0.0;
+			Gvvcoupl[5][0]=0.0;  Gvvcoupl[5][1]=0.0;
+			Gvvcoupl[6][0]=0.0;  Gvvcoupl[6][1]=0.0;
+			Gvvcoupl[7][0]=0.0;  Gvvcoupl[7][1]=0.0;
+			Gvvcoupl[8][0]=0.0;  Gvvcoupl[8][1]=0.0;
+			Gvvcoupl[9][0]=0.0;  Gvvcoupl[9][1]=0.0;
+		}
+		
+		// 2h3plus
+		if ( proc == TVar::H2_g3 ) // && production == TVar::ZZGG )
+		{
+			// gg production coupling constants
+			Gggcoupl[0][0]=0.0;  Gggcoupl[0][1]=0.0;
+			Gggcoupl[1][0]=0.0;  Gggcoupl[1][1]=0.0;
+			Gggcoupl[2][0]=1.0;  Gggcoupl[2][1]=0.0;
+			Gggcoupl[3][0]=0.0;  Gggcoupl[3][1]=0.0;
+			Gggcoupl[4][0]=0.0;  Gggcoupl[4][1]=0.0;
+			
+			// Graviton->ZZ coupling constants
+			Gvvcoupl[0][0]=0.0;  Gvvcoupl[0][1]=0.0;
+			Gvvcoupl[1][0]=0.0;  Gvvcoupl[1][1]=0.0;
+			Gvvcoupl[2][0]=1.0;  Gvvcoupl[2][1]=0.0;
+			Gvvcoupl[3][0]=0.0;  Gvvcoupl[3][1]=0.0;
+			Gvvcoupl[4][0]=0.0;  Gvvcoupl[4][1]=0.0;
+			Gvvcoupl[5][0]=0.0;  Gvvcoupl[5][1]=0.0;
+			Gvvcoupl[6][0]=0.0;  Gvvcoupl[6][1]=0.0;
+			Gvvcoupl[7][0]=0.0;  Gvvcoupl[7][1]=0.0;
+			Gvvcoupl[8][0]=0.0;  Gvvcoupl[8][1]=0.0;
+			Gvvcoupl[9][0]=0.0;  Gvvcoupl[9][1]=0.0;
+		}
+		
+		// 2h6+
+		if ( proc == TVar::H2_g6 ) // && production == TVar::ZZGG )
+		{
+			// gg production coupling constants
+			Gggcoupl[0][0]=1.0;  Gggcoupl[0][1]=0.0;
+			Gggcoupl[1][0]=0.0;  Gggcoupl[1][1]=0.0;
+			Gggcoupl[2][0]=0.0;  Gggcoupl[2][1]=0.0;
+			Gggcoupl[3][0]=0.0;  Gggcoupl[3][1]=0.0;
+			Gggcoupl[4][0]=0.0;  Gggcoupl[4][1]=0.0;
+			
+			// Graviton->ZZ coupling constants
+			Gvvcoupl[0][0]=0.0;  Gvvcoupl[0][1]=0.0;
+			Gvvcoupl[1][0]=0.0;  Gvvcoupl[1][1]=0.0;
+			Gvvcoupl[2][0]=0.0;  Gvvcoupl[2][1]=0.0;
+			Gvvcoupl[3][0]=0.0;  Gvvcoupl[3][1]=0.0;
+			Gvvcoupl[4][0]=0.0;  Gvvcoupl[4][1]=0.0;
+			Gvvcoupl[5][0]=1.0;  Gvvcoupl[5][1]=0.0;
+			Gvvcoupl[6][0]=0.0;  Gvvcoupl[6][1]=0.0;
+			Gvvcoupl[7][0]=0.0;  Gvvcoupl[7][1]=0.0;
+			Gvvcoupl[8][0]=0.0;  Gvvcoupl[8][1]=0.0;
+			Gvvcoupl[9][0]=0.0;  Gvvcoupl[9][1]=0.0;
+		}
+		
+		// 2h7plus
+		if ( proc == TVar::H2_g7 ) // && production == TVar::ZZGG )
+		{
+			// gg production coupling constants
+			Gggcoupl[0][0]=1.0;  Gggcoupl[0][1]=0.0;
+			Gggcoupl[1][0]=0.0;  Gggcoupl[1][1]=0.0;
+			Gggcoupl[2][0]=0.0;  Gggcoupl[2][1]=0.0;
+			Gggcoupl[3][0]=0.0;  Gggcoupl[3][1]=0.0;
+			Gggcoupl[4][0]=0.0;  Gggcoupl[4][1]=0.0;
+			
+			// Graviton->ZZ coupling constants
+			Gvvcoupl[0][0]=0.0;  Gvvcoupl[0][1]=0.0;
+			Gvvcoupl[1][0]=0.0;  Gvvcoupl[1][1]=0.0;
+			Gvvcoupl[2][0]=0.0;  Gvvcoupl[2][1]=0.0;
+			Gvvcoupl[3][0]=0.0;  Gvvcoupl[3][1]=0.0;
+			Gvvcoupl[4][0]=0.0;  Gvvcoupl[4][1]=0.0;
+			Gvvcoupl[5][0]=0.0;  Gvvcoupl[5][1]=0.0;
+			Gvvcoupl[6][0]=1.0;  Gvvcoupl[6][1]=0.0;
+			Gvvcoupl[7][0]=0.0;  Gvvcoupl[7][1]=0.0;
+			Gvvcoupl[8][0]=0.0;  Gvvcoupl[8][1]=0.0;
+			Gvvcoupl[9][0]=0.0;  Gvvcoupl[9][1]=0.0;
+		}
+		
+		// 2h9minus
+		if ( proc == TVar::H2_g9 ) // && production == TVar::ZZGG )
+		{
+			// gg production coupling constants
+			Gggcoupl[0][0]=0.0;  Gggcoupl[0][1]=0.0;
+			Gggcoupl[1][0]=0.0;  Gggcoupl[1][1]=0.0;
+			Gggcoupl[2][0]=0.0;  Gggcoupl[2][1]=0.0;
+			Gggcoupl[3][0]=0.0;  Gggcoupl[3][1]=0.0;
+			Gggcoupl[4][0]=1.0;  Gggcoupl[4][1]=0.0;
+			
+			// Graviton->ZZ coupling constants
+			Gvvcoupl[0][0]=0.0;  Gvvcoupl[0][1]=0.0;
+			Gvvcoupl[1][0]=0.0;  Gvvcoupl[1][1]=0.0;
+			Gvvcoupl[2][0]=0.0;  Gvvcoupl[2][1]=0.0;
+			Gvvcoupl[3][0]=0.0;  Gvvcoupl[3][1]=0.0;
+			Gvvcoupl[4][0]=0.0;  Gvvcoupl[4][1]=0.0;
+			Gvvcoupl[5][0]=0.0;  Gvvcoupl[5][1]=0.0;
+			Gvvcoupl[6][0]=0.0;  Gvvcoupl[6][1]=0.0;
+			Gvvcoupl[7][0]=0.0;  Gvvcoupl[7][1]=0.0;
+			Gvvcoupl[8][0]=1.0;  Gvvcoupl[8][1]=0.0;
+			Gvvcoupl[9][0]=0.0;  Gvvcoupl[9][1]=0.0;
+		}
+		
+		// 2h10minus
+		if ( proc == TVar::H2_g10 ) // && production == TVar::ZZGG )
+		{
+			// gg production coupling constants
+			Gggcoupl[0][0]=0.0;  Gggcoupl[0][1]=0.0;
+			Gggcoupl[1][0]=0.0;  Gggcoupl[1][1]=0.0;
+			Gggcoupl[2][0]=0.0;  Gggcoupl[2][1]=0.0;
+			Gggcoupl[3][0]=0.0;  Gggcoupl[3][1]=0.0;
+			Gggcoupl[4][0]=1.0;  Gggcoupl[4][1]=0.0;
+			
+			// Graviton->ZZ coupling constants
+			Gvvcoupl[0][0]=0.0;  Gvvcoupl[0][1]=0.0;
+			Gvvcoupl[1][0]=0.0;  Gvvcoupl[1][1]=0.0;
+			Gvvcoupl[2][0]=0.0;  Gvvcoupl[2][1]=0.0;
+			Gvvcoupl[3][0]=0.0;  Gvvcoupl[3][1]=0.0;
+			Gvvcoupl[4][0]=0.0;  Gvvcoupl[4][1]=0.0;
+			Gvvcoupl[5][0]=0.0;  Gvvcoupl[5][1]=0.0;
+			Gvvcoupl[6][0]=0.0;  Gvvcoupl[6][1]=0.0;
+			Gvvcoupl[7][0]=0.0;  Gvvcoupl[7][1]=0.0;
+			Gvvcoupl[8][0]=0.0;  Gvvcoupl[8][1]=0.0;
+			Gvvcoupl[9][0]=1.0;  Gvvcoupl[9][1]=0.0;
+		}
       if ( proc == TVar::H1plus) {
 	// z->vv coupling constants
 	Zvvcoupl[0][0]=0.0;  Zvvcoupl[0][1]=0.0;

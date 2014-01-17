@@ -71,6 +71,7 @@ float p0minus_plus_VAJHU;
   float p1_decay_VAJHU, p1plus_decay_VAJHU, p2_decay_VAJHU; 
   // probabilities for exotic spin-2 models
   float p2hminus_VAJHU, p2hplus_VAJHU, p2bplus_VAJHU;
+  float p2h2plus_VAJHU, p2h3plus_VAJHU, p2h6plus_VAJHU,p2h7plus_VAJHU,p2h9minus_VAJHU,p2h10minus_VAJHU; 
   float p2hminus_mela, p2hplus_mela, p2bplus_mela;
   float p1_decay_mela, p1plus_decay_mela, p2_decay_mela;
 
@@ -168,6 +169,12 @@ float pq2sm;
   newTree->Branch("p2_decay_mela_NEW",&p2_decay_mela,"p2_decay_mela_NEW/F");  // 2m+, analytical, production indpendent JHUgen
   newTree->Branch("p2hminus_VAJHU_NEW",&p2hminus_VAJHU,"p2hminus_VAJHU_NEW/F");  // 2h-, vector algebra, JHUgen,
   newTree->Branch("p2hplus_VAJHU_NEW",&p2hplus_VAJHU,"p2hplus_VAJHU_NEW/F");     // 2h+, vector algebra, JHUgen,
+  newTree->Branch("p2h2plus_VAJHU_NEW",&p2h2plus_VAJHU,"p2h2plus_VAJHU_NEW/F");     // 2h+, vector algebra, JHUgen,
+  newTree->Branch("p2h3plus_VAJHU_NEW",&p2h3plus_VAJHU,"p2h3plus_VAJHU_NEW/F");     // 2h+, vector algebra, JHUgen,
+  newTree->Branch("p2h6plus_VAJHU_NEW",&p2h6plus_VAJHU,"p2h6plus_VAJHU_NEW/F");     // 2h+, vector algebra, JHUgen,
+  newTree->Branch("p2h7plus_VAJHU_NEW",&p2h7plus_VAJHU,"p2h7plus_VAJHU_NEW/F");     // 2h+, vector algebra, JHUgen,
+  newTree->Branch("p2h9minus_VAJHU_NEW",&p2h9minus_VAJHU,"p2h9minus_VAJHU_NEW/F");     // 2h+, vector algebra, JHUgen,
+  newTree->Branch("p2h10minus_VAJHU_NEW",&p2h10minus_VAJHU,"p2h10minus_VAJHU_NEW/F");     // 2h+, vector algebra, JHUgen,
   newTree->Branch("p2hminus_mela_NEW",&p2hminus_mela,"p2hminus_mela_NEW/F");  // 2h-, vector algebra, JHUgen,
   newTree->Branch("p2hplus_mela_NEW",&p2hplus_mela,"p2hplus_mela_NEW/F");     // 2h+, vector algebra, analytical,
   newTree->Branch("p2bplus_VAJHU_NEW",&p2bplus_VAJHU,"p2bplus_VAJHU_NEW/F");     // 2b+, vector algebra, JHUgen,
@@ -533,6 +540,29 @@ coupling[0]=5.;
     myMELA.computeP(mzz, m1, m2, 
 		    hs,h1,h2,phi,phi1,flavor, p2bplus_VAJHU);
 
+    myMELA.setProcess(TVar::H2_g2, TVar::JHUGen, TVar::ZZGG);
+    myMELA.computeP(mzz, m1, m2, 
+		    hs,h1,h2,phi,phi1,flavor, p2h2plus_VAJHU);
+
+    myMELA.setProcess(TVar::H2_g3, TVar::JHUGen, TVar::ZZGG);
+    myMELA.computeP(mzz, m1, m2, 
+		    hs,h1,h2,phi,phi1,flavor, p2h3plus_VAJHU);
+
+    myMELA.setProcess(TVar::H2_g6, TVar::JHUGen, TVar::ZZGG);
+    myMELA.computeP(mzz, m1, m2, 
+		    hs,h1,h2,phi,phi1,flavor, p2h6plus_VAJHU);
+
+    myMELA.setProcess(TVar::H2_g7, TVar::JHUGen, TVar::ZZGG);
+    myMELA.computeP(mzz, m1, m2, 
+		    hs,h1,h2,phi,phi1,flavor, p2h7plus_VAJHU);
+
+    myMELA.setProcess(TVar::H2_g9, TVar::JHUGen, TVar::ZZGG);
+    myMELA.computeP(mzz, m1, m2, 
+		    hs,h1,h2,phi,phi1,flavor, p2h9minus_VAJHU);
+
+    myMELA.setProcess(TVar::H2_g10, TVar::JHUGen, TVar::ZZGG);
+    myMELA.computeP(mzz, m1, m2, 
+		    hs,h1,h2,phi,phi1,flavor, p2h10minus_VAJHU);
 //		myMELA->setProcess(HJJNONVBF,TVar::JHUGen,MELAprodMap[process]);
 //    myMELA->computeProdP(partP[4],2,partP[5],2,ZZ,25,0.,0,me2process_float);
 	    myMELA.setProcess(TVar::HSMHiggs, TVar::JHUGen, TVar::ZZGG);
