@@ -158,7 +158,7 @@ void newZZMatrixElement::computeXS(float mZZ, float mZ1, float mZ2,
   }
   
   // ==== Begin the differential cross-section calculation
-  if(myME==TVar::MCFM || myProduction==TVar::bkgZZ_SMHiggs) Xcal2.SetHiggsMass(mHiggs);
+  if(myME==TVar::MCFM || myModel==TVar::bkgZZ_SMHiggs) Xcal2.SetHiggsMass(mHiggs);
   else Xcal2.SetHiggsMass(zzmass);
   Xcal2.SetMatrixElement(myME);
   Xcal2.SetProduction(myProduction);

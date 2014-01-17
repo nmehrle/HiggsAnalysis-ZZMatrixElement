@@ -383,9 +383,9 @@ public:
   double getValIntegrOutAngles(RooRealVar* m1,RooRealVar* m2,RooRealVar* h1,RooRealVar* h2,RooRealVar* Phi,RooRealVar* mZZ){
     RooAbsPdf* PDFIntegratedOut =PDF->createProjection(RooArgSet(*h1,*h2,*Phi));
     double norm = PDFIntegratedOut->getNorm(RooArgSet(*m1, *m2, *mZZ));
-    cout<<"norm "<<norm<<endl;
+    std::cout<<"norm "<<norm<<std::endl;
     double val = PDFIntegratedOut->getVal()/norm;
-    cout<<"val "<<val<<endl;
+    std::cout<<"val "<<val<<std::endl;
    return val;
   }
 

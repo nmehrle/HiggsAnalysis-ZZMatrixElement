@@ -125,6 +125,8 @@ public:
 
     else                                    return TString ("UnKnown");
   };
+
+  inline virtual ~TVar(){};
   ClassDef(TVar,0)
 };
 
