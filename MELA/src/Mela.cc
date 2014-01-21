@@ -371,7 +371,7 @@ switch (myType){
 
 				if ( myModel_ == TVar::H2_g2 ) constant = 593623;
 				if ( myModel_ == TVar::H2_g3 ) constant = 5.78628e+06;
-				if ( myModel_ == TVar::H2_g6 ) constant = 3.01165e+06;
+				if ( myModel_ == TVar::H2_g6 ) constant = 3.01165e+06/4.;
 				if ( myModel_ == TVar::H2_g7 ) constant = 1.24471e+07;
 				if ( myModel_ == TVar::H2_g9 ) constant = 207.888;
 				if ( myModel_ == TVar::H2_g10 ) constant = 1.02881e+07;
@@ -388,7 +388,7 @@ switch (myType){
 
 				if ( myModel_ == TVar::H2_g2 ) constant = 593623;
 				if ( myModel_ == TVar::H2_g3 ) constant = 6.92743e+06;
-				if ( myModel_ == TVar::H2_g6 ) constant = 4.38631e+06;
+				if ( myModel_ == TVar::H2_g6 ) constant = 4.38631e+06/4.;
 				if ( myModel_ == TVar::H2_g7 ) constant = 2.25445e+07;
 				if ( myModel_ == TVar::H2_g9 ) constant = 219.423;
 				if ( myModel_ == TVar::H2_g10 ) constant = 1.83016e+07;
@@ -409,7 +409,7 @@ switch (myType){
 				if ( myModel_ == TVar::H2_g4 ) constant = 5.25355e+07;
 				if ( myModel_ == TVar::H2_g2 ) constant = 507119;
 				if ( myModel_ == TVar::H2_g3 ) constant = 5.66603e+06;
-				if ( myModel_ == TVar::H2_g6 ) constant = 3.39563e+06;
+				if ( myModel_ == TVar::H2_g6 ) constant = 3.39563e+06/4.;
 				if ( myModel_ == TVar::H2_g7 ) constant = 1.39711e+07;
 				if ( myModel_ == TVar::H2_g8 ) constant = 6.97202e+07;
 				if ( myModel_ == TVar::H2_g9 ) constant = 201.845;
@@ -426,7 +426,7 @@ switch (myType){
 				if ( myModel_ == TVar::H2_g4 ) constant = 7.62098e+07;
 				if ( myModel_ == TVar::H2_g2 ) constant = 504085;
 				if ( myModel_ == TVar::H2_g3 ) constant = 6.81066e+06;
-				if ( myModel_ == TVar::H2_g6 ) constant = 4.2823e+06;
+				if ( myModel_ == TVar::H2_g6 ) constant = 4.2823e+06/4.;
 				if ( myModel_ == TVar::H2_g7 ) constant = 2.38549e+07;
 				if ( myModel_ == TVar::H2_g8 ) constant = 1.37619e+08;
 				if ( myModel_ == TVar::H2_g9 ) constant = 207.992;
@@ -447,7 +447,7 @@ switch (myType){
 				if ( myModel_ == TVar::H2_g4 ) constant = 4.36662e+06;
 				if ( myModel_ == TVar::H2_g2 ) constant = 4409.43;
 				if ( myModel_ == TVar::H2_g3 ) constant = 573779;
-				if ( myModel_ == TVar::H2_g6 ) constant = 243409;
+				if ( myModel_ == TVar::H2_g6 ) constant = 243409/4.;
 				if ( myModel_ == TVar::H2_g7 ) constant = 1.1978e+06;
 				if ( myModel_ == TVar::H2_g8 ) constant = 6.07991e+06;
 				if ( myModel_ == TVar::H2_g9 ) constant = 16.5271;
@@ -464,7 +464,7 @@ switch (myType){
 			if ( myModel_ == TVar::H2_g4 ) constant = 5.6237e+06;
 			if ( myModel_ == TVar::H2_g2 ) constant = 4440.4;
 			if ( myModel_ == TVar::H2_g3 ) constant = 652131;
-			if ( myModel_ == TVar::H2_g6 ) constant = 310364;
+			if ( myModel_ == TVar::H2_g6 ) constant = 310364/4.;
 			if ( myModel_ == TVar::H2_g7 ) constant = 1.59758e+06;
 			if ( myModel_ == TVar::H2_g8 ) constant = 8.71451e+06;
 			if ( myModel_ == TVar::H2_g9 ) constant = 16.6932;
@@ -616,7 +616,7 @@ if (useConstant){
 
 				if ( myModel_ == TVar::H2_g2 ) constant = 4.7651e+08;
 				if ( myModel_ == TVar::H2_g3 ) constant = 1.62347e+11;
-				if ( myModel_ == TVar::H2_g6 ) constant = 188339;
+				if ( myModel_ == TVar::H2_g6 ) constant = 188339/4.;
 				if ( myModel_ == TVar::H2_g7 ) constant = 778403;
 				if ( myModel_ == TVar::H2_g9 ) constant = 1.13171e+09;
 				if ( myModel_ == TVar::H2_g10 ) constant = 5.58394e+13;
@@ -630,7 +630,7 @@ if (useConstant){
 
 				if ( myModel_ == TVar::H2_g2 ) constant = 5.98538e+08;
 				if ( myModel_ == TVar::H2_g3 ) constant = 1.96711e+11;
-				if ( myModel_ == TVar::H2_g6 ) constant = 222793;
+				if ( myModel_ == TVar::H2_g6 ) constant = 222793/4.;
 				if ( myModel_ == TVar::H2_g7 ) constant = 654090;
 				if ( myModel_ == TVar::H2_g9 ) constant = 1.23089e+09;
 				if ( myModel_ == TVar::H2_g10 ) constant = 5.84095e+13;
@@ -648,7 +648,7 @@ if (useConstant){
 				if ( myModel_ == TVar::H2_g4 ) constant = 8.74869e+07;
 				if ( myModel_ == TVar::H2_g2 ) constant = 792938;
 				if ( myModel_ == TVar::H2_g3 ) constant = 2.17563e+08;
-				if ( myModel_ == TVar::H2_g6 ) constant = 5.62089e+06;
+				if ( myModel_ == TVar::H2_g6 ) constant = 5.62089e+06/4.;
 				if ( myModel_ == TVar::H2_g7 ) constant = 2.32659e+07;
 				if ( myModel_ == TVar::H2_g8 ) constant = 1.16337e+08;
 				if ( myModel_ == TVar::H2_g9 ) constant = 4.84036e+06;
@@ -662,7 +662,7 @@ if (useConstant){
 				if ( myModel_ == TVar::H2_g4 ) constant = 8.9076e+07;
 				if ( myModel_ == TVar::H2_g2 ) constant = 981169;
 				if ( myModel_ == TVar::H2_g3 ) constant = 2.47272e+08;
-				if ( myModel_ == TVar::H2_g6 ) constant = 6.46556e+06;
+				if ( myModel_ == TVar::H2_g6 ) constant = 6.46556e+06/4.;
 				if ( myModel_ == TVar::H2_g7 ) constant = 1.94333e+07;
 				if ( myModel_ == TVar::H2_g8 ) constant = 1.30124e+08;
 				if ( myModel_ == TVar::H2_g9 ) constant = 5.11404e+06;
@@ -680,7 +680,7 @@ if (useConstant){
 				if ( myModel_ == TVar::H2_g4 ) constant = 1.01932e+16;
 				if ( myModel_ == TVar::H2_g2 ) constant = 9.3642e+13;
 				if ( myModel_ == TVar::H2_g3 ) constant = 2.51592e+16;
-				if ( myModel_ == TVar::H2_g6 ) constant = 5.69341e+14;
+				if ( myModel_ == TVar::H2_g6 ) constant = 5.69341e+14/4.;
 				if ( myModel_ == TVar::H2_g7 ) constant = 2.78772e+15;
 				if ( myModel_ == TVar::H2_g8 ) constant = 1.40936e+16;
 				if ( myModel_ == TVar::H2_g9 ) constant = 5.57788e+14;
@@ -694,7 +694,7 @@ if (useConstant){
 				if ( myModel_ == TVar::H2_g4 ) constant = 1.01932e+16;
 				if ( myModel_ == TVar::H2_g2 ) constant = 1.16336e+14;
 				if ( myModel_ == TVar::H2_g3 ) constant = 2.76942e+16;
-				if ( myModel_ == TVar::H2_g6 ) constant = 6.81624e+14;
+				if ( myModel_ == TVar::H2_g6 ) constant = 6.81624e+14/4.;
 				if ( myModel_ == TVar::H2_g7 ) constant = 2.22827e+15;
 				if ( myModel_ == TVar::H2_g8 ) constant = 1.39674e+16;
 				if ( myModel_ == TVar::H2_g9 ) constant = 5.69056e+14;
