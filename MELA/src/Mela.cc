@@ -113,7 +113,13 @@ Mela::Mela(int LHCsqrts, float mh)
   // std::cout << "starting superMELA initialization" << std::endl;
   super->init();
   //std::cout << "after supermela" << std::endl;
-  
+ 	edm::FileInPath CTotBkgFile("ZZMatrixElement/MELA/data/ZZ4l-C_TotalBkgM4lGraph.root");
+	TFile* finput_ctotbkg = TFile::Open(CTotBkgFile.fullPath().c_str(),"read");
+	for (int i=0;i<3;i++){
+		tgtotalbkg[i] = new TGraph();
+	} 
+	setCTotalBkgGraphs(finput_ctotbkg, tgtotalbkg);
+	finput_ctotbkg->Close(); 
 
   
 }
@@ -521,16 +527,16 @@ if (useConstant){
     if(flavor==1 && myME_ == TVar::MCFM){
 
       // for ggZZ 
-      if(myProduction_ == TVar::ZZGG){
+ //     if(myProduction_ == TVar::ZZGG){
 
-	if(mZZ > 900)
-	  prob *=vaScale_4e->Eval(900.)/DggZZ_scalefactor->Eval(900.);
-	else if (mZZ <  110 )
-	  prob *=vaScale_4e->Eval(110.)/DggZZ_scalefactor->Eval(110.);
-	else
-	  prob *=vaScale_4e->Eval(mZZ)/DggZZ_scalefactor->Eval(mZZ);
-	
-      }// end GG
+ // if(mZZ > 900)
+ //   prob *=vaScale_4e->Eval(900.)/DggZZ_scalefactor->Eval(900.);
+ // else if (mZZ <  110 )
+ //   prob *=vaScale_4e->Eval(110.)/DggZZ_scalefactor->Eval(110.);
+ // else
+ //   prob *=vaScale_4e->Eval(mZZ)/DggZZ_scalefactor->Eval(mZZ);
+ // 
+ //     }// end GG
 
       // for qqZZ
       if(myProduction_ == TVar::ZZQQB){
@@ -550,14 +556,14 @@ if (useConstant){
     if(flavor==2 && myME_ == TVar::MCFM){
       
       // for ggZZ 
-      if(myProduction_ == TVar::ZZGG){
-	if(mZZ > 900)                   
-	  prob *=vaScale_4mu->Eval(900.)/DggZZ_scalefactor->Eval(900.);
-	else if (mZZ <  110 )
-	  prob *=vaScale_4mu->Eval(110.)/DggZZ_scalefactor->Eval(110.);
-	else
-	  prob *=vaScale_4mu->Eval(mZZ)/DggZZ_scalefactor->Eval(mZZ);
-      }// end GG
+//      if(myProduction_ == TVar::ZZGG){
+//	if(mZZ > 900)                   
+//	  prob *=vaScale_4mu->Eval(900.)/DggZZ_scalefactor->Eval(900.);
+//	else if (mZZ <  110 )
+//	  prob *=vaScale_4mu->Eval(110.)/DggZZ_scalefactor->Eval(110.);
+//	else
+//	  prob *=vaScale_4mu->Eval(mZZ)/DggZZ_scalefactor->Eval(mZZ);
+//      }// end GG
             
       // for qqZZ
       if(myProduction_ == TVar::ZZQQB){
@@ -576,15 +582,15 @@ if (useConstant){
   //    cout<<"BEFORE scale: "<<prob<<endl;
 
       // for ggZZ 
-      if(myProduction_ == TVar::ZZGG){
-	if(mZZ > 900) 
-	  prob *=vaScale_2e2mu->Eval(900.)/DggZZ_scalefactor->Eval(900.);
-      else if (mZZ <  110 )
-	  prob *=vaScale_2e2mu->Eval(110.)/DggZZ_scalefactor->Eval(110.);
-      else
-	  prob *=vaScale_2e2mu->Eval(mZZ)/DggZZ_scalefactor->Eval(mZZ);
-
-      }// end GG
+//      if(myProduction_ == TVar::ZZGG){
+//	if(mZZ > 900) 
+//	  prob *=vaScale_2e2mu->Eval(900.)/DggZZ_scalefactor->Eval(900.);
+//      else if (mZZ <  110 )
+//	  prob *=vaScale_2e2mu->Eval(110.)/DggZZ_scalefactor->Eval(110.);
+//      else
+//	  prob *=vaScale_2e2mu->Eval(mZZ)/DggZZ_scalefactor->Eval(mZZ);
+//
+//      }// end GG
 
       // for qqZZ
       if(myProduction_ == TVar::ZZQQB){
@@ -1394,5 +1400,78 @@ void Mela::computeWeight(float mZZ, float mZ1, float mZ2,
 
   // protect against anomalously large weights
   if (w>10.) w=0.;
+
+}
+void Mela::setCTotalBkgGraphs(TFile* fcontainer, TGraph* tgC[]){ // Hope it has only 3 members in the array
+	string tgname = "C_TotalBkgM4l_";
+
+	float rValues[6]={1,5,10,15,20,25}; // Possible r Values
+
+	for(int flavor=0;flavor<3;flavor++){
+		float myWidth = 1;
+
+		char crValue[20];
+
+		int rCode = 2; // r=10
+		myWidth = rValues[rCode];
+		sprintf(crValue,"D_Gamma_gg_r%.0f",myWidth);
+
+		string ctgM4L = tgname;
+		string strChannel;
+		if(flavor==0) strChannel = "4e"; // Check this
+		else if(flavor==1) strChannel = "4mu"; // and this
+		else strChannel = "2mu2e";
+		ctgM4L = ctgM4L + strChannel + "_";
+		ctgM4L = ctgM4L + crValue;
+		tgC[flavor] = (TGraph*) fcontainer->Get(ctgM4L.c_str());
+	}
+}
+void Mela::constructDggr(float mzz, int flavor, float bkg_VAMCFM_noscale, float ggzz_VAMCFM_noscale, float ggHZZ_prob_pure_noscale, float ggHZZ_prob_int_noscale, float& myDggr){
+	float ctotal_bkg = tgtotalbkg[flavor-1]->Eval(mzz);
+
+	float rValues[6]={1,5,10,15,20,25};
+	float total_sig_ME;
+	float total_bkg_ME;
+	float myWidth = 1;
+	int rCode = 2;
+	myWidth = rValues[rCode];
+
+	total_sig_ME = (myWidth * ggHZZ_prob_pure_noscale + sqrt(myWidth) * ggHZZ_prob_int_noscale + ggzz_VAMCFM_noscale);
+	total_bkg_ME = bkg_VAMCFM_noscale*ctotal_bkg;
+	float kd_denominator = (total_sig_ME+total_bkg_ME);
+	float kd = total_sig_ME/kd_denominator;
+	myDggr = kd;
+}
+void Mela::computeD_gg(float mZZ, float mZ1, float mZ2, // input kinematics
+           float costhetastar,
+           float costheta1,
+           float costheta2,
+           float phi,
+           float phi1,
+           int flavor,
+           TVar::MatrixElement myME,
+           TVar::Process myType ,
+           float& prob){
+if(myME != TVar::MCFM || myType != TVar::D_gg10){
+	cout << "Only support MCFM and D_gg10"<<endl;
+	return;
+}
+float bkg_VAMCFM_noscale, ggzz_VAMCFM_noscale, ggHZZ_prob_pure_noscale, ggHZZ_prob_int_noscale, bkgHZZ_prob_noscale;
+ setProcess(TVar::bkgZZ, myME, TVar::ZZGG);
+ computeP(mZZ, mZ1, mZ2,
+        costhetastar,costheta1,costheta2,phi,phi1,flavor, ggzz_VAMCFM_noscale);
+ setProcess(TVar::HSMHiggs, myME, TVar::ZZGG);
+ computeP(mZZ, mZ1, mZ2,
+        costhetastar,costheta1,costheta2,phi,phi1,flavor, ggHZZ_prob_pure_noscale);
+ setProcess(TVar::bkgZZ_SMHiggs, myME, TVar::ZZGG);
+ computeP(mZZ, mZ1, mZ2,
+        costhetastar,costheta1,costheta2,phi,phi1,flavor, bkgHZZ_prob_noscale);
+ setProcess(TVar::bkgZZ, myME, TVar::ZZQQB);
+ computeP(mZZ, mZ1, mZ2,
+        costhetastar,costheta1,costheta2,phi,phi1,flavor, bkg_VAMCFM_noscale,0);
+ggHZZ_prob_int_noscale = bkgHZZ_prob_noscale - ggHZZ_prob_pure_noscale -  ggzz_VAMCFM_noscale;
+float myDggr;
+constructDggr(mZZ, flavor, bkg_VAMCFM_noscale, ggzz_VAMCFM_noscale, ggHZZ_prob_pure_noscale, ggHZZ_prob_int_noscale, myDggr);
+prob=myDggr;
 
 }

@@ -11,11 +11,11 @@ bool includePathIsSet = false;
   //flavor: 1:4e, 2:4mu, 3:2e2mu
 //void addProbtoTree(char* inputFile= "ggtoHtoZZ4l_VariousKDs_0+h",int flavor=3, int max=5000, int LHCsqrts=8){
 
-void addProbtoTree(char* inputFile= "/afs/cern.ch/work/x/xiaomeng/test/myWorkingArea/CMSSW_5_2_5/src/ZZMatrixElement/MELA/test/2e2mu/HZZ4lTree_powheg15jhuGenV3H126_withDisc_new",int flavor=3, int max=-1, int LHCsqrts=8){
+void addProbtoTree(char* inputFile= "/afs/cern.ch/work/x/xiaomeng/test/myWorkingArea/CMSSW_5_2_5/src/ZZMatrixElement/MELA/test/2mu2e/HZZ4lTree_powheg15jhuGenV3H126_withDisc_new",int flavor=3, int max=500, int LHCsqrts=8){
 //void addProbtoTree(char* inputFile= "ggtoHtoZZ4l_VariousKDs_0+m0+h",int flavor=3, int max=5000, int LHCsqrts=8){
 
 
-  gSystem->Load("$CMSSW_BASE/src/ZZMatrixElement/MELA/data/$SCRAM_ARCH/libmcfm.so");
+//  gSystem->Load("$CMSSW_BASE/src/ZZMatrixElement/MELA/data/$SCRAM_ARCH/libmcfm.so");
   gSystem->Load("$CMSSW_BASE/lib/slc5_amd64_gcc462/libZZMatrixElementMELA.so");
 //  gROOT->LoadMacro("$CMSSW_BASE/src/ZZMatrixElement/MELA/interface/Mela.h+");
   // set up path for local cmssw includes
@@ -79,6 +79,7 @@ float D_CP, D_JHUGen_CP, D_0m, D_JHUGen_0m;
 float D_JHUGen_CP, D_JHUGen_CP_T, D_JHUGen_int, D_JHUGen_int_T, D_int;
 float D_lambda1_VAJHU,D_lambda1_mela, D_int_lambda1, D_int_lambda1_VAJHU, D_int_lambda1_mela;
 float p0plus_m4l, bkg_m4l;
+float pgg10;
   // -------- CJLST TREES ---------------
   sigTree->SetBranchAddress("Z2Mass",&m2);
   sigTree->SetBranchAddress("Z1Mass",&m1);
@@ -188,6 +189,8 @@ float pq2sm;
   newTree->Branch("bkg_decay_VAMCFM_NEW",&bkg_decay_VAMCFM,"bkg_decay_VAMCFM_NEW/F");  // background, vector algebra, MCFM integrating out the production angles
   newTree->Branch("p0plus_m4l_NEW",&p0plus_m4l,"p0plus_m4l_NEW/F");  // background, vector algebra, MCFM integrating out the production angles
   newTree->Branch("bkg_m4l_NEW",&bkg_m4l,"bkg_m4l_NEW/F");  // background, vector algebra, MCFM integrating out the production angles
+
+  newTree->Branch("pgg10",&pgg10,"pgg10/F");  // background, vector algebra, MCFM integrating out the production angles
   
   //interference weight
   float interfWeight;
@@ -569,6 +572,10 @@ coupling[0]=5.;
 		myMELA.computePM4l(mzz,flavor,TVar::SMSyst_None,p0plus_m4l);
 	    myMELA.setProcess(TVar::bkgZZ, TVar::JHUGen, TVar::ZZGG);
 		myMELA.computePM4l(mzz,flavor,TVar::SMSyst_None,bkg_m4l);
+
+  myMELA.computeD_gg(mzz, m1, m2,
+        hs,h1,h2,phi,phi1,flavor, TVar::MCFM, TVar::D_gg10,pgg10);
+//cout<<pgg10<<endl;
     newTree->Fill();
     
   }

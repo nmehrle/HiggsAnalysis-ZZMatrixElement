@@ -183,6 +183,20 @@ void computeP_selfDspin1(float mZZ, float mZ1, float mZ2, // arbitrary spin 1 co
   TGraph* vaScale_4mu;
   TGraph* vaScale_2e2mu;
   TGraph* DggZZ_scalefactor;
+	void setCTotalBkgGraphs(TFile* fcontainer, TGraph* tgC[]);
+	void constructDggr(float mzz, int flavor, float bkg_VAMCFM_noscale, float ggzz_VAMCFM_noscale, float ggHZZ_prob_pure_noscale, float ggHZZ_prob_int_noscale, float& myDggr);
+	
+	TGraph* tgtotalbkg[3];
+	void computeD_gg(float mZZ, float mZ1, float mZ2, // input kinematics
+           float costhetastar,
+           float costheta1,
+           float costheta2,
+           float phi,
+           float phi1,
+           int flavor,
+           TVar::MatrixElement myME,
+           TVar::Process myType ,
+           float& prob);
 
  private:
 
