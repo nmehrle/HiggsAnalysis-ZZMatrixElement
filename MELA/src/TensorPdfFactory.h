@@ -15,7 +15,9 @@ public:
   RooRealVar* c1Val;
   RooRealVar* c2Val;
   RooRealVar* c3Val;
-  RooRealVar* c4Val;
+//  RooRealVar* c4Val;
+  RooRealVar* c41Val;
+  RooRealVar* c42Val;
   RooRealVar* c5Val;
   RooRealVar* c6Val;
   RooRealVar* c7Val;
@@ -61,7 +63,9 @@ public:
     c1Val = new RooRealVar("c1Val", "c1Val", 0.0);
     c2Val = new RooRealVar("c2Val", "c2Val", 0.0);
     c3Val = new RooRealVar("c3Val", "c3Val", 0.0);
-    c4Val = new RooRealVar("c4Val", "c4Val", 0.0);
+    //c4Val = new RooRealVar("c4Val", "c4Val", 0.0);
+    c41Val = new RooRealVar("c41Val", "c41Val", 0.0);
+    c42Val = new RooRealVar("c42Val", "c42Val", 0.0);
     c5Val = new RooRealVar("c5Val", "c5Val", 0.0);
     c6Val = new RooRealVar("c6Val", "c6Val", 0.0);
     c7Val = new RooRealVar("c7Val", "c7Val", 0.0);
@@ -81,7 +85,7 @@ public:
     g10Val = new RooRealVar("g10Val", "g10Val", 0.0);
 
     PDF = new RooSpinTwo_7D("PDF","PDF", *mZZ, *m1, *m2, *hs, *h1,*h2, *Phi, *Phi1, 
-				  *c1Val, *c2Val, *c3Val, *c4Val, *c5Val, *c6Val, *c7Val, 
+				  *c1Val, *c2Val, *c3Val, *c41Val,*c42Val, *c5Val, *c6Val, *c7Val, 
 				  *useGTerm, *g1Val, *g2Val, *g3Val, *g4Val, *g5Val, *g6Val, *g7Val, *g8Val, *g9Val, *g10Val,
 				  *fz1Val, *fz2Val, *R1Val, *R2Val, *mZ, *gamZ);
 
@@ -95,7 +99,9 @@ public:
     delete c1Val; 
     delete c2Val; 
     delete c3Val; 
-    delete c4Val; 
+//    delete c4Val; 
+    delete c41Val; 
+    delete c42Val; 
     delete c5Val; 
     delete c6Val; 
     delete c7Val; 
@@ -421,7 +427,8 @@ public:
       c1Val->setConstant(kTRUE);
       c2Val->setConstant(kTRUE);
       c3Val->setConstant(kTRUE);
-      c4Val->setConstant(kTRUE);
+      c41Val->setConstant(kTRUE);
+      c42Val->setConstant(kTRUE);
       c5Val->setConstant(kTRUE);
       c6Val->setConstant(kTRUE);
       c7Val->setConstant(kTRUE);
@@ -450,7 +457,8 @@ public:
       c1Val->setConstant(kFALSE);
       c2Val->setConstant(kFALSE);
       c3Val->setConstant(kFALSE);
-      c4Val->setConstant(kFALSE);
+      c41Val->setConstant(kFALSE);
+      c42Val->setConstant(kFALSE);
       c5Val->setConstant(kFALSE);
       c6Val->setConstant(kFALSE);
       c7Val->setConstant(kFALSE);

@@ -19,18 +19,20 @@ class RooSpinTwo_7D : public RooAbsPdf {
 public:
     RooSpinTwo_7D() {} ; 
     RooSpinTwo_7D(const char *name, const char *title,
-                RooAbsReal& _mzz,
-                RooAbsReal& _m1,
-                RooAbsReal& _m2,
+    RooAbsReal& _mzz,
+    RooAbsReal& _m1,
+    RooAbsReal& _m2,
 		RooAbsReal& _hs,
-                RooAbsReal& _h1,
-                RooAbsReal& _h2,
-                RooAbsReal& _Phi,
-                RooAbsReal& _Phi1,
+    RooAbsReal& _h1,
+    RooAbsReal& _h2,
+    RooAbsReal& _Phi,
+    RooAbsReal& _Phi1,
 		RooAbsReal& _c1Val,
 		RooAbsReal& _c2Val,
 		RooAbsReal& _c3Val,
-		RooAbsReal& _c4Val,
+//		RooAbsReal& _c4Val,
+    RooAbsReal& _c41Val,
+    RooAbsReal& _c42Val,
 		RooAbsReal& _c5Val,
 		RooAbsReal& _c6Val,
 		RooAbsReal& _c7Val,
@@ -73,7 +75,9 @@ protected:
     RooRealProxy c1Val;
     RooRealProxy c2Val;
     RooRealProxy c3Val;
-    RooRealProxy c4Val;
+//    RooRealProxy c4Val;
+    RooRealProxy c41Val;
+    RooRealProxy c42Val;
     RooRealProxy c5Val;
     RooRealProxy c6Val;
     RooRealProxy c7Val;

@@ -28,7 +28,9 @@ RooAbsReal& _Phi1,
 RooAbsReal& _c1Val,
 RooAbsReal& _c2Val,
 RooAbsReal& _c3Val,
-RooAbsReal& _c4Val,
+//RooAbsReal& _c4Val,
+RooAbsReal& _c41Val,
+RooAbsReal& _c42Val,
 RooAbsReal& _c5Val,
 RooAbsReal& _c6Val,
 RooAbsReal& _c7Val,
@@ -61,7 +63,9 @@ Phi1("Phi1","Phi1",this,_Phi1),
 c1Val("c1Val","c1Val",this,_c1Val),
 c2Val("c2Val","c2Val",this,_c2Val),
 c3Val("c3Val","c3Val",this,_c3Val),
-c4Val("c4Val","c4Val",this,_c4Val),
+//c4Val("c4Val","c4Val",this,_c4Val),
+c41Val("c41Val","c41Val",this,_c41Val),
+c42Val("c42Val","c42Val",this,_c42Val),
 c5Val("c5Val","c5Val",this,_c5Val),
 c6Val("c6Val","c6Val",this,_c6Val),
 c7Val("c7Val","c7Val",this,_c7Val),
@@ -99,7 +103,9 @@ Phi1("Phi1",this,other.Phi1),
 c1Val("c1Val",this,other.c1Val),
 c2Val("c2Val",this,other.c2Val),
 c3Val("c3Val",this,other.c3Val),
-c4Val("c4Val",this,other.c4Val),
+//c4Val("c4Val",this,other.c4Val),
+c41Val("c41Val",this,other.c41Val),
+c42Val("c42Val",this,other.c42Val),
 c5Val("c5Val",this,other.c5Val),
 c6Val("c6Val",this,other.c6Val),
 c7Val("c7Val",this,other.c7Val),
@@ -141,7 +147,9 @@ if (nanval != nanval) return 1e-9;
 double c1 = c1Val;
 double c2 = c2Val;
 double c3 = c3Val;
-double c4 = c4Val;
+//double c4 = c4Val;
+double c41 = c41Val;
+double c42 = c42Val;
 double c5 = c5Val;
 double c6 = c6Val;
 double c7 = c7Val;
@@ -151,6 +159,7 @@ if ( useGTerm > 0. ) {
 double Lambda = 1000.; // the new physics cutoff
 double s = (mzz*mzz-m1*m1-m2*m2)/2.;
 double kappa =  s / (Lambda*Lambda);
+/*
 //c1 = 2*g1Val + 2*g2Val*kappa*pow((1+mZ*mZ/s),2) + 2*g5Val*(mZ*mZ)/s;
 //c2 = -0.5*g1Val + g3Val*kappa*(1-mZ*mZ/s) + 2*g4Val*kappa + g7Val*kappa*mZ*mZ/s;
 c1 = 2*g1Val + 2*g2Val*kappa*(1+m1*m1/s)*(1+m2*m2/s) + 2*g5Val*(mZ*mZ)/s;
@@ -160,6 +169,15 @@ c4 = -g1Val - g2Val*kappa - (g2Val+g3Val+g6Val)*kappa*(mZ*mZ/s);
 c5 = 2*g8Val*kappa*(mzz*mzz)/s;
 c6 = g9Val;
 c7 = g10Val*kappa*(mzz*mzz)/s;
+*/
+c1 = 2*g1Val + 2*g2Val*kappa*(1+m1*m1/s)*(1+m2*m2/s) + 2*g5Val*(mZ*mZ)/s;
+c2 = -0.5*g1Val + g3Val*kappa*(1-(m1*m1+m2*m2)/(2*s)) + 2*g4Val*kappa + g7Val*kappa*mZ*mZ/s;
+c3 = -1.0*(g2Val/2.0+g3Val+2.0*g4Val)*kappa*mzz*mzz/s;
+c41 = -g1Val - g2Val*kappa - (g2Val*m1*m1+g3Val*m2*m2+g6Val*mZ*mZ)*kappa/s;
+c42 = -g1Val - g2Val*kappa - (g2Val*m2*m2+g3Val*m1*m1+g6Val*mZ*mZ)*kappa/s;
+c5 = 2*g8Val*kappa*(mzz*mzz)/s;
+c6 = g9Val*kappa*(mZ*mZ)/s;
+c7 = g10Val*kappa*kappa*(mzz*mzz*mZ*mZ)/(s*s);
 }
 
 Double_t value=0;
@@ -199,7 +217,9 @@ Double_t f00Real =
 
 + pow(sqrt(6.),-1)*c1*m1*m2 * ( 1.0/2.0 + 1.0/2.0*(x*x-1.) )
 + pow(sqrt(6.),-1)*c2*m1*m2 * (  - 2.*(x*x-1.) )
-+ pow(sqrt(6.),-1)*c4*m1*m2 * ( 4.*(x*x-1.) )
+//+ pow(sqrt(6.),-1)*c4*m1*m2 * ( 4.*(x*x-1.) )
++ pow(sqrt(6.),-1)*(c41+c42)*m1*m2 * ( 2.*(x*x-1.) )
++ pow(sqrt(6.),-1)*m1*m2*(m1*m1-m2*m2)*pow(mzz,-2)*(c41-c42)*2.*(x*x-1.) 
 
 + pow(sqrt(6.),-1)*c1*(1.0/m1)*pow(m2,3) * (  - 1.0/4.0 )
 + pow(sqrt(6.),-1)*c1*pow(m1,3)*(1.0/m2) * (  - 1.0/4.0 )
@@ -252,7 +272,8 @@ Double_t fp0Real =
 + (1.0/pow(mzz,3))*(1.0/sqrt(2.))*c1*pow(m1,6)*(1.0/m2) * ( 1.0/8.0 )
 
 + (1.0/mzz)*(1.0/sqrt(2.))*c1*pow(m1,2)*m2 * ( 1.0/4.0 + 1.0/2.0*(x*x-1.) )
-+ (1.0/mzz)*(1.0/sqrt(2.))*c4*pow(m1,2)*m2 * ( 2.*(x*x-1.) )
+//+ (1.0/mzz)*(1.0/sqrt(2.))*c4*pow(m1,2)*m2 * ( 2.*(x*x-1.) )
++ (1.0/mzz)*(1.0/sqrt(2.))*c41*pow(m1,2)*m2 * ( 2.*(x*x-1.) )
 
 + (1.0/mzz)*(1.0/sqrt(2.))*c1*pow(m2,3) * (  - 1.0/8.0 )
 
@@ -287,7 +308,8 @@ Double_t f0pReal =
 + (1.0/pow(mzz,3))*(1.0/sqrt(2.))*c1*pow(m1,5) * (  - 1.0/8.0 )
 
 + (1.0/mzz)*(1.0/sqrt(2.))*c1*m1*pow(m2,2) * ( 1.0/4.0 + 1.0/2.0*(x*x-1.) )
-+ (1.0/mzz)*(1.0/sqrt(2.))*c4*m1*pow(m2,2) * ( 2.*(x*x-1.) )
+//+ (1.0/mzz)*(1.0/sqrt(2.))*c4*m1*pow(m2,2) * ( 2.*(x*x-1.) )
++ (1.0/mzz)*(1.0/sqrt(2.))*c42*m1*pow(m2,2) * ( 2.*(x*x-1.) )
 
 + (1.0/mzz)*(1.0/sqrt(2.))*c1*(1.0/m1)*pow(m2,4) * (  - 1.0/8.0 )
 
@@ -322,7 +344,8 @@ Double_t f0mReal =
 + (1.0/pow(mzz,3))*(1.0/sqrt(2.))*c1*pow(m1,5) * (  - 1.0/8.0 )
 
 + (1.0/mzz)*(1.0/sqrt(2.))*c1*m1*pow(m2,2) * ( 1.0/4.0 + 1.0/2.0*(x*x-1.) )
-+ (1.0/mzz)*(1.0/sqrt(2.))*c4*m1*pow(m2,2) * ( 2*(x*x-1.) )
+//+ (1.0/mzz)*(1.0/sqrt(2.))*c4*m1*pow(m2,2) * ( 2*(x*x-1.) )
++ (1.0/mzz)*(1.0/sqrt(2.))*c42*m1*pow(m2,2) * ( 2*(x*x-1.) )
 
 + (1.0/mzz)*(1.0/sqrt(2.))*c1*(1.0/m1)*pow(m2,4) * (  - 1.0/8.0 )
 
@@ -356,7 +379,8 @@ Double_t fm0Real =
 + (1.0/pow(mzz,3))*(1.0/sqrt(2.))*c1*pow(m1,6)*(1.0/m2) * ( 1.0/8.0 )
 
 + (1.0/mzz)*(1.0/sqrt(2.))*c1*pow(m1,2)*m2 * ( 1.0/4.0 + 1.0/2.0*(x*x-1.) )
-+ (1.0/mzz)*(1.0/sqrt(2.))*c4*pow(m1,2)*m2 * ( 2*(x*x-1.) )
+//+ (1.0/mzz)*(1.0/sqrt(2.))*c4*pow(m1,2)*m2 * ( 2*(x*x-1.) )
++ (1.0/mzz)*(1.0/sqrt(2.))*c41*pow(m1,2)*m2 * ( 2*(x*x-1.) )
 
 + (1.0/mzz)*(1.0/sqrt(2.))*c1*pow(m2,3) * (  - 1.0/8.0 )
 
@@ -549,7 +573,9 @@ if (nanval != nanval) return 1e-9;
 double c1 = c1Val;
 double c2 = c2Val;
 double c3 = c3Val;
-double c4 = c4Val;
+//double c4 = c4Val;
+double c41 = c41Val;
+double c42 = c42Val;
 double c5 = c5Val;
 double c6 = c6Val;
 double c7 = c7Val;
@@ -559,6 +585,7 @@ if ( useGTerm > 0. ) {
 double Lambda = 1000.; // the new physics cutoff
 double s = (mzz*mzz-m1*m1-m2*m2)/2.;
 double kappa =  s / (Lambda*Lambda);
+/*
 c1 = 2*g1Val + 2*g2Val*kappa*pow((1+mZ*mZ/s),2) + 2*g5Val*(mZ*mZ)/s;
 c2 = -0.5*g1Val + g3Val*kappa*(1-mZ*mZ/s) + 2*g4Val*kappa + g7Val*kappa*mZ*mZ/s;
 c3 = -1.0*(g2Val/2.0+g3Val+2.0*g4Val)*kappa*mzz*mzz/s;
@@ -566,6 +593,15 @@ c4 = -g1Val - g2Val*kappa - (g2Val+g3Val+g6Val)*kappa*(mZ*mZ/s);
 c5 = 2*g8Val*kappa*(mzz*mzz)/s;
 c6 = g9Val;
 c7 = g10Val*kappa*(mzz*mzz)/s;
+*/
+c1 = 2*g1Val + 2*g2Val*kappa*(1+m1*m1/s)*(1+m2*m2/s) + 2*g5Val*(mZ*mZ)/s;
+c2 = -0.5*g1Val + g3Val*kappa*(1-(m1*m1+m2*m2)/(2*s)) + 2*g4Val*kappa + g7Val*kappa*mZ*mZ/s;
+c3 = -1.0*(g2Val/2.0+g3Val+2.0*g4Val)*kappa*mzz*mzz/s;
+c41 = -g1Val - g2Val*kappa - (g2Val*m1*m1+g3Val*m2*m2+g6Val*mZ*mZ)*kappa/s;
+c42 = -g1Val - g2Val*kappa - (g2Val*m2*m2+g3Val*m1*m1+g6Val*mZ*mZ)*kappa/s;
+c5 = 2*g8Val*kappa*(mzz*mzz)/s;
+c6 = g9Val*kappa*(mZ*mZ)/s;
+c7 = g10Val*kappa*kappa*(mzz*mzz*mZ*mZ)/(s*s);
 }
 
 Double_t integral=0;
@@ -605,7 +641,9 @@ Double_t f00Real =
 
 + pow(sqrt(6.),-1)*c1*m1*m2 * ( 1.0/2.0 + 1.0/2.0*(x*x-1.) )
 + pow(sqrt(6.),-1)*c2*m1*m2 * (  - 2*(x*x-1.) )
-+ pow(sqrt(6.),-1)*c4*m1*m2 * ( 4*(x*x-1.) )
+//+ pow(sqrt(6.),-1)*c4*m1*m2 * ( 4*(x*x-1.) )
++ pow(sqrt(6.),-1)*(c41+c42)*m1*m2 * ( 2.*(x*x-1.) )
++ pow(sqrt(6.),-1)*m1*m2*(m1*m1-m2*m2)*pow(mzz,-2)*(c41-c42)*2.*(x*x-1.)
 
 + pow(sqrt(6.),-1)*c1*(1.0/m1)*pow(m2,3) * (  - 1.0/4.0 )
 + pow(sqrt(6.),-1)*c1*pow(m1,3)*(1.0/m2) * (  - 1.0/4.0 )
@@ -658,7 +696,8 @@ Double_t fp0Real =
 + (1.0/pow(mzz,3))*(1.0/sqrt(2.))*c1*pow(m1,6)*(1.0/m2) * ( 1.0/8.0 )
 
 + (1.0/mzz)*(1.0/sqrt(2.))*c1*pow(m1,2)*m2 * ( 1.0/4.0 + 1.0/2.0*(x*x-1.) )
-+ (1.0/mzz)*(1.0/sqrt(2.))*c4*pow(m1,2)*m2 * ( 2.*(x*x-1.) )
+//+ (1.0/mzz)*(1.0/sqrt(2.))*c4*pow(m1,2)*m2 * ( 2.*(x*x-1.) )
++ (1.0/mzz)*(1.0/sqrt(2.))*c41*pow(m1,2)*m2 * ( 2.*(x*x-1.) )
 
 + (1.0/mzz)*(1.0/sqrt(2.))*c1*pow(m2,3) * (  - 1.0/8.0 )
 
@@ -693,7 +732,8 @@ Double_t f0pReal =
 + (1.0/pow(mzz,3))*(1.0/sqrt(2.))*c1*pow(m1,5) * (  - 1.0/8.0 )
 
 + (1.0/mzz)*(1.0/sqrt(2.))*c1*m1*pow(m2,2) * ( 1.0/4.0 + 1.0/2.0*(x*x-1.) )
-+ (1.0/mzz)*(1.0/sqrt(2.))*c4*m1*pow(m2,2) * ( 2*(x*x-1.) )
+//+ (1.0/mzz)*(1.0/sqrt(2.))*c4*m1*pow(m2,2) * ( 2*(x*x-1.) )
++ (1.0/mzz)*(1.0/sqrt(2.))*c42*m1*pow(m2,2) * ( 2.*(x*x-1.) )
 
 + (1.0/mzz)*(1.0/sqrt(2.))*c1*(1.0/m1)*pow(m2,4) * (  - 1.0/8.0 )
 
@@ -728,7 +768,8 @@ Double_t f0mReal =
 + (1.0/pow(mzz,3))*(1.0/sqrt(2.))*c1*pow(m1,5) * (  - 1.0/8.0 )
 
 + (1.0/mzz)*(1.0/sqrt(2.))*c1*m1*pow(m2,2) * ( 1.0/4.0 + 1.0/2.0*(x*x-1.) )
-+ (1.0/mzz)*(1.0/sqrt(2.))*c4*m1*pow(m2,2) * ( 2*(x*x-1.) )
+//+ (1.0/mzz)*(1.0/sqrt(2.))*c4*m1*pow(m2,2) * ( 2*(x*x-1.) )
++ (1.0/mzz)*(1.0/sqrt(2.))*c42*m1*pow(m2,2) * ( 2*(x*x-1.) )
 
 + (1.0/mzz)*(1.0/sqrt(2.))*c1*(1.0/m1)*pow(m2,4) * (  - 1.0/8.0 )
 
@@ -762,7 +803,8 @@ Double_t fm0Real =
 + (1.0/pow(mzz,3))*(1.0/sqrt(2.))*c1*pow(m1,6)*(1.0/m2) * ( 1.0/8.0 )
 
 + (1.0/mzz)*(1.0/sqrt(2.))*c1*pow(m1,2)*m2 * ( 1.0/4.0 + 1.0/2.0*(x*x-1.) )
-+ (1.0/mzz)*(1.0/sqrt(2.))*c4*pow(m1,2)*m2 * ( 2*(x*x-1.) )
+//+ (1.0/mzz)*(1.0/sqrt(2.))*c4*pow(m1,2)*m2 * ( 2*(x*x-1.) )
++ (1.0/mzz)*(1.0/sqrt(2.))*c41*pow(m1,2)*m2 * ( 2*(x*x-1.) )
 
 + (1.0/mzz)*(1.0/sqrt(2.))*c1*pow(m2,3) * (  - 1.0/8.0 )
 
