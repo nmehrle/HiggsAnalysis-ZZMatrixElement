@@ -278,9 +278,9 @@ switch (myType){
 	break; 
 	case TVar::D_g1g1prime2 :
 		coupl_mix[0][0] =1.;
-		coupl_mix[5][0] = -12046.01;
+		coupl_mix[5][0] = 12046.01;
 		coupl_1[0][0] =1.;
-		coupl_2[5][0] = -12046.01;
+		coupl_2[5][0] = 12046.01;
 	break; 
   default:
 		cout <<"Error: Not supported!"<<endl;	
