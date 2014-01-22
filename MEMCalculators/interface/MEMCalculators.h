@@ -46,6 +46,8 @@ namespace MEMNames {
 		kSpin1_qqbar, kSpin1_prodIndep,
 		kSpin2_gg, kSpin2_qqbar, kSpin2_prodIndep,
 		kJJ_SMHiggs_VBF, kJJ_0minus_VBF, kJJ_SMHiggs_GG, kJJ_0minus_GG, kJJ_SMHiggs_VH, kJJ_0minus_VH,
+		k2h2plus_gg,k2h2plus_qqbar,k2h2plus_prodIndep,k2h3plus_gg,k2h3plus_qqbar,k2h3plus_prodIndep,k2h6plus_gg,k2h6plus_qqbar,k2h6plus_prodIndep,k2h7plus_gg,k2h7plus_qqbar,k2h7plus_prodIndep,k2h9minus_gg,k2h9minus_qqbar,k2h9minus_prodIndep,k2h10minus_gg,k2h10minus_qqbar,k2h10minus_prodIndep,
+		kggHZZ_10,
 		NUM_PROCESSES};
 	
 	/// Enum type for supported MEM calculators from MELA and MEKD packages
@@ -342,14 +344,14 @@ const bool MEMs::isProcSupported[MEMNames::NUM_PROCESSES][MEMNames::NUM_MEMCALCS
   {1,            1,          1,          0,          0},	// k2mplus_qqbar
   {1,            1,          1,          0,          0},	// k2mplus_prodIndep
   {1,            1,          1,          0,          0},	// k2hplus
-  {0,            1,          0,          0,          0},	// k2hplus_qqbar
-  {0,            1,          0,          0,          0},	// k2hplus_prodIndep
+  {1,            1,          1,          0,          0},	// k2hplus_qqbar
+  {1,            1,          1,          0,          0},	// k2hplus_prodIndep
   {1,            1,          1,          0,          0},	// k2hminus
-  {0,            1,          0,          0,          0},	// k2hminus_qqbar
-  {0,            1,          0,          0,          0},	// k2hminus_prodIndep
+  {1,            1,          1,          0,          0},	// k2hminus_qqbar
+  {1,            1,          1,          0,          0},	// k2hminus_prodIndep
   {1,            1,          1,          0,          0},	// k2bplus
-  {0,            1,          0,          0,          0},	// k2bplus_qqbar
-  {0,            1,          0,          0,          0},	// k2bplus_prodIndep
+  {1,            1,          1,          0,          0},	// k2bplus_qqbar
+  {1,            1,          1,          0,          0},	// k2bplus_prodIndep
   {1,            1,          0,          1,          1},	// kqqZZ
   {1,            0,          0,          1,          0},	// kqqZZ_prodIndep
   {0,            1,          0,          1,          0},	// kggZZ
@@ -367,7 +369,26 @@ const bool MEMs::isProcSupported[MEMNames::NUM_PROCESSES][MEMNames::NUM_MEMCALCS
   {0,            0,          1,          0,          0},	// kJJ_SMHiggs_GG 
   {0,            0,          1,          0,          0},	// kJJ_0minus_GG 
   {1,            0,          0,          0,          0},	// kJJ_SMHiggs_VH
-  {1,            0,          0,          0,          0}};	// kJJ_0minus_VH
+  {1,            0,          0,          0,          0},	// kJJ_0minus_VH
+  {1,            0,          1,          0,          0},	// k2h2plus_gg 
+  {1,            0,          1,          0,          0},	// k2h2plus_qqbar 
+  {1,            0,          1,          0,          0},	// k2h2plus_prodIndep 
+  {1,            0,          1,          0,          0},	// k2h3plus_gg 
+  {1,            0,          1,          0,          0},	// k2h3plus_qqbar 
+  {1,            0,          1,          0,          0},	// k2h3plus_prodIndep 
+  {1,            0,          1,          0,          0},	// k2h6plus_gg 
+  {1,            0,          1,          0,          0},	// k2h6plus_qqbar 
+  {1,            0,          1,          0,          0},	// k2h6plus_prodIndep 
+  {1,            0,          1,          0,          0},	// k2h7plus_gg 
+  {1,            0,          1,          0,          0},	// k2h7plus_qqbar 
+  {1,            0,          1,          0,          0},	// k2h7plus_prodIndep 
+  {1,            0,          1,          0,          0},	// k2h9minus_gg 
+  {1,            0,          1,          0,          0},	// k2h9minus_qqbar 
+  {1,            0,          1,          0,          0},	// k2h9minus_prodIndep 
+  {1,            0,          1,          0,          0},	// k2h10minus_gg 
+  {1,            0,          1,          0,          0},	// k2h10minus_qqbar 
+  {1,            0,          1,          0,          0},	// k2h10minus_prodIndep 
+  {0,            0,          0,          1,          0}};	// kggHZZ_10 
  
 //////////////////////////////////////////////////////////////////////////
 

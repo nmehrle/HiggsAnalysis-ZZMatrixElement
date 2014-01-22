@@ -34,7 +34,15 @@ const TString MEMs::m_processNameMEKD[MEMNames::NUM_PROCESSES] = {
 	"ggSpin0", "Spin0",
 	"qqSpin1", "Spin1",
 	"ggSpin2", "qqSpin2", "Spin2",
-	"VBFSpin0Pm_jj", "VBFSpin0M_jj", "ggSpin0Pm_jj", "ggSpin0M_jj","VHSpin0Pm", "VHSpin0M_jj"
+	"VBFSpin0Pm_jj", "VBFSpin0M_jj", "ggSpin0Pm_jj", "ggSpin0M_jj","VHSpin0Pm", "VHSpin0M_jj",
+	"ggSpin2P2h","qqSpin2P2h","Spin2P2h",
+	"ggSpin2P3h","qqSpin2P3h","Spin2P3h",
+	"ggSpin2P6h","qqSpin2P6h","Spin2P6h",
+	"ggSpin2P7h","qqSpin2P7h","Spin2P7h",
+	"ggSpin2M9h","qqSpin2M9h","Spin2M9h",
+	"ggSpin2M10h","qqSpin2M10h","Spin2M10h",
+	"ggHZZ_10"
+
 };
 
 
@@ -57,8 +65,32 @@ MEMs::MEMs(double collisionEnergy, double sKD_mass, string PDFName, bool debug_)
     MELAprocMap[k2mplus_qqbar]    =TVar::H2_g1g5;
     MELAprocMap[k2mplus_prodIndep]=TVar::H2_g1g5;
     MELAprocMap[k2hplus]          =TVar::H2_g4;
+    MELAprocMap[k2hplus_qqbar]		=TVar::H2_g4;
+    MELAprocMap[k2hplus_prodIndep]=TVar::H2_g4;
     MELAprocMap[k2hminus]         =TVar::H2_g8;
+    MELAprocMap[k2hminus_qqbar]   =TVar::H2_g8;
+    MELAprocMap[k2hminus_prodIndep]=TVar::H2_g8;
     MELAprocMap[k2bplus]          =TVar::H2_g5;
+    MELAprocMap[k2bplus_qqbar]		=TVar::H2_g5;
+    MELAprocMap[k2bplus_prodIndep]=TVar::H2_g5;
+    MELAprocMap[k2h2plus_gg]      =TVar::H2_g2;
+    MELAprocMap[k2h2plus_qqbar]   =TVar::H2_g2;
+    MELAprocMap[k2h2plus_prodIndep]=TVar::H2_g2;
+    MELAprocMap[k2h3plus_gg]       =TVar::H2_g3;
+    MELAprocMap[k2h3plus_qqbar]    =TVar::H2_g3;
+    MELAprocMap[k2h3plus_prodIndep]=TVar::H2_g3;
+    MELAprocMap[k2h6plus_gg]       =TVar::H2_g6;
+    MELAprocMap[k2h6plus_qqbar]    =TVar::H2_g6;
+    MELAprocMap[k2h6plus_prodIndep]=TVar::H2_g6;
+    MELAprocMap[k2h7plus_gg]       =TVar::H2_g7;
+    MELAprocMap[k2h7plus_qqbar]    =TVar::H2_g7;
+    MELAprocMap[k2h7plus_prodIndep]=TVar::H2_g7;
+    MELAprocMap[k2h9minus_gg]       =TVar::H2_g9;
+    MELAprocMap[k2h9minus_qqbar]    =TVar::H2_g9;
+    MELAprocMap[k2h9minus_prodIndep]=TVar::H2_g9;
+    MELAprocMap[k2h10minus_gg]       =TVar::H2_g10;
+    MELAprocMap[k2h10minus_qqbar]    =TVar::H2_g10;
+    MELAprocMap[k2h10minus_prodIndep]=TVar::H2_g10;
     MELAprocMap[kqqZZ]            =TVar::bkgZZ;
     MELAprocMap[kqqZZ_prodIndep]  =TVar::bkgZZ;
     MELAprocMap[kggZZ]            =TVar::bkgZZ;
@@ -80,6 +112,7 @@ MEMs::MEMs(double collisionEnergy, double sKD_mass, string PDFName, bool debug_)
     MELAprocMap[kJJ_SMHiggs_VH]		=TVar::HSMHiggs;
     MELAprocMap[kJJ_0minus_VH]		=TVar::H0minus;
 
+    MELAprocMap[kggHZZ_10]		=TVar::D_gg10;
 
 	MELAprocIntMap[kg1g4]			=TVar::D_g1g4;
 	MELAprocIntMap[kg1g2]			=TVar::D_g1g2;
@@ -100,13 +133,39 @@ MEMs::MEMs(double collisionEnergy, double sKD_mass, string PDFName, bool debug_)
     MELAprodMap[k2mplus_qqbar]    =TVar::ZZQQB;
     MELAprodMap[k2mplus_prodIndep]=TVar::ZZINDEPENDENT;
     MELAprodMap[k2hplus]          =TVar::ZZGG;
+    MELAprodMap[k2hplus_qqbar]    =TVar::ZZQQB;
+    MELAprodMap[k2hplus_prodIndep]=TVar::ZZINDEPENDENT;
     MELAprodMap[k2hminus]         =TVar::ZZGG;
+    MELAprodMap[k2hminus_qqbar]    =TVar::ZZQQB;
+    MELAprodMap[k2hminus_prodIndep]=TVar::ZZINDEPENDENT;
     MELAprodMap[k2bplus]          =TVar::ZZGG;
+    MELAprodMap[k2bplus_qqbar]    =TVar::ZZQQB;
+    MELAprodMap[k2bplus_prodIndep]=TVar::ZZINDEPENDENT;
+    MELAprodMap[k2h2plus_gg]       =TVar::ZZGG;
+    MELAprodMap[k2h2plus_qqbar]    =TVar::ZZQQB;
+    MELAprodMap[k2h2plus_prodIndep]=TVar::ZZINDEPENDENT;
+    MELAprodMap[k2h3plus_gg]       =TVar::ZZGG;
+    MELAprodMap[k2h3plus_qqbar]    =TVar::ZZQQB;
+    MELAprodMap[k2h3plus_prodIndep]=TVar::ZZINDEPENDENT;
+    MELAprodMap[k2h6plus_gg]       =TVar::ZZGG;
+    MELAprodMap[k2h6plus_qqbar]    =TVar::ZZQQB;
+    MELAprodMap[k2h6plus_prodIndep]=TVar::ZZINDEPENDENT;
+    MELAprodMap[k2h7plus_gg]       =TVar::ZZGG;
+    MELAprodMap[k2h7plus_qqbar]    =TVar::ZZQQB;
+    MELAprodMap[k2h7plus_prodIndep]=TVar::ZZINDEPENDENT;
+    MELAprodMap[k2h9minus_gg]       =TVar::ZZGG;
+    MELAprodMap[k2h9minus_qqbar]    =TVar::ZZQQB;
+    MELAprodMap[k2h9minus_prodIndep]=TVar::ZZINDEPENDENT;
+    MELAprodMap[k2h10minus_gg]       =TVar::ZZGG;
+    MELAprodMap[k2h10minus_qqbar]    =TVar::ZZQQB;
+    MELAprodMap[k2h10minus_prodIndep]=TVar::ZZINDEPENDENT;
+
     MELAprodMap[kqqZZ]            =TVar::ZZQQB;
     MELAprodMap[kqqZZ_prodIndep]  =TVar::ZZINDEPENDENT;
     MELAprodMap[kggZZ]            =TVar::ZZGG;
     MELAprodMap[kggZZ_SMHiggs]    =TVar::ZZGG;
     MELAprodMap[k0_g1prime2]      =TVar::ZZGG;
+    MELAprodMap[kggHZZ_10]      =TVar::ZZGG;
 	
 	MELAprodMap[kSpin0_gg]			=TVar::ZZGG;
 	MELAprodMap[kSpin0_prodIndep]	=TVar::ZZINDEPENDENT;
@@ -913,6 +972,13 @@ int MEMs::cacheMELAcalculation(int process, MEMCalcs calculator, vector<TLorentz
 								costhetastar,costheta1,costheta2,phi,phi1,
 								flavor,MELAcalcMap[calculator],MELAprocIntMap[static_cast<Processes_int>(process)],
 								me2process_float );
+		}
+		else if (process == kggHZZ_10)
+		{
+		     m_MELA->computeD_gg( mzz, m1, m2,
+                costhetastar,costheta1,costheta2,phi,phi1,
+                flavor,MELAcalcMap[calculator],MELAprocMap[static_cast<Processes>(process)],
+                me2process_float );
 		}
 		else
 		{

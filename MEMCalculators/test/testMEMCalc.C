@@ -20,7 +20,9 @@ vector<TLorentzVector> Calculate4Momentum(double Mx,double M1,double M2,double t
 //=======
 //void testMEMCalc(TString fileName,int channel){
 int main(){
-TString fileName="/afs/cern.ch/work/c/chmartin/private/Fa2stuff/MC_from_JHU/SMHiggsToZZTo4L_M-126_8TeV_powheg15-JHUgenV4-pythia6_false.root";
+//TString fileName="/afs/cern.ch/work/x/xiaomeng/test/myWorkingArea/CMSSW_5_2_5/src/ZZMatrixElement/MELA/test/4e/HZZ4lTree_powheg15jhuGenV3H126_withDisc_new_withMELA_new_3.root";
+TString fileName="/afs/cern.ch/work/x/xiaomeng/test/myWorkingArea/CMSSW_5_2_5/src/ZZMatrixElement/MELA/test/2mu2e/HZZ4lTree_powheg15jhuGenV3H126_withDisc_new_withMELA_new_2.root";
+//TString fileName="/afs/cern.ch/work/c/chmartin/private/Fa2stuff/MC_from_JHU/SMHiggsToZZTo4L_M-126_8TeV_powheg15-JHUgenV4-pythia6_false.root";
 int channel=3;
 //>>>>>>> 1.8
   TChain* t = new TChain("SelectedTree");
@@ -31,7 +33,7 @@ int channel=3;
 
   TTree* tree = (TTree*) t->CloneTree(0,"fast");
 
-  MEMs test(8,125.65,"", false);
+  MEMs test(8,126,"", false);
 
   double p0plus_mela_test,p2_mela_test,p2qqb_mela_test;
   double bkg_mela_test,p0plus_melaNorm_test;
@@ -42,7 +44,7 @@ int channel=3;
   double p0hplus_VAJHU_test,p1plus_VAJHU_test;
   double p0minus_VAJHU_test,p1_VAJHU_test;
 
-  double qqZZ_VAMCFM_test,ggZZ_VAMCFM_test,p0plus_VAMCFM_test;
+  double qqZZ_VAMCFM_test,ggZZ_VAMCFM_test,p0plus_VAMCFM_test,ggzz_p0plus_VAMCFM_test ;
   double qqZZ_VAMCFMNorm_test;
 
   double p0plus_mad, p0minus_mad, p2_mad, qqZZ_mad;
@@ -66,6 +68,7 @@ int channel=3;
   tree->Branch("bkg_mela_test",&bkg_mela_test,"bkg_mela_test/D");
 
   tree->Branch("p0plus_VAMCFM_test",&p0plus_VAMCFM_test,"p0plus_VAMCFM_test/D");
+  tree->Branch("ggzz_p0plus_VAMCFM_test",&ggzz_p0plus_VAMCFM_test,"ggzz_p0plus_VAMCFM_test/D");
   tree->Branch("qqZZ_VAMCFM_test",&qqZZ_VAMCFM_test,"qqZZ_VAMCFM_test/D");
   tree->Branch("qqZZ_VAMCFMNorm_test",&qqZZ_VAMCFMNorm_test,"qqZZ_VAMCFMNorm_test/D");
   tree->Branch("ggZZ_VAMCFM_test",&ggZZ_VAMCFM_test,"ggZZ_VAMCFM_test/D");
@@ -100,8 +103,36 @@ int channel=3;
   tree->Branch("pg1g2_pi2_VAJHU_test",&pg1g2_pi2_VAJHU,"pg1g2_pi2_VAJHU_test/D");
   tree->Branch("pg1g4_pi2_VAJHU_test",&pg1g4_pi2_VAJHU,"pg1g4_pi2_VAJHU_test/D");
 	
+	double p2h3_VAJHU_test, p2h3_qq_VAJHU_test,p2h3_decay_VAJHU_test;
+	double p2h2_VAJHU_test, p2h2_qq_VAJHU_test,p2h2_decay_VAJHU_test;
+	double p2h6_VAJHU_test, p2h6_qq_VAJHU_test,p2h6_decay_VAJHU_test;
+	double p2h7_VAJHU_test, p2h7_qq_VAJHU_test,p2h7_decay_VAJHU_test;
+	double p2h9_VAJHU_test, p2h9_qq_VAJHU_test,p2h9_decay_VAJHU_test;
+	double p2h10_VAJHU_test, p2h10_qq_VAJHU_test,p2h10_decay_VAJHU_test;
+  tree->Branch("p2h3_VAJHU_test",&p2h3_VAJHU_test,"p2h3_VAJHU_test/D");
+  tree->Branch("p2h2_VAJHU_test",&p2h2_VAJHU_test,"p2h2_VAJHU_test/D");
+  tree->Branch("p2h6_VAJHU_test",&p2h6_VAJHU_test,"p2h6_VAJHU_test/D");
+  tree->Branch("p2h7_VAJHU_test",&p2h7_VAJHU_test,"p2h7_VAJHU_test/D");
+  tree->Branch("p2h9_VAJHU_test",&p2h9_VAJHU_test,"p2h9_VAJHU_test/D");
+  tree->Branch("p2h10_VAJHU_test",&p2h10_VAJHU_test,"p2h10_VAJHU_test/D");
+
+  tree->Branch("p2h3_qq_VAJHU_test",&p2h3_qq_VAJHU_test,"p2h3_qq_VAJHU_test/D");
+  tree->Branch("p2h2_qq_VAJHU_test",&p2h2_qq_VAJHU_test,"p2h2_qq_VAJHU_test/D");
+  tree->Branch("p2h6_qq_VAJHU_test",&p2h6_qq_VAJHU_test,"p2h6_qq_VAJHU_test/D");
+  tree->Branch("p2h7_qq_VAJHU_test",&p2h7_qq_VAJHU_test,"p2h7_qq_VAJHU_test/D");
+  tree->Branch("p2h9_qq_VAJHU_test",&p2h9_qq_VAJHU_test,"p2h9_qq_VAJHU_test/D");
+  tree->Branch("p2h10_qq_VAJHU_test",&p2h10_qq_VAJHU_test,"p2h10_qq_VAJHU_test/D");
+
+  tree->Branch("p2h3_decay_VAJHU_test",&p2h3_decay_VAJHU_test,"p2h3_decay_VAJHU_test/D");
+  tree->Branch("p2h2_decay_VAJHU_test",&p2h2_decay_VAJHU_test,"p2h2_decay_VAJHU_test/D");
+  tree->Branch("p2h6_decay_VAJHU_test",&p2h6_decay_VAJHU_test,"p2h6_decay_VAJHU_test/D");
+  tree->Branch("p2h7_decay_VAJHU_test",&p2h7_decay_VAJHU_test,"p2h7_decay_VAJHU_test/D");
+  tree->Branch("p2h9_decay_VAJHU_test",&p2h9_decay_VAJHU_test,"p2h9_decay_VAJHU_test/D");
+  tree->Branch("p2h10_decay_VAJHU_test",&p2h10_decay_VAJHU_test,"p2h10_decay_VAJHU_test/D");
 	double p0_self_VAJHU;
   tree->Branch("p0_self_VAJHU",&p0_self_VAJHU,"p0_self_VAJHU/D");
+	double pggHZZ_10;
+  tree->Branch("pggHZZ_10",&pggHZZ_10,"pggHZZ_10/D");
   // old branches
 
   float mzz,m1,m2,h1,h2,hs,phi,phi1,pt4l,Y4l;
@@ -163,9 +194,11 @@ int channel=3;
     test.computeME(k2mplus_qqbar,kAnalytical,p4,id,p2qqb_mela_test);
    
     test.computeME(kggZZ,kMCFM,p4,id,ggZZ_VAMCFM_test);
-    //test.computeME(kSMHiggs,kMCFM,p4,id,p0plus_VAMCFM_test);
-    test.computeME(kggZZ_SMHiggs,kMCFM,p4,id,p0plus_VAMCFM_test);
+    test.computeME(kSMHiggs,kMCFM,p4,id,p0plus_VAMCFM_test);
+    test.computeME(kggZZ_SMHiggs,kMCFM,p4,id,ggzz_p0plus_VAMCFM_test);
     test.computeME(kqqZZ,kMCFM,p4,id,qqZZ_VAMCFM_test);
+
+    test.computeME(kggHZZ_10,kMCFM,p4,id,pggHZZ_10);
 
     test.computeME(kSMHiggs,kJHUGen,p4,id,p0plus_VAJHU_test);
     test.computeME(k0hplus,kJHUGen,p4,id,p0hplus_VAJHU_test);
@@ -174,6 +207,34 @@ int channel=3;
     test.computeME(k1plus,kJHUGen,p4,id,p1plus_VAJHU_test);
     test.computeME(k2mplus_gg,kJHUGen,p4,id,p2_VAJHU_test);
     test.computeME(k2mplus_qqbar,kJHUGen,p4,id,p2qqb_VAJHU_test);
+
+    test.computeME(k2h2plus_gg,kJHUGen,p4,id,p2h2_VAJHU_test);
+    test.computeME(k2h2plus_qqbar,kJHUGen,p4,id,p2h2_qq_VAJHU_test);
+    test.computeME(k2h2plus_prodIndep,kJHUGen,p4,id,p2h2_decay_VAJHU_test);
+
+    test.computeME(k2h2plus_gg,kJHUGen,p4,id,p2h2_VAJHU_test);
+    test.computeME(k2h2plus_qqbar,kJHUGen,p4,id,p2h2_qq_VAJHU_test);
+    test.computeME(k2h2plus_prodIndep,kJHUGen,p4,id,p2h2_decay_VAJHU_test);
+
+    test.computeME(k2h3plus_gg,kJHUGen,p4,id,p2h3_VAJHU_test);
+    test.computeME(k2h3plus_qqbar,kJHUGen,p4,id,p2h3_qq_VAJHU_test);
+    test.computeME(k2h3plus_prodIndep,kJHUGen,p4,id,p2h3_decay_VAJHU_test);
+
+    test.computeME(k2h6plus_gg,kJHUGen,p4,id,p2h6_VAJHU_test);
+    test.computeME(k2h6plus_qqbar,kJHUGen,p4,id,p2h6_qq_VAJHU_test);
+    test.computeME(k2h6plus_prodIndep,kJHUGen,p4,id,p2h6_decay_VAJHU_test);
+
+    test.computeME(k2h7plus_gg,kJHUGen,p4,id,p2h7_VAJHU_test);
+    test.computeME(k2h7plus_qqbar,kJHUGen,p4,id,p2h7_qq_VAJHU_test);
+    test.computeME(k2h7plus_prodIndep,kJHUGen,p4,id,p2h7_decay_VAJHU_test);
+
+    test.computeME(k2h9minus_gg,kJHUGen,p4,id,p2h9_VAJHU_test);
+    test.computeME(k2h9minus_qqbar,kJHUGen,p4,id,p2h9_qq_VAJHU_test);
+    test.computeME(k2h9minus_prodIndep,kJHUGen,p4,id,p2h9_decay_VAJHU_test);
+
+    test.computeME(k2h10minus_gg,kJHUGen,p4,id,p2h10_VAJHU_test);
+    test.computeME(k2h10minus_qqbar,kJHUGen,p4,id,p2h10_qq_VAJHU_test);
+    test.computeME(k2h10minus_prodIndep,kJHUGen,p4,id,p2h10_decay_VAJHU_test);
 
     test.computeME(kSMHiggs,kMEKD,p4,id,p0plus_mad);
     test.computeME(k2mplus_gg,kMEKD,p4,id,p2_mad);
