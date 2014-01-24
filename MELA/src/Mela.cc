@@ -375,12 +375,12 @@ switch (myType){
 				if ( myModel_ == TVar::H2_g8 )  constant = 1.1e8;
 				if ( myModel_ == TVar::H2_g5 )  constant = 16.3;
 
-				if ( myModel_ == TVar::H2_g2 ) constant = 593623;
-				if ( myModel_ == TVar::H2_g3 ) constant = 5.78628e+06;
-				if ( myModel_ == TVar::H2_g6 ) constant = 3.01165e+06/4.;
-				if ( myModel_ == TVar::H2_g7 ) constant = 1.24471e+07;
-				if ( myModel_ == TVar::H2_g9 ) constant = 207.888;
-				if ( myModel_ == TVar::H2_g10 ) constant = 1.02881e+07;
+				if ( myModel_ == TVar::H2_g2 ) constant = 552385;
+				if ( myModel_ == TVar::H2_g3 ) constant = 1.08147e+08;
+				if ( myModel_ == TVar::H2_g6 ) constant = 748630;
+				if ( myModel_ == TVar::H2_g7 ) constant = 1.2522e+07;
+				if ( myModel_ == TVar::H2_g9 ) constant = 3.01467e+06;
+				if ( myModel_ == TVar::H2_g10 ) constant = 1.483e+11;
       }  else {
 
 	//cout << "ANALYTICAL - GG - flavor!=3" << endl;
@@ -392,12 +392,12 @@ switch (myType){
 				if ( myModel_ == TVar::H2_g8 )  constant = 1.9e8;
 				if ( myModel_ == TVar::H2_g5 )  constant = 15.6;
 
-				if ( myModel_ == TVar::H2_g2 ) constant = 593623;
-				if ( myModel_ == TVar::H2_g3 ) constant = 6.92743e+06;
-				if ( myModel_ == TVar::H2_g6 ) constant = 4.38631e+06/4.;
-				if ( myModel_ == TVar::H2_g7 ) constant = 2.25445e+07;
-				if ( myModel_ == TVar::H2_g9 ) constant = 219.423;
-				if ( myModel_ == TVar::H2_g10 ) constant = 1.83016e+07;
+				if ( myModel_ == TVar::H2_g2 ) constant = 552385;
+				if ( myModel_ == TVar::H2_g3 ) constant = 1.24897e+08;
+				if ( myModel_ == TVar::H2_g6 ) constant = 1.10793e+06;
+				if ( myModel_ == TVar::H2_g7 ) constant = 2.21423e+07;
+				if ( myModel_ == TVar::H2_g9 ) constant = 3.18193e+06;
+				if ( myModel_ == TVar::H2_g10 ) constant = 2.63811e+11;
       }
 
     }
@@ -412,14 +412,14 @@ switch (myType){
 				if ( myModel_ == TVar::H2_g1g5 )  constant = 7.9;
 
 				if ( myModel_ == TVar::H2_g5 ) constant = 13.7977;
-				if ( myModel_ == TVar::H2_g4 ) constant = 5.25355e+07;
-				if ( myModel_ == TVar::H2_g2 ) constant = 507119;
-				if ( myModel_ == TVar::H2_g3 ) constant = 5.66603e+06;
-				if ( myModel_ == TVar::H2_g6 ) constant = 3.39563e+06/4.;
-				if ( myModel_ == TVar::H2_g7 ) constant = 1.39711e+07;
-				if ( myModel_ == TVar::H2_g8 ) constant = 6.97202e+07;
-				if ( myModel_ == TVar::H2_g9 ) constant = 201.845;
-				if ( myModel_ == TVar::H2_g10 ) constant = 1.02061e+07;
+				if ( myModel_ == TVar::H2_g4 ) constant = 5.12897e+07;
+				if ( myModel_ == TVar::H2_g2 ) constant = 477586;
+				if ( myModel_ == TVar::H2_g3 ) constant = 1.30907e+08;
+				if ( myModel_ == TVar::H2_g6 ) constant = 847461;
+				if ( myModel_ == TVar::H2_g7 ) constant = 1.39014e+07;
+				if ( myModel_ == TVar::H2_g8 ) constant = 7.08446e+07;
+				if ( myModel_ == TVar::H2_g9 ) constant = 2.93583e+06;
+				if ( myModel_ == TVar::H2_g10 ) constant = 1.47118e+11;
       } else {
 
 	//cout << "ANALYTICAL - QQB - flavor!=3" << endl;
@@ -428,15 +428,15 @@ switch (myType){
 				if ( myModel_ == TVar::H1plus )  constant = 4.0e5;
 				if ( myModel_ == TVar::H2_g1g5 )  constant = 7.9;
 
-				if ( myModel_ == TVar::H2_g5 ) constant = 13.7977;
-				if ( myModel_ == TVar::H2_g4 ) constant = 7.62098e+07;
-				if ( myModel_ == TVar::H2_g2 ) constant = 504085;
-				if ( myModel_ == TVar::H2_g3 ) constant = 6.81066e+06;
-				if ( myModel_ == TVar::H2_g6 ) constant = 4.2823e+06/4.;
-				if ( myModel_ == TVar::H2_g7 ) constant = 2.38549e+07;
-				if ( myModel_ == TVar::H2_g8 ) constant = 1.37619e+08;
-				if ( myModel_ == TVar::H2_g9 ) constant = 207.992;
-				if ( myModel_ == TVar::H2_g10 ) constant = 1.51045e+07;
+				if ( myModel_ == TVar::H2_g5 ) constant = 13.7289;
+				if ( myModel_ == TVar::H2_g4 ) constant = 7.57539e+07;
+				if ( myModel_ == TVar::H2_g2 ) constant = 476156;
+				if ( myModel_ == TVar::H2_g3 ) constant = 1.44675e+08;
+				if ( myModel_ == TVar::H2_g6 ) constant = 1.07303e+06;
+				if ( myModel_ == TVar::H2_g7 ) constant = 2.37359e+07;
+				if ( myModel_ == TVar::H2_g8 ) constant = 1.35435e+08;
+				if ( myModel_ == TVar::H2_g9 ) constant = 2.99514e+06;
+				if ( myModel_ == TVar::H2_g10 ) constant = 2.13201e+11;
       }
     }
     // production independent calculations
@@ -451,13 +451,13 @@ switch (myType){
 
 				if ( myModel_ == TVar::H2_g5 ) constant = 1.15604;
 				if ( myModel_ == TVar::H2_g4 ) constant = 4.36662e+06;
-				if ( myModel_ == TVar::H2_g2 ) constant = 4409.43;
-				if ( myModel_ == TVar::H2_g3 ) constant = 573779;
-				if ( myModel_ == TVar::H2_g6 ) constant = 243409/4.;
-				if ( myModel_ == TVar::H2_g7 ) constant = 1.1978e+06;
+				if ( myModel_ == TVar::H2_g2 ) constant = 39994.6;
+				if ( myModel_ == TVar::H2_g3 ) constant = 1.0897e+07;
+				if ( myModel_ == TVar::H2_g6 ) constant = 61420.6;
+				if ( myModel_ == TVar::H2_g7 ) constant = 1.20742e+06;
 				if ( myModel_ == TVar::H2_g8 ) constant = 6.07991e+06;
-				if ( myModel_ == TVar::H2_g9 ) constant = 16.5271;
-				if ( myModel_ == TVar::H2_g10 ) constant = 810171;
+				if ( myModel_ == TVar::H2_g9 ) constant = 239187;
+				if ( myModel_ == TVar::H2_g10 ) constant = 1.1843e+10;
       } else {
 
 	//cout << "ANALYTICAL - INDEP - flavor!=3" << endl;
@@ -468,13 +468,13 @@ switch (myType){
 
 			if ( myModel_ == TVar::H2_g5 ) constant = 1.15604;
 			if ( myModel_ == TVar::H2_g4 ) constant = 5.6237e+06;
-			if ( myModel_ == TVar::H2_g2 ) constant = 4440.4;
-			if ( myModel_ == TVar::H2_g3 ) constant = 652131;
-			if ( myModel_ == TVar::H2_g6 ) constant = 310364/4.;
-			if ( myModel_ == TVar::H2_g7 ) constant = 1.59758e+06;
-			if ( myModel_ == TVar::H2_g8 ) constant = 8.71451e+06;
-			if ( myModel_ == TVar::H2_g9 ) constant = 16.6932;
-			if ( myModel_ == TVar::H2_g10 ) constant = 1.08273e+06;
+				if ( myModel_ == TVar::H2_g2 ) constant = 39715.6;
+				if ( myModel_ == TVar::H2_g3 ) constant = 1.16172e+07;
+				if ( myModel_ == TVar::H2_g6 ) constant = 77613.8;
+				if ( myModel_ == TVar::H2_g7 ) constant = 1.58485e+06;
+				if ( myModel_ == TVar::H2_g8 ) constant = 8.71451e+06;
+				if ( myModel_ == TVar::H2_g9 ) constant = 241591;
+				if ( myModel_ == TVar::H2_g10 ) constant = 1.55139e+10;
 
       }
     } 
@@ -620,11 +620,11 @@ if (useConstant){
 				if ( myModel_ == TVar::H2_g8 )  constant = 4.1e10;
 				if ( myModel_ == TVar::H2_g5 )  constant = .97;
 
-				if ( myModel_ == TVar::H2_g2 ) constant = 4.7651e+08;
-				if ( myModel_ == TVar::H2_g3 ) constant = 1.62347e+11;
-				if ( myModel_ == TVar::H2_g6 ) constant = 188339/4.;
-				if ( myModel_ == TVar::H2_g7 ) constant = 778403;
-				if ( myModel_ == TVar::H2_g9 ) constant = 1.13171e+09;
+				if ( myModel_ == TVar::H2_g2 ) constant = 4.74608e+08;
+				if ( myModel_ == TVar::H2_g3 ) constant = 1.63324e+11;
+				if ( myModel_ == TVar::H2_g6 ) constant = 46816.9;
+				if ( myModel_ == TVar::H2_g7 ) constant = 783088;
+				if ( myModel_ == TVar::H2_g9 ) constant = 1.13853e+09;
 				if ( myModel_ == TVar::H2_g10 ) constant = 5.58394e+13;
       }  else {
 				if ( myModel_ == TVar::H0minus )  constant = 7.0;
@@ -634,12 +634,12 @@ if (useConstant){
 				if ( myModel_ == TVar::H2_g8 )  constant = 3.7e10;
 				if ( myModel_ == TVar::H2_g5 )  constant = 1.26;
 
-				if ( myModel_ == TVar::H2_g2 ) constant = 5.98538e+08;
-				if ( myModel_ == TVar::H2_g3 ) constant = 1.96711e+11;
-				if ( myModel_ == TVar::H2_g6 ) constant = 222793/4.;
-				if ( myModel_ == TVar::H2_g7 ) constant = 654090;
+				if ( myModel_ == TVar::H2_g2 ) constant = 5.96148e+08;
+				if ( myModel_ == TVar::H2_g3 ) constant = 1.95534e+11;
+				if ( myModel_ == TVar::H2_g6 ) constant = 55160.4;
+				if ( myModel_ == TVar::H2_g7 ) constant = 658026;
 				if ( myModel_ == TVar::H2_g9 ) constant = 1.23089e+09;
-				if ( myModel_ == TVar::H2_g10 ) constant = 5.84095e+13;
+				if ( myModel_ == TVar::H2_g10 ) constant = 5.78862e+13;
 
 			}
     } 
@@ -650,27 +650,27 @@ if (useConstant){
 				if ( myModel_ == TVar::H1plus )  constant = 13.;
 				if ( myModel_ == TVar::H2_g1g5 )  constant = 13.;
 
-				if ( myModel_ == TVar::H2_g5 ) constant = 22.8854;
-				if ( myModel_ == TVar::H2_g4 ) constant = 8.74869e+07;
+				if ( myModel_ == TVar::H2_g5 ) constant = 22.8625;
+				if ( myModel_ == TVar::H2_g4 ) constant = 8.49013e+07;
 				if ( myModel_ == TVar::H2_g2 ) constant = 792938;
 				if ( myModel_ == TVar::H2_g3 ) constant = 2.17563e+08;
-				if ( myModel_ == TVar::H2_g6 ) constant = 5.62089e+06/4.;
-				if ( myModel_ == TVar::H2_g7 ) constant = 2.32659e+07;
-				if ( myModel_ == TVar::H2_g8 ) constant = 1.16337e+08;
-				if ( myModel_ == TVar::H2_g9 ) constant = 4.84036e+06;
-				if ( myModel_ == TVar::H2_g10 ) constant = 2.38468e+11;
+				if ( myModel_ == TVar::H2_g6 ) constant = 1.40845e+06;
+				if ( myModel_ == TVar::H2_g7 ) constant = 2.31499e+07;
+				if ( myModel_ == TVar::H2_g8 ) constant = 1.17271e+08;
+				if ( myModel_ == TVar::H2_g9 ) constant = 4.86462e+06;
+				if ( myModel_ == TVar::H2_g10 ) constant = 2.43529e+11;
       } else {
 				if ( myModel_ == TVar::H1minus )  constant = 38/2.;
 				if ( myModel_ == TVar::H1plus )  constant = 28/2.;
 				if ( myModel_ == TVar::H2_g1g5 )  constant = 30/2.;
 
-				if ( myModel_ == TVar::H2_g5 ) constant = 26.3245;
-				if ( myModel_ == TVar::H2_g4 ) constant = 8.9076e+07;
-				if ( myModel_ == TVar::H2_g2 ) constant = 981169;
-				if ( myModel_ == TVar::H2_g3 ) constant = 2.47272e+08;
-				if ( myModel_ == TVar::H2_g6 ) constant = 6.46556e+06/4.;
-				if ( myModel_ == TVar::H2_g7 ) constant = 1.94333e+07;
-				if ( myModel_ == TVar::H2_g8 ) constant = 1.30124e+08;
+				if ( myModel_ == TVar::H2_g5 ) constant = 26.167;
+				if ( myModel_ == TVar::H2_g4 ) constant = 8.9612e+07;
+				if ( myModel_ == TVar::H2_g2 ) constant = 984117;
+				if ( myModel_ == TVar::H2_g3 ) constant = 2.46285e+08;
+				if ( myModel_ == TVar::H2_g6 ) constant = 1.6201e+06;
+				if ( myModel_ == TVar::H2_g7 ) constant = 1.95307e+07;
+				if ( myModel_ == TVar::H2_g8 ) constant = 1.29087e+08;
 				if ( myModel_ == TVar::H2_g9 ) constant = 5.11404e+06;
 				if ( myModel_ == TVar::H2_g10 ) constant = 2.4183e+11;
       }
@@ -684,13 +684,13 @@ if (useConstant){
 
 				if ( myModel_ == TVar::H2_g5 ) constant = 2.71213e+09;
 				if ( myModel_ == TVar::H2_g4 ) constant = 1.01932e+16;
-				if ( myModel_ == TVar::H2_g2 ) constant = 9.3642e+13;
-				if ( myModel_ == TVar::H2_g3 ) constant = 2.51592e+16;
-				if ( myModel_ == TVar::H2_g6 ) constant = 5.69341e+14/4.;
-				if ( myModel_ == TVar::H2_g7 ) constant = 2.78772e+15;
+				if ( myModel_ == TVar::H2_g2 ) constant = 9.29888e+13;
+				if ( myModel_ == TVar::H2_g3 ) constant = 2.53613e+16;
+				if ( myModel_ == TVar::H2_g6 ) constant = 1.43664e+14;
+				if ( myModel_ == TVar::H2_g7 ) constant = 2.81011e+15;
 				if ( myModel_ == TVar::H2_g8 ) constant = 1.40936e+16;
 				if ( myModel_ == TVar::H2_g9 ) constant = 5.57788e+14;
-				if ( myModel_ == TVar::H2_g10 ) constant = 2.68018e+19;
+				if ( myModel_ == TVar::H2_g10 ) constant = 2.73432e+19;
       } else {
 				if ( myModel_ == TVar::H1minus )  constant = 1.6e+10;
 				if ( myModel_ == TVar::H1plus )  constant = 1.4e+10;
@@ -700,11 +700,11 @@ if (useConstant){
 				if ( myModel_ == TVar::H2_g4 ) constant = 1.01932e+16;
 				if ( myModel_ == TVar::H2_g2 ) constant = 1.16336e+14;
 				if ( myModel_ == TVar::H2_g3 ) constant = 2.76942e+16;
-				if ( myModel_ == TVar::H2_g6 ) constant = 6.81624e+14/4.;
+				if ( myModel_ == TVar::H2_g6 ) constant = 1.68929e+14;
 				if ( myModel_ == TVar::H2_g7 ) constant = 2.22827e+15;
 				if ( myModel_ == TVar::H2_g8 ) constant = 1.39674e+16;
-				if ( myModel_ == TVar::H2_g9 ) constant = 5.69056e+14;
-				if ( myModel_ == TVar::H2_g10 ) constant = 2.57509e+19;
+				if ( myModel_ == TVar::H2_g9 ) constant = 5.63394e+14;
+				if ( myModel_ == TVar::H2_g10 ) constant = 2.54946e+19;
       }
     } 
     
