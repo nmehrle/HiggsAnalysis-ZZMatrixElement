@@ -137,6 +137,12 @@ private:
 	int Run_MEKD_MG_ME_Spin2Ph(string initial_state);
 	int Run_MEKD_MG_ME_Spin2Mh(string initial_state);
 	int Run_MEKD_MG_ME_Spin2Pb(string initial_state);
+	int Run_MEKD_MG_ME_Spin2Ph2(string initial_state);
+	int Run_MEKD_MG_ME_Spin2Ph3(string initial_state);
+	int Run_MEKD_MG_ME_Spin2Ph6(string initial_state);
+	int Run_MEKD_MG_ME_Spin2Ph7(string initial_state);
+	int Run_MEKD_MG_ME_Spin2Mh9(string initial_state);
+	int Run_MEKD_MG_ME_Spin2Mh10(string initial_state);
 	int Run_MEKD_MG_ME_Spin0Pm_Spin0M(string initial_state);	// A mixed state of two contributions
 	int Run_MEKD_MG_ME_Spin0Pm_Spin0Ph(string initial_state);
 	int Run_MEKD_MG_ME_Spin0M_Spin0Ph(string initial_state);

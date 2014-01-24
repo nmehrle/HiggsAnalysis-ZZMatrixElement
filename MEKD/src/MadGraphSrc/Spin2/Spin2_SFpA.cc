@@ -20,7 +20,7 @@ using namespace MG5_HEF_MEKD_spinX;
 void Spin2_SFpA::initProc(string param_card_name) 
 {
   // Instantiate the model class and set parameters that stay fixed during run
-  pars = Parameters_HEF_MEKD::getInstance(); 
+  pars = Parameters_MEKD::getInstance(); 
   SLHAReader slha(param_card_name); 
   pars->setIndependentParameters(slha); 
   pars->setIndependentCouplings();

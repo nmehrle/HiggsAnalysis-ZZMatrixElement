@@ -802,71 +802,138 @@ int MEKD_MG::Run_MEKD_MG()
 		
 		for( unsigned int i=0; i<Test_Models.size(); i++)
 		{
-			if( Test_Models[i]=="-1" || Test_Models[i]=="ZZ" || Test_Models[i]=="DY" )
-				{ Run_MEKD_MG_ME_BKG_ZZ(); Signal_ME=Background_ME; }
-			if( Test_Models[i]=="0" || Test_Models[i]=="Custom" )
+			// Is it a parameter card defined?
+			if( Test_Models[i]=="Custom" )
 				Run_MEKD_MG_ME_Custom();
-			if( Test_Models[i]=="1" || Test_Models[i]=="ggSpin0Pm" )	// SM Higgs
+			
+			
+			// Is it a "background"?
+			else if( Test_Models[i]=="ZZ" || Test_Models[i]=="DY" )
+				{ Run_MEKD_MG_ME_BKG_ZZ(); Signal_ME=Background_ME; }
+			
+			
+			// Is it a spin-0 resonance?
+			else if( Test_Models[i]=="ggSpin0Pm" )	// SM Higgs
 				Run_MEKD_MG_ME_Spin0Pm( "gg" );
-			if( Test_Models[i]=="2" || Test_Models[i]=="ggSpin0M" )
-				Run_MEKD_MG_ME_Spin0M( "gg" );
-			if( Test_Models[i]=="3" || Test_Models[i]=="ggSpin0Ph" )
-		 		Run_MEKD_MG_ME_Spin0Ph( "gg" );
-			if( Test_Models[i]=="ggSpin0" )
-				Run_MEKD_MG_ME_Spin0( "gg" );
-			if( Test_Models[i]=="4" || Test_Models[i]=="qqSpin1M" )
-		 		Run_MEKD_MG_ME_Spin1M( "qq" );
-			if( Test_Models[i]=="5" || Test_Models[i]=="qqSpin1P" )
-		 		Run_MEKD_MG_ME_Spin1P( "qq" );
-			if( Test_Models[i]=="qqSpin1" )
-		 		Run_MEKD_MG_ME_Spin1( "qq" );
-			if( Test_Models[i]=="6" || Test_Models[i]=="ggSpin2Pm" )
-				Run_MEKD_MG_ME_Spin2Pm( "gg" );
-			if( Test_Models[i]=="7" || Test_Models[i]=="qqSpin2Pm" )
-				Run_MEKD_MG_ME_Spin2Pm( "qq" );
-			if( Test_Models[i]=="9" || Test_Models[i]=="ggSpin2Ph" )
-				Run_MEKD_MG_ME_Spin2Ph( "gg" );
-			if( Test_Models[i]=="10" || Test_Models[i]=="ggSpin2Mh" )
-				Run_MEKD_MG_ME_Spin2Mh( "gg" );
-			if( Test_Models[i]=="11" || Test_Models[i]=="ggSpin2Pb" )
-				Run_MEKD_MG_ME_Spin2Pb( "gg" );
-			if( Test_Models[i]=="12" || Test_Models[i]=="qqSpin2Ph" )
-				Run_MEKD_MG_ME_Spin2Ph( "qq" );
-			if( Test_Models[i]=="13" || Test_Models[i]=="qqSpin2Mh" )
-				Run_MEKD_MG_ME_Spin2Mh( "qq" );
-			if( Test_Models[i]=="14" || Test_Models[i]=="qqSpin2Pb" )
-				Run_MEKD_MG_ME_Spin2Pb( "qq" );
-			if( Test_Models[i]=="ggSpin2" )
-				Run_MEKD_MG_ME_Spin2( "gg" );
-			if( Test_Models[i]=="qqSpin2" )
-				Run_MEKD_MG_ME_Spin2( "qq" );
-			if( Test_Models[i]=="Spin0Pm" )
+			else if( Test_Models[i]==  "Spin0Pm" )
 				Run_MEKD_MG_ME_Spin0Pm( "NO" );
-			if( Test_Models[i]=="Spin0M" )
+			
+			else if( Test_Models[i]=="ggSpin0M" )
+				Run_MEKD_MG_ME_Spin0M( "gg" );
+			else if( Test_Models[i]==  "Spin0M" )
 				Run_MEKD_MG_ME_Spin0M( "NO" );
-			if( Test_Models[i]=="Spin0Ph" )
+			
+			else if( Test_Models[i]=="ggSpin0Ph" )
+				Run_MEKD_MG_ME_Spin0Ph( "gg" );
+			else if( Test_Models[i]==  "Spin0Ph" )
 				Run_MEKD_MG_ME_Spin0Ph( "NO" );
-			if( Test_Models[i]=="Spin1P" )
-				Run_MEKD_MG_ME_Spin1P( "NO" );
-			if( Test_Models[i]=="Spin1M" )
-				Run_MEKD_MG_ME_Spin1M( "NO" );
-			if( Test_Models[i]=="Spin2Pm" )
-				Run_MEKD_MG_ME_Spin2Pm( "NO" );
-			if( Test_Models[i]=="Spin2Ph" )
-				Run_MEKD_MG_ME_Spin2Ph( "NO" );
-			if( Test_Models[i]=="Spin2Mh" )
-				Run_MEKD_MG_ME_Spin2Mh( "NO" );
-			if( Test_Models[i]=="Spin2Pb" )
-				Run_MEKD_MG_ME_Spin2Pb( "NO" );
-			if( Test_Models[i]=="Spin0" )
+			
+			else if( Test_Models[i]=="ggSpin0" )
+				Run_MEKD_MG_ME_Spin0( "gg" );
+			else if( Test_Models[i]==  "Spin0" )
 				Run_MEKD_MG_ME_Spin0( "NO" );
-			if( Test_Models[i]=="Spin1" )
+			
+			
+			// Is it a spin-1 resonance?
+			else if( Test_Models[i]=="qqSpin1M" )
+				Run_MEKD_MG_ME_Spin1M( "qq" );
+			else if( Test_Models[i]==  "Spin1M" )
+				Run_MEKD_MG_ME_Spin1M( "NO" );
+			
+			else if( Test_Models[i]=="qqSpin1P" )
+				Run_MEKD_MG_ME_Spin1P( "qq" );
+			else if( Test_Models[i]==  "Spin1P" )
+				Run_MEKD_MG_ME_Spin1P( "NO" );
+			
+			else if( Test_Models[i]=="qqSpin1" )
+				Run_MEKD_MG_ME_Spin1( "qq" );
+			else if( Test_Models[i]==  "Spin1" )
 				Run_MEKD_MG_ME_Spin1( "NO" );
-			if( Test_Models[i]=="Spin2" )
+			
+			
+			// Is it a spin-2 resonance?
+			else if( Test_Models[i]=="ggSpin2Pm" )
+				Run_MEKD_MG_ME_Spin2Pm( "gg" );
+			else if( Test_Models[i]=="qqSpin2Pm" )
+				Run_MEKD_MG_ME_Spin2Pm( "qq" );
+			else if( Test_Models[i]==  "Spin2Pm" )
+				Run_MEKD_MG_ME_Spin2Pm( "NO" );
+			
+			else if( Test_Models[i]=="ggSpin2Ph" )
+				Run_MEKD_MG_ME_Spin2Ph( "gg" );
+			else if( Test_Models[i]=="qqSpin2Ph" )
+				Run_MEKD_MG_ME_Spin2Ph( "qq" );
+			else if( Test_Models[i]==  "Spin2Ph" )
+				Run_MEKD_MG_ME_Spin2Ph( "NO" );
+			
+			else if( Test_Models[i]=="ggSpin2Mh" )
+				Run_MEKD_MG_ME_Spin2Mh( "gg" );
+			else if( Test_Models[i]=="qqSpin2Mh" )
+				Run_MEKD_MG_ME_Spin2Mh( "qq" );
+			else if( Test_Models[i]==  "Spin2Mh" )
+				Run_MEKD_MG_ME_Spin2Mh( "NO" );
+			
+			else if( Test_Models[i]=="ggSpin2Pb" )
+				Run_MEKD_MG_ME_Spin2Pb( "gg" );
+			else if( Test_Models[i]=="qqSpin2Pb" )
+				Run_MEKD_MG_ME_Spin2Pb( "qq" );
+			else if( Test_Models[i]==  "Spin2Pb" )
+				Run_MEKD_MG_ME_Spin2Pb( "NO" );
+			
+			else if( Test_Models[i]=="ggSpin2Ph2" )
+				Run_MEKD_MG_ME_Spin2Ph2( "gg" );
+			else if( Test_Models[i]=="qqSpin2Ph2" )
+				Run_MEKD_MG_ME_Spin2Ph2( "qq" );
+			else if( Test_Models[i]==  "Spin2Ph2" )
+				Run_MEKD_MG_ME_Spin2Ph2( "NO" );
+			
+			else if( Test_Models[i]=="ggSpin2Ph3" )
+				Run_MEKD_MG_ME_Spin2Ph3( "gg" );
+			else if( Test_Models[i]=="qqSpin2Ph3" )
+				Run_MEKD_MG_ME_Spin2Ph3( "qq" );
+			else if( Test_Models[i]==  "Spin2Ph3" )
+				Run_MEKD_MG_ME_Spin2Ph3( "NO" );
+			
+			else if( Test_Models[i]=="ggSpin2Ph6" )
+				Run_MEKD_MG_ME_Spin2Ph6( "gg" );
+			else if( Test_Models[i]=="qqSpin2Ph6" )
+				Run_MEKD_MG_ME_Spin2Ph6( "qq" );
+			else if( Test_Models[i]==  "Spin2Ph6" )
+				Run_MEKD_MG_ME_Spin2Ph6( "NO" );
+			
+			else if( Test_Models[i]=="ggSpin2Ph7" )
+				Run_MEKD_MG_ME_Spin2Ph7( "gg" );
+			else if( Test_Models[i]=="qqSpin2Ph7" )
+				Run_MEKD_MG_ME_Spin2Ph7( "qq" );
+			else if( Test_Models[i]==  "Spin2Ph7" )
+				Run_MEKD_MG_ME_Spin2Ph7( "NO" );
+			
+			else if( Test_Models[i]=="ggSpin2Mh9" )
+				Run_MEKD_MG_ME_Spin2Mh9( "gg" );
+			else if( Test_Models[i]=="qqSpin2Mh9" )
+				Run_MEKD_MG_ME_Spin2Mh9( "qq" );
+			else if( Test_Models[i]==  "Spin2Mh9" )
+				Run_MEKD_MG_ME_Spin2Mh9( "NO" );
+			
+			else if( Test_Models[i]=="ggSpin2Mh10" )
+				Run_MEKD_MG_ME_Spin2Mh10( "gg" );
+			else if( Test_Models[i]=="qqSpin2Mh10" )
+				Run_MEKD_MG_ME_Spin2Mh10( "qq" );
+			else if( Test_Models[i]==  "Spin2Mh10" )
+				Run_MEKD_MG_ME_Spin2Mh10( "NO" );
+			
+			else if( Test_Models[i]=="ggSpin2" )
+				Run_MEKD_MG_ME_Spin2( "gg" );
+			else if( Test_Models[i]=="qqSpin2" )
+				Run_MEKD_MG_ME_Spin2( "qq" );
+			else if( Test_Models[i]==  "Spin2" )
 				Run_MEKD_MG_ME_Spin2( "NO" );
-			if( Test_Models[i]=="qqZ4l_Background" )
+			
+			
+			// Is it a Z boson resonance?
+			else if( Test_Models[i]=="qqZ4l_Background" )
 				{ Run_MEKD_MG_ME_BKG_Z4l(); Signal_ME=Background_ME; }
-			if( Test_Models[i]=="qqZ4l_Signal" )
+			else if( Test_Models[i]=="qqZ4l_Signal" )
 				Run_MEKD_MG_ME_Z4l();
 				
 			Signal_MEs.push_back( Signal_ME );
@@ -874,104 +941,140 @@ int MEKD_MG::Run_MEKD_MG()
 	}
 	else
 	{
-		if( Test_Model=="-1" || Test_Model=="ZZ" || Test_Model=="DY" ||
-			Test_Model=="!-1" || Test_Model=="!ZZ" || Test_Model=="!DY" )
-			{ Run_MEKD_MG_ME_BKG_ZZ(); Signal_ME=Background_ME; }
-		if( Test_Model=="0" || Test_Model=="Custom" ||
-			Test_Model=="!0" || Test_Model=="!Custom" )
+		// Is it a parameter card defined?
+		if( Test_Model=="Custom" || Test_Model=="!Custom" )
 			Run_MEKD_MG_ME_Custom();
-		if( Test_Model=="1" || Test_Model=="ggSpin0Pm" ||
-			Test_Model=="!1" || Test_Model=="!ggSpin0Pm" )	// SM Higgs
+		
+		
+		// Is it a "background"?
+		else if( Test_Model=="ZZ" || Test_Model=="DY" ||
+			Test_Model=="!ZZ" || Test_Model=="!DY" )
+			{ Run_MEKD_MG_ME_BKG_ZZ(); Signal_ME=Background_ME; }
+		
+		
+		// Is it a spin-0 resonance?
+		else if( Test_Model=="ggSpin0Pm" || Test_Model=="!ggSpin0Pm" )	// SM Higgs
 			Run_MEKD_MG_ME_Spin0Pm( "gg" );
-		if( Test_Model=="2" || Test_Model=="ggSpin0M" ||
-			Test_Model=="!2" || Test_Model=="!ggSpin0M" )
-			Run_MEKD_MG_ME_Spin0M( "gg" );
-		if( Test_Model=="3" || Test_Model=="ggSpin0Ph" ||
-			Test_Model=="!3" || Test_Model=="!ggSpin0Ph" )
-	 		Run_MEKD_MG_ME_Spin0Ph( "gg" );
-		if( Test_Model=="ggSpin0" ||
-			Test_Model=="!ggSpin0" )
-			Run_MEKD_MG_ME_Spin0( "gg" );
-		if( Test_Model=="4" || Test_Model=="qqSpin1M" ||
-			Test_Model=="!4" || Test_Model=="!qqSpin1M" )
-	 		Run_MEKD_MG_ME_Spin1M( "qq" );
-		if( Test_Model=="5" || Test_Model=="qqSpin1P" ||
-			Test_Model=="!5" || Test_Model=="!qqSpin1P" )
-	 		Run_MEKD_MG_ME_Spin1P( "qq" );
-		if( Test_Model=="qqSpin1" ||
-			Test_Model=="!qqSpin1" )
-			Run_MEKD_MG_ME_Spin1( "qq" );
-		if( Test_Model=="6" || Test_Model=="ggSpin2Pm" ||
-			Test_Model=="!6" || Test_Model=="!ggSpin2Pm" )
-			Run_MEKD_MG_ME_Spin2Pm( "gg" );
-		if( Test_Model=="7" || Test_Model=="qqSpin2Pm" ||
-			Test_Model=="!7" || Test_Model=="!qqSpin2Pm" )
-			Run_MEKD_MG_ME_Spin2Pm( "qq" );
-		if( Test_Model=="9" || Test_Model=="ggSpin2Ph" ||
-			Test_Model=="!9" || Test_Model=="!ggSpin2Ph" )
-			Run_MEKD_MG_ME_Spin2Ph( "gg" );
-		if( Test_Model=="10" || Test_Model=="ggSpin2Mh" ||
-			Test_Model=="!10" || Test_Model=="!ggSpin2Mh" )
-			Run_MEKD_MG_ME_Spin2Mh( "gg" );
-		if( Test_Model=="11" || Test_Model=="ggSpin2Pb" ||
-			Test_Model=="!11" || Test_Model=="!ggSpin2Pb" )
-			Run_MEKD_MG_ME_Spin2Pb( "gg" );
-		if( Test_Model=="12" || Test_Model=="qqSpin2Ph" ||
-			Test_Model=="!12" || Test_Model=="!qqSpin2Ph" )
-			Run_MEKD_MG_ME_Spin2Ph( "qq" );
-		if( Test_Model=="13" || Test_Model=="qqSpin2Mh" ||
-			Test_Model=="!13" || Test_Model=="!qqSpin2Mh" )
-			Run_MEKD_MG_ME_Spin2Mh( "qq" );
-		if( Test_Model=="14" || Test_Model=="qqSpin2Pb" ||
-			Test_Model=="!14" || Test_Model=="!qqSpin2Pb" )
-			Run_MEKD_MG_ME_Spin2Pb( "qq" );
-		if( Test_Model=="ggSpin2" ||
-			Test_Model=="!ggSpin2" )
-			Run_MEKD_MG_ME_Spin2( "gg" );
-		if( Test_Model=="qqSpin2" ||
-			Test_Model=="!qqSpin2" )
-			Run_MEKD_MG_ME_Spin2( "qq" );
-		if( Test_Model=="Spin0Pm" ||
-			Test_Model=="!Spin0Pm" )
+		else if( Test_Model==  "Spin0Pm" || Test_Model==  "!Spin0Pm" )
 			Run_MEKD_MG_ME_Spin0Pm( "NO" );
-		if( Test_Model=="Spin0M" ||
-			Test_Model=="!Spin0M" )
+		
+		else if( Test_Model=="ggSpin0M" || Test_Model=="!ggSpin0M" )
+			Run_MEKD_MG_ME_Spin0M( "gg" );
+		else if( Test_Model==  "Spin0M" || Test_Model==  "!Spin0M" )
 			Run_MEKD_MG_ME_Spin0M( "NO" );
-		if( Test_Model=="Spin0Ph" ||
-			Test_Model=="!Spin0Ph" )
+		
+		else if( Test_Model=="ggSpin0Ph" || Test_Model=="!ggSpin0Ph" )
+			Run_MEKD_MG_ME_Spin0Ph( "gg" );
+		else if( Test_Model==  "Spin0Ph" || Test_Model==  "!Spin0Ph" )
 			Run_MEKD_MG_ME_Spin0Ph( "NO" );
-		if( Test_Model=="Spin1P" ||
-			Test_Model=="!Spin1P" )
-			Run_MEKD_MG_ME_Spin1P( "NO" );
-		if( Test_Model=="Spin1M" ||
-			Test_Model=="!Spin1M" )
-			Run_MEKD_MG_ME_Spin1M( "NO" );
-		if( Test_Model=="Spin2Pm" ||
-			Test_Model=="!Spin2Pm" )
-			Run_MEKD_MG_ME_Spin2Pm( "NO" );
-		if( Test_Model=="Spin2Ph" ||
-			Test_Model=="!Spin2Ph" )
-			Run_MEKD_MG_ME_Spin2Ph( "NO" );
-		if( Test_Model=="Spin2Mh" ||
-			Test_Model=="!Spin2Mh" )
-			Run_MEKD_MG_ME_Spin2Mh( "NO" );
-		if( Test_Model=="Spin2Pb" ||
-			Test_Model=="!Spin2Pb" )
-			Run_MEKD_MG_ME_Spin2Pb( "NO" );
-		if( Test_Model=="Spin0" ||
-			Test_Model=="!Spin0" )
+		
+		else if( Test_Model=="ggSpin0" || Test_Model=="!ggSpin0" )
+			Run_MEKD_MG_ME_Spin0( "gg" );
+		else if( Test_Model==  "Spin0" || Test_Model==  "!Spin0" )
 			Run_MEKD_MG_ME_Spin0( "NO" );
-		if( Test_Model=="Spin1" ||
-			Test_Model=="!Spin1" )
+		
+		
+		// Is it a spin-1 resonance?
+		else if( Test_Model=="qqSpin1M" || Test_Model=="!qqSpin1M" )
+			Run_MEKD_MG_ME_Spin1M( "qq" );
+		else if( Test_Model==  "Spin1M" || Test_Model==  "!Spin1M" )
+			Run_MEKD_MG_ME_Spin1M( "NO" );
+		
+		else if( Test_Model=="qqSpin1P" || Test_Model=="!qqSpin1P" )
+			Run_MEKD_MG_ME_Spin1P( "qq" );
+		else if( Test_Model==  "Spin1P" || Test_Model==  "!Spin1P" )
+			Run_MEKD_MG_ME_Spin1P( "NO" );
+		
+		else if( Test_Model=="qqSpin1" || Test_Model=="!qqSpin1" )
+			Run_MEKD_MG_ME_Spin1( "qq" );
+		else if( Test_Model==  "Spin1" || Test_Model==  "!Spin1" )
 			Run_MEKD_MG_ME_Spin1( "NO" );
-		if( Test_Model=="Spin2" ||
-			Test_Model=="!Spin2" )
+		
+		
+		// Is it a spin-2 resonance?
+		else if( Test_Model=="ggSpin2Pm" || Test_Model=="!ggSpin2Pm" )
+			Run_MEKD_MG_ME_Spin2Pm( "gg" );
+		else if( Test_Model=="qqSpin2Pm" || Test_Model=="!qqSpin2Pm" )
+			Run_MEKD_MG_ME_Spin2Pm( "qq" );
+		else if( Test_Model==  "Spin2Pm" || Test_Model==  "!Spin2Pm" )
+			Run_MEKD_MG_ME_Spin2Pm( "NO" );
+		
+		else if( Test_Model=="ggSpin2Ph" || Test_Model=="!ggSpin2Ph" )
+			Run_MEKD_MG_ME_Spin2Ph( "gg" );
+		else if( Test_Model=="qqSpin2Ph" || Test_Model=="!qqSpin2Ph" )
+			Run_MEKD_MG_ME_Spin2Ph( "qq" );
+		else if( Test_Model==  "Spin2Ph" || Test_Model==  "!Spin2Ph" )
+			Run_MEKD_MG_ME_Spin2Ph( "NO" );
+		
+		else if( Test_Model=="ggSpin2Mh" || Test_Model=="!ggSpin2Mh" )
+			Run_MEKD_MG_ME_Spin2Mh( "gg" );
+		else if( Test_Model=="qqSpin2Mh" || Test_Model=="!qqSpin2Mh" )
+			Run_MEKD_MG_ME_Spin2Mh( "qq" );
+		else if( Test_Model==  "Spin2Mh" || Test_Model==  "!Spin2Mh" )
+			Run_MEKD_MG_ME_Spin2Mh( "NO" );
+		
+		else if( Test_Model=="ggSpin2Pb" || Test_Model=="!ggSpin2Pb" )
+			Run_MEKD_MG_ME_Spin2Pb( "gg" );
+		else if( Test_Model=="qqSpin2Pb" || Test_Model=="!qqSpin2Pb" )
+			Run_MEKD_MG_ME_Spin2Pb( "qq" );
+		else if( Test_Model==  "Spin2Pb" || Test_Model==  "!Spin2Pb" )
+			Run_MEKD_MG_ME_Spin2Pb( "NO" );
+		
+		
+		else if( Test_Model=="ggSpin2Ph2" || Test_Model=="!ggSpin2Ph2" )
+			Run_MEKD_MG_ME_Spin2Ph2( "gg" );
+		else if( Test_Model=="qqSpin2Ph2" || Test_Model=="!qqSpin2Ph2" )
+			Run_MEKD_MG_ME_Spin2Ph2( "qq" );
+		else if( Test_Model==  "Spin2Ph2" || Test_Model==  "!Spin2Ph2" )
+			Run_MEKD_MG_ME_Spin2Ph2( "NO" );
+		
+		else if( Test_Model=="ggSpin2Ph3" || Test_Model=="!ggSpin2Ph3" )
+			Run_MEKD_MG_ME_Spin2Ph3( "gg" );
+		else if( Test_Model=="qqSpin2Ph3" || Test_Model=="!qqSpin2Ph3" )
+			Run_MEKD_MG_ME_Spin2Ph3( "qq" );
+		else if( Test_Model==  "Spin2Ph3" || Test_Model==  "!Spin2Ph3" )
+			Run_MEKD_MG_ME_Spin2Ph3( "NO" );
+		
+		else if( Test_Model=="ggSpin2Ph6" || Test_Model=="!ggSpin2Ph6" )
+			Run_MEKD_MG_ME_Spin2Ph6( "gg" );
+		else if( Test_Model=="qqSpin2Ph6" || Test_Model=="!qqSpin2Ph6" )
+			Run_MEKD_MG_ME_Spin2Ph6( "qq" );
+		else if( Test_Model==  "Spin2Ph6" || Test_Model==  "!Spin2Ph6" )
+			Run_MEKD_MG_ME_Spin2Ph6( "NO" );
+		
+		else if( Test_Model=="ggSpin2Ph7" || Test_Model=="!ggSpin2Ph7" )
+			Run_MEKD_MG_ME_Spin2Ph7( "gg" );
+		else if( Test_Model=="qqSpin2Ph7" || Test_Model=="!qqSpin2Ph7" )
+			Run_MEKD_MG_ME_Spin2Ph7( "qq" );
+		else if( Test_Model==  "Spin2Ph7" || Test_Model==  "!Spin2Ph7" )
+			Run_MEKD_MG_ME_Spin2Ph7( "NO" );
+		
+		else if( Test_Model=="ggSpin2Mh9" || Test_Model=="!ggSpin2Mh9" )
+			Run_MEKD_MG_ME_Spin2Mh9( "gg" );
+		else if( Test_Model=="qqSpin2Mh9" || Test_Model=="!qqSpin2Mh9" )
+			Run_MEKD_MG_ME_Spin2Mh9( "qq" );
+		else if( Test_Model==  "Spin2Mh9" || Test_Model==  "!Spin2Mh9" )
+			Run_MEKD_MG_ME_Spin2Mh9( "NO" );
+		
+		else if( Test_Model=="ggSpin2Mh10" || Test_Model=="!ggSpin2Mh10" )
+			Run_MEKD_MG_ME_Spin2Mh10( "gg" );
+		else if( Test_Model=="qqSpin2Mh10" || Test_Model=="!qqSpin2Mh10" )
+			Run_MEKD_MG_ME_Spin2Mh10( "qq" );
+		else if( Test_Model==  "Spin2Mh10" || Test_Model==  "!Spin2Mh10" )
+			Run_MEKD_MG_ME_Spin2Mh10( "NO" );
+		
+		else if( Test_Model=="ggSpin2" || Test_Model=="!ggSpin2" )
+			Run_MEKD_MG_ME_Spin2( "gg" );
+		else if( Test_Model=="qqSpin2" || Test_Model=="!qqSpin2" )
+			Run_MEKD_MG_ME_Spin2( "qq" );
+		else if( Test_Model==  "Spin2" || Test_Model==  "!Spin2" )
 			Run_MEKD_MG_ME_Spin2( "NO" );
-		if( Test_Model=="qqZ4l_Background" ||
-			Test_Model=="!qqZ4l_Background" )
+		
+		
+		// Is it a Z boson resonance?
+		else if( Test_Model=="qqZ4l_Background" || Test_Model=="!qqZ4l_Background" )
 			{ Run_MEKD_MG_ME_BKG_Z4l(); Signal_ME=Background_ME; }
-		if( Test_Model=="qqZ4l_Signal" ||
-			Test_Model=="!qqZ4l_Signal" )
+		else if( Test_Model=="qqZ4l_Signal" || Test_Model=="!qqZ4l_Signal" )
 			Run_MEKD_MG_ME_Z4l();
 	}
 	
@@ -1056,6 +1159,12 @@ int MEKD_MG::Run_MEKD_MG_ME_Custom()
 
 
 
+////////////////////////////////////
+/// Spin-0 resonances start here ///
+////////////////////////////////////
+
+
+
 /// A SM Higgs
 int MEKD_MG::Run_MEKD_MG_ME_Spin0Pm(string initial_state)
 {
@@ -1101,6 +1210,12 @@ int MEKD_MG::Run_MEKD_MG_ME_Spin0Ph(string initial_state)
 
 
 
+////////////////////////////////////
+/// Spin-1 resonances start here ///
+////////////////////////////////////
+
+
+
 /// A vector default configuration
 int MEKD_MG::Run_MEKD_MG_ME_Spin1M(string initial_state)
 {
@@ -1133,11 +1248,17 @@ int MEKD_MG::Run_MEKD_MG_ME_Spin1P(string initial_state)
 
 
 
+////////////////////////////////////
+/// Spin-2 resonances start here ///
+////////////////////////////////////
+
+
+
 /// A minimal-coupling KK graviton
 int MEKD_MG::Run_MEKD_MG_ME_Spin2Pm(string initial_state)
 {
 	Predefined_Model = true;
-	Mixing_Coefficients_Spin2_internal[0] = complex<double>(1, 0);	// Production
+	if( initial_state=="gg" ) Mixing_Coefficients_Spin2_internal[0] = complex<double>(1, 0);	// Production
 	Mixing_Coefficients_Spin2_internal[1] = complex<double>(0, 0);
 	Mixing_Coefficients_Spin2_internal[2] = complex<double>(0, 0);
 	Mixing_Coefficients_Spin2_internal[3] = complex<double>(0, 0);
@@ -1158,6 +1279,9 @@ int MEKD_MG::Run_MEKD_MG_ME_Spin2Pm(string initial_state)
 	Mixing_Coefficients_Spin2_internal[18] = complex<double>(0, 0);
 	Mixing_Coefficients_Spin2_internal[19] = complex<double>(0, 0);
 	
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[0] = complex<double>(1, 0);
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[1] = complex<double>(1, 0);
+	
 	return Run_MEKD_MG_ME_Spin2( initial_state );
 }
 
@@ -1170,7 +1294,7 @@ int MEKD_MG::Run_MEKD_MG_ME_Spin2Ph(string initial_state)
 	Mixing_Coefficients_Spin2_internal[0] = complex<double>(0, 0);	// Production
 	Mixing_Coefficients_Spin2_internal[1] = complex<double>(0, 0);
 	Mixing_Coefficients_Spin2_internal[2] = complex<double>(0, 0);
-	Mixing_Coefficients_Spin2_internal[3] = complex<double>(1, 0);
+	if( initial_state=="gg" ) Mixing_Coefficients_Spin2_internal[3] = complex<double>(1, 0);
 	Mixing_Coefficients_Spin2_internal[4] = complex<double>(0, 0);
 	Mixing_Coefficients_Spin2_internal[5] = complex<double>(0, 0);
 	Mixing_Coefficients_Spin2_internal[6] = complex<double>(0, 0);
@@ -1188,6 +1312,10 @@ int MEKD_MG::Run_MEKD_MG_ME_Spin2Ph(string initial_state)
 	Mixing_Coefficients_Spin2_internal[18] = complex<double>(0, 0);
 	Mixing_Coefficients_Spin2_internal[19] = complex<double>(0, 0);
 	
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[0] = complex<double>(1, 0);
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[1] = complex<double>(1, 0);
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[3] = complex<double>(0, 0);
+	
 	return Run_MEKD_MG_ME_Spin2( initial_state );
 }
 
@@ -1204,7 +1332,7 @@ int MEKD_MG::Run_MEKD_MG_ME_Spin2Mh(string initial_state)
 	Mixing_Coefficients_Spin2_internal[4] = complex<double>(0, 0);
 	Mixing_Coefficients_Spin2_internal[5] = complex<double>(0, 0);
 	Mixing_Coefficients_Spin2_internal[6] = complex<double>(0, 0);
-	Mixing_Coefficients_Spin2_internal[7] = complex<double>(1, 0);
+	if( initial_state=="gg" ) Mixing_Coefficients_Spin2_internal[7] = complex<double>(1, 0);
 	Mixing_Coefficients_Spin2_internal[8] = complex<double>(0, 0);
 	Mixing_Coefficients_Spin2_internal[9] = complex<double>(0, 0);
 	Mixing_Coefficients_Spin2_internal[10] = complex<double>(0, 0);	// Decay
@@ -1218,6 +1346,10 @@ int MEKD_MG::Run_MEKD_MG_ME_Spin2Mh(string initial_state)
 	Mixing_Coefficients_Spin2_internal[18] = complex<double>(0, 0);
 	Mixing_Coefficients_Spin2_internal[19] = complex<double>(0, 0);
 	
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[0] = complex<double>(1, 0);
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[1] = complex<double>(1, 0);
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[7] = complex<double>(0, 0);
+	
 	return Run_MEKD_MG_ME_Spin2( initial_state );
 }
 
@@ -1227,7 +1359,7 @@ int MEKD_MG::Run_MEKD_MG_ME_Spin2Mh(string initial_state)
 int MEKD_MG::Run_MEKD_MG_ME_Spin2Pb(string initial_state)
 {
 	Predefined_Model = true;
-	Mixing_Coefficients_Spin2_internal[0] = complex<double>(1, 0);	// Production
+	if( initial_state=="gg" ) Mixing_Coefficients_Spin2_internal[0] = complex<double>(1, 0);	// Production
 	Mixing_Coefficients_Spin2_internal[1] = complex<double>(0, 0);
 	Mixing_Coefficients_Spin2_internal[2] = complex<double>(0, 0);
 	Mixing_Coefficients_Spin2_internal[3] = complex<double>(0, 0);
@@ -1247,6 +1379,210 @@ int MEKD_MG::Run_MEKD_MG_ME_Spin2Pb(string initial_state)
 	Mixing_Coefficients_Spin2_internal[17] = complex<double>(0, 0);
 	Mixing_Coefficients_Spin2_internal[18] = complex<double>(0, 0);
 	Mixing_Coefficients_Spin2_internal[19] = complex<double>(0, 0);
+	
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[0] = complex<double>(1, 0);
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[1] = complex<double>(1, 0);
+	
+	return Run_MEKD_MG_ME_Spin2( initial_state );
+}
+
+
+
+///
+int MEKD_MG::Run_MEKD_MG_ME_Spin2Ph2(string initial_state)
+{
+	Predefined_Model = true;
+	Mixing_Coefficients_Spin2_internal[0] = complex<double>(0, 0);	// Production
+	if( initial_state=="gg" ) Mixing_Coefficients_Spin2_internal[1] = complex<double>(1, 0);
+	Mixing_Coefficients_Spin2_internal[2] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[3] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[4] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[5] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[6] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[7] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[8] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[9] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[10] = complex<double>(0, 0);	// Decay
+	Mixing_Coefficients_Spin2_internal[11] = complex<double>(1, 0);
+	Mixing_Coefficients_Spin2_internal[12] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[13] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[14] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[15] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[16] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[17] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[18] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[19] = complex<double>(0, 0);
+	
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[0] = complex<double>(1, 0);
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[1] = complex<double>(1, 0);
+	
+	return Run_MEKD_MG_ME_Spin2( initial_state );
+}
+
+
+
+///
+int MEKD_MG::Run_MEKD_MG_ME_Spin2Ph3(string initial_state)
+{
+	Predefined_Model = true;
+	Mixing_Coefficients_Spin2_internal[0] = complex<double>(0, 0);	// Production
+	Mixing_Coefficients_Spin2_internal[1] = complex<double>(0, 0);
+	if( initial_state=="gg" ) Mixing_Coefficients_Spin2_internal[2] = complex<double>(1, 0);
+	Mixing_Coefficients_Spin2_internal[3] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[4] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[5] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[6] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[7] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[8] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[9] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[10] = complex<double>(0, 0);	// Decay
+	Mixing_Coefficients_Spin2_internal[11] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[12] = complex<double>(1, 0);
+	Mixing_Coefficients_Spin2_internal[13] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[14] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[15] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[16] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[17] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[18] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[19] = complex<double>(0, 0);
+	
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[0] = complex<double>(1, 0);
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[1] = complex<double>(1, 0);
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[3] = complex<double>(0, 0);
+	
+	return Run_MEKD_MG_ME_Spin2( initial_state );
+}
+
+
+
+///
+int MEKD_MG::Run_MEKD_MG_ME_Spin2Ph6(string initial_state)
+{
+	Predefined_Model = true;
+	if( initial_state=="gg" ) Mixing_Coefficients_Spin2_internal[0] = complex<double>(1, 0);	// Production
+	Mixing_Coefficients_Spin2_internal[1] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[2] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[3] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[4] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[5] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[6] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[7] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[8] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[9] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[10] = complex<double>(0, 0);	// Decay
+	Mixing_Coefficients_Spin2_internal[11] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[12] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[13] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[14] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[15] = complex<double>(1, 0);
+	Mixing_Coefficients_Spin2_internal[16] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[17] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[18] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[19] = complex<double>(0, 0);
+	
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[0] = complex<double>(1, 0);
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[1] = complex<double>(1, 0);
+	
+	return Run_MEKD_MG_ME_Spin2( initial_state );
+}
+
+
+
+///
+int MEKD_MG::Run_MEKD_MG_ME_Spin2Ph7(string initial_state)
+{
+	Predefined_Model = true;
+	if( initial_state=="gg" ) Mixing_Coefficients_Spin2_internal[0] = complex<double>(1, 0);	// Production
+	Mixing_Coefficients_Spin2_internal[1] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[2] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[3] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[4] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[5] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[6] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[7] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[8] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[9] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[10] = complex<double>(0, 0);	// Decay
+	Mixing_Coefficients_Spin2_internal[11] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[12] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[13] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[14] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[15] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[16] = complex<double>(1, 0);
+	Mixing_Coefficients_Spin2_internal[17] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[18] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[19] = complex<double>(0, 0);
+	
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[0] = complex<double>(1, 0);
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[1] = complex<double>(1, 0);
+	
+	return Run_MEKD_MG_ME_Spin2( initial_state );
+}
+
+
+
+///
+int MEKD_MG::Run_MEKD_MG_ME_Spin2Mh9(string initial_state)
+{
+	Predefined_Model = true;
+	Mixing_Coefficients_Spin2_internal[0] = complex<double>(0, 0);	// Production
+	Mixing_Coefficients_Spin2_internal[1] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[2] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[3] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[4] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[5] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[6] = complex<double>(0, 0);
+	if( initial_state=="gg" ) Mixing_Coefficients_Spin2_internal[7] = complex<double>(1, 0);
+	Mixing_Coefficients_Spin2_internal[8] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[9] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[10] = complex<double>(0, 0);	// Decay
+	Mixing_Coefficients_Spin2_internal[11] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[12] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[13] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[14] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[15] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[16] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[17] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[18] = complex<double>(1, 0);
+	Mixing_Coefficients_Spin2_internal[19] = complex<double>(0, 0);
+	
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[0] = complex<double>(1, 0);
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[1] = complex<double>(1, 0);
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[7] = complex<double>(0, 0);
+	
+	return Run_MEKD_MG_ME_Spin2( initial_state );
+}
+
+
+
+///
+int MEKD_MG::Run_MEKD_MG_ME_Spin2Mh10(string initial_state)
+{
+	Predefined_Model = true;
+	Mixing_Coefficients_Spin2_internal[0] = complex<double>(0, 0);	// Production
+	Mixing_Coefficients_Spin2_internal[1] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[2] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[3] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[4] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[5] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[6] = complex<double>(0, 0);
+	if( initial_state=="gg" ) Mixing_Coefficients_Spin2_internal[7] = complex<double>(1, 0);
+	Mixing_Coefficients_Spin2_internal[8] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[9] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[10] = complex<double>(0, 0);	// Decay
+	Mixing_Coefficients_Spin2_internal[11] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[12] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[13] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[14] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[15] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[16] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[17] = complex<double>(1, 0);
+	Mixing_Coefficients_Spin2_internal[18] = complex<double>(0, 0);
+	Mixing_Coefficients_Spin2_internal[19] = complex<double>(1, 0);
+	
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[0] = complex<double>(1, 0);
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[1] = complex<double>(1, 0);
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[7] = complex<double>(0, 0);
 	
 	return Run_MEKD_MG_ME_Spin2( initial_state );
 }

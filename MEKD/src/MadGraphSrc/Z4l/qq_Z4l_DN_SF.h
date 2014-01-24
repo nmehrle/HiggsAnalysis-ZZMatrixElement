@@ -11,7 +11,7 @@
 #include <complex> 
 #include <vector> 
 
-#include "../Parameters_HEF_MEKD.h"
+#include "../Parameters_MEKD.h"
 #include "../read_slha.h"
 
 using namespace std; 
@@ -81,7 +81,7 @@ class qq_Z4l_DN_SF
     double * jamp2[nprocesses]; 
 
     // Pointer to the model parameters
-    Parameters_HEF_MEKD * pars; 
+    Parameters_MEKD * pars; 
 
     // vector with external particle masses
     vector<double> mME; 
