@@ -85,7 +85,7 @@ public:
 	/// \param[out] me2process              retrieved |ME|^2 for the specified process and calculator.
 	/// \return                             error code of the computation: 0 = NO_ERR, 1 = ERR_PROCESS, 2 = ERR_COMPUTE
 	///
-  int computeME(Processes process, MEMCalcs calculator, vector<TLorentzVector> partP, vector<int> partId, double& me2process);
+	int computeME(Processes process, MEMCalcs calculator, vector<TLorentzVector> partP, vector<int> partId, double& me2process);
 	
 	///
 	/// Compute individual mixed MEs for the specified "model".
@@ -370,24 +370,24 @@ const bool MEMs::isProcSupported[MEMNames::NUM_PROCESSES][MEMNames::NUM_MEMCALCS
   {0,            0,          1,          0,          0},	// kJJ_0minus_GG 
   {1,            0,          0,          0,          0},	// kJJ_SMHiggs_VH
   {1,            0,          0,          0,          0},	// kJJ_0minus_VH
-  {1,            0,          1,          0,          0},	// k2h2plus_gg 
-  {1,            0,          1,          0,          0},	// k2h2plus_qqbar 
-  {1,            0,          1,          0,          0},	// k2h2plus_prodIndep 
-  {1,            0,          1,          0,          0},	// k2h3plus_gg 
-  {1,            0,          1,          0,          0},	// k2h3plus_qqbar 
-  {1,            0,          1,          0,          0},	// k2h3plus_prodIndep 
-  {1,            0,          1,          0,          0},	// k2h6plus_gg 
-  {1,            0,          1,          0,          0},	// k2h6plus_qqbar 
-  {1,            0,          1,          0,          0},	// k2h6plus_prodIndep 
-  {1,            0,          1,          0,          0},	// k2h7plus_gg 
-  {1,            0,          1,          0,          0},	// k2h7plus_qqbar 
-  {1,            0,          1,          0,          0},	// k2h7plus_prodIndep 
-  {1,            0,          1,          0,          0},	// k2h9minus_gg 
-  {1,            0,          1,          0,          0},	// k2h9minus_qqbar 
-  {1,            0,          1,          0,          0},	// k2h9minus_prodIndep 
-  {1,            0,          1,          0,          0},	// k2h10minus_gg 
-  {1,            0,          1,          0,          0},	// k2h10minus_qqbar 
-  {1,            0,          1,          0,          0},	// k2h10minus_prodIndep 
+  {1,            1,          1,          0,          0},	// k2h2plus_gg 
+  {1,            1,          1,          0,          0},	// k2h2plus_qqbar 
+  {1,            1,          1,          0,          0},	// k2h2plus_prodIndep 
+  {1,            1,          1,          0,          0},	// k2h3plus_gg 
+  {1,            1,          1,          0,          0},	// k2h3plus_qqbar 
+  {1,            1,          1,          0,          0},	// k2h3plus_prodIndep 
+  {1,            1,          1,          0,          0},	// k2h6plus_gg 
+  {1,            1,          1,          0,          0},	// k2h6plus_qqbar 
+  {1,            1,          1,          0,          0},	// k2h6plus_prodIndep 
+  {1,            1,          1,          0,          0},	// k2h7plus_gg 
+  {1,            1,          1,          0,          0},	// k2h7plus_qqbar 
+  {1,            1,          1,          0,          0},	// k2h7plus_prodIndep 
+  {1,            1,          1,          0,          0},	// k2h9minus_gg 
+  {1,            1,          1,          0,          0},	// k2h9minus_qqbar 
+  {1,            1,          1,          0,          0},	// k2h9minus_prodIndep 
+  {1,            1,          1,          0,          0},	// k2h10minus_gg 
+  {1,            1,          1,          0,          0},	// k2h10minus_qqbar 
+  {1,            1,          1,          0,          0},	// k2h10minus_prodIndep 
   {0,            0,          0,          1,          0}};	// kggHZZ_10 
  
 //////////////////////////////////////////////////////////////////////////
