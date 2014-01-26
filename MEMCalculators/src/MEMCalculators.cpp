@@ -195,8 +195,13 @@ MEMs::MEMs(double collisionEnergy, double sKD_mass, string PDFName, bool debug_)
     MELAcalcMap[kJHUGen]    =TVar::JHUGen;
     MELAcalcMap[kAnalytical]=TVar::ANALYTICAL;
     MELAcalcMap[kMELA_HCP]  =TVar::ANALYTICAL; 
-//    MELAcalcMap[kMEKD]      =TVar::MadGraph; 
-
+//    MELAcalcMap[kMEKD]      =TVar::MadGraph;
+	
+	m_Lambda_z1 = 10000;
+	m_Lambda_z2 = 10000;
+	m_Lambda_z3 = 10000;
+	m_Lambda_z4 = 10000;
+	
     debug=debug_;
 	if( debug ) cout << "MEMs::MEMs. The debug flag is ON\n";
 	
@@ -636,7 +641,7 @@ int MEMs::Check_Couplings( Processes process, vector<complex<double> > *ProdCoup
 	{
 		if( ProdCouplings!=(vector<complex<double> >*) NULL && (*DecayCouplings).size() != 4 && (*DecayCouplings).size() != 20)
 		{
-			if( debug ) cout << "MEMs::Check_Couplings. Error in provided couplings decay. Expected size: 4 or 20 (form-factor case), provided: "  << (*DecayCouplings).size() << endl;
+			if( debug ) cout << "MEMs::Check_Couplings. Error in provided decay couplings. Expected size: 4 or 20 (form-factor case), provided: "  << (*DecayCouplings).size() << endl;
 			return 1;
 		}
 		
@@ -1015,6 +1020,188 @@ int MEMs::cacheMELAcalculation(int process, MEMCalcs calculator, vector<TLorentz
 		cout << "MEMs::cacheMELAcalculation. Done!" << endl;
 	
 	return NO_ERR;
+}
+
+
+
+///----------------------------------------------------------------------------------------------
+/// MEMs::Convert_couplings_a_to_kappa - Coupling conversion function
+///----------------------------------------------------------------------------------------------
+int MEMs::Convert_couplings_a_to_kappa( Processes process, vector<complex<double> > *ProdCouplings_a, vector<complex<double> > *DecayCouplings_a, vector<complex<double> > *ProdCouplings_kappa, vector<complex<double> > *DecayCouplings_kappa )
+{
+	if( (Check_Couplings( process, ProdCouplings_a, DecayCouplings_a)) != 0 ) return ERR_PROCESS;
+	
+	if( process==kSpin0_gg || process==kSpin0_prodIndep )
+	{
+		if( (*DecayCouplings_kappa).size()!=4 ) (*DecayCouplings_kappa).resize( 4, complex<double>(0.0, 0.0) );
+		
+		(*DecayCouplings_kappa)[0] =  0.5*(*DecayCouplings_a)[0];
+		(*DecayCouplings_kappa)[1] = -1.0*(*DecayCouplings_a)[1];
+		(*DecayCouplings_kappa)[2] = -1.0*(*DecayCouplings_a)[2];
+		(*DecayCouplings_kappa)[3] = -1.0*(*DecayCouplings_a)[3];
+		
+		if( (*DecayCouplings_kappa).size()==4 ) return NO_ERR;
+		
+		(*DecayCouplings_kappa)[0] +=  0.5*XZZ_form_factor( (*DecayCouplings_a)[4], (*DecayCouplings_a)[5], (*DecayCouplings_a)[6], (*DecayCouplings_a)[7], m_mZ1, m_mZ2, m_Lambda_z1 );
+		(*DecayCouplings_kappa)[1] += -1.0*XZZ_form_factor( (*DecayCouplings_a)[8], (*DecayCouplings_a)[9], (*DecayCouplings_a)[10], (*DecayCouplings_a)[11], m_mZ1, m_mZ2, m_Lambda_z2 );
+		(*DecayCouplings_kappa)[2] += -1.0*XZZ_form_factor( (*DecayCouplings_a)[12], (*DecayCouplings_a)[13], (*DecayCouplings_a)[14], (*DecayCouplings_a)[15], m_mZ1, m_mZ2, m_Lambda_z3 );
+		(*DecayCouplings_kappa)[3] += -1.0*XZZ_form_factor( (*DecayCouplings_a)[16], (*DecayCouplings_a)[17], (*DecayCouplings_a)[18], (*DecayCouplings_a)[19], m_mZ1, m_mZ2, m_Lambda_z4 );
+		
+		return NO_ERR;
+	}
+	else if( process==kSpin1_qqbar || process==kSpin1_prodIndep )	// WARNING NOT well defined yet
+	{
+		if( (*DecayCouplings_kappa).size()!=2 ) (*DecayCouplings_kappa).resize( 2, complex<double>(0.0, 0.0) );
+		
+		(*DecayCouplings_kappa)[0] =  1.0*(*DecayCouplings_a)[0];
+		(*DecayCouplings_kappa)[1] =  1.0*(*DecayCouplings_a)[1];
+		
+		// Production
+		if( process==kSpin1_qqbar )
+		{
+			if( (*ProdCouplings_kappa).size()!=2 ) (*ProdCouplings_kappa).resize( 2, complex<double>(0.0, 0.0) );
+			
+			(*ProdCouplings_kappa)[0] =  1.0*(*ProdCouplings_a)[0];
+			(*ProdCouplings_kappa)[1] =  1.0*(*ProdCouplings_a)[1];
+		}
+		
+		return NO_ERR;
+	}
+	else if( process==kSpin2_gg || process==kSpin2_qqbar || process==kSpin2_prodIndep )	// WARNING NOT well defined yet
+	{
+		if( (*DecayCouplings_kappa).size()!=10 ) (*DecayCouplings_kappa).resize( 10, complex<double>(0.0, 0.0) );
+		
+		(*DecayCouplings_kappa)[0] = -1.0*(*DecayCouplings_a)[0];
+		(*DecayCouplings_kappa)[1] =  1.0*(*DecayCouplings_a)[1];
+		(*DecayCouplings_kappa)[2] =  1.0*(*DecayCouplings_a)[2];
+		(*DecayCouplings_kappa)[3] =  1.0*(*DecayCouplings_a)[3];
+		(*DecayCouplings_kappa)[4] =  1.0*(*DecayCouplings_a)[4];
+		(*DecayCouplings_kappa)[5] =  1.0*(*DecayCouplings_a)[5];
+		(*DecayCouplings_kappa)[6] =  1.0*(*DecayCouplings_a)[6];
+		(*DecayCouplings_kappa)[7] =  1.0*(*DecayCouplings_a)[4];
+		(*DecayCouplings_kappa)[8] =  1.0*(*DecayCouplings_a)[8];
+		(*DecayCouplings_kappa)[9] =  1.0*(*DecayCouplings_a)[9];
+		
+		// Production
+		if( process==kSpin2_gg )
+		{
+			if( (*ProdCouplings_kappa).size()!=10 ) (*ProdCouplings_kappa).resize( 10, complex<double>(0.0, 0.0) );
+			
+			(*ProdCouplings_kappa)[0] = -1.0*(*ProdCouplings_a)[0];
+			(*ProdCouplings_kappa)[1] =  1.0*(*ProdCouplings_a)[1];
+			(*ProdCouplings_kappa)[2] =  1.0*(*ProdCouplings_a)[2];
+			(*ProdCouplings_kappa)[3] =  1.0*(*ProdCouplings_a)[3];
+			(*ProdCouplings_kappa)[4] =  complex<double>(0.0, 0.0);
+			(*ProdCouplings_kappa)[5] =  complex<double>(0.0, 0.0);
+			(*ProdCouplings_kappa)[6] =  complex<double>(0.0, 0.0);
+			(*ProdCouplings_kappa)[7] =  1.0*(*ProdCouplings_a)[4];
+			(*ProdCouplings_kappa)[8] =  complex<double>(0.0, 0.0);
+			(*ProdCouplings_kappa)[9] =  complex<double>(0.0, 0.0);
+		}
+		if( process==kSpin2_qqbar )
+		{
+			if( (*ProdCouplings_kappa).size()!=4 ) (*ProdCouplings_kappa).resize( 4, complex<double>(0.0, 0.0) );
+			
+			(*ProdCouplings_kappa)[0] =  1.0*(*ProdCouplings_a)[0];
+			(*ProdCouplings_kappa)[1] =  1.0*(*ProdCouplings_a)[1];
+			(*ProdCouplings_kappa)[2] =  complex<double>(0.0, 0.0);
+			(*ProdCouplings_kappa)[3] =  complex<double>(0.0, 0.0);
+		}
+		
+		return NO_ERR;
+	}
+	
+	return ERR_PROCESS;
+}
+
+
+
+///----------------------------------------------------------------------------------------------
+/// MEMs::Convert_couplings_kappa_to_a - Coupling conversion function
+///----------------------------------------------------------------------------------------------
+int MEMs::Convert_couplings_kappa_to_a( Processes process, vector<complex<double> > *ProdCouplings_kappa, vector<complex<double> > *DecayCouplings_kappa, vector<complex<double> > *ProdCouplings_a, vector<complex<double> > *DecayCouplings_a )
+{
+	if( (Check_Couplings( process, ProdCouplings_kappa, DecayCouplings_kappa)) != 0 ) return ERR_PROCESS;
+	
+	if( process==kSpin0_gg || process==kSpin0_prodIndep )
+	{
+		if( (*DecayCouplings_a).size()<4 ) (*DecayCouplings_a).resize( 4, complex<double>(0.0, 0.0) );
+		
+		(*DecayCouplings_a)[0] =  2.0*(*DecayCouplings_kappa)[0];
+		(*DecayCouplings_a)[1] = -1.0*(*DecayCouplings_kappa)[1];
+		(*DecayCouplings_a)[2] = -1.0*(*DecayCouplings_kappa)[2];
+		(*DecayCouplings_a)[3] = -1.0*(*DecayCouplings_kappa)[3];
+		
+		return NO_ERR;
+	}
+	else if( process==kSpin1_qqbar || process==kSpin1_prodIndep )	// WARNING NOT well defined yet
+	{
+		if( (*DecayCouplings_a).size()!=2 ) (*DecayCouplings_a).resize( 2, complex<double>(0.0, 0.0) );
+		(*DecayCouplings_a)[0] =  1.0*(*DecayCouplings_kappa)[0];
+		(*DecayCouplings_a)[1] =  1.0*(*DecayCouplings_kappa)[1];
+		
+		// Production
+		if( process==kSpin1_qqbar )
+		{
+			if( (*ProdCouplings_a).size()!=2 ) (*ProdCouplings_a).resize( 2, complex<double>(0.0, 0.0) );
+			
+			(*ProdCouplings_a)[0] =  1.0*(*ProdCouplings_kappa)[0];
+			(*ProdCouplings_a)[1] =  1.0*(*ProdCouplings_kappa)[1];
+		}
+		
+		return NO_ERR;
+	}
+	else if( process==kSpin2_gg || process==kSpin2_qqbar || process==kSpin2_prodIndep )	// WARNING NOT well defined yet
+	{
+		if( (*DecayCouplings_a).size()!=10 ) (*DecayCouplings_a).resize( 10, complex<double>(0.0, 0.0) );
+		
+		(*DecayCouplings_a)[0] = -1.0*(*DecayCouplings_kappa)[0];
+		(*DecayCouplings_a)[1] =  1.0*(*DecayCouplings_kappa)[1];
+		(*DecayCouplings_a)[2] =  1.0*(*DecayCouplings_kappa)[2];
+		(*DecayCouplings_a)[3] =  1.0*(*DecayCouplings_kappa)[3];
+		(*DecayCouplings_a)[4] =  1.0*(*DecayCouplings_kappa)[4];
+		(*DecayCouplings_a)[5] =  1.0*(*DecayCouplings_kappa)[5];
+		(*DecayCouplings_a)[6] =  1.0*(*DecayCouplings_kappa)[6];
+		(*DecayCouplings_a)[7] =  1.0*(*DecayCouplings_kappa)[4];
+		(*DecayCouplings_a)[8] =  1.0*(*DecayCouplings_kappa)[8];
+		(*DecayCouplings_a)[9] =  1.0*(*DecayCouplings_kappa)[9];
+		
+		// Production
+		if( process==kSpin2_gg )
+		{
+			if( (*ProdCouplings_a).size()!=5 ) (*ProdCouplings_a).resize( 5, complex<double>(0.0, 0.0) );
+			
+			(*ProdCouplings_a)[0] = -1.0*(*ProdCouplings_kappa)[0];
+			(*ProdCouplings_a)[1] =  1.0*(*ProdCouplings_kappa)[1];
+			(*ProdCouplings_a)[2] =  1.0*(*ProdCouplings_kappa)[2];
+			(*ProdCouplings_a)[3] =  1.0*(*ProdCouplings_kappa)[3];
+			(*ProdCouplings_a)[4] =  1.0*(*ProdCouplings_kappa)[7];
+		}
+		if( process==kSpin2_qqbar )
+		{
+			if( (*ProdCouplings_kappa).size()!=2 ) (*ProdCouplings_kappa).resize( 2, complex<double>(0.0, 0.0) );
+			
+			(*ProdCouplings_a)[0] =  1.0*(*ProdCouplings_a)[0];
+			(*ProdCouplings_a)[1] =  1.0*(*ProdCouplings_a)[1];
+		}
+		
+		return NO_ERR;
+	}
+	
+	return ERR_PROCESS;
+}
+
+
+
+///----------------------------------------------------------------------------------------------
+/// MEMs::XZZ_form_factor - XZZ coupling form factors
+///----------------------------------------------------------------------------------------------
+complex<double> MEMs::XZZ_form_factor( complex<double> form_c1, complex<double> form_c2, complex<double> form_c3, complex<double> form_c4, double mZ1, double mZ2, double Lambda_z )
+{
+	return (  form_c1*pow(Lambda_z,4)/( pow(Lambda_z,2) + mZ1*mZ1 )/( pow(Lambda_z,2) + mZ2*mZ2 ) 
+			+ form_c2*( mZ1*mZ1+mZ2*mZ2 )/pow(Lambda_z,2)
+			+ form_c3*pow( ( mZ1*mZ1+mZ2*mZ2 ),2 )/pow(Lambda_z,4)
+			+ form_c4*( mZ1*mZ1*mZ2*mZ2 )/pow(Lambda_z,4)  );
 }
 
 

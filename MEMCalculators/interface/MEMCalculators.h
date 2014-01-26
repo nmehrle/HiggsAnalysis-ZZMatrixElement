@@ -244,9 +244,45 @@ public:
 	void computePm4l(vector<TLorentzVector> partP, vector<int> partId, SuperKDsyst syst, double& sigProb, double& bkgProb);
 	
 	
-	/// Conversion functions
-// 	int Convert_coefficients_a_to_kappa( Processes, complex<double>*, complex<double>* );
-// 	int Convert_coefficients_kappa_to_a( Processes, complex<double>*, complex<double>* );
+	///
+	/// Coupling conversion function
+	///
+	/// \param[in]	process					The name of a process. Only generic processes should be considered: kSpinX_YYY.
+	/// \param[in]	ProdCouplings_a			An input complex vector of amplitude notation production couplings (MELA).
+	/// \param[in]	DecayCouplings_a		An input complex vector of amplitude notation decay couplings (MELA).
+	/// \param[out]	ProdCouplings_kappa		An output complex vector of lagrangian/kappa notation production couplings (MEKD).
+	/// \param[out]	DecayCouplings_kappa	An output complex vector of lagrangian/kappa notation decay couplings (MEKD). Here kappa_3 is the 4th coupling in a vector.
+	/// \return								Error code of the computation: 0 = NO_ERR, 1 = ERR_PROCESS
+	///
+	int Convert_couplings_a_to_kappa( Processes process, vector<complex<double> > *ProdCouplings_a, vector<complex<double> > *DecayCouplings_a, vector<complex<double> > *ProdCouplings_kappa, vector<complex<double> > *DecayCouplings_kappa );
+	
+	///
+	/// Coupling conversion function
+	///
+	/// \param[in]	process					The name of a process. Only generic processes should be considered: kSpinX_YYY.
+	/// \param[in]	ProdCouplings_kappa		An input complex vector of lagrangian/kappa notation production couplings (MEKD).
+	/// \param[in]	DecayCouplings_kappa	An input complex vector of lagrangian/kappa notation decay couplings (MEKD). Here kappa_3 is the 4th coupling in a vector.
+	/// \param[out]	ProdCouplings_a			An output complex vector of amplitude notation production couplings (MELA).
+	/// \param[out]	DecayCouplings_a		An output complex vector of amplitude notation decay couplings (MELA).
+	/// \return								Error code of the computation: 0 = NO_ERR, 1 = ERR_PROCESS
+	///
+	int Convert_couplings_kappa_to_a( Processes process, vector<complex<double> > *ProdCouplings_kappa, vector<complex<double> > *DecayCouplings_kappa, vector<complex<double> > *ProdCouplings_a, vector<complex<double> > *DecayCouplings_a );
+	
+	
+	///
+	/// XZZ coupling form factors
+	///
+	/// \param[in]	form_c1					The first form factor
+	/// \param[in]	form_c2					The second form factor
+	/// \param[in]	form_c3					The third form factor
+	/// \param[in]	form_c4					The fourth form factor
+	/// \param[in]	mZ1						Z1 mass
+	/// \param[in]	mZ2						Z2 mass
+	/// \param[in]	Lambda_z				Coefficient
+	/// \return								Evaluated form factor value
+	///
+	complex<double> XZZ_form_factor( complex<double> form_c1, complex<double> form_c2, complex<double> form_c3, complex<double> form_c4, double mZ1, double mZ2, double Lambda_z );
+	
 	
 	/// Simple KD function: kd = log(me2processA / me2processB).
 	double logRatio(double me2processA, double me2processB);
@@ -257,6 +293,7 @@ public:
 	/// KD function with pdf(m4l) folded in, in a form: kd = Pm4lSig * me2sig / ( Pm4lSig * me2sig + Pm4lBkg * me2bkg ).
 	double PDFm4lRatio(double me2processA, double me2processB, SuperKDsyst syst);
 	
+	
 	/// Matrix of supproted processes
 	static const bool isProcSupported[NUM_PROCESSES][NUM_MEMCALCS];
 	
@@ -264,6 +301,10 @@ public:
 	enum ERRCodes    {NO_ERR, ERR_PROCESS, ERR_COMPUTE, NUM_ERRORS};
 	
 	double qqZZ_MCFMNorm;
+	
+	/// Needed for form-factor integration into couplings from amplitude-type couplings to kappa-type couplings
+	double m_mZ1, m_mZ2;
+	double m_Lambda_z1, m_Lambda_z2, m_Lambda_z3, m_Lambda_z4;
 	
 private:
 	/// MEM calculators: MEKD (FeynRules+MadGraph5_v1) and MELA (Analytic, JHUGen, MCFM)
