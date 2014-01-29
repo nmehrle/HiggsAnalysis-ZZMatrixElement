@@ -637,6 +637,11 @@ double MEMs::PDFm4lRatio(double me2processA, double me2processB, SuperKDsyst sys
 
 int MEMs::Check_Couplings( Processes process, vector<complex<double> > *ProdCouplings, vector<complex<double> > *DecayCouplings )
 {
+	if( ProdCouplings==(vector<complex<double> >*) NULL && DecayCouplings==(vector<complex<double> >*) NULL )
+	{
+		if( debug ) cout << "MEMs::Check_Couplings. Error in provided couplings. Is the correct model being used?\n";
+		return 1;
+	}
 	if( process==kSpin0_gg || process==kSpin0_prodIndep )	// checking Spin-0 case
 	{
 		if( ProdCouplings!=(vector<complex<double> >*) NULL && (*DecayCouplings).size() != 4 && (*DecayCouplings).size() != 20)
