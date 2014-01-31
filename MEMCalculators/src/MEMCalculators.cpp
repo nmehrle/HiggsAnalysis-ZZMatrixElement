@@ -27,7 +27,7 @@ using namespace MEMNames;
 
 /// MEKD process name translation - initialisation
 const TString MEMs::m_processNameMEKD[MEMNames::NUM_PROCESSES] = {
-	"ggSpin0Pm", "Spin0Pm", "ggSpin0h", "Spin0h", "ggSpin0M", "Spin0M",
+	"ggSpin0Pm", "Spin0Pm", "ggSpin0Ph", "Spin0Ph", "ggSpin0M", "Spin0M",
 	"qqSpin1P", "Spin1P", "qqSpin1M", "Spin1M",
 	"ggSpin2Pm", "qqSpin2Pm", "Spin2Pm", "ggSpin2Ph", "qqSpin2Ph", "Spin2Ph", "ggSpin2Mh", "qqSpin2Mh", "Spin2Mh", "ggSpin2Pb", "qqSpin2Pb", "Spin2Pb",
 	"ZZ", "", "","ggZZ_Higgs","ggSpin0Lambda1",

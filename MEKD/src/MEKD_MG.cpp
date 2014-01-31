@@ -1448,7 +1448,7 @@ int MEKD_MG::Run_MEKD_MG_ME_Spin2Ph3(string initial_state)
 	
 	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[0] = complex<double>(1, 0);
 	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[1] = complex<double>(1, 0);
-	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[3] = complex<double>(0, 0);
+	if( initial_state=="qq" ) Mixing_Coefficients_Spin2_internal[2] = complex<double>(0, 0);
 	
 	return Run_MEKD_MG_ME_Spin2( initial_state );
 }
@@ -1576,7 +1576,7 @@ int MEKD_MG::Run_MEKD_MG_ME_Spin2Mh10(string initial_state)
 	Mixing_Coefficients_Spin2_internal[14] = complex<double>(0, 0);
 	Mixing_Coefficients_Spin2_internal[15] = complex<double>(0, 0);
 	Mixing_Coefficients_Spin2_internal[16] = complex<double>(0, 0);
-	Mixing_Coefficients_Spin2_internal[17] = complex<double>(1, 0);
+	Mixing_Coefficients_Spin2_internal[17] = complex<double>(0, 0);
 	Mixing_Coefficients_Spin2_internal[18] = complex<double>(0, 0);
 	Mixing_Coefficients_Spin2_internal[19] = complex<double>(1, 0);
 	
@@ -1827,22 +1827,33 @@ int MEKD_MG::Run_MEKD_MG_ME_Spin2(string initial_state)
 	if( Vary_signal_couplings )
 	{
 		//gg
-		Set_Of_Model_Parameters.set_block_entry( "gravity", 1, buffer_complex[0]*complex<double>(8*LmbdGG_calculated, 0) );	// 8 flavors
-		Set_Of_Model_Parameters.set_block_entry( "gravity", 2, buffer_complex[1]*complex<double>(0, 0) );
-		Set_Of_Model_Parameters.set_block_entry( "gravity", 3, buffer_complex[2]*complex<double>(0, 0) );
 		if( Use_mh_eq_m4l )
-			Set_Of_Model_Parameters.set_block_entry( "gravity", 4, buffer_complex[3]*complex<double>(8*0.12*0.12/2/M_PI/Mass_4l*LmbdGG_calculated, 0) );	// Dummy scale factor but = a_s(100 GeV)^2/2Pi/m4l
+		{
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 1, buffer_complex[0]*complex<double>(8.0*LmbdGG_calculated, 0) );	// 8 flavors
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 2, buffer_complex[1]*complex<double>(8.0*LmbdGG_calculated/Mass_4l/Mass_4l, 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 3, buffer_complex[2]*complex<double>(8.0*LmbdGG_calculated/Mass_4l/Mass_4l, 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 4, buffer_complex[3]*complex<double>(8.0*LmbdGG_calculated/Mass_4l/Mass_4l, 0) );	// old dummy scale factor a_s(100 GeV)^2/2Pi/m4l
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 5, buffer_complex[4]*complex<double>(8.0*LmbdGG_calculated*Mass_4l*Mass_4l, 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 6, buffer_complex[5]*complex<double>(8.0*LmbdGG_calculated/Mass_4l/Mass_4l, 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 7, buffer_complex[6]*complex<double>(8.0*LmbdGG_calculated, 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 8, buffer_complex[7]*complex<double>(8.0*LmbdGG_calculated/Mass_4l/Mass_4l, 0) );	// old dummy scale factor a_s(100 GeV)^2/2Pi/m4l
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 9, buffer_complex[8]*complex<double>(8.0*LmbdGG_calculated, 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity",10, buffer_complex[9]*complex<double>(8.0*LmbdGG_calculated/Mass_4l/Mass_4l, 0) );
+		}
 		else
-			Set_Of_Model_Parameters.set_block_entry( "gravity", 4, buffer_complex[3]*complex<double>(8*0.12*0.12/2/M_PI/Higgs_mass*LmbdGG_calculated, 0) );
-		Set_Of_Model_Parameters.set_block_entry( "gravity", 5, buffer_complex[4]*complex<double>(0, 0) );
-		Set_Of_Model_Parameters.set_block_entry( "gravity", 6, buffer_complex[5]*complex<double>(0, 0) );
-		Set_Of_Model_Parameters.set_block_entry( "gravity", 7, buffer_complex[6]*complex<double>(0, 0) );
-		if( Use_mh_eq_m4l )
-			Set_Of_Model_Parameters.set_block_entry( "gravity", 8, buffer_complex[7]*complex<double>(8*0.12*0.12/2/M_PI/Mass_4l*LmbdGG_calculated, 0) ); 	// Dummy scale factor but = a_s(100 GeV)^2/2Pi/m4l
-		else
-			Set_Of_Model_Parameters.set_block_entry( "gravity", 8, buffer_complex[7]*complex<double>(8*0.12*0.12/2/M_PI/Higgs_mass*LmbdGG_calculated, 0) );
-		Set_Of_Model_Parameters.set_block_entry( "gravity", 9, buffer_complex[8]*complex<double>(0, 0) );
-		Set_Of_Model_Parameters.set_block_entry( "gravity", 10, buffer_complex[9]*complex<double>(0, 0) );
+		{
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 1, buffer_complex[0]*complex<double>(8.0*LmbdGG_calculated, 0) );	// 8 flavors
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 2, buffer_complex[1]*complex<double>(8.0*LmbdGG_calculated/Higgs_mass/Higgs_mass, 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 3, buffer_complex[2]*complex<double>(8.0*LmbdGG_calculated/Higgs_mass/Higgs_mass, 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 4, buffer_complex[3]*complex<double>(8.0*LmbdGG_calculated/Higgs_mass/Higgs_mass, 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 5, buffer_complex[4]*complex<double>(8.0*LmbdGG_calculated*Higgs_mass*Higgs_mass, 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 6, buffer_complex[5]*complex<double>(8.0*LmbdGG_calculated/Higgs_mass/Higgs_mass, 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 7, buffer_complex[6]*complex<double>(8.0*LmbdGG_calculated, 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 8, buffer_complex[7]*complex<double>(8.0*LmbdGG_calculated/Higgs_mass/Higgs_mass, 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 9, buffer_complex[8]*complex<double>(8.0*LmbdGG_calculated, 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity",10, buffer_complex[9]*complex<double>(8.0*LmbdGG_calculated/Higgs_mass/Higgs_mass, 0) );
+			
+		}
 			
 		//qq
 		params_rhod21 = buffer_complex[0]*complex<double>(LmbdGG_calculated, 0);
@@ -1867,16 +1878,33 @@ int MEKD_MG::Run_MEKD_MG_ME_Spin2(string initial_state)
 		params_rhoc24 = buffer_complex[3]*complex<double>(LmbdGG_calculated, 0);
 		
 		// Decay to ZZ
-		Set_Of_Model_Parameters.set_block_entry( "gravity", 11, buffer_complex[10]*complex<double>(hZZ_coupling/2/params_m_Z/params_m_Z/sqrt(2), 0) );
-		Set_Of_Model_Parameters.set_block_entry( "gravity", 12, buffer_complex[11]*complex<double>(0, 0) );
-		Set_Of_Model_Parameters.set_block_entry( "gravity", 13, buffer_complex[12]*complex<double>(0, 0) );
-		Set_Of_Model_Parameters.set_block_entry( "gravity", 14, buffer_complex[13]*complex<double>(hZZ_coupling/2/params_m_Z/params_m_Z/params_m_Z, 0) );
-		Set_Of_Model_Parameters.set_block_entry( "gravity", 15, buffer_complex[14]*complex<double>(hZZ_coupling/2/sqrt(2), 0) );
-		Set_Of_Model_Parameters.set_block_entry( "gravity", 16, buffer_complex[15]*complex<double>(hZZ_coupling/2, 0) );
-		Set_Of_Model_Parameters.set_block_entry( "gravity", 17, buffer_complex[16]*complex<double>(0, 0) );
-		Set_Of_Model_Parameters.set_block_entry( "gravity", 18, buffer_complex[17]*complex<double>(hZZ_coupling/2/params_m_Z/params_m_Z/params_m_Z, 0) );
-		Set_Of_Model_Parameters.set_block_entry( "gravity", 19, buffer_complex[18]*complex<double>(0, 0) );
-		Set_Of_Model_Parameters.set_block_entry( "gravity", 20, buffer_complex[19]*complex<double>(0, 0) );
+		if( Use_mh_eq_m4l )
+		{
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 11, buffer_complex[10]*complex<double>(hZZ_coupling/2/params_m_Z/params_m_Z/sqrt(2), 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 12, buffer_complex[11]*complex<double>(hZZ_coupling/2/params_m_Z/params_m_Z/Mass_4l/Mass_4l, 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 13, buffer_complex[12]*complex<double>(hZZ_coupling/2/params_m_Z/params_m_Z/params_m_Z, 0) );	// or /mZ^4?
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 14, buffer_complex[13]*complex<double>(hZZ_coupling/2/params_m_Z/params_m_Z/params_m_Z, 0) );	// or /mZ^4?
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 15, buffer_complex[14]*complex<double>(hZZ_coupling/2/sqrt(2), 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 16, buffer_complex[15]*complex<double>(hZZ_coupling/2/params_m_Z/Mass_4l, 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 17, buffer_complex[16]*complex<double>(hZZ_coupling/2/params_m_Z/params_m_Z, 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 18, buffer_complex[17]*complex<double>(hZZ_coupling/2/params_m_Z/params_m_Z/params_m_Z, 0) );	// or /mZ^4?
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 19, buffer_complex[18]*complex<double>(hZZ_coupling/2/params_m_Z/Mass_4l, 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 20, buffer_complex[19]*complex<double>(hZZ_coupling/2/params_m_Z/params_m_Z/Mass_4l/Mass_4l, 0) );
+			
+		}
+		else
+		{
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 11, buffer_complex[10]*complex<double>(hZZ_coupling/2/params_m_Z/params_m_Z/sqrt(2), 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 12, buffer_complex[11]*complex<double>(hZZ_coupling/2/params_m_Z/params_m_Z/Higgs_mass/Higgs_mass, 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 13, buffer_complex[12]*complex<double>(hZZ_coupling/2/params_m_Z/params_m_Z/params_m_Z, 0) );	// or /mZ^4?
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 14, buffer_complex[13]*complex<double>(hZZ_coupling/2/params_m_Z/params_m_Z/params_m_Z, 0) );	// or /mZ^4?
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 15, buffer_complex[14]*complex<double>(hZZ_coupling/2/sqrt(2), 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 16, buffer_complex[15]*complex<double>(hZZ_coupling/2/params_m_Z/Higgs_mass, 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 17, buffer_complex[16]*complex<double>(hZZ_coupling/2/params_m_Z/params_m_Z, 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 18, buffer_complex[17]*complex<double>(hZZ_coupling/2/params_m_Z/params_m_Z/params_m_Z, 0) );	// or /mZ^4?
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 19, buffer_complex[18]*complex<double>(hZZ_coupling/2/params_m_Z/Higgs_mass, 0) );
+			Set_Of_Model_Parameters.set_block_entry( "gravity", 20, buffer_complex[19]*complex<double>(hZZ_coupling/2/params_m_Z/params_m_Z/Higgs_mass/Higgs_mass, 0) );
+		}
 		
 		// Decay to 2l
 		Set_Of_Model_Parameters.set_block_entry( "gravity", 41, buffer_complex[10]*complex<double>(4.291210e-04, 0) );
