@@ -1645,14 +1645,22 @@ int MEKD_MG::Run_MEKD_MG_ME_Spin0(string initial_state)
 			Set_Of_Model_Parameters.set_block_entry( "heff", 3, complex<double>(0, 0) );
 			Set_Of_Model_Parameters.set_block_entry( "heff", 4, buffer_complex[3]*complex<double>(4*LmbdGG_calculated, 0) );	// Spin0M
 		}
+		
 		// Decay to ZZ
-		Set_Of_Model_Parameters.set_block_entry( "heff", 5, buffer_complex[0]*complex<double>(hZZ_coupling, 0) );	// Spin0Pm
-		Set_Of_Model_Parameters.set_block_entry( "heff", 6, buffer_complex[1]*complex<double>(hZZ_coupling/params_m_Z/params_m_Z, 0) );	// Spin0Ph
 		if( Use_mh_eq_m4l )
+		{
+			Set_Of_Model_Parameters.set_block_entry( "heff", 5, buffer_complex[0]*complex<double>(hZZ_coupling, 0) );	// Spin0Pm
+			Set_Of_Model_Parameters.set_block_entry( "heff", 6, buffer_complex[1]*complex<double>(hZZ_coupling/params_m_Z/params_m_Z, 0) );	// Spin0Ph
 			Set_Of_Model_Parameters.set_block_entry( "heff", 7, buffer_complex[2]*complex<double>(hZZ_coupling/params_m_Z/params_m_Z/Mass_4l/Mass_4l, 0) );	// Spin0Ph+
+			Set_Of_Model_Parameters.set_block_entry( "heff", 8, buffer_complex[3]*complex<double>(hZZ_coupling/params_m_Z/params_m_Z, 0) );	// Spin0M
+		}
 		else
+		{
+			Set_Of_Model_Parameters.set_block_entry( "heff", 5, buffer_complex[0]*complex<double>(hZZ_coupling, 0) );	// Spin0Pm
+			Set_Of_Model_Parameters.set_block_entry( "heff", 6, buffer_complex[1]*complex<double>(hZZ_coupling/params_m_Z/params_m_Z, 0) );	// Spin0Ph
 			Set_Of_Model_Parameters.set_block_entry( "heff", 7, buffer_complex[2]*complex<double>(hZZ_coupling/params_m_Z/params_m_Z/Higgs_mass/Higgs_mass, 0) );	// Spin0Ph+
-		Set_Of_Model_Parameters.set_block_entry( "heff", 8, buffer_complex[3]*complex<double>(hZZ_coupling/params_m_Z/params_m_Z, 0) );	// Spin0M
+			Set_Of_Model_Parameters.set_block_entry( "heff", 8, buffer_complex[3]*complex<double>(hZZ_coupling/params_m_Z/params_m_Z, 0) );	// Spin0M
+		}
 		
 		// Decay to 2l
 		Set_Of_Model_Parameters.set_block_entry( "gravity", 19, buffer_complex[0]*complex<double>(4.291210e-04, 0) );
@@ -1766,6 +1774,7 @@ int MEKD_MG::Run_MEKD_MG_ME_Spin1(string initial_state)
 			params_rhou14 = buffer_complex[3]*complex<double>(LmbdGG_calculated*v_expectation, 0);
 			params_rhoc14 = buffer_complex[3]*complex<double>(LmbdGG_calculated*v_expectation, 0);
 		}
+		
 		// Decay to ZZ
 		Set_Of_Model_Parameters.set_block_entry( "vec", 1, buffer_complex[4]*complex<double>(hZZ_coupling/2/params_m_Z, 0) );
 		Set_Of_Model_Parameters.set_block_entry( "vec", 2, buffer_complex[5]*complex<double>(hZZ_coupling/4/params_m_Z, 0) );

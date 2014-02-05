@@ -384,19 +384,19 @@ const bool MEMs::isProcSupported[MEMNames::NUM_PROCESSES][MEMNames::NUM_MEMCALCS
   {1,            1,          1,          0,          0},	// k2mplus_gg
   {1,            1,          1,          0,          0},	// k2mplus_qqbar
   {1,            1,          1,          0,          0},	// k2mplus_prodIndep
-  {1,            1,          1,          0,          0},	// k2hplus
+  {1,            1,          1,          0,          0},	// k2hplus			//TO BE RENAMED to k2hplus_gg
   {1,            1,          1,          0,          0},	// k2hplus_qqbar
   {1,            1,          1,          0,          0},	// k2hplus_prodIndep
-  {1,            1,          1,          0,          0},	// k2hminus
+  {1,            1,          1,          0,          0},	// k2hminus			//TO BE RENAMED to k2hminus_gg
   {1,            1,          1,          0,          0},	// k2hminus_qqbar
   {1,            1,          1,          0,          0},	// k2hminus_prodIndep
-  {1,            1,          1,          0,          0},	// k2bplus
+  {1,            1,          1,          0,          0},	// k2bplus			//TO BE RENAMED to k2bplus_gg
   {1,            1,          1,          0,          0},	// k2bplus_qqbar
   {1,            1,          1,          0,          0},	// k2bplus_prodIndep
   {1,            1,          0,          1,          1},	// kqqZZ
   {1,            0,          0,          1,          0},	// kqqZZ_prodIndep
-  {0,            1,          0,          1,          0},	// kggZZ
-  {0,            1,          1,          1,          0},	// kggZZ_SMHiggs
+  {0,            0,          0,          1,          0},	// kggZZ
+  {0,            0,          1,          1,          0},	// kggZZ_SMHiggs
   {1,            0,          1,          0,          0},	// k0_g1prime2 
   {1,            1,          1,          0,          0},	// kSpin0_gg
   {1,            1,          1,          0,          0},	// kSpin0_prodIndep
