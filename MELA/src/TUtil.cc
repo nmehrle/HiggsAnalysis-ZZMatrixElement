@@ -260,7 +260,7 @@ double SumMatrixElementPDF(TVar::Process process, TVar::Production production, T
 
   invariantP[0] = pow(invariantP[1],2.0);
   for(int iq=2;iq<5;iq++) invariantP[0] -= pow(invariantP[iq],2.0);
-  invariantP[0] = sqrt(abs(invariantP[0]));
+  invariantP[0] = sqrt(fabs(invariantP[0]));
 
   double defaultScale = scale_.scale;
   int defaultNloop = nlooprun_.nlooprun;
