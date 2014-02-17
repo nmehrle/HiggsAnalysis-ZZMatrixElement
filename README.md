@@ -19,7 +19,10 @@ At this point, git commands apply to this repository if issued inside the ZZMatr
 The package depends on:
 ```
 ## >>> CombinedLimit <<<
-cvs co -r V02-06-00 HiggsAnalysis/CombinedLimit
+git clone https://github.com/cms-analysis/HiggsAnalysis-CombinedLimit.git HiggsAnalysis/CombinedLimit
+cd HiggsAnalysis/CombinedLimit
+git checkout -b from-V02-06-00 HiggsAnalysis-CombinedLimit-V02-06-00
+cd -
 ## >>> Higgs_CS_and_Width <<<
 git clone https://github.com/msnowball/HCSaW Higgs/Higgs_CS_and_Width
 cd Higgs/Higgs_CS_and_Width
