@@ -347,7 +347,7 @@ double SumMatrixElementPDF(TVar::Process process, TVar::Production production, T
 // Test code from Markus to calculate the HZZ cross-section
 // 
 double JHUGenMatEl(TVar::Process process, TVar::Production production, mcfm_event_type* mcfm_event, double MReso, double GaReso, 
-		   double Hggcoupl[3][2], double Hvvcoupl[20][2], double Zqqcoupl[2][2], double Zvvcoupl[2][2],
+		   double Hggcoupl[3][2], double Hvvcoupl[30][2], double Zqqcoupl[2][2], double Zvvcoupl[2][2],
 		   double Gqqcoupl[2][2], double Gggcoupl[5][2], double Gvvcoupl[10][2])
 {
   // input unit = GeV/100 such that 125GeV is 1.25 in the code
@@ -405,7 +405,7 @@ double JHUGenMatEl(TVar::Process process, TVar::Production production, mcfm_even
   }
 
   //if ( process == TVar::HZZ_4l || process == TVar::PSHZZ_4l || process == TVar::HDHZZ_4l || process == TVar::HZZ_4l_MIXCP   || process == TVar::CPMixHZZ_4l || process == TVar::PSHZZ_g4star || process == TVar::HDHZZ_4l_g2star || process == TVar::HDMixHZZ_4l_pi_2|| process== TVar::HDMixHZZ_4l || process == TVar::CPMixHZZ_4l_pi_2 || process == TVar::SelfDefine || process == TVar::H_g1prime2) {
-  if ( process == TVar::HSMHiggs || process == TVar::H0minus || process == TVar::H0hplus || process == TVar::SelfDefine_spin0 || process == TVar::H0_g1prime2) {
+  if ( process == TVar::HSMHiggs || process == TVar::H0minus || process == TVar::H0hplus || process == TVar::SelfDefine_spin0 || process == TVar::H0_g1prime2 || process== TVar::H0_Zgs || process ==TVar::H0_gsgs) {
     __modhiggs_MOD_evalamp_gg_h_vv(p4, &MReso,  &GaReso, Hggcoupl, Hvvcoupl, MYIDUP, &MatElSq);
 
   }
@@ -475,7 +475,7 @@ double JHUGenMatEl(TVar::Process process, TVar::Production production, mcfm_even
 }
 
 
-double HJJMatEl(TVar::Process process, TVar::Production production, const TLorentzVector p[5], double Hggcoupl[3][2], double Hvvcoupl[20][2], TVar::VerbosityLevel verbosity, double EBEAM)
+double HJJMatEl(TVar::Process process, TVar::Production production, const TLorentzVector p[5], double Hggcoupl[3][2], double Hvvcoupl[30][2], TVar::VerbosityLevel verbosity, double EBEAM)
 {
 
   // by default assume only gg productions 

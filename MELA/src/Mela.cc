@@ -247,9 +247,9 @@ void Mela::computeD_CP(float mZZ, float mZ1, float mZ2, // input kinematics
 
 //prob = (p0minus_plus - p0minus_g4star - p0plus ) / (p0minus + p0plus);
 
-double coupl_mix[20][2] = {{ 0. }};
-double coupl_1[20][2] = {{ 0. }};
-double coupl_2[20][2] = {{ 0. }};
+double coupl_mix[30][2] = {{ 0. }};
+double coupl_1[30][2] = {{ 0. }};
+double coupl_2[30][2] = {{ 0. }};
 
 switch (myType){
 	case TVar::D_g1g4 :
@@ -278,9 +278,21 @@ switch (myType){
 	break; 
 	case TVar::D_g1g1prime2 :
 		coupl_mix[0][0] =1.;
-		coupl_mix[5][0] = 12046.01;
+		coupl_mix[11][0] = 12046.01;
 		coupl_1[0][0] =1.;
-		coupl_2[5][0] = 12046.01;
+		coupl_2[11][0] = 12046.01;
+	break; 
+	case TVar::D_zzzg :
+		coupl_mix[0][0] =1.;
+		coupl_mix[4][0] = 0.0725;
+		coupl_1[0][0] =1.;
+		coupl_2[4][0] = 0.0725;
+	break; 
+	case TVar::D_zzgg :
+		coupl_mix[0][0] =1.;
+		coupl_mix[7][0] = -0.0951;
+		coupl_1[0][0] =1.;
+		coupl_2[7][0] = -0.0951;
 	break; 
   default:
 		cout <<"Error: Not supported!"<<endl;	
@@ -328,7 +340,7 @@ switch (myType){
    
    float constant = 1.;
    double couplingvals_NOTggZZ[2] = {0.0,0.0};
-   double selfDHvvcoupl[20][2] = {{0.}};
+   double selfDHvvcoupl[30][2] = {{0.}};
    double selfDGqqcoupl[2][2]= {{0.}}; 
    double selfDGggcoupl[5][2]= {{0.}};
    double selfDGvvcoupl[10][2]= {{0.}};
@@ -381,6 +393,7 @@ switch (myType){
 				if ( myModel_ == TVar::H2_g7 ) constant = 1.2522e+07;
 				if ( myModel_ == TVar::H2_g9 ) constant = 3.01467e+06;
 				if ( myModel_ == TVar::H2_g10 ) constant = 1.483e+11;
+
       }  else {
 
 	//cout << "ANALYTICAL - GG - flavor!=3" << endl;
@@ -398,6 +411,7 @@ switch (myType){
 				if ( myModel_ == TVar::H2_g7 ) constant = 2.21423e+07;
 				if ( myModel_ == TVar::H2_g9 ) constant = 3.18193e+06;
 				if ( myModel_ == TVar::H2_g10 ) constant = 2.63811e+11;
+
       }
 
     }
@@ -626,6 +640,7 @@ if (useConstant){
 				if ( myModel_ == TVar::H2_g7 ) constant = 783088;
 				if ( myModel_ == TVar::H2_g9 ) constant = 1.13853e+09;
 				if ( myModel_ == TVar::H2_g10 ) constant = 5.58394e+13;
+
       }  else {
 				if ( myModel_ == TVar::H0minus )  constant = 7.0;
 				if ( myModel_ == TVar::H0hplus )  constant = 2.3;
@@ -795,7 +810,7 @@ void Mela::computeP(float mZZ, float mZ1, float mZ2, // input kinematics
 		    float phi,
 		    float phi1,
 		    int flavor,
-		    double selfDHvvcoupl[20][2],
+		    double selfDHvvcoupl[30][2],
 		    float& prob){ 
 
    double couplingvals_NOTggZZ[2] = {0.0,0.0};
@@ -824,7 +839,7 @@ void Mela::computeP(float mZZ, float mZ1, float mZ2, // input kinematics
            selfDGvvcoupl, prob);
 	}
 else if (myME_ == TVar::ANALYTICAL){
- for (int i =0 ;i<20;i++){
+ for (int i =0 ;i<30;i++){
 		if(selfDHvvcoupl[i][1]!=0){
 			cout << "Error: MELA does not support complex coupling for the moment! "<<endl;
 			return;
@@ -874,7 +889,7 @@ void Mela::computeP_selfDspin2(float mZZ, float mZ1, float mZ2, // input kinemat
         double selfDGggcoupl[5][2], double selfDGvvcoupl[10][2], 
         float& prob){
    double couplingvals_NOTggZZ[2] = {0.0,0.0};
-   double selfDHvvcoupl[20][2]= {{0.}};
+   double selfDHvvcoupl[30][2]= {{0.}};
    double selfDZqqcoupl[2][2]= {{0.}};
    double selfDZvvcoupl[2][2]= {{0.}};
    double selfDGqqcoupl[2][2]={{0.}};
@@ -952,7 +967,7 @@ void Mela::computeP_selfDspin1(float mZZ, float mZ1, float mZ2, // input kinemat
   
    double couplingvals_NOTggZZ[2] = {0.0,0.0};
 	 double selfDZqqcoupl[2][2] = {{0.}};
-	 double selfDHvvcoupl[20][2]= {{0.}};
+	 double selfDHvvcoupl[30][2]= {{0.}};
    double selfDGqqcoupl[2][2]= {{0.}}; 
    double selfDGggcoupl[5][2]= {{0.}};
    double selfDGvvcoupl[10][2]= {{0.}};
@@ -1006,7 +1021,7 @@ void Mela::computeP(float mZZ, float mZ1, float mZ2, // input kinematics
 		    int flavor,
 		    double couplingvals[2],
 		    float& prob){ 
-   double selfDHvvcoupl[20][2] = {{0.}};
+   double selfDHvvcoupl[30][2] = {{0.}};
    double selfDGqqcoupl[2][2]= {{0.}}; 
    double selfDGggcoupl[5][2]= {{0.}};
    double selfDGvvcoupl[10][2]= {{0.}};

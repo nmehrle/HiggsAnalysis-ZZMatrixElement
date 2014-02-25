@@ -74,6 +74,12 @@ public:
     SelfDefine_spin2  = 25,
 		/**** For width ***/
 		D_gg10						= 26,
+		
+		H0_Zgs 						= 27,
+		H0_gsgs 					= 28,
+		D_zzzg						= 29,
+		D_zzgg						= 30,
+
     /*** Are these ones still used? ***/
     //  QQB_TZZ_4l = 8,
     //  TZZ_DECAY_4l = 10,

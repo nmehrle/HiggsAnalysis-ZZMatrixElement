@@ -40,7 +40,7 @@ TEvtProb::~TEvtProb() {
 // WARNING: in development
 // 
 double TEvtProb::XsecCalc(TVar::Process proc, TVar::Production production, const hzz4l_event_type &hzz4l_event,
-			  TVar::VerbosityLevel verbosity, double couplingvals[2], double selfDHvvcoupl[20][2],double selfDZqqcoupl[2][2],
+			  TVar::VerbosityLevel verbosity, double couplingvals[2], double selfDHvvcoupl[30][2],double selfDZqqcoupl[2][2],
      double selfDZvvcoupl[2][2],
      double selfDGqqcoupl[2][2],
      double selfDGggcoupl[5][2],
@@ -107,7 +107,7 @@ double TEvtProb::XsecCalc(TVar::Process proc, TVar::Production production, const
 
 	// all the possible couplings
       double Hggcoupl[3][2];
-      double Hvvcoupl[20][2];
+      double Hvvcoupl[30][2];
       double Zqqcoupl[2][2];
       double Zvvcoupl[2][2];
       double Gqqcoupl[2][2];
@@ -128,7 +128,7 @@ double TEvtProb::XsecCalc(TVar::Process proc, TVar::Production production, const
       Hvvcoupl[2][0]=0.0;  Hvvcoupl[2][1]=0.0;  
       Hvvcoupl[3][0]=0.0;  Hvvcoupl[3][1]=0.0;
 
-		for(int i = 4; i<20; i++){
+		for(int i = 4; i<30; i++){
 			for(int j=0; j<2; j++){
 				Hvvcoupl[i][j]=0.;
 			}
@@ -174,8 +174,16 @@ double TEvtProb::XsecCalc(TVar::Process proc, TVar::Production production, const
 		Hvvcoupl[3][0] = 1.0;
       }
 
+      if ( proc == TVar::H0_Zgs) {
+				Hvvcoupl[4][0] = 0.0725;
+				Hvvcoupl[0][0] = 0.;
+      }
+      if ( proc == TVar::H0_gsgs) {
+				Hvvcoupl[7][0] = -0.0951;
+				Hvvcoupl[0][0] = 0.;
+      }
 	if ( proc == TVar::SelfDefine_spin0){
-		for(int i=0; i<20; i++){
+		for(int i=0; i<30; i++){
 			for(int j=0;j<2;j++){
 				Hvvcoupl [i][j] = selfDHvvcoupl[i][j];
 			}
@@ -223,7 +231,7 @@ double TEvtProb::XsecCalc(TVar::Process proc, TVar::Production production, const
 //      }
 		if( proc == TVar::H0_g1prime2){
 			Hvvcoupl[0][0] = 0.;
-			Hvvcoupl[5][0] = -12046.01;
+			Hvvcoupl[11][0] = -12046.01;
 		}
       // 2h-
       if ( proc == TVar::H2_g8 ) //&& production == TVar::ZZGG) {
@@ -476,13 +484,13 @@ double TEvtProb::XsecCalcXJJ(TVar::Process proc, TVar::Production production, TL
   Hggcoupl[1][0]=0.0;  Hggcoupl[1][1]=0.0; // g3
   Hggcoupl[2][0]=0.0;  Hggcoupl[2][1]=0.0; // g4  
 
-  double Hvvcoupl[20][2];
+  double Hvvcoupl[30][2];
   // first/second number is the real/imaginary part
   Hvvcoupl[0][0]=1.0;  Hvvcoupl[0][1]=0.0; // g1  
   Hvvcoupl[1][0]=0.0;  Hvvcoupl[1][1]=0.0; // g2 
   Hvvcoupl[2][0]=0.0;  Hvvcoupl[2][1]=0.0; // g3 
   Hvvcoupl[3][0]=0.0;  Hvvcoupl[3][1]=0.0; // g4   
-    for(int i = 4; i<20; i++){
+    for(int i = 4; i<30; i++){
        for(int j=0; j<2; j++){
          Hvvcoupl[i][j]=0.;
        }

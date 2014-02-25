@@ -56,7 +56,7 @@ public:
 		float phi,
 		float phi1,
 		int flavor,
-    double selfDHvvcoupl[20][2],
+    double selfDHvvcoupl[30][2],
 		float& prob                   // output probability
 		);
 

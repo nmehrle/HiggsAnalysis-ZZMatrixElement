@@ -67,7 +67,7 @@ public:
   double XsecCalc(TVar::Process proc,
 		  TVar::Production production,
 		  const hzz4l_event_type &hzz4l_event,
-		  TVar::VerbosityLevel verbosity, double couplingvals[2], double selfDHvvcoupl[20][2],double selfDZqqcoupl[2][2],
+		  TVar::VerbosityLevel verbosity, double couplingvals[2], double selfDHvvcoupl[30][2],double selfDZqqcoupl[2][2],
      double selfDZvvcoupl[2][2],
      double selfDGqqcoupl[2][2],
      double selfDGggcoupl[5][2],

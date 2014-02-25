@@ -47,14 +47,14 @@ namespace MEMNames {
 		kSpin2_gg, kSpin2_qqbar, kSpin2_prodIndep,
 		kJJ_SMHiggs_VBF, kJJ_0minus_VBF, kJJ_SMHiggs_GG, kJJ_0minus_GG, kJJ_SMHiggs_VH, kJJ_0minus_VH,
 		k2h2plus_gg,k2h2plus_qqbar,k2h2plus_prodIndep,k2h3plus_gg,k2h3plus_qqbar,k2h3plus_prodIndep,k2h6plus_gg,k2h6plus_qqbar,k2h6plus_prodIndep,k2h7plus_gg,k2h7plus_qqbar,k2h7plus_prodIndep,k2h9minus_gg,k2h9minus_qqbar,k2h9minus_prodIndep,k2h10minus_gg,k2h10minus_qqbar,k2h10minus_prodIndep,
-		kggHZZ_10,
+		kggHZZ_10, k0_Zgs, k0_gsgs,
 		NUM_PROCESSES};
 	
 	/// Enum type for supported MEM calculators from MELA and MEKD packages
 	enum MEMCalcs    {kAnalytical, kMEKD, kJHUGen, kMCFM, kMELA_HCP, NUM_MEMCALCS};
 	
 	enum SuperKDsyst {kNone, kScaleUp, kScaleDown, kResolUp, kResolDown, NUM_SuperKDsyst};
-	enum Processes_int {kg1g4=1000, kg1g2, kg1g4_pi_2, kg1g2_pi_2, k_g1g1prime2};
+	enum Processes_int {kg1g4=1000, kg1g2, kg1g4_pi_2, kg1g2_pi_2, k_g1g1prime2, kzzzg, kzzgg};
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -429,7 +429,9 @@ const bool MEMs::isProcSupported[MEMNames::NUM_PROCESSES][MEMNames::NUM_MEMCALCS
   {1,            1,          1,          0,          0},	// k2h10minus_gg 
   {1,            1,          1,          0,          0},	// k2h10minus_qqbar 
   {1,            1,          1,          0,          0},	// k2h10minus_prodIndep 
-  {0,            0,          0,          1,          0}};	// kggHZZ_10 
+  {0,            0,          0,          1,          0},	// kggHZZ_10 
+  {0,            0,          1,          0,          0},	// k0_gsgs 
+  {0,            0,          1,          0,          0}};	// k0_Zgs 
  
 //////////////////////////////////////////////////////////////////////////
 

@@ -41,7 +41,7 @@ const TString MEMs::m_processNameMEKD[MEMNames::NUM_PROCESSES] = {
 	"ggSpin2Ph7", "qqSpin2Ph7", "Spin2Ph7",
 	"ggSpin2Mh9", "qqSpin2Mh9", "Spin2Mh9",
 	"ggSpin2Mh10", "qqSpin2Mh10", "Spin2Mh10",
-	"ggHZZ_10"
+	"ggHZZ_10","ggHZgs","ggHgsgs"
 
 };
 
@@ -113,12 +113,16 @@ MEMs::MEMs(double collisionEnergy, double sKD_mass, string PDFName, bool debug_)
     MELAprocMap[kJJ_0minus_VH]		=TVar::H0minus;
 
     MELAprocMap[kggHZZ_10]		=TVar::D_gg10;
+    MELAprocMap[k0_Zgs]		=TVar::H0_Zgs;
+    MELAprocMap[k0_gsgs]		=TVar::H0_gsgs;
 
 	MELAprocIntMap[kg1g4]			=TVar::D_g1g4;
 	MELAprocIntMap[kg1g2]			=TVar::D_g1g2;
 	MELAprocIntMap[kg1g4_pi_2]		=TVar::D_g1g4_pi_2;
 	MELAprocIntMap[kg1g2_pi_2]		=TVar::D_g1g2_pi_2;
 	MELAprocIntMap[k_g1g1prime2]	=TVar::D_g1g1prime2;
+	MELAprocIntMap[kzzzg]	=TVar::D_zzzg;
+	MELAprocIntMap[kzzgg]	=TVar::D_zzgg;
     
     /// Mapping between MEMs process enums and MELA production enums 
     /// - initialisation (to be updated)
@@ -166,6 +170,8 @@ MEMs::MEMs(double collisionEnergy, double sKD_mass, string PDFName, bool debug_)
     MELAprodMap[kggZZ_SMHiggs]    =TVar::ZZGG;
     MELAprodMap[k0_g1prime2]      =TVar::ZZGG;
     MELAprodMap[kggHZZ_10]      =TVar::ZZGG;
+    MELAprodMap[k0_Zgs]      =TVar::ZZGG;
+    MELAprodMap[k0_gsgs]      =TVar::ZZGG;
 	
 	MELAprodMap[kSpin0_gg]			=TVar::ZZGG;
 	MELAprodMap[kSpin0_prodIndep]	=TVar::ZZINDEPENDENT;
@@ -188,6 +194,8 @@ MEMs::MEMs(double collisionEnergy, double sKD_mass, string PDFName, bool debug_)
     MELAprodIntMap[kg1g4_pi_2]		=TVar::ZZGG;
     MELAprodIntMap[kg1g2_pi_2]		=TVar::ZZGG;
     MELAprodIntMap[k_g1g1prime2]	=TVar::ZZGG;
+    MELAprodIntMap[kzzzg]	=TVar::ZZGG;
+    MELAprodIntMap[kzzgg]	=TVar::ZZGG;
 	
     /// Mapping between MEMs calculator enums and MELA MatrixElement enums 
     /// - initialisation (to be updated)
@@ -830,7 +838,8 @@ int MEMs::cacheMELAcalculation(int process, MEMCalcs calculator, vector<TLorentz
 	TLorentzVector ZZ = (partP[0] + partP[1] + partP[2] + partP[3]);
 	
 	//if(MELAprocMap[static_cast<Processes>(process)] == TVar::HJJVBF || MELAprocMap[static_cast<Processes>(process)] == TVar::PSHJJVBF || MELAprocMap[static_cast<Processes>(process)] == TVar::HJJNONVBF || MELAprocMap[static_cast<Processes>(process)] == TVar::PSHJJNONVBF )
-	if(MELAprodMap[static_cast<Processes>(process)] == TVar::JJVBF|| MELAprodMap[static_cast<Processes>(process)] == TVar::JJGG || MELAprodMap[static_cast<Processes>(process)] == TVar::JJVH)
+//	if(MELAprodMap[static_cast<Processes>(process)] == TVar::JJVBF|| MELAprodMap[static_cast<Processes>(process)] == TVar::JJGG || MELAprodMap[static_cast<Processes>(process)] == TVar::JJVH)
+  if(process == kJJ_SMHiggs_VBF || process == kJJ_0minus_VBF || process == kJJ_SMHiggs_GG || process == kJJ_0minus_GG || process == kJJ_0minus_VH || process == kJJ_SMHiggs_VH)
 	{
 		float me2process_float;
 		m_MELA->setProcess(MELAprocMap[static_cast<Processes>(process)],MELAcalcMap[calculator],MELAprodMap[static_cast<Processes>(process)]);
@@ -976,7 +985,7 @@ int MEMs::cacheMELAcalculation(int process, MEMCalcs calculator, vector<TLorentz
 			else return ERR_PROCESS;	// not yet implemented
 		}
 		else if( process==kg1g4 || process==kg1g2 || process==kg1g4_pi_2 ||
-			process==kg1g2_pi_2 || process==k_g1g1prime2 )
+			process==kg1g2_pi_2 || process==k_g1g1prime2 || process ==kzzzg || process == kzzgg )
 		{
 			m_MELA->computeD_CP( mzz, m1, m2,
 								costhetastar,costheta1,costheta2,phi,phi1,

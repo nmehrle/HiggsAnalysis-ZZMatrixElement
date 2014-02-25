@@ -27,7 +27,7 @@ public:
 		 TVar::MatrixElement memethod,
 		 TVar::Production prodmode,
 		 double couplingvals[2],
-     double selfDHvvcoupl[20][2],
+     double selfDHvvcoupl[30][2],
      double selfDZqqcoupl[2][2],
      double selfDZvvcoupl[2][2],
      double selfDGqqcoupl[2][2],
