@@ -310,11 +310,12 @@ public:
 	double m_mZ1, m_mZ2;
 	double m_Lambda_z1, m_Lambda_z2, m_Lambda_z3, m_Lambda_z4;
 	
-private:
-	/// MEM calculators: MEKD (FeynRules+MadGraph5_v1) and MELA (Analytic, JHUGen, MCFM)
+	
+	/// MEM calculators: MEKD (FeynRules+MadGraph5_v1) and MELA (Analytic, JHUGen, MCFM). Placed here for the expert use.
 	MEKD* m_MEKD;
 	Mela* m_MELA;
 	
+private:
 	/// For error handling and supported precalculations
 	int m_err, NUM_PROCESSES_PRECALC;
 	
