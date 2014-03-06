@@ -16,13 +16,12 @@ using namespace std;
  
 class Parameters_MEKD
 {
-  public:
-
-    static Parameters_MEKD * getInstance(); 
-
-    // Define "zero"
-    double zero, ZERO; 
-    // Model parameters independent of aS
+public:
+	static Parameters_MEKD * getInstance();
+	
+	// Define "zero"
+	double zero, ZERO;
+	// Model parameters independent of aS
 	double WXG, WH, WZp, WW, WZ, WT, ymtau, ymm, yme, ymt, ymb, ymc, yms, ymup,
 		ymdo, aS, Gf, aEWM1, MXG, MH, MZp, MZ, MTA, MM, Me, MT, MB, MC, MS, MU, MD,
 		cabi, gw, g1, cos__cabi, sin__cabi, MZ__exp__2,
@@ -31,14 +30,17 @@ class Parameters_MEKD
 		ys, yt, ytau, yup, muH, ee__exp__2, sw__exp__2, cw__exp__2;
 	// Spin 0
 	std::complex<double> rhob02, rhob01, rhos02, rhos01, rhod02, rhod01, rhoc02, rhoc01, rhou02, rhou01, g4z, g3z, g2z, g1z, g4g, g3g, g2g, g1g;
+	std::complex<double> rhomu02, rhomu01, rhoe02, rhoe01;	// 2l
+	
 	// Spin 1
 	std::complex<double> rhob14, rhob13, rhob12, rhob11, rhos14, rhos13, rhos12, rhos11, rhod14, rhod13, rhod12, rhod11, rhoc14, rhoc13, rhoc12, rhoc11, rhou14, rhou13, rhou12, rhou11, b2z, b1z;
+	std::complex<double> rhomu14, rhomu13, rhomu12, rhomu11, rhoe14, rhoe13, rhoe12, rhoe11;	// 2l
+	
 	// Spin 2
 	std::complex<double> rhob24, rhob23, rhob22, rhob21, rhos24, rhos23, rhos22, rhos21, rhod24, rhod23, rhod22, rhod21, rhoc24, rhoc23, rhoc22, rhoc21, rhou24, rhou23, rhou22, rhou21, k10g, k9g, k8g, k7g, k6g, k5g, k4g, k3g, k2g, k1g, k10z, k9z, k8z, k7z, k6z, k5z, k4z, k3z, k2z, k1z;
-	// Resonance to 2mu
-	std::complex<double> rhomu14, rhomu13, rhomu12, rhomu11, rhomu02, rhomu01, rhomu24, rhomu23, rhomu22, rhomu21;
+	std::complex<double> rhomu24, rhomu23, rhomu22, rhomu21, rhoe24, rhoe23, rhoe22, rhoe21;	// 2l
 	
-    std::complex<double> CKM11, CKM12, CKM13, CKM21, CKM22, CKM23, CKM31,
+	std::complex<double> CKM11, CKM12, CKM13, CKM21, CKM22, CKM23, CKM31,
         CKM32, CKM33, conjg__CKM11, conjg__CKM21, conjg__CKM31, conjg__CKM12,
         conjg__CKM22, conjg__CKM32, conjg__CKM13, conjg__CKM23, conjg__CKM33,
         complexi, I1x11, I1x12, I1x13, I1x21, I1x22, I1x23, I1x31, I1x32,
@@ -60,18 +62,20 @@ class Parameters_MEKD
 	// Coming extra from spin 2
 	std::complex<double> HEF_MEKD_GC_62, HEF_MEKD_GC_63, HEF_MEKD_GC_64, HEF_MEKD_GC_67, HEF_MEKD_GC_68, HEF_MEKD_GC_71, HEF_MEKD_GC_72, HEF_MEKD_GC_75 , HEF_MEKD_GC_76, HEF_MEKD_GC_79, HEF_MEKD_GC_80, HEF_MEKD_GC_81, HEF_MEKD_GC_82, HEF_MEKD_GC_83, HEF_MEKD_GC_84, HEF_MEKD_GC_85, HEF_MEKD_GC_86, HEF_MEKD_GC_90, HEF_MEKD_GC_91, HEF_MEKD_GC_92, HEF_MEKD_GC_112, HEF_MEKD_GC_113, HEF_MEKD_GC_114, HEF_MEKD_GC_115, HEF_MEKD_GC_122, HEF_MEKD_GC_123, HEF_MEKD_GC_124, HEF_MEKD_GC_125, HEF_MEKD_GC_132, HEF_MEKD_GC_133, HEF_MEKD_GC_134, HEF_MEKD_GC_135, HEF_MEKD_GC_142, HEF_MEKD_GC_143, HEF_MEKD_GC_144, HEF_MEKD_GC_145;
 	
-	/// 2mu states
+	
+	/// HEF_MEKD2_1 model
 	// Coming from DY
-	std::complex<double> HEF_MEKD2_GC_3, HEF_MEKD2_GC_4, HEF_MEKD2_GC_5,	HEF_MEKD2_GC_171, HEF_MEKD2_GC_172, HEF_MEKD2_GC_177, HEF_MEKD2_GC_178;
+	std::complex<double> HEF_MEKD2_1_GC_3, HEF_MEKD2_1_GC_4, HEF_MEKD2_1_GC_5, HEF_MEKD2_1_GC_181, HEF_MEKD2_1_GC_182, HEF_MEKD2_1_GC_187, HEF_MEKD2_1_GC_188;
 	
 	// Coming extra from spin 0
-	std::complex<double> HEF_MEKD2_GC_13, HEF_MEKD2_GC_15, HEF_MEKD2_GC_19, HEF_MEKD2_GC_23, HEF_MEKD2_GC_106, HEF_MEKD2_GC_107, HEF_MEKD2_GC_116, HEF_MEKD2_GC_117, HEF_MEKD2_GC_126, HEF_MEKD2_GC_127, HEF_MEKD2_GC_136, HEF_MEKD2_GC_137, HEF_MEKD2_GC_146, HEF_MEKD2_GC_147;
+	std::complex<double> HEF_MEKD2_1_GC_13, HEF_MEKD2_1_GC_14, HEF_MEKD2_1_GC_15, HEF_MEKD2_1_GC_18, HEF_MEKD2_1_GC_19, HEF_MEKD2_1_GC_22, HEF_MEKD2_1_GC_23, HEF_MEKD2_1_GC_25, HEF_MEKD2_1_GC_126, HEF_MEKD2_1_GC_127, HEF_MEKD2_1_GC_136, HEF_MEKD2_1_GC_137;
 	
 	// Coming extra from spin 1
-	std::complex<double> HEF_MEKD2_GC_108, HEF_MEKD2_GC_109, HEF_MEKD2_GC_110, HEF_MEKD2_GC_111, HEF_MEKD2_GC_118, HEF_MEKD2_GC_119, HEF_MEKD2_GC_120, HEF_MEKD2_GC_121, HEF_MEKD2_GC_128, HEF_MEKD2_GC_129, HEF_MEKD2_GC_130, HEF_MEKD2_GC_131, HEF_MEKD2_GC_138, HEF_MEKD2_GC_139, HEF_MEKD2_GC_140, HEF_MEKD2_GC_141, HEF_MEKD2_GC_148, HEF_MEKD2_GC_149, HEF_MEKD2_GC_150, HEF_MEKD2_GC_151;
+	std::complex<double> HEF_MEKD2_1_GC_1, HEF_MEKD2_1_GC_2, HEF_MEKD2_1_GC_108, HEF_MEKD2_1_GC_109, HEF_MEKD2_1_GC_110, HEF_MEKD2_1_GC_111, HEF_MEKD2_1_GC_128, HEF_MEKD2_1_GC_129, HEF_MEKD2_1_GC_130, HEF_MEKD2_1_GC_131, HEF_MEKD2_1_GC_138, HEF_MEKD2_1_GC_139, HEF_MEKD2_1_GC_140, HEF_MEKD2_1_GC_141, HEF_MEKD2_1_GC_148, HEF_MEKD2_1_GC_149, HEF_MEKD2_1_GC_150, HEF_MEKD2_1_GC_151;
 	
 	// Coming extra from spin 2
-	std::complex<double> HEF_MEKD2_GC_62, HEF_MEKD2_GC_63, HEF_MEKD2_GC_64, HEF_MEKD2_GC_68, HEF_MEKD2_GC_72, HEF_MEKD2_GC_76, HEF_MEKD2_GC_80, HEF_MEKD2_GC_82, HEF_MEKD2_GC_84, HEF_MEKD2_GC_86, HEF_MEKD2_GC_91, HEF_MEKD2_GC_112, HEF_MEKD2_GC_113, HEF_MEKD2_GC_114, HEF_MEKD2_GC_115, HEF_MEKD2_GC_122, HEF_MEKD2_GC_123, HEF_MEKD2_GC_124, HEF_MEKD2_GC_125, HEF_MEKD2_GC_132, HEF_MEKD2_GC_133, HEF_MEKD2_GC_134, HEF_MEKD2_GC_135, HEF_MEKD2_GC_142, HEF_MEKD2_GC_143, HEF_MEKD2_GC_144, HEF_MEKD2_GC_145, HEF_MEKD2_GC_152, HEF_MEKD2_GC_153, HEF_MEKD2_GC_154, HEF_MEKD2_GC_155;
+	std::complex<double> HEF_MEKD2_1_GC_62, HEF_MEKD2_1_GC_63, HEF_MEKD2_1_GC_64, HEF_MEKD2_1_GC_67, HEF_MEKD2_1_GC_68, HEF_MEKD2_1_GC_71, HEF_MEKD2_1_GC_72, HEF_MEKD2_1_GC_75, HEF_MEKD2_1_GC_76, HEF_MEKD2_1_GC_79, HEF_MEKD2_1_GC_80, HEF_MEKD2_1_GC_81, HEF_MEKD2_1_GC_82, HEF_MEKD2_1_GC_83, HEF_MEKD2_1_GC_84, HEF_MEKD2_1_GC_85, HEF_MEKD2_1_GC_86, HEF_MEKD2_1_GC_90, HEF_MEKD2_1_GC_91, HEF_MEKD2_1_GC_92, HEF_MEKD2_1_GC_112, HEF_MEKD2_1_GC_113, HEF_MEKD2_1_GC_114, HEF_MEKD2_1_GC_115, HEF_MEKD2_1_GC_132, HEF_MEKD2_1_GC_133, HEF_MEKD2_1_GC_134, HEF_MEKD2_1_GC_135, HEF_MEKD2_1_GC_142, HEF_MEKD2_1_GC_143, HEF_MEKD2_1_GC_144, HEF_MEKD2_1_GC_145, HEF_MEKD2_1_GC_152, HEF_MEKD2_1_GC_153, HEF_MEKD2_1_GC_154, HEF_MEKD2_1_GC_155;
+	
 	
     // Model couplings dependent on aS
 

@@ -6,9 +6,9 @@
 //==========================================================================
 
 #include "qq_Spin2_DN_OFpA.h"
-#include "../HelAmps_HEF_MEKD_spin2pA.h"
+#include "../HelAmps_HEF_MEKD.h"
 
-using namespace MG5_HEF_MEKD_spin2pA;
+using namespace MG5_HEF_MEKD;
 
 //==========================================================================
 // Class member functions for calculating the matrix elements for

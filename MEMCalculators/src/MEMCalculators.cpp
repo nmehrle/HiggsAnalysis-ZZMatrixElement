@@ -41,7 +41,9 @@ const TString MEMs::m_processNameMEKD[MEMNames::NUM_PROCESSES] = {
 	"ggSpin2Ph7", "qqSpin2Ph7", "Spin2Ph7",
 	"ggSpin2Mh9", "qqSpin2Mh9", "Spin2Mh9",
 	"ggSpin2Mh10", "qqSpin2Mh10", "Spin2Mh10",
-	"ggHZZ_10","ggHZgs","ggHgsgs"
+	"ggHZZ_10","ggHZgs","ggHgsgs",
+	"qqZ4l_Signal", "qqZ4l_Background",
+	"ggSpin2Pm_2f", "qqSpin2Pm_2f", "Spin2Pm_2f"
 
 };
 

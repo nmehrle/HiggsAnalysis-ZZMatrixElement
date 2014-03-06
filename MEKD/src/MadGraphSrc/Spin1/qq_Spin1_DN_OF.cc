@@ -6,10 +6,10 @@
 //==========================================================================
 
 #include "qq_Spin1_DN_OF.h"
-#include "../HelAmps_HEF_MEKD_spin1.h"
+#include "../HelAmps_HEF_MEKD.h"
 #include "../read_slha.h"
 
-using namespace MG5_HEF_MEKD_spin1; 
+using namespace MG5_HEF_MEKD; 
 
 //==========================================================================
 // Class member functions for calculating the matrix elements for

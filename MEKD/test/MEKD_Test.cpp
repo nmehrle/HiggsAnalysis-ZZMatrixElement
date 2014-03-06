@@ -9,6 +9,7 @@
 #define MEKD_TEST_CPP
 
 #include "MEKD_Test.h"
+#include "MEKD_Test_Check_Models.cpp"
 #include "MEKD_Test_Consistency.cpp"
 #include "MEKD_Test_Debug_Ghosts.cpp"
 #include "MEKD_Test_Functionality.cpp"
@@ -74,17 +75,17 @@ int main()
 // 		cout << " --------------------------------------------- \n";
 // 	}
 // 	
-	error_value = MEKD_Test_Consistency_Test1();
-	if( error_value == 0 ) cout << "TEST 1: PASSED\n";
-	else cout << "TEST 1: FAILED\n";
-	
-	
-	MEKD_Test_Gen_Test1();	//many tests at the moment
+// 	error_value = MEKD_Test_Consistency_Test1();
+// 	if( error_value == 0 ) cout << "TEST 1: PASSED\n";
+// 	else cout << "TEST 1: FAILED\n";
+// 	
+// 	
+// 	MEKD_Test_Gen_Test1();	//many tests at the moment
 	
 	
 // 	if( Show_Description )
 // 	{
-// 		cout << "\n --------------------------------------------- \n";
+// 		cout << "\n -------------------------------------------------- \n";
 // 		cout << " -- Testing ME calculations for the interference -- \n";
 // 		cout << " --------------------------------------------- \n";
 // 	}
@@ -96,23 +97,38 @@ int main()
 // 	if( error_value == 0 ) cout << "TEST 2: PASSED\n";
 // 	else cout << "TEST 2: FAILED\n";
 	
-	
+/*	
 	if( Show_Description )
 	{
-		cout << "\n --------------------------------------------- \n";
+		cout << "\n ----------------------------------------------------- \n";
 		cout << " -- Testing ME calculations for the order dependece -- \n";
-		cout << " --------------------------------------------- \n";
+		cout << " ----------------------------------------------------- \n";
 	}
 	
 	error_value = MEKD_Test_Debug_Ghosts_Test0();
 	if( error_value == 0 ) cout << "TEST 0: PASSED\n";
-	else cout << "TEST 0: FAILED\n";
+	else cout << "TEST 0: FAILED\n";*/
 // 	error_value = MEKD_Test_Debug_Ghosts_Test1();
 // 	if( error_value == 0 ) cout << "TEST 1: PASSED\n";
 // 	else cout << "TEST 1: FAILED\n";
 // 	error_value = MEKD_Test_Debug_Ghosts_Test2();
 // 	if( error_value == 0 ) cout << "TEST 2: PASSED\n";
 // 	else cout << "TEST 2: FAILED\n";
+	
+	
+	if( Show_Description )
+	{
+		cout << "\n --------------------------------------------------- \n";
+		cout << " -- Testing model integration for ME calculations -- \n";
+		cout << " --------------------------------------------------- \n";
+	}
+	
+	error_value = MEKD_Test_Check_Models_Test1();
+	if( error_value == 0 ) cout << "TEST 1: PASSED\n";
+	else cout << "TEST 1: FAILED\n";
+	error_value = MEKD_Test_Check_Models_Test2();
+	if( error_value == 0 ) cout << "TEST 2: PASSED\n";
+	else cout << "TEST 2: FAILED\n";
 	
 	
 	return 0;

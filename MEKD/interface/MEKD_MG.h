@@ -55,7 +55,7 @@ public:
 	
 	/// String flags and file locations
 	string Final_state;	// Final state, for the moment: 4e, 4mu, 2e2mu
-	string Resonance_decay_mode;	// default: ZZ. Alternatives: 2mu
+	string Resonance_decay_mode;	// default: ZZ. Alternatives: 2l, 2l_s
 	string Test_Model;	// Models: ZZ, DY, Custom, CPevenScalar, ggSpin0Pm, ggSpin0M, ggSpin0Ph, qqSpin1P, qqSpin1M, ggSpin2Pm, ggSpin2Ph, ggSpin2Mh, ggSpin2Pb, qqSpin2Pm, qqSpin2Ph, qqSpin2Mh, qqSpin2Pb, Spin0Pm, Spin0M, Spin0Ph, Spin1P, Spin1M, Spin2Pm, Spin2Ph, Spin2Mh, Spin2Pb, qqZ4l_Signal, qqZ4l_Background
 	vector<string> Test_Models;	// same names as for the Test_Model
 	string Parameter_file;	// Location where a parameter card is stored
@@ -86,11 +86,14 @@ private:
 	bool Parameters_Are_Loaded, buffer_bool, Predefined_Model;
 	
 	int error_value;
+	unsigned int counter;
 	
 	double *buffer, buffer_p[4], buffer_Custom, ml1, ml2, ml3, ml4, PDFx1, PDFx2, LmbdGG_calculated;
 	double *pl1_internal, *pl2_internal, *pl3_internal, *pl4_internal, *pA1_internal;
 	
 	complex<double> *buffer_complex, *Mixing_Coefficients_Spin0_internal, *Mixing_Coefficients_Spin1_internal, *Mixing_Coefficients_Spin2_internal;
+	
+	string *Test_Model_buffer;
 	
 	// Parameters
 	double v_expectation;	// Vacuum expectation value
@@ -121,46 +124,50 @@ private:
 	
 	int Arrange_Internal_pls();
 	
-	/// Sets up particular choices
-	int Run_MEKD_MG_ME_BKG_Z4l();
-	int Run_MEKD_MG_ME_BKG_ZZ();
-	int Run_MEKD_MG_ME_Custom();
-	int Run_MEKD_MG_ME_Spin0(string initial_state);	// A general mixed spin-0 state
-	int Run_MEKD_MG_ME_Spin1(string initial_state);	// A general mixed spin-1 state
-	int Run_MEKD_MG_ME_Spin2(string initial_state);	// A general mixed spin-2 state
-	int Run_MEKD_MG_ME_Spin0Pm(string initial_state);	// SM Higgs
-	int Run_MEKD_MG_ME_Spin0M(string initial_state);
-	int Run_MEKD_MG_ME_Spin0Ph(string initial_state);
-	int Run_MEKD_MG_ME_Spin1P(string initial_state);
-	int Run_MEKD_MG_ME_Spin1M(string initial_state);
-	int Run_MEKD_MG_ME_Spin2Pm(string initial_state);
-	int Run_MEKD_MG_ME_Spin2Ph(string initial_state);
-	int Run_MEKD_MG_ME_Spin2Mh(string initial_state);
-	int Run_MEKD_MG_ME_Spin2Pb(string initial_state);
-	int Run_MEKD_MG_ME_Spin2Ph2(string initial_state);
-	int Run_MEKD_MG_ME_Spin2Ph3(string initial_state);
-	int Run_MEKD_MG_ME_Spin2Ph6(string initial_state);
-	int Run_MEKD_MG_ME_Spin2Ph7(string initial_state);
-	int Run_MEKD_MG_ME_Spin2Mh9(string initial_state);
-	int Run_MEKD_MG_ME_Spin2Mh10(string initial_state);
-	int Run_MEKD_MG_ME_Spin0Pm_Spin0M(string initial_state);	// A mixed state of two contributions
-	int Run_MEKD_MG_ME_Spin0Pm_Spin0Ph(string initial_state);
-	int Run_MEKD_MG_ME_Spin0M_Spin0Ph(string initial_state);
-	int Run_MEKD_MG_ME_Z4l();
+	/// Sets up particular choices. Tier 3
+	int Run_MEKD_MG_ME_Configurator_BKG_ZZ(string initial_state);
+	int Run_MEKD_MG_ME_Configurator_Custom();
+	int Run_MEKD_MG_ME_Configurator_Spin0(string initial_state);	// A general mixed spin-0 state
+	int Run_MEKD_MG_ME_Configurator_Spin1(string initial_state);	// A general mixed spin-1 state
+	int Run_MEKD_MG_ME_Configurator_Spin2(string initial_state);	// A general mixed spin-2 state
+	int Run_MEKD_MG_ME_Configurator_Spin0Pm(string initial_state);	// SM Higgs
+	int Run_MEKD_MG_ME_Configurator_Spin0M(string initial_state);
+	int Run_MEKD_MG_ME_Configurator_Spin0Ph(string initial_state);
+	int Run_MEKD_MG_ME_Configurator_Spin1P(string initial_state);
+	int Run_MEKD_MG_ME_Configurator_Spin1M(string initial_state);
+	int Run_MEKD_MG_ME_Configurator_Spin2Pm(string initial_state);
+	int Run_MEKD_MG_ME_Configurator_Spin2Ph(string initial_state);
+	int Run_MEKD_MG_ME_Configurator_Spin2Mh(string initial_state);
+	int Run_MEKD_MG_ME_Configurator_Spin2Pb(string initial_state);
+	int Run_MEKD_MG_ME_Configurator_Spin2Ph2(string initial_state);
+	int Run_MEKD_MG_ME_Configurator_Spin2Ph3(string initial_state);
+	int Run_MEKD_MG_ME_Configurator_Spin2Ph6(string initial_state);
+	int Run_MEKD_MG_ME_Configurator_Spin2Ph7(string initial_state);
+	int Run_MEKD_MG_ME_Configurator_Spin2Mh9(string initial_state);
+	int Run_MEKD_MG_ME_Configurator_Spin2Mh10(string initial_state);
+	int Run_MEKD_MG_ME_Configurator_Spin0Pm_Spin0M(string initial_state);	// A mixed state of two contributions
+	int Run_MEKD_MG_ME_Configurator_Spin0Pm_Spin0Ph(string initial_state);
+	int Run_MEKD_MG_ME_Configurator_Spin0M_Spin0Ph(string initial_state);
+	int Run_MEKD_MG_ME_Configurator_Z4l_BKG(string initial_state);
+	int Run_MEKD_MG_ME_Configurator_Z4l_SIG(string initial_state);
 	
-	/// Blind-calculation functions
-	int Run_MEKD_MG_MEs_BKG_Z4l(string initial_state);
-	int Run_MEKD_MG_MEs_BKG_Z4l_Sub(string initial_state, string flavor, bool photon);
-	int Run_MEKD_MG_MEs_BKG_ZZ(string initial_state);
-	int Run_MEKD_MG_MEs_BKG_ZZ_Sub(string initial_state, string flavor, bool photon);
-	int Run_MEKD_MG_MEs_SIG_Spin0(string initial_state);
-	int Run_MEKD_MG_MEs_SIG_Spin0_Sub(string initial_state, string flavor, bool photon);
-	int Run_MEKD_MG_MEs_SIG_Spin1(string initial_state);
-	int Run_MEKD_MG_MEs_SIG_Spin1_Sub(string initial_state, string flavor, bool photon);
-	int Run_MEKD_MG_MEs_SIG_Spin2(string initial_state);
-	int Run_MEKD_MG_MEs_SIG_Spin2_Sub(string initial_state, string flavor, bool photon);
-	int Run_MEKD_MG_MEs_SIG_Z4l(string initial_state);
-	int Run_MEKD_MG_MEs_SIG_Z4l_Sub(string initial_state, string flavor, bool photon);
+	/// Dispatches MEs that have correct parameters. Tier 2
+	int Run_MEKD_MG_ME_Dispatcher_BKG_ZZ(string initial_state);
+	int Run_MEKD_MG_ME_Dispatcher_Z4l_BKG(string initial_state);
+	int Run_MEKD_MG_ME_Dispatcher_Z4l_SIG(string initial_state);
+	int Run_MEKD_MG_ME_Dispatcher_SIG_Spin0(string initial_state);
+	int Run_MEKD_MG_ME_Dispatcher_SIG_Spin1(string initial_state);
+	int Run_MEKD_MG_ME_Dispatcher_SIG_Spin2(string initial_state);
+	
+	/// Evaluators. Blind-calculation functions. Handles MEs from Dispatchers. Tier 1
+	template<class Generic_MEKD_MG_ME>
+	int Run_MEKD_MG_MEs_Evaluator_Initial_State_NO(bool photon, Generic_MEKD_MG_ME &Generic_ME);
+	
+	template<class Generic_MEKD_MG_ME>
+	int Run_MEKD_MG_MEs_Evaluator_Initial_State_gg(bool photon, Generic_MEKD_MG_ME &Generic_ME);
+	
+	template<class Generic_MEKD_MG_ME_s, class Generic_MEKD_MG_ME_c>
+	int Run_MEKD_MG_MEs_Evaluator_Initial_State_qqbar(bool photon, Generic_MEKD_MG_ME_s &Generic_ME_s, Generic_MEKD_MG_ME_c &Generic_ME_c);
 };
 
 
