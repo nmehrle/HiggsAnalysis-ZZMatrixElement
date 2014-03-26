@@ -22,7 +22,7 @@ void gg_Spin0_2f_OF::initProc(string param_card_name)
 {
   // Instantiate the model class and set parameters that stay fixed during run
   pars = Parameters_MEKD::getInstance();	// Changed by Convert_source 0.2 
-  SLHAReader slha(param_card_name);
+  SLHAReader_MEKD slha(param_card_name);
   pars->setIndependentParameters(slha);
   pars->setIndependentCouplings();
 	ntry = 0, sum_hel = 0, ngood = 0;	// Moved here by Convert_source 0.2
@@ -34,13 +34,13 @@ void gg_Spin0_2f_OF::initProc(string param_card_name)
   mME.push_back(pars->MM);
   mME.push_back(pars->MM);
   jamp2[0] = new double[1];
-	for( unsigned int count=0; count<namplitudes; count++ ) amp[count] = 0;
+	for( int count=0; count<namplitudes; count++ ) amp[count] = 0;
 }
 
 //--------------------------------------------------------------------------
 // Update process.	// Created here by Convert_source 0.2
 
-void gg_Spin0_2f_OF::updateProc(SLHAReader slha)
+void gg_Spin0_2f_OF::updateProc(SLHAReader_MEKD &slha)
 {
 	pars->setIndependentParameters(slha);
 	pars->setIndependentCouplings();

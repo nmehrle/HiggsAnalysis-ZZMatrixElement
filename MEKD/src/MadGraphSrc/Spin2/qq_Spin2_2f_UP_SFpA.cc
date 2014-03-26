@@ -21,7 +21,7 @@ void qq_Spin2_2f_UP_SFpA::initProc(string param_card_name)
 {
   // Instantiate the model class and set parameters that stay fixed during run
   pars = Parameters_MEKD::getInstance();	// Changed by Convert_source 0.2 
-  SLHAReader slha(param_card_name);
+  SLHAReader_MEKD slha(param_card_name);
   pars->setIndependentParameters(slha);
   pars->setIndependentCouplings();
 	ntry = 0, sum_hel = 0, ngood = 0;	// Moved here by Convert_source 0.2
@@ -39,7 +39,7 @@ void qq_Spin2_2f_UP_SFpA::initProc(string param_card_name)
 //--------------------------------------------------------------------------
 // Update process.	// Created here by Convert_source 0.2
 
-void qq_Spin2_2f_UP_SFpA::updateProc(SLHAReader slha)
+void qq_Spin2_2f_UP_SFpA::updateProc(SLHAReader_MEKD &slha)
 {
 	pars->setIndependentParameters(slha);
 	pars->setIndependentCouplings();
@@ -509,7 +509,7 @@ void qq_Spin2_2f_UP_SFpA::calculate_wavefunctions(const int perm[], const int he
 
   // Calculate all amplitudes
   // Amplitude(s) for diagram number 0
-	for( unsigned int count=0; count<namplitudes; count++ ) amp[count] = 0;
+	for( int count=0; count<namplitudes; count++ ) amp[count] = 0;
   FFV2_0(w[10], w[9], w[6], pars->HEF_MEKD2_1_GC_5, amp[0]);
   FFV2_0(w[11], w[12], w[6], pars->HEF_MEKD2_1_GC_5, amp[1]);
   FFV2_0(w[14], w[9], w[6], pars->HEF_MEKD2_1_GC_5, amp[2]);

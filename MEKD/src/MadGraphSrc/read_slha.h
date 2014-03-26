@@ -1,5 +1,5 @@
-#ifndef READ_SLHA_H
-#define READ_SLHA_H
+#ifndef READ_SLHA_MEKD_H
+#define READ_SLHA_MEKD_H
 
 #include <map>
 #include <string>
@@ -9,11 +9,11 @@
 
 using namespace std;
 
-class SLHABlock
+class SLHABlock_MEKD
 {
   public:
-    SLHABlock(string name = ""){_name = name;}
-    ~SLHABlock(){}
+    SLHABlock_MEKD(string name = ""){_name = name;}
+    ~SLHABlock_MEKD(){}
 
     void set_entry(vector<int> indices, complex<double> value);
     complex<double> get_entry(vector<int> indices, complex<double> def_val = 0);
@@ -27,10 +27,10 @@ class SLHABlock
     unsigned int _indices;
 };
 
-class SLHAReader
+class SLHAReader_MEKD
 {
   public:
-    SLHAReader(string file_name = "")
+    SLHAReader_MEKD(string file_name = "")
 	{if(file_name != "") read_slha_file(file_name);}
 
     void read_slha_file(string file_name);
@@ -43,7 +43,7 @@ class SLHAReader
     void set_block_entry(string block_name, int index, 
 			   complex<double> value);
   private:
-    map<string, SLHABlock> _blocks;
+    map<string, SLHABlock_MEKD> _blocks;
 };
 
 

@@ -85,6 +85,9 @@ objects3=$(INCDIR2)/MEKD_CalcHEP_PDF.o $(INCDIR2)/MEKD_CalcHEP_Extra_functions.o
 
 objects4=$(INCDIR1)/MEKD_MG.o
 
+## RAW ME from MG5_aMC
+# objects5=$(INCDIR4)/RAW/CPPProcess.o $(INCDIR4)/RAW/HelAmps_sm.o $(INCDIR4)/RAW/Parameters_sm.o $(INCDIR4)/RAW/read_slha.o
+
 
 
 ########################
@@ -93,7 +96,7 @@ objects4=$(INCDIR1)/MEKD_MG.o
 
 objects2=$(objects2_ZZ) $(objects2_Z4l) $(objects2_DY) $(objects2_spin0) $(objects2_spin0_2) $(objects2_spin0_3) $(objects2_spin1) $(objects2_spin1_2) $(objects2_spin1_3) $(objects2_spin2) $(objects2_spin2_2) $(objects2_spin2_3)
 
-objects=$(objects1) $(objects2) $(objects3) $(objects4)
+objects=$(objects1) $(objects2) $(objects3) $(objects4) $(objects5)
 
 
 

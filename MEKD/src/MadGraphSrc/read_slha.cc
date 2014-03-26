@@ -1,5 +1,5 @@
-#ifndef READ_SLHA_CC
-#define READ_SLHA_CC
+#ifndef READ_SLHA_MEKD_CC
+#define READ_SLHA_MEKD_CC
 
 #include <algorithm>
 #include <iostream>
@@ -8,7 +8,7 @@
 
 using namespace std;
 
-void SLHABlock::set_entry(vector<int> indices, complex<double> value)
+void SLHABlock_MEKD::set_entry(vector<int> indices, complex<double> value)
 {
   if (_entries.size() == 0)
     _indices = indices.size();
@@ -18,7 +18,7 @@ void SLHABlock::set_entry(vector<int> indices, complex<double> value)
   _entries[indices] = value;
 }
 
-complex<double> SLHABlock::get_entry(vector<int> indices, complex<double> def_val)
+complex<double> SLHABlock_MEKD::get_entry(vector<int> indices, complex<double> def_val)
 {
   if (_entries.find(indices) == _entries.end()){
     cout << "Warning: No such entry in " << _name << ", using default value " 
@@ -28,7 +28,7 @@ complex<double> SLHABlock::get_entry(vector<int> indices, complex<double> def_va
   return _entries[indices];
 }
 
-void SLHAReader::read_slha_file(string file_name)
+void SLHAReader_MEKD::read_slha_file(string file_name)
 {
   ifstream param_card;
   param_card.open(file_name.c_str(), ifstream::in);
@@ -109,7 +109,7 @@ void SLHAReader::read_slha_file(string file_name)
   param_card.close();
 }
 
-complex<double> SLHAReader::get_block_entry(string block_name, vector<int> indices, 
+complex<double> SLHAReader_MEKD::get_block_entry(string block_name, vector<int> indices, 
 				   complex<double> def_val)
 {
   if (_blocks.find(block_name) == _blocks.end()){
@@ -120,7 +120,7 @@ complex<double> SLHAReader::get_block_entry(string block_name, vector<int> indic
   return _blocks[block_name].get_entry(indices);  
 }
 
-complex<double> SLHAReader::get_block_entry(string block_name, int index, 
+complex<double> SLHAReader_MEKD::get_block_entry(string block_name, int index, 
 				   complex<double> def_val)
 {
   vector<int> indices;
@@ -129,11 +129,11 @@ complex<double> SLHAReader::get_block_entry(string block_name, int index,
 }
 
 
-void SLHAReader::set_block_entry(string block_name, vector<int> indices, 
+void SLHAReader_MEKD::set_block_entry(string block_name, vector<int> indices, 
 				   complex<double> value)
 {
   if (_blocks.find(block_name) == _blocks.end()){
-    SLHABlock block(block_name);
+    SLHABlock_MEKD block(block_name);
     _blocks[block_name] = block;
   }
   _blocks[block_name].set_entry(indices, value);  
@@ -143,7 +143,7 @@ void SLHAReader::set_block_entry(string block_name, vector<int> indices,
      cout << "to " << _blocks[block_name].get_entry(indices) << endl;*/
 }
 
-void SLHAReader::set_block_entry(string block_name, int index, 
+void SLHAReader_MEKD::set_block_entry(string block_name, int index, 
 				   complex<double> value)
 {
   vector<int> indices;

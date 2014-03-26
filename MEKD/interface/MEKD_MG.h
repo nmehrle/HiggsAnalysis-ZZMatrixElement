@@ -69,7 +69,7 @@ public:
 	double KD;	//is not filled with RUN_MEKD_MG( string )
 	
 	/// Parameter container. For experts only
-	SLHAReader Set_Of_Model_Parameters;
+	SLHAReader_MEKD Set_Of_Model_Parameters;
 	
 	/// Functions
 	void Set_Default_MEKD_MG_Parameters();
@@ -127,6 +127,7 @@ private:
 	/// Sets up particular choices. Tier 3
 	int Run_MEKD_MG_ME_Configurator_BKG_ZZ(string initial_state);
 	int Run_MEKD_MG_ME_Configurator_Custom();
+	int Run_MEKD_MG_ME_Configurator_CPPProcess(string initial_state);	// RAW MG5_aMC ME
 	int Run_MEKD_MG_ME_Configurator_Spin0(string initial_state);	// A general mixed spin-0 state
 	int Run_MEKD_MG_ME_Configurator_Spin1(string initial_state);	// A general mixed spin-1 state
 	int Run_MEKD_MG_ME_Configurator_Spin2(string initial_state);	// A general mixed spin-2 state
@@ -152,6 +153,7 @@ private:
 	int Run_MEKD_MG_ME_Configurator_Z4l_SIG(string initial_state);
 	
 	/// Dispatches MEs that have correct parameters. Tier 2
+	int Run_MEKD_MG_ME_Dispatcher_CPPProcess(string initial_state);	// RAW MG5_aMC ME
 	int Run_MEKD_MG_ME_Dispatcher_BKG_ZZ(string initial_state);
 	int Run_MEKD_MG_ME_Dispatcher_Z4l_BKG(string initial_state);
 	int Run_MEKD_MG_ME_Dispatcher_Z4l_SIG(string initial_state);

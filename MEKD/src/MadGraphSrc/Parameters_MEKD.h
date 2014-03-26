@@ -81,7 +81,7 @@ public:
 
 
     // Set parameters that are unchanged during the run
-    void setIndependentParameters(SLHAReader& slha); 
+    void setIndependentParameters(SLHAReader_MEKD& slha); 
     // Set couplings that are unchanged during the run
     void setIndependentCouplings(); 
     // Set parameters that are changed event by event

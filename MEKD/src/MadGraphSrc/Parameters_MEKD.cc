@@ -24,7 +24,7 @@ Parameters_MEKD * Parameters_MEKD::getInstance()
   return instance; 
 }
 
-void Parameters_MEKD::setIndependentParameters(SLHAReader& slha)
+void Parameters_MEKD::setIndependentParameters(SLHAReader_MEKD& slha)
 {
   // Define "zero"
   zero = 0; 

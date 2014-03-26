@@ -32,7 +32,7 @@ class qq_Z4l_BKG_UP_OFpA
     virtual void initProc(string param_card_name);
 	
 	// Update process.
-	virtual void updateProc(SLHAReader slha);
+	virtual void updateProc(SLHAReader_MEKD &slha);
 
     // Calculate flavour-independent parts of cross section.
 	virtual void sigmaKin();

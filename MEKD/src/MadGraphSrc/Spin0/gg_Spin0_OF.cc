@@ -21,7 +21,7 @@ void gg_Spin0_OF::initProc(string param_card_name)
 {
   // Instantiate the model class and set parameters that stay fixed during run
   pars = Parameters_MEKD::getInstance(); 
-  SLHAReader slha(param_card_name); 
+  SLHAReader_MEKD slha(param_card_name); 
   pars->setIndependentParameters(slha); 
   pars->setIndependentCouplings();
 	ntry = 0, sum_hel = 0, ngood = 0;	// moved here by Ghost remover v. 0.1 
@@ -38,7 +38,7 @@ void gg_Spin0_OF::initProc(string param_card_name)
 //--------------------------------------------------------------------------
 // Update process.
 
-void gg_Spin0_OF::updateProc(SLHAReader slha) 
+void gg_Spin0_OF::updateProc(SLHAReader_MEKD &slha) 
 {
   pars->setIndependentParameters(slha); 
   pars->setIndependentCouplings();
