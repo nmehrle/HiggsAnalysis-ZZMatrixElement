@@ -654,9 +654,9 @@ int MEMs::Check_Couplings( Processes process, vector<complex<double> > *ProdCoup
 	}
 	if( process==kSpin0_gg || process==kSpin0_prodIndep )	// checking Spin-0 case
 	{
-		if( ProdCouplings!=(vector<complex<double> >*) NULL && (*DecayCouplings).size() != 4 && (*DecayCouplings).size() != 20)
+		if( ProdCouplings!=(vector<complex<double> >*) NULL && (*DecayCouplings).size() != 4 && (*DecayCouplings).size() != 30)
 		{
-			if( debug ) cout << "MEMs::Check_Couplings. Error in provided decay couplings. Expected size: 4 or 20 (form-factor case), provided: "  << (*DecayCouplings).size() << endl;
+			if( debug ) cout << "MEMs::Check_Couplings. Error in provided decay couplings. Expected size: 4 or 30 (form-factor case), provided: "  << (*DecayCouplings).size() << endl;
 			return 1;
 		}
 		
@@ -881,7 +881,7 @@ int MEMs::cacheMELAcalculation(int process, MEMCalcs calculator, vector<TLorentz
 		{
 			if( process==kSpin0_gg || process==kSpin0_prodIndep )
 			{
-				double translation[20][2];
+				double translation[30][2];
 				if( (*DecayCouplings).size() == 4 )
 				{
 					for(int i=0;i<4;i++)
@@ -889,15 +889,15 @@ int MEMs::cacheMELAcalculation(int process, MEMCalcs calculator, vector<TLorentz
 						translation[i][0] = (*DecayCouplings)[i].real();
 						translation[i][1] = (*DecayCouplings)[i].imag();
 					}
-					for(int i=4;i<20;i++)
+					for(int i=4;i<30;i++)
 					{
 						translation[i][0] = 0.;
 						translation[i][1] = 0.; 
 					}
 				}
-				else if( (*DecayCouplings).size() == 20 )
+				else if( (*DecayCouplings).size() == 30 )
 				{
-					for(int i=0;i<20;i++)
+					for(int i=0;i<30;i++)
 					{
 						translation[i][0] = (*DecayCouplings)[i].real();
 						translation[i][1] = (*DecayCouplings)[i].imag();
@@ -905,7 +905,7 @@ int MEMs::cacheMELAcalculation(int process, MEMCalcs calculator, vector<TLorentz
 				}
 				else
 				{
-					cout<< "expect 4/20 decay couplings for mela"<<endl;
+					cout<< "expect 4/30 decay couplings for mela"<<endl;
 				}
 				
 				//                 TVar::Process        TVar::MatrixElement     TVar::Production
