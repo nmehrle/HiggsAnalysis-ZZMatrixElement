@@ -1128,10 +1128,10 @@ void Mela::computeP(TLorentzVector Z1_lept1, int Z1_lept1Id,  // input 4-vectors
   float mzz = ZZ.M();
     
   // Skip candidates where KD is irrelevant.
-  if (mzz<100.){
-    prob = -99.0;
-    return;
-  }
+//  if (mzz<100.){
+//    prob = -99.0;
+//    return;
+//  }
 
   float costhetastar, costheta1, costheta2, phi, phi1;
 
@@ -1176,10 +1176,10 @@ void Mela::computeP(TLorentzVector Z1_lept1, int Z1_lept1Id,  // input 4-vectors
     float mzz = ZZ.M();
     
     // Skip candidates where KD is irrelevant.
-    if (mzz<100.){
-      prob = -99.0;
-      return;
-    }
+   // if (mzz<100.){
+   //   prob = -99.0;
+   //   return;
+   // }
     
     float costhetastar, costheta1, costheta2, phi, phi1;
     
@@ -1221,10 +1221,10 @@ void Mela::computeProdP(TLorentzVector Jet1, int Jet1_Id,
     higgs=Decay1+Decay2;
   }
   //float rdiff=Jet1.DeltaR(Jet2);
-  if(higgs.M()<100) failedEvent=true;
-  //if(Jet1.Pt()<30. || fabs(Jet1.Eta())>4.7 || Jet2.Pt()<30. || fabs(Jet2.Eta())>4.7 || rdiff<0.5) failedEvent=true;
-  if(failedEvent) prob=-99.;
-  else{
+//  if(higgs.M()<100) failedEvent=true;
+//  //if(Jet1.Pt()<30. || fabs(Jet1.Eta())>4.7 || Jet2.Pt()<30. || fabs(Jet2.Eta())>4.7 || rdiff<0.5) failedEvent=true;
+//  if(failedEvent) prob=-99.;
+  //else{
     energy = Jet1.Energy();
     p3sq = sqrt(Jet1.Px()*Jet1.Px()+Jet1.Py()*Jet1.Py()+Jet1.Pz()*Jet1.Pz());
     ratio = energy / p3sq;
@@ -1238,7 +1238,7 @@ void Mela::computeProdP(TLorentzVector Jet1, int Jet1_Id,
     jet2massless.Boost(-total.BoostVector().x(),-total.BoostVector().y(),0.);
     higgs.Boost(-total.BoostVector().x(),-total.BoostVector().y(),0.);
     ZZME->computeProdXS(jet1massless,jet2massless,higgs,myModel_,myProduction_,prob);
-  }
+  //}
 
   if(myME_==TVar::JHUGen){
     if( myModel_ == TVar::HSMHiggs && myProduction_ == TVar::JJGG)  constant = 1.8e-5;
