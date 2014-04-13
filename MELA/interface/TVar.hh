@@ -80,6 +80,10 @@ public:
 		D_zzzg						= 29,
 		D_zzgg						= 30,
 
+		H0_Zgs_PS 					= 31,
+		H0_gsgs_PS 					= 32,
+		D_zzzg_PS						= 33,
+		D_zzgg_PS						= 34,
     /*** Are these ones still used? ***/
     //  QQB_TZZ_4l = 8,
     //  TZZ_DECAY_4l = 10,

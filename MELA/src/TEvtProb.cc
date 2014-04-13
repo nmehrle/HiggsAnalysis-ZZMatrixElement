@@ -175,11 +175,19 @@ double TEvtProb::XsecCalc(TVar::Process proc, TVar::Production production, const
       }
 
       if ( proc == TVar::H0_Zgs) {
-				Hvvcoupl[4][0] = 0.0725;
+				Hvvcoupl[4][0] = 0.0688;
 				Hvvcoupl[0][0] = 0.;
       }
       if ( proc == TVar::H0_gsgs) {
-				Hvvcoupl[7][0] = -0.0951;
+				Hvvcoupl[7][0] = -0.0898;
+				Hvvcoupl[0][0] = 0.;
+      }
+      if ( proc == TVar::H0_Zgs_PS) {
+				Hvvcoupl[6][0] = 0.0351;
+				Hvvcoupl[0][0] = 0.;
+      }
+      if ( proc == TVar::H0_gsgs_PS) {
+				Hvvcoupl[9][0] = -0.0372;
 				Hvvcoupl[0][0] = 0.;
       }
 	if ( proc == TVar::SelfDefine_spin0){

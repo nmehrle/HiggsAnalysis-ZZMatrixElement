@@ -405,7 +405,7 @@ double JHUGenMatEl(TVar::Process process, TVar::Production production, mcfm_even
   }
 
   //if ( process == TVar::HZZ_4l || process == TVar::PSHZZ_4l || process == TVar::HDHZZ_4l || process == TVar::HZZ_4l_MIXCP   || process == TVar::CPMixHZZ_4l || process == TVar::PSHZZ_g4star || process == TVar::HDHZZ_4l_g2star || process == TVar::HDMixHZZ_4l_pi_2|| process== TVar::HDMixHZZ_4l || process == TVar::CPMixHZZ_4l_pi_2 || process == TVar::SelfDefine || process == TVar::H_g1prime2) {
-  if ( process == TVar::HSMHiggs || process == TVar::H0minus || process == TVar::H0hplus || process == TVar::SelfDefine_spin0 || process == TVar::H0_g1prime2 || process== TVar::H0_Zgs || process ==TVar::H0_gsgs) {
+  if ( process == TVar::HSMHiggs || process == TVar::H0minus || process == TVar::H0hplus || process == TVar::SelfDefine_spin0 || process == TVar::H0_g1prime2 || process== TVar::H0_Zgs || process ==TVar::H0_gsgs || process ==TVar::H0_Zgs_PS || process ==TVar::H0_gsgs_PS) {
     __modhiggs_MOD_evalamp_gg_h_vv(p4, &MReso,  &GaReso, Hggcoupl, Hvvcoupl, MYIDUP, &MatElSq);
 
   }

@@ -41,7 +41,7 @@ const TString MEMs::m_processNameMEKD[MEMNames::NUM_PROCESSES] = {
 	"ggSpin2Ph7", "qqSpin2Ph7", "Spin2Ph7",
 	"ggSpin2Mh9", "qqSpin2Mh9", "Spin2Mh9",
 	"ggSpin2Mh10", "qqSpin2Mh10", "Spin2Mh10",
-	"ggHZZ_10","ggHZgs","ggHgsgs",
+	"ggHZZ_10","ggHZgs","ggHgsgs","ggHZgs_PS","ggHgsgs_PS",
 	"qqZ4l_Signal", "qqZ4l_Background",
 	"ggSpin2Pm_2f", "qqSpin2Pm_2f", "Spin2Pm_2f"
 
@@ -117,6 +117,8 @@ MEMs::MEMs(double collisionEnergy, double sKD_mass, string PDFName, bool debug_)
     MELAprocMap[kggHZZ_10]		=TVar::D_gg10;
     MELAprocMap[k0_Zgs]		=TVar::H0_Zgs;
     MELAprocMap[k0_gsgs]		=TVar::H0_gsgs;
+    MELAprocMap[k0_Zgs_PS]		=TVar::H0_Zgs_PS;
+    MELAprocMap[k0_gsgs_PS]		=TVar::H0_gsgs_PS;
 
 	MELAprocIntMap[kg1g4]			=TVar::D_g1g4;
 	MELAprocIntMap[kg1g2]			=TVar::D_g1g2;
@@ -125,6 +127,8 @@ MEMs::MEMs(double collisionEnergy, double sKD_mass, string PDFName, bool debug_)
 	MELAprocIntMap[k_g1g1prime2]	=TVar::D_g1g1prime2;
 	MELAprocIntMap[kzzzg]	=TVar::D_zzzg;
 	MELAprocIntMap[kzzgg]	=TVar::D_zzgg;
+	MELAprocIntMap[kzzzg_PS]	=TVar::D_zzzg_PS;
+	MELAprocIntMap[kzzgg_PS]	=TVar::D_zzgg_PS;
     
     /// Mapping between MEMs process enums and MELA production enums 
     /// - initialisation (to be updated)
@@ -174,6 +178,8 @@ MEMs::MEMs(double collisionEnergy, double sKD_mass, string PDFName, bool debug_)
     MELAprodMap[kggHZZ_10]      =TVar::ZZGG;
     MELAprodMap[k0_Zgs]      =TVar::ZZGG;
     MELAprodMap[k0_gsgs]      =TVar::ZZGG;
+    MELAprodMap[k0_Zgs_PS]      =TVar::ZZGG;
+    MELAprodMap[k0_gsgs_PS]      =TVar::ZZGG;
 	
 	MELAprodMap[kSpin0_gg]			=TVar::ZZGG;
 	MELAprodMap[kSpin0_prodIndep]	=TVar::ZZINDEPENDENT;
@@ -198,6 +204,8 @@ MEMs::MEMs(double collisionEnergy, double sKD_mass, string PDFName, bool debug_)
     MELAprodIntMap[k_g1g1prime2]	=TVar::ZZGG;
     MELAprodIntMap[kzzzg]	=TVar::ZZGG;
     MELAprodIntMap[kzzgg]	=TVar::ZZGG;
+    MELAprodIntMap[kzzzg_PS]	=TVar::ZZGG;
+    MELAprodIntMap[kzzgg_PS]	=TVar::ZZGG;
 	
     /// Mapping between MEMs calculator enums and MELA MatrixElement enums 
     /// - initialisation (to be updated)
@@ -987,7 +995,7 @@ int MEMs::cacheMELAcalculation(int process, MEMCalcs calculator, vector<TLorentz
 			else return ERR_PROCESS;	// not yet implemented
 		}
 		else if( process==kg1g4 || process==kg1g2 || process==kg1g4_pi_2 ||
-			process==kg1g2_pi_2 || process==k_g1g1prime2 || process ==kzzzg || process == kzzgg )
+			process==kg1g2_pi_2 || process==k_g1g1prime2 || process ==kzzzg || process == kzzgg || process == kzzzg_PS || process ==kzzgg_PS)
 		{
 			m_MELA->computeD_CP( mzz, m1, m2,
 								costhetastar,costheta1,costheta2,phi,phi1,

@@ -284,15 +284,27 @@ switch (myType){
 	break; 
 	case TVar::D_zzzg :
 		coupl_mix[0][0] =1.;
-		coupl_mix[4][0] = 0.0725;
+		coupl_mix[4][0] = 0.0688;
 		coupl_1[0][0] =1.;
-		coupl_2[4][0] = 0.0725;
+		coupl_2[4][0] = 0.0688;
 	break; 
 	case TVar::D_zzgg :
 		coupl_mix[0][0] =1.;
-		coupl_mix[7][0] = -0.0951;
+		coupl_mix[7][0] = -0.0898;
 		coupl_1[0][0] =1.;
-		coupl_2[7][0] = -0.0951;
+		coupl_2[7][0] = -0.0898;
+	break; 
+	case TVar::D_zzzg_PS :
+		coupl_mix[3][0] =1.;
+		coupl_mix[6][0] = 0.0351;
+		coupl_1[3][0] =1.;
+		coupl_2[6][0] = 0.0351;
+	break; 
+	case TVar::D_zzgg_PS :
+		coupl_mix[3][0] =1.;
+		coupl_mix[9][0] = -0.0372; 
+		coupl_1[3][0] =1.;
+		coupl_2[9][0] = -0.0372; 
 	break; 
   default:
 		cout <<"Error: Not supported!"<<endl;	
