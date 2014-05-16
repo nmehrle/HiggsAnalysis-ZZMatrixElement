@@ -60,10 +60,14 @@ Mela::Mela(int LHCsqrts, float mh)
   spin2Model = new TensorPdfFactory(z1mass_rrv,z2mass_rrv,costhetastar_rrv,costheta1_rrv,costheta2_rrv,phi_rrv,phi1_rrv,mzz_rrv);
   qqZZmodel = new RooqqZZ_JHU_ZgammaZZ_fast("qqZZmodel","qqZZmodel",*z1mass_rrv,*z2mass_rrv,*costheta1_rrv,*costheta2_rrv,*phi_rrv,*costhetastar_rrv,*phi1_rrv,*mzz_rrv,*upFrac_rrv);
 
-  edm::FileInPath HiggsWidthFile("Higgs/Higgs_CS_and_Width/txtFiles/8TeV-ggH.txt");
+ //edm::FileInPath HiggsWidthFile("Higgs/Higgs_CS_and_Width/txtFiles/8TeV-ggH.txt");
+// edm::FileInPath HiggsWidthFile("Higgs/Higgs_CS_and_Width/txtFiles/YR3/8TeV-ggH.txt");
+  edm::FileInPath HiggsWidthFile("ZZMatrixElement/MELA/data/HiggsTotalWidth.txt");
+
   std::string path = HiggsWidthFile.fullPath();
   //std::cout << path.substr(0,path.length()-12) << std::endl;
-  ZZME = new  newZZMatrixElement(path.substr(0,path.length()-12 ).c_str(),1000.*LHCsqrts/2.,TVar::INFO);
+ // ZZME = new  newZZMatrixElement(path.substr(0,path.length()-12 ).c_str(),1000.*LHCsqrts/2.,TVar::INFO);
+  ZZME = new  newZZMatrixElement(path.substr(0,path.length()-19 ).c_str(),1000.*LHCsqrts/2.,TVar::INFO);
   ZZME->set_mHiggs(mh);
 
   // 
@@ -333,7 +337,7 @@ switch (myType){
  		    float phi,
  		    float phi1,
  		    int flavor,
- 		    float& prob, bool useConstant){                   // output probability    
+ 		    float& prob, bool useConstant, double wHiggs){                   // output probability    
   
    //cout << "Mela::computeP - begin" << endl;
    //cout << "calculator: " << myME_ << " model: " << myModel_ << " production: " << myProduction_ << endl;
@@ -527,7 +531,7 @@ switch (myType){
            selfDZvvcoupl,
            selfDGqqcoupl,
            selfDGggcoupl,
-           selfDGvvcoupl,prob);
+           selfDGvvcoupl,prob, wHiggs);
 
     //cout << "Mela::computeP() - mZZ: " << mZZ << endl;
     //cout << "Mela::computeP() - mZ1: " << mZ1 << endl;

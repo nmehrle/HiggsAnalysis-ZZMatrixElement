@@ -31,7 +31,8 @@
 #include "TMCFM.hh"
 #include "TVar.hh"
 #include "TUtil.hh"
-#include "Higgs/Higgs_CS_and_Width/include/HiggsCSandWidth.h"
+//#include "Higgs/Higgs_CS_and_Width/include/HiggsCSandWidth.h"
+#include "ZZMatrixElement/MELA/interface/HiggsCSandWidth_MELA.h"
 
 
 //----------------------------------------
@@ -46,7 +47,8 @@ public:
   TVar::Process _process;
   TVar::MatrixElement _matrixElement;
   TVar::Production _production;
-  HiggsCSandWidth *myCSW_;
+  HiggsCSandWidth_MELA *myCSW_;
+  //HiggsCSandWidth *myCSW_;
   double _hmass;
   double _hwidth;
   double EBEAM;
@@ -56,6 +58,7 @@ public:
   //---------------------------------------------------------------------------
   TEvtProb() {};
   TEvtProb(const char* path,double ebeam);
+ // TEvtProb(const string* path,double ebeam);
   ~TEvtProb();
   
   //----------------------
@@ -78,7 +81,7 @@ public:
   // this appears to be some kind of 
   // way of setting MCFM parameters through
   // an interface defined in TMCFM.hh
-  void SetHiggsMass(double mass);
+  void SetHiggsMass(double mass, float wHiggs=-1);
   ClassDef(TEvtProb,0);
 };
 

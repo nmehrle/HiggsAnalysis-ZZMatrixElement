@@ -21,12 +21,14 @@ using namespace std;
 //-----------------------------------------------------------------------------
 // Constructors and Destructor
 //-----------------------------------------------------------------------------
-TEvtProb::TEvtProb(const char* path, double ebeam):EBEAM(ebeam){
+TEvtProb::TEvtProb(const char* path, double ebeam ):EBEAM(ebeam){
   mcfm_init_((char *)"input.DAT",(char *)"./");
   SetEwkCoupligParameters();
   energy_.sqrts = 2.*EBEAM;
   coupling_();
-  myCSW_ = new HiggsCSandWidth(path);
+	string path_string = path;
+  myCSW_ = new HiggsCSandWidth_MELA(path_string);
+  //myCSW_ = new HiggsCSandWidth(path_string);
   //std::cout << path << std::endl;
 }
 
@@ -451,7 +453,7 @@ double TEvtProb::XsecCalc(TVar::Process proc, TVar::Production production, const
 	Zvvcoupl[0][0]=0.0;  Zvvcoupl[0][1]=0.0;
 	Zvvcoupl[1][0]=1.0;  Zvvcoupl[1][1]=0.0; // 1+
       }
-      
+     //cout<<_hwidth<<endl; 
       msqjk = JHUGenMatEl(proc, production, &mcfm_event, _hmass, _hwidth, Hggcoupl, Hvvcoupl, Zqqcoupl, Zvvcoupl, Gqqcoupl, Gggcoupl, Gvvcoupl);
 
 	} // end of JHUGen matrix element calculations
@@ -551,11 +553,17 @@ double TEvtProb::XsecCalcXJJ(TVar::Process proc, TVar::Production production, TL
 // this appears to be some kind of 
 // way of setting MCFM parameters through
 // an interface defined in TMCFM.hh
-void TEvtProb::SetHiggsMass(double mass){
+void TEvtProb::SetHiggsMass(double mass, float wHiggs){
     masses_mcfm_.hmass=mass;
-    masses_mcfm_.hwidth=myCSW_->HiggsWidth(0, min(mass,1000.) );
     _hmass = mass;
-    _hwidth = myCSW_->HiggsWidth(0, min(mass,1000.) );
+		if (wHiggs < 0.){
+	    masses_mcfm_.hwidth=myCSW_->HiggsWidth(0, min(mass,1000.) );
+    	_hwidth = myCSW_->HiggsWidth(0, min(mass,1000.) );
+		}
+		else{
+			masses_mcfm_.hwidth = wHiggs;
+    	_hwidth = wHiggs; 
+		}
     /*
     //
     // get higgs width for 125 and 250 GeV

@@ -3,7 +3,8 @@
 #include "../interface/SuperMELA.h"
 #include "RooArgSet.h"
 #include "RooArgList.h"
-#include "Higgs/Higgs_CS_and_Width/include/HiggsCSandWidth.h"
+//#include "Higgs/Higgs_CS_and_Width/include/HiggsCSandWidth.h"
+#include "ZZMatrixElement/MELA/interface/HiggsCSandWidth_MELA.h"
 #include "RooPlot.h"
 #include <FWCore/ParameterSet/interface/FileInPath.h>
 
@@ -520,11 +521,16 @@ void SuperMELA::readBkgParsFromFile(std::vector<double> &apars ){
 }//end readBkgParsFromFile
 
 void SuperMELA::calc_mZZ_range(const double mHVal,double &low_M,double &high_M){
-  edm::FileInPath fip("Higgs/Higgs_CS_and_Width/txtFiles/8TeV-ggH.txt");
+//  edm::FileInPath fip("Higgs/Higgs_CS_and_Width/txtFiles/8TeV-ggH.txt");
+	  //edm::FileInPath fip("Higgs/Higgs_CS_and_Width/txtFiles/YR3/8TeV-ggH.txt");
+  edm::FileInPath fip("ZZMatrixElement/MELA/data/HiggsTotalWidth.txt");
+
   string path = fip.fullPath();
-  path.erase(std::find(path.rbegin(), path.rend(), '/').base(), path.end());
-  HiggsCSandWidth *myCSW = new HiggsCSandWidth(path.c_str());
-  double widthHVal =  myCSW->HiggsWidth(1,mHVal);
+  path.erase((std::find(path.rbegin(), path.rend(), '/').base()), path.end());
+  HiggsCSandWidth_MELA *myCSW = new HiggsCSandWidth_MELA(path.c_str());
+ // HiggsCSandWidth *myCSW = new HiggsCSandWidth(path.c_str());
+
+  double widthHVal =  myCSW->HiggsWidth(0,mHVal);
   //  if(verbose_)cout<<"Width="<<widthHVal<<endl;
   double windowVal = max( widthHVal, 1. );
   double lowside = 100.;
@@ -535,6 +541,7 @@ void SuperMELA::calc_mZZ_range(const double mHVal,double &low_M,double &high_M){
 
   if(mHVal==125){low_M=105;high_M=140.0;}
   if(mHVal==126){low_M=106;high_M=141.0;}
+	cout<<low_M<<" "<<high_M<<endl;
 
   delete myCSW;
 

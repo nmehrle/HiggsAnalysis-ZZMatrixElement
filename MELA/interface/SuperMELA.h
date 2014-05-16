@@ -49,7 +49,7 @@ class SuperMELA {
   void readSigSystFromFile(string &str_mean_CB_err_e, string &str_mean_CB_err_m,
 			   string &str_sigma_CB_err_e, string &str_sigma_CB_err_m);
 
-  void calc_mZZ_range(const double mHVal,double &low_M,double &high_M);
+  void calc_mZZ_range(const double mHVal,double &low_M,double &high_M );
   bool checkChannel();
   ///data members
   double mHVal_;

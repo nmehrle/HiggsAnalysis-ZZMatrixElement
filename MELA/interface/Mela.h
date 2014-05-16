@@ -46,7 +46,8 @@ public:
     float phi1,
     int flavor,
     float& prob       ,            // output probability
-		bool useConstant=1
+		bool useConstant=1,
+		double wHiggs=-1
     );
 
   void computeP(float mZZ, float mZ1, float mZ2, // input kinematics
@@ -167,6 +168,7 @@ void computeP_selfDspin1(float mZZ, float mZ1, float mZ2, // arbitrary spin 1 co
   RooqqZZ_JHU_ZgammaZZ_fast* qqZZmodel;
   SuperMELA* super;
   TRandom3 *myR; // random number for resolution szstematics
+
 
   RooRealVar* mzz_rrv;
   RooRealVar* z1mass_rrv;

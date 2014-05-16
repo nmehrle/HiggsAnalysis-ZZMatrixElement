@@ -33,7 +33,8 @@ public:
      double selfDGqqcoupl[2][2],
      double selfDGggcoupl[5][2],
      double selfDGvvcoupl[10][2],
-		 float &mevalue
+		 float &mevalue,
+		 float wHiggs=-1
 		 );
 
   void computeProdXS(TLorentzVector jet1,
@@ -45,6 +46,7 @@ public:
 		     );
 
   void set_mHiggs(float myPoleMass);
+
 
   //compute four-momenta from angles only 
   // Nota bene: angles, not cos(theta)...

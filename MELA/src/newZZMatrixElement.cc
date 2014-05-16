@@ -92,7 +92,8 @@ void newZZMatrixElement::computeXS(float mZZ, float mZ1, float mZ2,
 					 double selfDGqqcoupl[2][2], 
 					 double selfDGggcoupl[5][2],
 					 double selfDGvvcoupl[10][2],
-				   float &mevalue
+				   float &mevalue,
+					 float wHiggs
 				   ){
   std::vector<TLorentzVector> p;
   p=Calculate4Momentum(mZZ,mZ1,mZ2,acos(costhetastar),acos(costheta1),acos(costheta2),phistar1,phi);
@@ -158,8 +159,8 @@ void newZZMatrixElement::computeXS(float mZZ, float mZ1, float mZ2,
   }
   
   // ==== Begin the differential cross-section calculation
-  if(myME==TVar::MCFM || myModel==TVar::bkgZZ_SMHiggs) Xcal2.SetHiggsMass(mHiggs);
-  else Xcal2.SetHiggsMass(zzmass);
+  if(myME==TVar::MCFM || myModel==TVar::bkgZZ_SMHiggs) Xcal2.SetHiggsMass(mHiggs,wHiggs);
+  else Xcal2.SetHiggsMass(zzmass,wHiggs);
   Xcal2.SetMatrixElement(myME);
   Xcal2.SetProduction(myProduction);
   Xcal2.SetProcess(myModel);
