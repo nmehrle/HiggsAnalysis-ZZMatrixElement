@@ -74,6 +74,9 @@ std::vector<TLorentzVector> newZZMatrixElement::Calculate4Momentum(double Mx,dou
 void newZZMatrixElement::set_mHiggs(float myPoleMass){
 	mHiggs = myPoleMass;
 }
+void newZZMatrixElement::set_wHiggs(float myPoleWidth){
+	wHiggs = myPoleWidth;
+}
 
 void newZZMatrixElement::computeXS(float mZZ, float mZ1, float mZ2,
 				   float costhetastar,
@@ -92,8 +95,8 @@ void newZZMatrixElement::computeXS(float mZZ, float mZ1, float mZ2,
 					 double selfDGqqcoupl[2][2], 
 					 double selfDGggcoupl[5][2],
 					 double selfDGvvcoupl[10][2],
-				   float &mevalue,
-					 float wHiggs
+				   float &mevalue
+//					 float wHiggs
 				   ){
   std::vector<TLorentzVector> p;
   p=Calculate4Momentum(mZZ,mZ1,mZ2,acos(costhetastar),acos(costheta1),acos(costheta2),phistar1,phi);
@@ -165,6 +168,12 @@ void newZZMatrixElement::computeXS(float mZZ, float mZ1, float mZ2,
   Xcal2.SetProduction(myProduction);
   Xcal2.SetProcess(myModel);
   mevalue = Xcal2.XsecCalc(myModel,myProduction,hzz4l_event,verb,couplingvals,selfDHvvcoupl,selfDZqqcoupl,selfDZvvcoupl,selfDGqqcoupl,selfDGggcoupl,selfDGvvcoupl);
+  if (wHiggs>=0){
+//	  cout << "Protection commencing" << endl;
+	  set_wHiggs(-1); // Protection against forgetfulness; custom width has to be set per-event
+	  Xcal2.SetHiggsMass(mHiggs,-1);
+//	  cout << "Protection successful" << endl;
+  };
   return;
 }
 

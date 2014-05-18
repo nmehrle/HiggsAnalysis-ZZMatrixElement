@@ -210,7 +210,7 @@ bool My_smalls(double s[][12],int npart){
 double SumMatrixElementPDF(TVar::Process process, TVar::Production production, TVar::MatrixElement myME, mcfm_event_type* mcfm_event,double flavor_msq[nmsq][nmsq],double* flux, double EBEAM, double coupling[2]){
 
   int NPart=npart_.npart+2;
-  double p4[4][12];
+  double p4[4][mxpart];
   double fx1[nmsq];
   double fx2[nmsq];
   double msq[nmsq][nmsq];

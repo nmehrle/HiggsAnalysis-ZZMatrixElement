@@ -69,6 +69,7 @@ Mela::Mela(int LHCsqrts, float mh)
  // ZZME = new  newZZMatrixElement(path.substr(0,path.length()-12 ).c_str(),1000.*LHCsqrts/2.,TVar::INFO);
   ZZME = new  newZZMatrixElement(path.substr(0,path.length()-19 ).c_str(),1000.*LHCsqrts/2.,TVar::INFO);
   ZZME->set_mHiggs(mh);
+  ZZME->set_wHiggs(-1);
 
   // 
   // configure the JHUGEn and MCFM calculations 
@@ -171,6 +172,9 @@ void Mela::setProcess(TVar::Process myModel, TVar::MatrixElement myME, TVar::Pro
 
 }
 
+void Mela::setMelaHiggsWidth(float myHiggsWidth){ // Should be called per-event
+	ZZME->set_wHiggs(myHiggsWidth);
+}
 
 // Re-order masses and angles as needed by likelihoodDiscriminant. 
 // This follows a different convention than the usual Z1/Z2 definition!
@@ -337,7 +341,7 @@ switch (myType){
  		    float phi,
  		    float phi1,
  		    int flavor,
- 		    float& prob, bool useConstant, double wHiggs){                   // output probability    
+ 		    float& prob, bool useConstant){                   // output probability    
   
    //cout << "Mela::computeP - begin" << endl;
    //cout << "calculator: " << myME_ << " model: " << myModel_ << " production: " << myProduction_ << endl;
@@ -531,7 +535,7 @@ switch (myType){
            selfDZvvcoupl,
            selfDGqqcoupl,
            selfDGggcoupl,
-           selfDGvvcoupl,prob, wHiggs);
+           selfDGvvcoupl,prob);
 
     //cout << "Mela::computeP() - mZZ: " << mZZ << endl;
     //cout << "Mela::computeP() - mZ1: " << mZ1 << endl;

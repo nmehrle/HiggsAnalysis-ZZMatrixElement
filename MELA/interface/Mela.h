@@ -37,6 +37,7 @@ public:
   ~Mela();
   
   void setProcess(TVar::Process myModel, TVar::MatrixElement myME, TVar::Production myProduction);
+  void setMelaHiggsWidth(float myHiggsWidth=-1);
   
  void computeP(float mZZ, float mZ1, float mZ2, // input kinematics
     float costhetastar,
@@ -46,8 +47,7 @@ public:
     float phi1,
     int flavor,
     float& prob       ,            // output probability
-		bool useConstant=1,
-		double wHiggs=-1
+		bool useConstant=1
     );
 
   void computeP(float mZZ, float mZ1, float mZ2, // input kinematics

@@ -33,8 +33,8 @@ public:
      double selfDGqqcoupl[2][2],
      double selfDGggcoupl[5][2],
      double selfDGvvcoupl[10][2],
-		 float &mevalue,
-		 float wHiggs=-1
+		 float &mevalue
+//		 float wHiggs=-1
 		 );
 
   void computeProdXS(TLorentzVector jet1,
@@ -46,6 +46,7 @@ public:
 		     );
 
   void set_mHiggs(float myPoleMass);
+  void set_wHiggs(float myPoleWidth);
 
 
   //compute four-momenta from angles only 
@@ -58,6 +59,7 @@ private:
   TEvtProb Xcal2;
   hzz4l_event_type hzz4l_event;
   float mHiggs;
+  float wHiggs;
   double EBEAM;
   TVar::Process myModel;
   TVar::MatrixElement myME;
