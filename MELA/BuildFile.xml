@@ -14,7 +14,6 @@
 <use name="roofit"/>
 <use name="roofitcore"/>
 <use name="CLHEP"/>
-<use name="Higgs/Higgs_CS_and_Width"/>
 
 <export>
   <lib   name="1"/>
