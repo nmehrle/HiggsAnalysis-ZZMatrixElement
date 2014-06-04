@@ -56,7 +56,7 @@ double HiggsCSandWidth_MELA::HiggsWidth(int ID, double mH){
 
 
 
-  double PartialWidth = 0;
+  //  double PartialWidth = 0;
   double Width = 0;
   int i = 0;
   double step;

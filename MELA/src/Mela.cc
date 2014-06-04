@@ -1228,13 +1228,13 @@ void Mela::computeProdP(TLorentzVector Jet1, int Jet1_Id,
 
   float constant=1.;
   TLorentzVector higgs,jet1massless,jet2massless;
-  bool failedEvent = false;
+  //  bool failedEvent = false;
   double energy,p3sq,ratio;
   if(Decay2==0. || Decay2_Id==0){
     if(Decay1_Id==25) higgs=Decay1;
     if(Decay1_Id!=25){
       cout<<"No Higgs event passed. Returning prob=-99."<<endl;
-      failedEvent=true;
+//      failedEvent=true;
     }
   }
   else{
