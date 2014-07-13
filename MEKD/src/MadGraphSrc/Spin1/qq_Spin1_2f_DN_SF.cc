@@ -33,6 +33,7 @@ void qq_Spin1_2f_DN_SF::initProc(string param_card_name)
   mME.push_back(pars->MM);
   mME.push_back(pars->MM);
   jamp2[0] = new double[1];
+	for( int count=0; count<namplitudes; count++ ) amp[count] = 0;
 }
 
 //--------------------------------------------------------------------------
@@ -237,58 +238,58 @@ void qq_Spin1_2f_DN_SF::calculate_wavefunctions(const int perm[], const int hel[
   FFV1_2_3_4_2(w[5], w[6], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
       pars->HEF_MEKD2_1_GC_140, pars->MM, pars->ZERO, w[9]);
   FFV5_7_3(w[3], w[2], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_188, pars->MZ, pars->WZ, w[10]);
-  FFV2P0_3(w[0], w[1], pars->HEF_MEKD2_1_GC_3, pars->ZERO, pars->ZERO, w[11]);
-  FFV1_2_3_4_3(w[3], w[2], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
-      pars->HEF_MEKD2_1_GC_140, pars->MZp, pars->WZp, w[12]);
-  FFV2_1(w[4], w[11], pars->HEF_MEKD2_1_GC_5, pars->MM, pars->ZERO, w[13]);
-  FFV2_2(w[5], w[11], pars->HEF_MEKD2_1_GC_5, pars->MM, pars->ZERO, w[14]);
-  FFV5_6_3(w[0], w[1], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_187, pars->MZ, pars->WZ, w[15]);
-  FFV5_7_1(w[4], w[15], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_188, pars->MM, pars->ZERO,
-      w[16]);
-  FFV5_7_2(w[5], w[15], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_188, pars->MM, pars->ZERO,
-      w[17]);
+//   FFV2P0_3(w[0], w[1], pars->HEF_MEKD2_1_GC_3, pars->ZERO, pars->ZERO, w[11]);
+//   FFV1_2_3_4_3(w[3], w[2], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
+//       pars->HEF_MEKD2_1_GC_140, pars->MZp, pars->WZp, w[12]);
+//   FFV2_1(w[4], w[11], pars->HEF_MEKD2_1_GC_5, pars->MM, pars->ZERO, w[13]);
+//   FFV2_2(w[5], w[11], pars->HEF_MEKD2_1_GC_5, pars->MM, pars->ZERO, w[14]);
+//   FFV5_6_3(w[0], w[1], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_187, pars->MZ, pars->WZ, w[15]);
+//   FFV5_7_1(w[4], w[15], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_188, pars->MM, pars->ZERO,
+//       w[16]);
+//   FFV5_7_2(w[5], w[15], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_188, pars->MM, pars->ZERO,
+//       w[17]);
   FFV5_7_3(w[5], w[4], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_188, pars->MZ, pars->WZ, w[18]);
-  FFV1_2_3_4_3(w[5], w[4], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
-      pars->HEF_MEKD2_1_GC_140, pars->MZp, pars->WZp, w[19]);
+//   FFV1_2_3_4_3(w[5], w[4], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
+//       pars->HEF_MEKD2_1_GC_140, pars->MZp, pars->WZp, w[19]);
   FFV2P0_3(w[5], w[2], pars->HEF_MEKD2_1_GC_5, pars->ZERO, pars->ZERO, w[20]);
   FFV1_2_3_4_2(w[3], w[6], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
       pars->HEF_MEKD2_1_GC_140, pars->MM, pars->ZERO, w[21]);
   FFV5_7_3(w[5], w[2], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_188, pars->MZ, pars->WZ, w[22]);
-  FFV1_2_3_4_3(w[5], w[2], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
-      pars->HEF_MEKD2_1_GC_140, pars->MZp, pars->WZp, w[23]);
-  FFV2_2(w[3], w[11], pars->HEF_MEKD2_1_GC_5, pars->MM, pars->ZERO, w[24]);
-  FFV5_7_2(w[3], w[15], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_188, pars->MM, pars->ZERO,
-      w[25]);
+//   FFV1_2_3_4_3(w[5], w[2], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
+//       pars->HEF_MEKD2_1_GC_140, pars->MZp, pars->WZp, w[23]);
+//   FFV2_2(w[3], w[11], pars->HEF_MEKD2_1_GC_5, pars->MM, pars->ZERO, w[24]);
+//   FFV5_7_2(w[3], w[15], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_188, pars->MM, pars->ZERO,
+//       w[25]);
   FFV5_7_3(w[3], w[4], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_188, pars->MZ, pars->WZ, w[26]);
-  FFV1_2_3_4_3(w[3], w[4], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
-      pars->HEF_MEKD2_1_GC_140, pars->MZp, pars->WZp, w[27]);
+//   FFV1_2_3_4_3(w[3], w[4], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
+//       pars->HEF_MEKD2_1_GC_140, pars->MZp, pars->WZp, w[27]);
   FFV2P0_3(w[3], w[4], pars->HEF_MEKD2_1_GC_5, pars->ZERO, pars->ZERO, w[28]);
   FFV1_2_3_4_1(w[2], w[6], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
       pars->HEF_MEKD2_1_GC_140, pars->MM, pars->ZERO, w[29]);
-  FFV2_1(w[2], w[11], pars->HEF_MEKD2_1_GC_5, pars->MM, pars->ZERO, w[30]);
-  FFV5_7_1(w[2], w[15], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_188, pars->MM, pars->ZERO,
-      w[31]);
+//   FFV2_1(w[2], w[11], pars->HEF_MEKD2_1_GC_5, pars->MM, pars->ZERO, w[30]);
+//   FFV5_7_1(w[2], w[15], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_188, pars->MM, pars->ZERO,
+//       w[31]);
   FFV2P0_3(w[5], w[4], pars->HEF_MEKD2_1_GC_5, pars->ZERO, pars->ZERO, w[32]);
-  FFV1_2_3_4_2(w[0], w[12], pars->HEF_MEKD2_1_GC_151, pars->HEF_MEKD2_1_GC_148, pars->HEF_MEKD2_1_GC_149,
-      pars->HEF_MEKD2_1_GC_150, pars->MS, pars->ZERO, w[33]);
-  FFV2_2(w[0], w[32], pars->HEF_MEKD2_1_GC_3, pars->MS, pars->ZERO, w[34]);
-  FFV5_6_2(w[0], w[18], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_187, pars->MS, pars->ZERO,
-      w[35]);
-  FFV2_2(w[0], w[7], pars->HEF_MEKD2_1_GC_3, pars->MS, pars->ZERO, w[36]);
-  FFV1_2_3_4_2(w[0], w[19], pars->HEF_MEKD2_1_GC_151, pars->HEF_MEKD2_1_GC_148, pars->HEF_MEKD2_1_GC_149,
-      pars->HEF_MEKD2_1_GC_150, pars->MS, pars->ZERO, w[37]);
-  FFV5_6_2(w[0], w[10], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_187, pars->MS, pars->ZERO,
-      w[38]);
-  FFV1_2_3_4_2(w[0], w[23], pars->HEF_MEKD2_1_GC_151, pars->HEF_MEKD2_1_GC_148, pars->HEF_MEKD2_1_GC_149,
-      pars->HEF_MEKD2_1_GC_150, pars->MS, pars->ZERO, w[39]);
-  FFV2_2(w[0], w[28], pars->HEF_MEKD2_1_GC_3, pars->MS, pars->ZERO, w[40]);
-  FFV5_6_2(w[0], w[26], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_187, pars->MS, pars->ZERO,
-      w[41]);
-  FFV2_2(w[0], w[20], pars->HEF_MEKD2_1_GC_3, pars->MS, pars->ZERO, w[42]);
-  FFV1_2_3_4_2(w[0], w[27], pars->HEF_MEKD2_1_GC_151, pars->HEF_MEKD2_1_GC_148, pars->HEF_MEKD2_1_GC_149,
-      pars->HEF_MEKD2_1_GC_150, pars->MS, pars->ZERO, w[43]);
-  FFV5_6_2(w[0], w[22], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_187, pars->MS, pars->ZERO,
-      w[44]);
+//   FFV1_2_3_4_2(w[0], w[12], pars->HEF_MEKD2_1_GC_151, pars->HEF_MEKD2_1_GC_148, pars->HEF_MEKD2_1_GC_149,
+//       pars->HEF_MEKD2_1_GC_150, pars->MS, pars->ZERO, w[33]);
+//   FFV2_2(w[0], w[32], pars->HEF_MEKD2_1_GC_3, pars->MS, pars->ZERO, w[34]);
+//   FFV5_6_2(w[0], w[18], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_187, pars->MS, pars->ZERO,
+//       w[35]);
+//   FFV2_2(w[0], w[7], pars->HEF_MEKD2_1_GC_3, pars->MS, pars->ZERO, w[36]);
+//   FFV1_2_3_4_2(w[0], w[19], pars->HEF_MEKD2_1_GC_151, pars->HEF_MEKD2_1_GC_148, pars->HEF_MEKD2_1_GC_149,
+//       pars->HEF_MEKD2_1_GC_150, pars->MS, pars->ZERO, w[37]);
+//   FFV5_6_2(w[0], w[10], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_187, pars->MS, pars->ZERO,
+//       w[38]);
+//   FFV1_2_3_4_2(w[0], w[23], pars->HEF_MEKD2_1_GC_151, pars->HEF_MEKD2_1_GC_148, pars->HEF_MEKD2_1_GC_149,
+//       pars->HEF_MEKD2_1_GC_150, pars->MS, pars->ZERO, w[39]);
+//   FFV2_2(w[0], w[28], pars->HEF_MEKD2_1_GC_3, pars->MS, pars->ZERO, w[40]);
+//   FFV5_6_2(w[0], w[26], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_187, pars->MS, pars->ZERO,
+//       w[41]);
+//   FFV2_2(w[0], w[20], pars->HEF_MEKD2_1_GC_3, pars->MS, pars->ZERO, w[42]);
+//   FFV1_2_3_4_2(w[0], w[27], pars->HEF_MEKD2_1_GC_151, pars->HEF_MEKD2_1_GC_148, pars->HEF_MEKD2_1_GC_149,
+//       pars->HEF_MEKD2_1_GC_150, pars->MS, pars->ZERO, w[43]);
+//   FFV5_6_2(w[0], w[22], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_187, pars->MS, pars->ZERO,
+//       w[44]);
 
   // Calculate all amplitudes
   // Amplitude(s) for diagram number 0
@@ -296,80 +297,80 @@ void qq_Spin1_2f_DN_SF::calculate_wavefunctions(const int perm[], const int hel[
   FFV2_0(w[9], w[4], w[7], pars->HEF_MEKD2_1_GC_5, amp[1]);
   FFV5_7_0(w[5], w[8], w[10], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_188, amp[2]);
   FFV5_7_0(w[9], w[4], w[10], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_188, amp[3]);
-  FFV1_2_3_4_0(w[5], w[13], w[12], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
-      pars->HEF_MEKD2_1_GC_140, amp[4]);
-  FFV1_2_3_4_0(w[14], w[4], w[12], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
-      pars->HEF_MEKD2_1_GC_140, amp[5]);
-  FFV1_2_3_4_0(w[5], w[16], w[12], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
-      pars->HEF_MEKD2_1_GC_140, amp[6]);
-  FFV1_2_3_4_0(w[17], w[4], w[12], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
-      pars->HEF_MEKD2_1_GC_140, amp[7]);
-  VVV1_2_0(w[10], w[18], w[6], pars->HEF_MEKD2_1_GC_2, pars->HEF_MEKD2_1_GC_1, amp[8]);
-  VVV1_2_0(w[15], w[18], w[12], pars->HEF_MEKD2_1_GC_2, pars->HEF_MEKD2_1_GC_1, amp[9]);
-  VVV1_2_0(w[15], w[10], w[19], pars->HEF_MEKD2_1_GC_2, pars->HEF_MEKD2_1_GC_1, amp[10]);
+//   FFV1_2_3_4_0(w[5], w[13], w[12], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
+//       pars->HEF_MEKD2_1_GC_140, amp[4]);	// s ch. A
+//   FFV1_2_3_4_0(w[14], w[4], w[12], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
+//       pars->HEF_MEKD2_1_GC_140, amp[5]);	// s ch. A
+//   FFV1_2_3_4_0(w[5], w[16], w[12], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
+//       pars->HEF_MEKD2_1_GC_140, amp[6]);	// s ch. Z
+//   FFV1_2_3_4_0(w[17], w[4], w[12], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
+//       pars->HEF_MEKD2_1_GC_140, amp[7]);	// s ch. Z
+//   VVV1_2_0(w[10], w[18], w[6], pars->HEF_MEKD2_1_GC_2, pars->HEF_MEKD2_1_GC_1, amp[8]);	// ZZ
+//   VVV1_2_0(w[15], w[18], w[12], pars->HEF_MEKD2_1_GC_2, pars->HEF_MEKD2_1_GC_1, amp[9]);	// s ch. Z, VBF
+//   VVV1_2_0(w[15], w[10], w[19], pars->HEF_MEKD2_1_GC_2, pars->HEF_MEKD2_1_GC_1, amp[10]);	// s ch. Z, VBF
   FFV2_0(w[21], w[4], w[20], pars->HEF_MEKD2_1_GC_5, amp[11]);
   FFV2_0(w[3], w[8], w[20], pars->HEF_MEKD2_1_GC_5, amp[12]);
   FFV5_7_0(w[21], w[4], w[22], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_188, amp[13]);
   FFV5_7_0(w[3], w[8], w[22], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_188, amp[14]);
-  FFV1_2_3_4_0(w[24], w[4], w[23], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
-      pars->HEF_MEKD2_1_GC_140, amp[15]);
-  FFV1_2_3_4_0(w[3], w[13], w[23], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
-      pars->HEF_MEKD2_1_GC_140, amp[16]);
-  FFV1_2_3_4_0(w[25], w[4], w[23], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
-      pars->HEF_MEKD2_1_GC_140, amp[17]);
-  FFV1_2_3_4_0(w[3], w[16], w[23], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
-      pars->HEF_MEKD2_1_GC_140, amp[18]);
-  VVV1_2_0(w[22], w[26], w[6], pars->HEF_MEKD2_1_GC_2, pars->HEF_MEKD2_1_GC_1, amp[19]);
-  VVV1_2_0(w[15], w[26], w[23], pars->HEF_MEKD2_1_GC_2, pars->HEF_MEKD2_1_GC_1, amp[20]);
-  VVV1_2_0(w[15], w[22], w[27], pars->HEF_MEKD2_1_GC_2, pars->HEF_MEKD2_1_GC_1, amp[21]);
+//   FFV1_2_3_4_0(w[24], w[4], w[23], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
+//       pars->HEF_MEKD2_1_GC_140, amp[15]);	// s ch. A
+//   FFV1_2_3_4_0(w[3], w[13], w[23], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
+//       pars->HEF_MEKD2_1_GC_140, amp[16]);	// s ch. A
+//   FFV1_2_3_4_0(w[25], w[4], w[23], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
+//       pars->HEF_MEKD2_1_GC_140, amp[17]);	// s ch. Z
+//   FFV1_2_3_4_0(w[3], w[16], w[23], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
+//       pars->HEF_MEKD2_1_GC_140, amp[18]);	// s ch. Z
+//   VVV1_2_0(w[22], w[26], w[6], pars->HEF_MEKD2_1_GC_2, pars->HEF_MEKD2_1_GC_1, amp[19]);	// ZZ
+//   VVV1_2_0(w[15], w[26], w[23], pars->HEF_MEKD2_1_GC_2, pars->HEF_MEKD2_1_GC_1, amp[20]);	// s ch. Z, VBF
+//   VVV1_2_0(w[15], w[22], w[27], pars->HEF_MEKD2_1_GC_2, pars->HEF_MEKD2_1_GC_1, amp[21]);	// s ch. Z, VBF
   FFV2_0(w[5], w[29], w[28], pars->HEF_MEKD2_1_GC_5, amp[22]);
   FFV2_0(w[9], w[2], w[28], pars->HEF_MEKD2_1_GC_5, amp[23]);
   FFV5_7_0(w[5], w[29], w[26], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_188, amp[24]);
   FFV5_7_0(w[9], w[2], w[26], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_188, amp[25]);
-  FFV1_2_3_4_0(w[5], w[30], w[27], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
-      pars->HEF_MEKD2_1_GC_140, amp[26]);
-  FFV1_2_3_4_0(w[14], w[2], w[27], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
-      pars->HEF_MEKD2_1_GC_140, amp[27]);
-  FFV1_2_3_4_0(w[5], w[31], w[27], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
-      pars->HEF_MEKD2_1_GC_140, amp[28]);
-  FFV1_2_3_4_0(w[17], w[2], w[27], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
-      pars->HEF_MEKD2_1_GC_140, amp[29]);
+//   FFV1_2_3_4_0(w[5], w[30], w[27], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
+//       pars->HEF_MEKD2_1_GC_140, amp[26]);	// s ch. A
+//   FFV1_2_3_4_0(w[14], w[2], w[27], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
+//       pars->HEF_MEKD2_1_GC_140, amp[27]);	// s ch. A
+//   FFV1_2_3_4_0(w[5], w[31], w[27], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
+//       pars->HEF_MEKD2_1_GC_140, amp[28]);	// s ch. Z
+//   FFV1_2_3_4_0(w[17], w[2], w[27], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
+//       pars->HEF_MEKD2_1_GC_140, amp[29]);	// s ch. Z
   FFV2_0(w[3], w[29], w[32], pars->HEF_MEKD2_1_GC_5, amp[30]);
   FFV2_0(w[21], w[2], w[32], pars->HEF_MEKD2_1_GC_5, amp[31]);
   FFV5_7_0(w[3], w[29], w[18], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_188, amp[32]);
   FFV5_7_0(w[21], w[2], w[18], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_188, amp[33]);
-  FFV1_2_3_4_0(w[3], w[30], w[19], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
-      pars->HEF_MEKD2_1_GC_140, amp[34]);
-  FFV1_2_3_4_0(w[24], w[2], w[19], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
-      pars->HEF_MEKD2_1_GC_140, amp[35]);
-  FFV1_2_3_4_0(w[3], w[31], w[19], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
-      pars->HEF_MEKD2_1_GC_140, amp[36]);
-  FFV1_2_3_4_0(w[25], w[2], w[19], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
-      pars->HEF_MEKD2_1_GC_140, amp[37]);
-  FFV2_0(w[33], w[1], w[32], pars->HEF_MEKD2_1_GC_3, amp[38]);
-  FFV1_2_3_4_0(w[34], w[1], w[12], pars->HEF_MEKD2_1_GC_151, pars->HEF_MEKD2_1_GC_148, pars->HEF_MEKD2_1_GC_149,
-      pars->HEF_MEKD2_1_GC_150, amp[39]);
-  FFV5_6_0(w[33], w[1], w[18], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_187, amp[40]);
-  FFV1_2_3_4_0(w[35], w[1], w[12], pars->HEF_MEKD2_1_GC_151, pars->HEF_MEKD2_1_GC_148, pars->HEF_MEKD2_1_GC_149,
-      pars->HEF_MEKD2_1_GC_150, amp[41]);
-  FFV1_2_3_4_0(w[36], w[1], w[19], pars->HEF_MEKD2_1_GC_151, pars->HEF_MEKD2_1_GC_148, pars->HEF_MEKD2_1_GC_149,
-      pars->HEF_MEKD2_1_GC_150, amp[42]);
-  FFV2_0(w[37], w[1], w[7], pars->HEF_MEKD2_1_GC_3, amp[43]);
-  FFV1_2_3_4_0(w[38], w[1], w[19], pars->HEF_MEKD2_1_GC_151, pars->HEF_MEKD2_1_GC_148, pars->HEF_MEKD2_1_GC_149,
-      pars->HEF_MEKD2_1_GC_150, amp[44]);
-  FFV5_6_0(w[37], w[1], w[10], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_187, amp[45]);
-  FFV2_0(w[39], w[1], w[28], pars->HEF_MEKD2_1_GC_3, amp[46]);
-  FFV1_2_3_4_0(w[40], w[1], w[23], pars->HEF_MEKD2_1_GC_151, pars->HEF_MEKD2_1_GC_148, pars->HEF_MEKD2_1_GC_149,
-      pars->HEF_MEKD2_1_GC_150, amp[47]);
-  FFV5_6_0(w[39], w[1], w[26], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_187, amp[48]);
-  FFV1_2_3_4_0(w[41], w[1], w[23], pars->HEF_MEKD2_1_GC_151, pars->HEF_MEKD2_1_GC_148, pars->HEF_MEKD2_1_GC_149,
-      pars->HEF_MEKD2_1_GC_150, amp[49]);
-  FFV1_2_3_4_0(w[42], w[1], w[27], pars->HEF_MEKD2_1_GC_151, pars->HEF_MEKD2_1_GC_148, pars->HEF_MEKD2_1_GC_149,
-      pars->HEF_MEKD2_1_GC_150, amp[50]);
-  FFV2_0(w[43], w[1], w[20], pars->HEF_MEKD2_1_GC_3, amp[51]);
-  FFV1_2_3_4_0(w[44], w[1], w[27], pars->HEF_MEKD2_1_GC_151, pars->HEF_MEKD2_1_GC_148, pars->HEF_MEKD2_1_GC_149,
-      pars->HEF_MEKD2_1_GC_150, amp[52]);
-  FFV5_6_0(w[43], w[1], w[22], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_187, amp[53]);
+//   FFV1_2_3_4_0(w[3], w[30], w[19], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
+//       pars->HEF_MEKD2_1_GC_140, amp[34]);	// s ch. A
+//   FFV1_2_3_4_0(w[24], w[2], w[19], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
+//       pars->HEF_MEKD2_1_GC_140, amp[35]);	// s ch. A
+//   FFV1_2_3_4_0(w[3], w[31], w[19], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
+//       pars->HEF_MEKD2_1_GC_140, amp[36]);	// s ch. Z
+//   FFV1_2_3_4_0(w[25], w[2], w[19], pars->HEF_MEKD2_1_GC_141, pars->HEF_MEKD2_1_GC_138, pars->HEF_MEKD2_1_GC_139,
+//       pars->HEF_MEKD2_1_GC_140, amp[37]);	// s ch. Z
+//   FFV2_0(w[33], w[1], w[32], pars->HEF_MEKD2_1_GC_3, amp[38]);
+//   FFV1_2_3_4_0(w[34], w[1], w[12], pars->HEF_MEKD2_1_GC_151, pars->HEF_MEKD2_1_GC_148, pars->HEF_MEKD2_1_GC_149,
+//       pars->HEF_MEKD2_1_GC_150, amp[39]);
+//   FFV5_6_0(w[33], w[1], w[18], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_187, amp[40]);
+//   FFV1_2_3_4_0(w[35], w[1], w[12], pars->HEF_MEKD2_1_GC_151, pars->HEF_MEKD2_1_GC_148, pars->HEF_MEKD2_1_GC_149,
+//       pars->HEF_MEKD2_1_GC_150, amp[41]);
+//   FFV1_2_3_4_0(w[36], w[1], w[19], pars->HEF_MEKD2_1_GC_151, pars->HEF_MEKD2_1_GC_148, pars->HEF_MEKD2_1_GC_149,
+//       pars->HEF_MEKD2_1_GC_150, amp[42]);
+//   FFV2_0(w[37], w[1], w[7], pars->HEF_MEKD2_1_GC_3, amp[43]);
+//   FFV1_2_3_4_0(w[38], w[1], w[19], pars->HEF_MEKD2_1_GC_151, pars->HEF_MEKD2_1_GC_148, pars->HEF_MEKD2_1_GC_149,
+//       pars->HEF_MEKD2_1_GC_150, amp[44]);
+//   FFV5_6_0(w[37], w[1], w[10], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_187, amp[45]);
+//   FFV2_0(w[39], w[1], w[28], pars->HEF_MEKD2_1_GC_3, amp[46]);
+//   FFV1_2_3_4_0(w[40], w[1], w[23], pars->HEF_MEKD2_1_GC_151, pars->HEF_MEKD2_1_GC_148, pars->HEF_MEKD2_1_GC_149,
+//       pars->HEF_MEKD2_1_GC_150, amp[47]);
+//   FFV5_6_0(w[39], w[1], w[26], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_187, amp[48]);
+//   FFV1_2_3_4_0(w[41], w[1], w[23], pars->HEF_MEKD2_1_GC_151, pars->HEF_MEKD2_1_GC_148, pars->HEF_MEKD2_1_GC_149,
+//       pars->HEF_MEKD2_1_GC_150, amp[49]);
+//   FFV1_2_3_4_0(w[42], w[1], w[27], pars->HEF_MEKD2_1_GC_151, pars->HEF_MEKD2_1_GC_148, pars->HEF_MEKD2_1_GC_149,
+//       pars->HEF_MEKD2_1_GC_150, amp[50]);
+//   FFV2_0(w[43], w[1], w[20], pars->HEF_MEKD2_1_GC_3, amp[51]);
+//   FFV1_2_3_4_0(w[44], w[1], w[27], pars->HEF_MEKD2_1_GC_151, pars->HEF_MEKD2_1_GC_148, pars->HEF_MEKD2_1_GC_149,
+//       pars->HEF_MEKD2_1_GC_150, amp[52]);
+//   FFV5_6_0(w[43], w[1], w[22], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_187, amp[53]);
 
 }
 double qq_Spin1_2f_DN_SF::matrix_ssx_zp_mummupmummup_no_hxg() 

@@ -32,6 +32,7 @@ void Spin0_2f_OF::initProc(string param_card_name)
   mME.push_back(pars->MM);
   mME.push_back(pars->MM);
   jamp2[0] = new double[1];
+	for( int count=0; count<namplitudes; count++ ) amp[count] = 0;
 }
 
 //--------------------------------------------------------------------------
@@ -209,8 +210,8 @@ void Spin0_2f_OF::calculate_wavefunctions(const int perm[], const int hel[])
   FFS1_2_0(w[7], w[3], w[0], pars->HEF_MEKD2_1_GC_137, pars->HEF_MEKD2_1_GC_136, amp[1]);
   FFS1_2_0(w[4], w[9], w[0], pars->HEF_MEKD2_1_GC_137, pars->HEF_MEKD2_1_GC_136, amp[2]);
   FFS1_2_0(w[10], w[3], w[0], pars->HEF_MEKD2_1_GC_137, pars->HEF_MEKD2_1_GC_136, amp[3]);
-  VVS3_4_5_0(w[8], w[11], w[0], pars->HEF_MEKD2_1_GC_14, pars->HEF_MEKD2_1_GC_18, pars->HEF_MEKD2_1_GC_22, amp[4]);
-  VVS2_0(w[8], w[11], w[0], pars->HEF_MEKD2_1_GC_25, amp[5]);
+//   VVS3_4_5_0(w[8], w[11], w[0], pars->HEF_MEKD2_1_GC_14, pars->HEF_MEKD2_1_GC_18, pars->HEF_MEKD2_1_GC_22, amp[4]);	// ZZ
+//   VVS2_0(w[8], w[11], w[0], pars->HEF_MEKD2_1_GC_25, amp[5]);	// ZZ
   FFS1_2_0(w[2], w[13], w[0], pars->HEF_MEKD2_1_GC_127, pars->HEF_MEKD2_1_GC_126, amp[6]);
   FFS1_2_0(w[14], w[1], w[0], pars->HEF_MEKD2_1_GC_127, pars->HEF_MEKD2_1_GC_126, amp[7]);
   FFS1_2_0(w[2], w[15], w[0], pars->HEF_MEKD2_1_GC_127, pars->HEF_MEKD2_1_GC_126, amp[8]);

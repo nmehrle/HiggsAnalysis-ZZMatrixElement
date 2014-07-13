@@ -33,6 +33,7 @@ void Spin0_2f_OFpA::initProc(string param_card_name)
   mME.push_back(pars->MM);
   mME.push_back(pars->ZERO);
   jamp2[0] = new double[1];
+	for( int count=0; count<namplitudes; count++ ) amp[count] = 0;
 }
 
 //--------------------------------------------------------------------------
@@ -279,25 +280,25 @@ void Spin0_2f_OFpA::calculate_wavefunctions(const int perm[], const int hel[])
   FFS1_2_0(w[9], w[16], w[0], pars->HEF_MEKD2_1_GC_137, pars->HEF_MEKD2_1_GC_136, amp[5]);
   FFS1_2_0(w[4], w[18], w[0], pars->HEF_MEKD2_1_GC_137, pars->HEF_MEKD2_1_GC_136, amp[6]);
   FFS1_2_0(w[14], w[16], w[0], pars->HEF_MEKD2_1_GC_137, pars->HEF_MEKD2_1_GC_136, amp[7]);
-  VVS3_4_5_0(w[11], w[19], w[0], pars->HEF_MEKD2_1_GC_14, pars->HEF_MEKD2_1_GC_18, pars->HEF_MEKD2_1_GC_22,
-      amp[8]);
-  VVS2_0(w[11], w[19], w[0], pars->HEF_MEKD2_1_GC_25, amp[9]);
+//   VVS3_4_5_0(w[11], w[19], w[0], pars->HEF_MEKD2_1_GC_14, pars->HEF_MEKD2_1_GC_18, pars->HEF_MEKD2_1_GC_22,
+//       amp[8]);	// ZZ
+//   VVS2_0(w[11], w[19], w[0], pars->HEF_MEKD2_1_GC_25, amp[9]);	// ZZ
   FFS1_2_0(w[20], w[7], w[0], pars->HEF_MEKD2_1_GC_137, pars->HEF_MEKD2_1_GC_136, amp[10]);
   FFS1_2_0(w[21], w[3], w[0], pars->HEF_MEKD2_1_GC_137, pars->HEF_MEKD2_1_GC_136, amp[11]);
   FFS1_2_0(w[20], w[12], w[0], pars->HEF_MEKD2_1_GC_137, pars->HEF_MEKD2_1_GC_136, amp[12]);
   FFS1_2_0(w[22], w[3], w[0], pars->HEF_MEKD2_1_GC_137, pars->HEF_MEKD2_1_GC_136, amp[13]);
-  VVS3_4_5_0(w[11], w[23], w[0], pars->HEF_MEKD2_1_GC_14, pars->HEF_MEKD2_1_GC_18, pars->HEF_MEKD2_1_GC_22,
-      amp[14]);
-  VVS2_0(w[11], w[23], w[0], pars->HEF_MEKD2_1_GC_25, amp[15]);
+//   VVS3_4_5_0(w[11], w[23], w[0], pars->HEF_MEKD2_1_GC_14, pars->HEF_MEKD2_1_GC_18, pars->HEF_MEKD2_1_GC_22,
+//       amp[14]);	// ZZ
+//   VVS2_0(w[11], w[23], w[0], pars->HEF_MEKD2_1_GC_25, amp[15]);	// ZZ
   FFS1_2_0(w[4], w[26], w[0], pars->HEF_MEKD2_1_GC_137, pars->HEF_MEKD2_1_GC_136, amp[16]);
   FFS1_2_0(w[27], w[3], w[0], pars->HEF_MEKD2_1_GC_137, pars->HEF_MEKD2_1_GC_136, amp[17]);
   FFS1_2_0(w[4], w[29], w[0], pars->HEF_MEKD2_1_GC_137, pars->HEF_MEKD2_1_GC_136, amp[18]);
   FFS1_2_0(w[30], w[3], w[0], pars->HEF_MEKD2_1_GC_137, pars->HEF_MEKD2_1_GC_136, amp[19]);
   FFS1_2_0(w[2], w[32], w[0], pars->HEF_MEKD2_1_GC_127, pars->HEF_MEKD2_1_GC_126, amp[20]);
   FFS1_2_0(w[33], w[24], w[0], pars->HEF_MEKD2_1_GC_127, pars->HEF_MEKD2_1_GC_126, amp[21]);
-  VVS3_4_5_0(w[28], w[34], w[0], pars->HEF_MEKD2_1_GC_14, pars->HEF_MEKD2_1_GC_18, pars->HEF_MEKD2_1_GC_22,
-      amp[22]);
-  VVS2_0(w[28], w[34], w[0], pars->HEF_MEKD2_1_GC_25, amp[23]);
+//   VVS3_4_5_0(w[28], w[34], w[0], pars->HEF_MEKD2_1_GC_14, pars->HEF_MEKD2_1_GC_18, pars->HEF_MEKD2_1_GC_22,
+//       amp[22]);	// ZZ
+//   VVS2_0(w[28], w[34], w[0], pars->HEF_MEKD2_1_GC_25, amp[23]);	// ZZ
   FFS1_2_0(w[2], w[35], w[0], pars->HEF_MEKD2_1_GC_127, pars->HEF_MEKD2_1_GC_126, amp[24]);
   FFS1_2_0(w[36], w[24], w[0], pars->HEF_MEKD2_1_GC_127, pars->HEF_MEKD2_1_GC_126, amp[25]);
   FFS1_2_0(w[4], w[39], w[0], pars->HEF_MEKD2_1_GC_137, pars->HEF_MEKD2_1_GC_136, amp[26]);
@@ -306,9 +307,9 @@ void Spin0_2f_OFpA::calculate_wavefunctions(const int perm[], const int hel[])
   FFS1_2_0(w[43], w[3], w[0], pars->HEF_MEKD2_1_GC_137, pars->HEF_MEKD2_1_GC_136, amp[29]);
   FFS1_2_0(w[37], w[44], w[0], pars->HEF_MEKD2_1_GC_127, pars->HEF_MEKD2_1_GC_126, amp[30]);
   FFS1_2_0(w[45], w[1], w[0], pars->HEF_MEKD2_1_GC_127, pars->HEF_MEKD2_1_GC_126, amp[31]);
-  VVS3_4_5_0(w[41], w[34], w[0], pars->HEF_MEKD2_1_GC_14, pars->HEF_MEKD2_1_GC_18, pars->HEF_MEKD2_1_GC_22,
-      amp[32]);
-  VVS2_0(w[41], w[34], w[0], pars->HEF_MEKD2_1_GC_25, amp[33]);
+//   VVS3_4_5_0(w[41], w[34], w[0], pars->HEF_MEKD2_1_GC_14, pars->HEF_MEKD2_1_GC_18, pars->HEF_MEKD2_1_GC_22,
+//       amp[32]);	// ZZ
+//   VVS2_0(w[41], w[34], w[0], pars->HEF_MEKD2_1_GC_25, amp[33]);	// ZZ
   FFS1_2_0(w[37], w[46], w[0], pars->HEF_MEKD2_1_GC_127, pars->HEF_MEKD2_1_GC_126, amp[34]);
   FFS1_2_0(w[47], w[1], w[0], pars->HEF_MEKD2_1_GC_127, pars->HEF_MEKD2_1_GC_126, amp[35]);
   FFS1_2_0(w[2], w[48], w[0], pars->HEF_MEKD2_1_GC_127, pars->HEF_MEKD2_1_GC_126, amp[36]);
