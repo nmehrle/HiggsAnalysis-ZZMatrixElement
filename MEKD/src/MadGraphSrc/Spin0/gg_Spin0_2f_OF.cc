@@ -256,6 +256,7 @@ void gg_Spin0_2f_OF::calculate_wavefunctions(const int perm[], const int hel[])
   FFV5_7_0(w[19], w[2], w[14], pars->HEF_MEKD2_1_GC_181, pars->HEF_MEKD2_1_GC_188, amp[19]);
 
 }
+
 double gg_Spin0_2f_OF::matrix_gg_h_emepmummup_no_zpxg() 
 {
   int i, j;

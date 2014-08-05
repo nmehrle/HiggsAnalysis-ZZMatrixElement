@@ -2047,7 +2047,6 @@ void testME_FullMELA_MCFMBSMHiggs_Ping(int flavor=1){
 	finput->Close();
 }
 
-
 void testME_FullMELA_FullSimMCValidation_NonSpin0(int flavor=1){
 	int erg_tev=8;
 	float mPOLE=125.6;

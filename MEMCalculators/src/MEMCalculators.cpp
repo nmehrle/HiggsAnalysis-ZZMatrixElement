@@ -27,22 +27,35 @@ using namespace MEMNames;
 
 /// MEKD process name translation - initialisation
 const TString MEMs::m_processNameMEKD[MEMNames::NUM_PROCESSES] = {
-	"ggSpin0Pm", "Spin0Pm", "ggSpin0Ph", "Spin0Ph", "ggSpin0M", "Spin0M",
-	"qqSpin1P", "Spin1P", "qqSpin1M", "Spin1M",
-	"ggSpin2Pm", "qqSpin2Pm", "Spin2Pm", "ggSpin2Ph", "qqSpin2Ph", "Spin2Ph", "ggSpin2Mh", "qqSpin2Mh", "Spin2Mh", "ggSpin2Pb", "qqSpin2Pb", "Spin2Pb",
-	"ZZ", "", "","ggZZ_Higgs","ggSpin0Lambda1",
+	"ggSpin0Pm", "Spin0Pm",
+	"ggSpin0Ph", "Spin0Ph",
+	"ggSpin0M", "Spin0M",
+	"qqSpin1P", "Spin1P",
+	"qqSpin1M", "Spin1M",
+	"ggSpin2Pm", "qqSpin2Pm", "Spin2Pm",
+	"ggSpin2Ph", "qqSpin2Ph", "Spin2Ph",
+	"ggSpin2Mh", "qqSpin2Mh", "Spin2Mh",
+	"ggSpin2Pb", "qqSpin2Pb", "Spin2Pb",
+	
+	"ZZ", "", "", "ggZZ_Higgs", "ggSpin0Lambda1",
 	"ggSpin0", "Spin0",
 	"qqSpin1", "Spin1",
 	"ggSpin2", "qqSpin2", "Spin2",
-	"VBFSpin0Pm_jj", "VBFSpin0M_jj", "ggSpin0Pm_jj", "ggSpin0M_jj","VHSpin0Pm", "VHSpin0M_jj",
+	"VBFSpin0Pm_jj", "VBFSpin0M_jj", "ggSpin0Pm_jj", "ggSpin0M_jj", "VHSpin0Pm", "VHSpin0M_jj",
+	
 	"ggSpin2Ph2", "qqSpin2Ph2", "Spin2Ph2",
 	"ggSpin2Ph3", "qqSpin2Ph3", "Spin2Ph3",
 	"ggSpin2Ph6", "qqSpin2Ph6", "Spin2Ph6",
 	"ggSpin2Ph7", "qqSpin2Ph7", "Spin2Ph7",
 	"ggSpin2Mh9", "qqSpin2Mh9", "Spin2Mh9",
 	"ggSpin2Mh10", "qqSpin2Mh10", "Spin2Mh10",
-	"ggHZZ_10","ggHZgs","ggHgsgs","ggHZgs_PS","ggHgsgs_PS",
+	"ggHZZ_10", "ggHZgs", "ggHgsgs", "ggHZgs_PS", "ggHgsgs_PS",
 	"qqZ4l_Signal", "qqZ4l_Background",
+	
+	"ggSpin0Pm_2f", "Spin0Pm_2f",
+	"ggSpin0M_2f", "Spin0M_2f",
+	"qqSpin1P_2f", "Spin1P_2f",
+	"qqSpin1M_2f", "Spin1M_2f",
 	"ggSpin2Pm_2f", "qqSpin2Pm_2f", "Spin2Pm_2f"
 
 };

@@ -1408,6 +1408,12 @@ int MEKD_MG::Run_MEKD_MG_ME_Configurator_Spin1M(string initial_state)
 	Mixing_Coefficients_Spin1_internal[4] = complex<double>(1, 0);	// Decay
 	Mixing_Coefficients_Spin1_internal[5] = complex<double>(0, 0);
 	
+	if( Final_state=="2m" || Final_state=="2mu" || Final_state=="2mA" || Final_state=="2muA" || Resonance_decay_mode=="2l" )
+	{
+		Mixing_Coefficients_Spin1_internal[6] = complex<double>(0, 0);
+		Mixing_Coefficients_Spin1_internal[7] = complex<double>(0, 0);
+	}
+	
 	return Run_MEKD_MG_ME_Configurator_Spin1( initial_state );
 }
 
@@ -1423,6 +1429,12 @@ int MEKD_MG::Run_MEKD_MG_ME_Configurator_Spin1P(string initial_state)
 	Mixing_Coefficients_Spin1_internal[3] = complex<double>(0, 0);
 	Mixing_Coefficients_Spin1_internal[4] = complex<double>(0, 0);	// Decay
 	Mixing_Coefficients_Spin1_internal[5] = complex<double>(1, 0);
+	
+	if( Final_state=="2m" || Final_state=="2mu" || Final_state=="2mA" || Final_state=="2muA" || Resonance_decay_mode=="2l" )
+	{
+		Mixing_Coefficients_Spin1_internal[6] = complex<double>(0, 0);
+		Mixing_Coefficients_Spin1_internal[7] = complex<double>(0, 0);
+	}
 	
 	return Run_MEKD_MG_ME_Configurator_Spin1( initial_state );
 }
@@ -1928,8 +1940,8 @@ int MEKD_MG::Run_MEKD_MG_ME_Configurator_Spin0(string initial_state)
 		Set_Of_Model_Parameters.set_block_entry( "heff", 20, buffer_complex[1]*complex<double>(4.291210e-04, 0) );
 		
 		// Decay to 2e (2f)
-		Set_Of_Model_Parameters.set_block_entry( "heff", 21, buffer_complex[0]*complex<double>(2.075371e-06, 0) );
-		Set_Of_Model_Parameters.set_block_entry( "heff", 22, buffer_complex[1]*complex<double>(2.075371e-06, 0) );
+		Set_Of_Model_Parameters.set_block_entry( "heff", 21, buffer_complex[0]*complex<double>(4.291210e-04, 0) );	// for Hee should be 2.075371e-06
+		Set_Of_Model_Parameters.set_block_entry( "heff", 22, buffer_complex[1]*complex<double>(4.291210e-04, 0) );
 	}
 	
 	//qq
@@ -2051,10 +2063,10 @@ int MEKD_MG::Run_MEKD_MG_ME_Configurator_Spin1(string initial_state)
 		Set_Of_Model_Parameters.set_block_entry( "vec", 26, buffer_complex[7]*complex<double>(4.291210e-04, 0) );
 		
 		// Decay to 2e (2f)
-		Set_Of_Model_Parameters.set_block_entry( "vec", 27, buffer_complex[4]*complex<double>(2.075371e-06, 0) );
-		Set_Of_Model_Parameters.set_block_entry( "vec", 28, buffer_complex[5]*complex<double>(2.075371e-06, 0) );
-		Set_Of_Model_Parameters.set_block_entry( "vec", 29, buffer_complex[6]*complex<double>(2.075371e-06, 0) );
-		Set_Of_Model_Parameters.set_block_entry( "vec", 30, buffer_complex[7]*complex<double>(2.075371e-06, 0) );
+		Set_Of_Model_Parameters.set_block_entry( "vec", 27, buffer_complex[4]*complex<double>(4.291210e-04, 0) );	// for Hee should be 2.075371e-06
+		Set_Of_Model_Parameters.set_block_entry( "vec", 28, buffer_complex[5]*complex<double>(4.291210e-04, 0) );
+		Set_Of_Model_Parameters.set_block_entry( "vec", 29, buffer_complex[6]*complex<double>(4.291210e-04, 0) );
+		Set_Of_Model_Parameters.set_block_entry( "vec", 30, buffer_complex[7]*complex<double>(4.291210e-04, 0) );
 	}
 	
 	buffer_complex = NULL;
@@ -2193,10 +2205,10 @@ int MEKD_MG::Run_MEKD_MG_ME_Configurator_Spin2(string initial_state)
 		Set_Of_Model_Parameters.set_block_entry( "gravity", 44, buffer_complex[13]*complex<double>(4.291210e-04, 0) );
 		
 		// Decay to 2e (2f)
-		Set_Of_Model_Parameters.set_block_entry( "gravity", 45, buffer_complex[10]*complex<double>(2.075371e-06, 0) );
-		Set_Of_Model_Parameters.set_block_entry( "gravity", 46, buffer_complex[11]*complex<double>(2.075371e-06, 0) );
-		Set_Of_Model_Parameters.set_block_entry( "gravity", 47, buffer_complex[12]*complex<double>(2.075371e-06, 0) );
-		Set_Of_Model_Parameters.set_block_entry( "gravity", 48, buffer_complex[13]*complex<double>(2.075371e-06, 0) );
+		Set_Of_Model_Parameters.set_block_entry( "gravity", 45, buffer_complex[10]*complex<double>(4.291210e-04, 0) );	// for Hee should be 2.075371e-06
+		Set_Of_Model_Parameters.set_block_entry( "gravity", 46, buffer_complex[11]*complex<double>(4.291210e-04, 0) );
+		Set_Of_Model_Parameters.set_block_entry( "gravity", 47, buffer_complex[12]*complex<double>(4.291210e-04, 0) );
+		Set_Of_Model_Parameters.set_block_entry( "gravity", 48, buffer_complex[13]*complex<double>(4.291210e-04, 0) );
 	}
 	
 	buffer_complex = NULL;
@@ -2209,7 +2221,6 @@ int MEKD_MG::Run_MEKD_MG_ME_Configurator_Spin2(string initial_state)
 /// ME_RAW (RAW MG5_aMC ME) dispatcher
 int MEKD_MG::Run_MEKD_MG_ME_Dispatcher_CPPProcess(string initial_state)
 {
-	return 1;	// Dispatcher is disabled
 // 	if( Resonance_decay_mode=="ZZ" )
 // 	{
 // 		if( Final_state=="4e" || Final_state=="4eA" )
@@ -2385,8 +2396,8 @@ int MEKD_MG::Run_MEKD_MG_ME_Dispatcher_CPPProcess(string initial_state)
 // 		if( initial_state=="qq" && (Final_state=="2mA" || Final_state=="2muA") )
 // 			return Run_MEKD_MG_MEs_Evaluator_Initial_State_qqbar( true, ME_RAW, ME_RAW );
 // 	}
-// 	
-// 	return 1;
+	
+	return 1;
 }
 
 

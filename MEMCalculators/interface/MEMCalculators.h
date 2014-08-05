@@ -38,17 +38,38 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////////
 namespace MEMNames {
 	/// Enum type for supported processes in MELA and MEKD packages
-	enum Processes    {kSMHiggs, kSMHiggs_prodIndep, k0hplus, k0hplus_prodIndep, k0minus, k0minus_prodIndep,
-		k1plus, k1plus_prodIndep, k1minus, k1minus_prodIndep,
-		k2mplus_gg, k2mplus_qqbar, k2mplus_prodIndep, k2hplus, k2hplus_qqbar, k2hplus_prodIndep, k2hminus, k2hminus_qqbar, k2hminus_prodIndep, k2bplus, k2bplus_qqbar, k2bplus_prodIndep, 
-		kqqZZ, kqqZZ_prodIndep, kggZZ, kggZZ_SMHiggs, k0_g1prime2,
+	enum Processes    {kSMHiggs, kSMHiggs_prodIndep,
+		k0hplus, k0hplus_prodIndep,
+		k0minus, k0minus_prodIndep,
+		k1plus, k1plus_prodIndep,
+		k1minus, k1minus_prodIndep,
+		k2mplus_gg, k2mplus_qqbar, k2mplus_prodIndep,
+		k2hplus, k2hplus_qqbar, k2hplus_prodIndep,
+		k2hminus, k2hminus_qqbar, k2hminus_prodIndep,
+		k2bplus, k2bplus_qqbar, k2bplus_prodIndep,
+		
+		kqqZZ, kqqZZ_prodIndep,
+		kggZZ, kggZZ_SMHiggs,
+		k0_g1prime2,
 		kSpin0_gg, kSpin0_prodIndep,
 		kSpin1_qqbar, kSpin1_prodIndep,
 		kSpin2_gg, kSpin2_qqbar, kSpin2_prodIndep,
 		kJJ_SMHiggs_VBF, kJJ_0minus_VBF, kJJ_SMHiggs_GG, kJJ_0minus_GG, kJJ_SMHiggs_VH, kJJ_0minus_VH,
-		k2h2plus_gg,k2h2plus_qqbar,k2h2plus_prodIndep,k2h3plus_gg,k2h3plus_qqbar,k2h3plus_prodIndep,k2h6plus_gg,k2h6plus_qqbar,k2h6plus_prodIndep,k2h7plus_gg,k2h7plus_qqbar,k2h7plus_prodIndep,k2h9minus_gg,k2h9minus_qqbar,k2h9minus_prodIndep,k2h10minus_gg,k2h10minus_qqbar,k2h10minus_prodIndep,
-		kggHZZ_10, k0_Zgs, k0_gsgs,k0_Zgs_PS, k0_gsgs_PS,
+		
+		k2h2plus_gg, k2h2plus_qqbar, k2h2plus_prodIndep,
+		k2h3plus_gg, k2h3plus_qqbar, k2h3plus_prodIndep,
+		k2h6plus_gg, k2h6plus_qqbar, k2h6plus_prodIndep,
+		k2h7plus_gg, k2h7plus_qqbar, k2h7plus_prodIndep,
+		k2h9minus_gg, k2h9minus_qqbar, k2h9minus_prodIndep,
+		k2h10minus_gg, k2h10minus_qqbar, k2h10minus_prodIndep,
+		
+		kggHZZ_10, k0_Zgs, k0_gsgs, k0_Zgs_PS, k0_gsgs_PS,
 		kqqZ4l_s, kqqZ4l_t,
+		
+		k0plus_2f_gg, k0plus_2f_prodIndep,
+		k0minus_2f_gg, k0minus_2f_prodIndep,
+		k1plus_2f_qqbar, k1plus_2f_prodIndep,
+		k1minus_2f_qqbar, k1minus_2f_prodIndep,
 		k2mplus_2f_gg, k2mplus_2f_qqbar, k2mplus_2f_prodIndep,
 		
 		NUM_PROCESSES};
@@ -440,10 +461,17 @@ const bool MEMs::isProcSupported[MEMNames::NUM_PROCESSES][MEMNames::NUM_MEMCALCS
   {0,            0,          1,          0,          0},	// k0_Zgs_PS
   {0,            1,          0,          0,          0},	// kqqZ4l_s
   {0,            1,          0,          0,          0},	// kqqZ4l_t
+  {0,            1,          0,          0,          0},	// k0plus_2f_gg
+  {0,            1,          0,          0,          0},	// k0plus_2f_prodIndep
+  {0,            1,          0,          0,          0},	// k0minus_2f_gg
+  {0,            1,          0,          0,          0},	// k0minus_2f_prodIndep
+  {0,            1,          0,          0,          0},	// k1plus_2f_qqbar
+  {0,            1,          0,          0,          0},	// k1plus_2f_prodIndep
+  {0,            1,          0,          0,          0},	// k1minus_2f_qqbar
+  {0,            1,          0,          0,          0},	// k1minus_2f_prodIndep
   {0,            1,          0,          0,          0},	// k2mplus_2f_gg
   {0,            1,          0,          0,          0},	// k2mplus_2f_qqbar
   {0,            1,          0,          0,          0}};	// k2mplus_2f_prodIndep
- 
 //////////////////////////////////////////////////////////////////////////
 
 #endif
