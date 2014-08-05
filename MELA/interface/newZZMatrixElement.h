@@ -12,6 +12,7 @@ public:
   newZZMatrixElement(const char* pathtoHiggsCSandWidth,
 		     double ebeam,
 		     TVar::VerbosityLevel verbosity);
+
   ~newZZMatrixElement(){};
   /// Compute KD from masses and angles.
   /// The user must ensure that the order of m1/m2 matches the order of theta1/theta2.
@@ -22,32 +23,35 @@ public:
                  float costheta2,
                  float phistar1,
                  float phi,
-		 int flavor,
-		 TVar::Process process, 
-		 TVar::MatrixElement memethod,
-		 TVar::Production prodmode,
-		 double couplingvals[2],
-     double selfDHvvcoupl[30][2],
-     double selfDZqqcoupl[2][2],
-     double selfDZvvcoupl[2][2],
-     double selfDGqqcoupl[2][2],
-     double selfDGggcoupl[5][2],
-     double selfDGvvcoupl[10][2],
-		 float &mevalue
-//		 float wHiggs=-1
-		 );
+				 int flavor,
+				 TVar::Process process, 
+				 TVar::MatrixElement memethod,
+				 TVar::Production prodmode,
+				 double couplingvals[SIZE_HVV_FREENORM],
+				 double selfDHvvcoupl[SIZE_HVV][2],
+				 double selfDZqqcoupl[SIZE_ZQQ][2],
+				 double selfDZvvcoupl[SIZE_ZVV][2],
+				 double selfDGqqcoupl[SIZE_GQQ][2],
+				 double selfDGggcoupl[SIZE_GGG][2],
+				 double selfDGvvcoupl[SIZE_GVV][2],
+				 float &mevalue
+			 );
 
   void computeProdXS(TLorentzVector jet1,
 		     TLorentzVector jet2,
 		     TLorentzVector higgs,
 		     TVar::Process myModel,
 		     TVar::Production myProduction,
+			 double selfDHggcoupl[SIZE_HGG][2],
+			 double selfDHvvcoupl[SIZE_HVV_VBF][2],
+			 double selfDHwwcoupl[SIZE_HWW_VBF][2],
 		     float &mevalue
 		     );
 
   void set_mHiggs(float myPoleMass);
   void set_wHiggs(float myPoleWidth);
-
+  void set_LeptonInterference(TVar::LeptonInterference myLepInterf);
+  void reset_MCFM_EWKParameters(double ext_Gf, double ext_aemmz, double ext_mW, double ext_mZ);
 
   //compute four-momenta from angles only 
   // Nota bene: angles, not cos(theta)...
@@ -64,6 +68,7 @@ private:
   TVar::Process myModel;
   TVar::MatrixElement myME;
   TVar::Production myProduction;
+  TVar::LeptonInterference myLeptonInterference;
 
 };
 #endif

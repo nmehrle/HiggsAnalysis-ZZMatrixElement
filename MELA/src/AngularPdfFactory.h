@@ -44,7 +44,19 @@ public:
   RooRealVar* g2_prime4Val;
   RooRealVar* g3_prime4Val;
   RooRealVar* g4_prime4Val;
-	
+  RooRealVar* g1_prime5Val;
+  RooRealVar* g2_prime5Val;
+  RooRealVar* g3_prime5Val;
+  RooRealVar* g4_prime5Val;
+  RooRealVar* g1_prime6Val;
+  RooRealVar* g2_prime6Val;
+  RooRealVar* g3_prime6Val;
+  RooRealVar* g4_prime6Val;
+  RooRealVar* g1_prime7Val;
+  RooRealVar* g2_prime7Val;
+  RooRealVar* g3_prime7Val;
+  RooRealVar* g4_prime7Val;
+
   RooRealVar* R1Val;  
   RooRealVar* R2Val;  
   
@@ -78,27 +90,99 @@ public:
     g1_prime2Val = new RooRealVar("g1_prime2Val","g1_prime2Val",0.);
     g1_prime3Val = new RooRealVar("g1_prime3Val","g1_prime3Val",0.);
     g1_prime4Val = new RooRealVar("g1_prime4Val","g1_prime4Val",0.);
+    g1_prime5Val = new RooRealVar("g1_prime5Val","g1_prime5Val",0.);
+    g1_prime6Val = new RooRealVar("g1_prime6Val","g1_prime6Val",0.);
+    g1_prime7Val = new RooRealVar("g1_prime7Val","g1_prime7Val",0.);
 
 
     g2_primeVal =  new RooRealVar("g2_primeVal", "g2_primeVal",0.);
     g2_prime2Val = new RooRealVar("g2_prime2Val","g2_prime2Val",0.);
     g2_prime3Val = new RooRealVar("g2_prime3Val","g2_prime3Val",0.);
     g2_prime4Val = new RooRealVar("g2_prime4Val","g2_prime4Val",0.);
+    g2_prime5Val = new RooRealVar("g2_prime5Val","g2_prime5Val",0.);
+    g2_prime6Val = new RooRealVar("g2_prime6Val","g2_prime6Val",0.);
+    g2_prime7Val = new RooRealVar("g2_prime7Val","g2_prime7Val",0.);
 
     g3_primeVal =  new RooRealVar("g3_primeVal", "g3_primeVal",0.);
     g3_prime2Val = new RooRealVar("g3_prime2Val","g3_prime2Val",0.);
     g3_prime3Val = new RooRealVar("g3_prime3Val","g3_prime3Val",0.);
     g3_prime4Val = new RooRealVar("g3_prime4Val","g3_prime4Val",0.);
+    g3_prime5Val = new RooRealVar("g3_prime5Val","g3_prime5Val",0.);
+    g3_prime6Val = new RooRealVar("g3_prime6Val","g3_prime6Val",0.);
+    g3_prime7Val = new RooRealVar("g3_prime7Val","g3_prime7Val",0.);
 
     g4_primeVal =  new RooRealVar("g4_primeVal", "g4_primeVal",0.);
     g4_prime2Val = new RooRealVar("g4_prime2Val","g4_prime2Val",0.);
     g4_prime3Val = new RooRealVar("g4_prime3Val","g4_prime3Val",0.);
     g4_prime4Val = new RooRealVar("g4_prime4Val","g4_prime4Val",0.);
+    g4_prime5Val = new RooRealVar("g4_prime5Val","g4_prime5Val",0.);
+    g4_prime6Val = new RooRealVar("g4_prime6Val","g4_prime6Val",0.);
+    g4_prime7Val = new RooRealVar("g4_prime7Val","g4_prime7Val",0.);
 
-    R1Val  = new RooRealVar("R1Val","R1Val",0.15);
+	R1Val  = new RooRealVar("R1Val","R1Val",0.15);
     R2Val  = new RooRealVar("R2Val","R2Val",0.15);
 
-    PDF = new RooXZsZs_5D("PDF","PDF",*m1,*m2,*h1,*h2,*Phi,*a1Val,*phi1Val,*a2Val,*phi2Val,*a3Val,*phi3Val,*useGTerm,*g1Val,*g2Val,*g3Val,*g4Val,*g1_primeVal,*g2_primeVal,*g3_primeVal,*g4_primeVal,	*g1_prime2Val,*g2_prime2Val,*g3_prime2Val,*g4_prime2Val,*g1_prime3Val,*g2_prime3Val,*g3_prime3Val,*g4_prime3Val,*g1_prime4Val,*g2_prime4Val,*g3_prime4Val,*g4_prime4Val,*mZ,*gamZ,*mZZ,*R1Val,*R2Val);
+	RooRealVar* g1List[] = {
+		g1Val,
+		g1_primeVal,
+		g1_prime2Val,
+		g1_prime3Val,
+		g1_prime4Val,
+		g1_prime5Val,
+		g1_prime6Val,
+		g1_prime7Val
+	};
+	RooRealVar* g2List[] = {
+		g2Val,
+		g2_primeVal,
+		g2_prime2Val,
+		g2_prime3Val,
+		g2_prime4Val,
+		g2_prime5Val,
+		g2_prime6Val,
+		g2_prime7Val
+	};
+	RooRealVar* g3List[] = {
+		g3Val,
+		g3_primeVal,
+		g3_prime2Val,
+		g3_prime3Val,
+		g3_prime4Val,
+		g3_prime5Val,
+		g3_prime6Val,
+		g3_prime7Val
+	};
+	RooRealVar* g4List[] = {
+		g4Val,
+		g4_primeVal,
+		g4_prime2Val,
+		g4_prime3Val,
+		g4_prime4Val,
+		g4_prime5Val,
+		g4_prime6Val,
+		g4_prime7Val
+	};
+
+    PDF = new RooXZsZs_5D("PDF","PDF",*m1,*m2,*h1,*h2,*Phi,
+		*a1Val,*phi1Val,*a2Val,*phi2Val,*a3Val,*phi3Val,
+		*useGTerm,
+/*
+		*g1Val,*g2Val,*g3Val,*g4Val,
+		*g1_primeVal,*g2_primeVal,*g3_primeVal,*g4_primeVal,
+		*g1_prime2Val,*g2_prime2Val,*g3_prime2Val,*g4_prime2Val,
+		*g1_prime3Val,*g2_prime3Val,*g3_prime3Val,*g4_prime3Val,
+		*g1_prime4Val,*g2_prime4Val,*g3_prime4Val,*g4_prime4Val,
+		*g1_prime5Val,*g2_prime5Val,*g3_prime5Val,*g4_prime5Val,
+		*g1_prime6Val,*g2_prime6Val,*g3_prime6Val,*g4_prime6Val,
+		*g1_prime7Val,*g2_prime7Val,*g3_prime7Val,*g4_prime7Val,
+*/
+
+		g1List,
+		g2List,
+		g3List,
+		g4List,
+
+		*mZ,*gamZ,*mZZ,*R1Val,*R2Val);
 
   };
 
@@ -115,12 +199,11 @@ public:
     delete R1Val;
     delete R2Val;
 
-    delete useGTerm;
-    delete g1Val;
-    delete g2Val;
-    delete g3Val;
-    delete g4Val;
-
+		delete useGTerm;
+		delete  g1Val;
+		delete  g2Val;
+		delete  g3Val;
+		delete  g4Val;
 		delete  g1_primeVal;
 		delete  g2_primeVal;
 		delete  g3_primeVal;
@@ -137,8 +220,20 @@ public:
 		delete  g2_prime4Val;
 		delete  g3_prime4Val;
 		delete  g4_prime4Val;
-    delete PDF;
+		delete  g1_prime5Val;
+		delete  g2_prime5Val;
+		delete  g3_prime5Val;
+		delete  g4_prime5Val;
+		delete  g1_prime6Val;
+		delete  g2_prime6Val;
+		delete  g3_prime6Val;
+		delete  g4_prime6Val;
+		delete  g1_prime7Val;
+		delete  g2_prime7Val;
+		delete  g3_prime7Val;
+		delete  g4_prime7Val;
 
+    delete PDF;
   };
 
   int configure(TVar::Process model_){
@@ -169,7 +264,6 @@ public:
     setRestConst();
     modelIndex=0;
   };
-
   void makeLGHiggs(){          
     useGTerm->setVal(1.0);
     g1Val->setVal(0.0);
@@ -181,8 +275,6 @@ public:
     // need to calculate the proper normalizations
     modelIndex=2;
   };
-
-
   void makePSHiggs(){
     useGTerm->setVal(1.0);
     g1Val->setVal(0.0);
@@ -193,41 +285,51 @@ public:
     setRestConst();
     modelIndex=1;
   };
- 	
-	 void makeSMq2Higgs(){
+  void makeSMq2Higgs(){
     useGTerm->setVal(1.0);
     g1Val->setVal(0.0);
     g2Val->setVal(0.0);
     g3Val->setVal(0.0);
     g4Val->setVal(0.0);
     g1_prime2Val->setVal(-12046.01);
- 		setRestConst();
+	setRestConst();
     modelIndex=-1;
   };
-
-	void setRestConst(){
+  void setRestConst(){
     g1_primeVal ->setVal(0.);
     g1_prime3Val->setVal(0.);
     g1_prime4Val->setVal(0.);
+    g1_prime5Val->setVal(0.);
+    g1_prime6Val->setVal(0.);
+    g1_prime7Val->setVal(0.);
 
 
     g2_primeVal ->setVal(0.);
     g2_prime2Val->setVal(0.);
     g2_prime3Val->setVal(0.);
     g2_prime4Val->setVal(0.);
+    g2_prime5Val->setVal(0.);
+    g2_prime6Val->setVal(0.);
+    g2_prime7Val->setVal(0.);
 
     g3_primeVal ->setVal(0.);
     g3_prime2Val->setVal(0.);
     g3_prime3Val->setVal(0.);
     g3_prime4Val->setVal(0.);
+    g3_prime5Val->setVal(0.);
+    g3_prime6Val->setVal(0.);
+    g3_prime7Val->setVal(0.);
 
     g4_primeVal ->setVal(0.);
     g4_prime2Val->setVal(0.);
     g4_prime3Val->setVal(0.);
     g4_prime4Val->setVal(0.);
-	};
+    g4_prime5Val->setVal(0.);
+    g4_prime6Val->setVal(0.);
+    g4_prime7Val->setVal(0.);
+  };
   void makeCustom(double a1, double a2, double a3,
-		  double phi1, double phi2, double phi3){
+				  double phi1, double phi2, double phi3){
     a1Val->setVal(a1);
     phi1Val->setVal(phi1);
     a2Val->setVal(a2);
@@ -236,9 +338,8 @@ public:
     phi3Val->setVal(phi3);
     modelIndex=-1;
   };
-
   void makeCustom(double g1, double g2, 
-		  double g3, double g4){
+				  double g3, double g4){
     useGTerm->setVal(1.0);
     g1Val->setVal(g1);
     g2Val->setVal(g2);
@@ -246,7 +347,6 @@ public:
     g4Val->setVal(g4);
     modelIndex=-1;
   };
-
   void makeParamsConst(bool yesNo=true){
     if(yesNo){
       a1Val->setConstant(kTRUE);
@@ -272,7 +372,6 @@ public:
       R2Val->setConstant(kFALSE);
     }
   };
-
   double getVal(double mZZ){
 
     double Norm[80];
@@ -379,7 +478,6 @@ public:
     return PDF->getVal()/Norm[(int)floor(mZZ-100)];
 
   };
-
   double getValIntegrOutAngles(RooRealVar* m1,RooRealVar* m2,RooRealVar* h1,RooRealVar* h2,RooRealVar* Phi,RooRealVar* mZZ){
     RooAbsPdf* PDFIntegratedOut =PDF->createProjection(RooArgSet(*h1,*h2,*Phi));
     double norm = PDFIntegratedOut->getNorm(RooArgSet(*m1, *m2, *mZZ));

@@ -200,8 +200,8 @@ void SuperMELA::init(){
     mean_CB_err_=new RooFormulaVar("mean_CB_err",("("+str_mean_CB_err_m+"+"+str_mean_CB_err_e+")*@0").c_str(),RooArgList(dummyOne));
     sigma_CB_err_=new RooFormulaVar("sigma_CB_err",("("+str_sigma_CB_err_m+"+"+str_mean_CB_err_e+")*@0").c_str(),RooArgList(dummyOne));
   }
-  if(mean_CB_err_->getVal()<0.0){std::cout<<"Negatiuve error on the m4l mean ! "<<mean_CB_err_->getVal()<<std::endl;}
-  if(sigma_CB_err_->getVal()<0.0){std::cout<<"Negatiuve error on the m4l sigma ! "<<sigma_CB_err_->getVal()<<std::endl;}
+  if(mean_CB_err_->getVal()<0.0){std::cout<<"Negative error on the m4l mean ! "<<mean_CB_err_->getVal()<<std::endl;}
+  if(sigma_CB_err_->getVal()<0.0){std::cout<<"Negative error on the m4l sigma ! "<<sigma_CB_err_->getVal()<<std::endl;}
     //  if(verbose_)std::cout<<"Systematic from RooFormulaVar(), Mean and Sigma of CB: "<<mean_CB_err_->getVal()<<"  "<<sigma_CB_err_->getVal()<<endl;
 
   //delete old stuff before reinitialization                                                                                                                                                                  
@@ -541,7 +541,6 @@ void SuperMELA::calc_mZZ_range(const double mHVal,double &low_M,double &high_M){
 
   if(mHVal==125){low_M=105;high_M=140.0;}
   if(mHVal==126){low_M=106;high_M=141.0;}
-//	cout<<low_M<<" "<<high_M<<endl;
 
   delete myCSW;
 

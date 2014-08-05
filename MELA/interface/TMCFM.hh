@@ -15,7 +15,8 @@
 // nflavors constants.f 
 enum {nf=5};
 // maxpart constants.f 
-enum {mxpart=12};
+enum {mxpart=14}; // MCFM 6.8: CAUTION!!! IMPORTANT TO CHECK WHEN UPDATING MCFM!!!
+//enum {mxpart=12}; // MCFM 6.7
 //mxdim.f
 enum {ndims=22};
 
@@ -91,6 +92,10 @@ extern "C" {
    double gsq, as, ason2pi, ason4pi;
  } qcdcouple_;
 
+ extern struct {
+   double Gf,gw,xw,gwsq,esq,vevsq;
+ } ewcouple_;
+
  extern   struct {
    double delg1_z, delg1_g, lambda_g, lambda_z, delk_g, delk_z,tevscale;
  } anomcoup_;
@@ -109,8 +114,26 @@ extern "C" {
            mtausq,mcsq,mbsq;
  } masses_mcfm_;
 
-//mcfm/src/Inc/zcouple.F
 
+  extern  struct{
+      double LambdaBSM,Lambda_z1,Lambda_z2,Lambda_z3,Lambda_z4;
+	  double Lambda_Q;
+
+      double ghz1[2];double ghz2[2];double ghz3[2];double ghz4[2]; // No additional q2 dependence
+      double ghz1_prime[2];double ghz2_prime[2];double ghz3_prime[2];double ghz4_prime[2]; // Dipole ansatz
+      double ghz1_prime2[2];double ghz2_prime2[2];double ghz3_prime2[2];double ghz4_prime2[2]; // |q1**2| + |q2**2|
+      double ghz1_prime3[2];double ghz2_prime3[2];double ghz3_prime3[2];double ghz4_prime3[2]; // |q1**2| - |q2**2|
+      double ghz1_prime4[2];double ghz2_prime4[2];double ghz3_prime4[2];double ghz4_prime4[2]; // (q1 + q2)**2
+      double ghz1_prime5[2];double ghz2_prime5[2];double ghz3_prime5[2];double ghz4_prime5[2]; // q1**4 + q2**4
+      double ghz1_prime6[2];double ghz2_prime6[2];double ghz3_prime6[2];double ghz4_prime6[2]; // q1**4 - q2**4
+      double ghz1_prime7[2];double ghz2_prime7[2];double ghz3_prime7[2];double ghz4_prime7[2]; // |q1**2| * |q2**2|
+
+      bool AllowAnomalousCouplings;
+ } spinzerohiggs_anomcoupl_;
+
+
+
+//mcfm/src/Inc/zcouple.F
   extern struct{
     double l[nf],r[nf],q1,l1,r1,q2,l2,r2,le,ln,re,rn,sin2w;
   } zcouple_;
@@ -177,6 +200,8 @@ extern "C" {
   #define qqb_zz_ qqb_zz_
   void qqb_zz_(double* p, double* msq);
   void gen4_(double* r, double* p, double* wt4);  //r(22) p(4,12)
+  #define qqb_zz_stu_ qqb_zz_stu_ // Custom qqb->ZZ for different s, t, u channels
+  void qqb_zz_stu_(double* p, double* msq, int* channeltoggle);
 
   #define gg_zz_int_ gg_zz_int_
   void gg_zz_int_(double* p, double* msq);

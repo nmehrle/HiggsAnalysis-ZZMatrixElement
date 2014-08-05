@@ -12,6 +12,7 @@
 #include "RooCategoryProxy.h"
 #include "RooAbsReal.h"
 #include "RooAbsCategory.h"
+#include "RooArgList.h"
 
 class RooXZsZs_5D : public RooAbsPdf {
 public:
@@ -28,28 +29,48 @@ public:
                 RooAbsReal& _phi2Val,
                 RooAbsReal& _a3Val,
                 RooAbsReal& _phi3Val,
+
 		RooAbsReal& _useGTerm,
+
+		RooRealVar* _g1List[],
+		RooRealVar* _g2List[],
+		RooRealVar* _g3List[],
+		RooRealVar* _g4List[],
+/*
 		RooAbsReal& _g1Val,
 		RooAbsReal& _g2Val,
 		RooAbsReal& _g3Val,
 		RooAbsReal& _g4Val,
-    RooAbsReal& _g1_primeVal,
-    RooAbsReal& _g2_primeVal,
-    RooAbsReal& _g3_primeVal,
-    RooAbsReal& _g4_primeVal,
-    RooAbsReal& _g1_prime2Val,
-    RooAbsReal& _g2_prime2Val,
-    RooAbsReal& _g3_prime2Val,
-    RooAbsReal& _g4_prime2Val,
-    RooAbsReal& _g1_prime3Val,
-    RooAbsReal& _g2_prime3Val,
-    RooAbsReal& _g3_prime3Val,
-    RooAbsReal& _g4_prime3Val,
-    RooAbsReal& _g1_prime4Val,
-    RooAbsReal& _g2_prime4Val,
-    RooAbsReal& _g3_prime4Val,
-    RooAbsReal& _g4_prime4Val,
-                RooAbsReal& _mZ,
+		RooAbsReal& _g1_primeVal,
+		RooAbsReal& _g2_primeVal,
+		RooAbsReal& _g3_primeVal,
+		RooAbsReal& _g4_primeVal,
+		RooAbsReal& _g1_prime2Val,
+		RooAbsReal& _g2_prime2Val,
+		RooAbsReal& _g3_prime2Val,
+		RooAbsReal& _g4_prime2Val,
+		RooAbsReal& _g1_prime3Val,
+		RooAbsReal& _g2_prime3Val,
+		RooAbsReal& _g3_prime3Val,
+		RooAbsReal& _g4_prime3Val,
+		RooAbsReal& _g1_prime4Val,
+		RooAbsReal& _g2_prime4Val,
+		RooAbsReal& _g3_prime4Val,
+		RooAbsReal& _g4_prime4Val,
+		RooAbsReal& _g1_prime5Val,
+		RooAbsReal& _g2_prime5Val,
+		RooAbsReal& _g3_prime5Val,
+		RooAbsReal& _g4_prime5Val,
+		RooAbsReal& _g1_prime6Val,
+		RooAbsReal& _g2_prime6Val,
+		RooAbsReal& _g3_prime6Val,
+		RooAbsReal& _g4_prime6Val,
+		RooAbsReal& _g1_prime7Val,
+		RooAbsReal& _g2_prime7Val,
+		RooAbsReal& _g3_prime7Val,
+		RooAbsReal& _g4_prime7Val,
+*/
+				RooAbsReal& _mZ,
                 RooAbsReal& _gamZ,
                 RooAbsReal& _mX,
                 RooAbsReal& _R1Val,
@@ -95,7 +116,20 @@ protected:
     RooRealProxy g2_prime4Val;
     RooRealProxy g3_prime4Val;
     RooRealProxy g4_prime4Val;
-    RooRealProxy mZ ;
+    RooRealProxy g1_prime5Val;
+    RooRealProxy g2_prime5Val;
+    RooRealProxy g3_prime5Val;
+    RooRealProxy g4_prime5Val;
+    RooRealProxy g1_prime6Val;
+    RooRealProxy g2_prime6Val;
+    RooRealProxy g3_prime6Val;
+    RooRealProxy g4_prime6Val;
+    RooRealProxy g1_prime7Val;
+    RooRealProxy g2_prime7Val;
+    RooRealProxy g3_prime7Val;
+    RooRealProxy g4_prime7Val;
+
+	RooRealProxy mZ ;
     RooRealProxy gamZ ;
     RooRealProxy mX ;
     RooRealProxy R1Val ;
@@ -108,6 +142,7 @@ private:
     double Lambda_z2 ; 
     double Lambda_z3 ; 
     double Lambda_z4 ; 
+    double Lambda_Q ; 
     //ClassDef(RooXZsZs_5D,1) // Your description goes here...
 };
 

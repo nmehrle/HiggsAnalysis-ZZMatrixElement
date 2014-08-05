@@ -11,8 +11,22 @@
 #define fbGeV2 0.389379E12
 #define smallnumber 1e-15
 #define sixteen_2Pi_to_8 3.88650230418250561e+07
-#define   eight_2Pi_to_5 7.83410393050320417e+04
-#define    four_2Pi_to_2 39.478417604357432
+#define eight_2Pi_to_5 7.83410393050320417e+04
+#define four_2Pi_to_2 39.478417604357432
+//---------------------------------
+// Coupling array sizes
+//---------------------------------
+#define SIZE_HVV 39
+#define SIZE_HVV_VBF 32
+#define SIZE_HWW_VBF 32
+#define SIZE_HGG 3
+#define SIZE_ZQQ 2
+#define SIZE_ZVV 2
+#define SIZE_GQQ 2
+#define SIZE_GGG 5
+#define SIZE_GVV 10
+#define SIZE_HVV_FREENORM 2
+
 
 class TVar{
 public:
@@ -29,10 +43,18 @@ public:
   enum Production{
     ZZGG = 0,
     ZZQQB = 1,
-    ZZINDEPENDENT=2,
-    JJGG =3,
-    JJVBF =4,
-    JJVH =5//analytical
+    ZZQQB_STU = 2,
+    ZZQQB_S = 3,
+    ZZQQB_TU = 4,
+    ZZINDEPENDENT= 5,
+    JJGG = 6,
+    JJVBF = 7,
+    JJVH = 8//analytical
+  };
+  enum LeptonInterference{
+    DefaultLeptonInterf = 0,
+    InterfOn = 1,
+    InterfOff=2
   };
 
   enum Process{
@@ -84,7 +106,12 @@ public:
 		H0_gsgs_PS 					= 32,
 		D_zzzg_PS						= 33,
 		D_zzgg_PS						= 34,
-    /*** Are these ones still used? ***/
+		
+		H0_Zgsg1prime2						= 35,
+		D_zzzg_g1prime2						= 36,
+		D_zzzg_g1prime2_pi_2						= 37,
+
+	/*** Are these ones still used? ***/
     //  QQB_TZZ_4l = 8,
     //  TZZ_DECAY_4l = 10,
     //  VZZ_DECAY_4l = 11,
@@ -107,12 +134,11 @@ public:
     SMSyst_ResDown   = 4
   };
 
-
   //---------------------------------
   // Function
   //---------------------------------
   static TString ProcessName(int temp){
-    if     (temp==TVar::HSMHiggs          ) return TString("HSMHiggs");
+    if     (temp==TVar::HSMHiggs          ) return TString ("HSMHiggs");
     else if(temp==TVar::H0minus           ) return TString ("H0minus");           
     else if(temp==TVar::H0hplus           ) return TString ("H0hplus");          
                                                                                
@@ -146,7 +172,22 @@ public:
     else if(temp==TVar::SelfDefine_spin1  ) return TString ("SelfDefine_spin1");  
     else if(temp==TVar::SelfDefine_spin2  ) return TString ("SelfDefine_spin2");  
 
-    else                                    return TString ("UnKnown");
+	else if(temp==TVar::D_gg10  ) return TString ("D_gg10");  
+
+	else if(temp==TVar::H0_Zgs  ) return TString ("H0_Zgs");  
+	else if(temp==TVar::H0_gsgs  ) return TString ("H0_gsgs");  
+	else if(temp==TVar::D_zzzg  ) return TString ("D_zzzg");  
+	else if(temp==TVar::D_zzgg  ) return TString ("D_zzgg");  
+
+	else if(temp==TVar::H0_Zgs_PS  ) return TString ("H0_Zgs_PS");  
+	else if(temp==TVar::H0_gsgs_PS  ) return TString ("H0_gsgs_PS");  
+	else if(temp==TVar::D_zzzg_PS  ) return TString ("D_zzzg_PS");  
+	else if(temp==TVar::D_zzgg_PS  ) return TString ("D_zzgg_PS");  
+
+	else if(temp==TVar::H0_Zgsg1prime2  ) return TString ("H0_Zgsg1prime2");  
+	else if(temp==TVar::D_zzzg_g1prime2  ) return TString ("D_zzzg_g1prime2");  
+
+    else return TString ("UnKnown");
   };
 
   inline virtual ~TVar(){};

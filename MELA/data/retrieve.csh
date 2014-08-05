@@ -3,7 +3,7 @@
 
 cd `dirname $0`/$1
 
-if (! -e libmcfm_6p7.so) then
+if (! -e libmcfm_6p8.so) then
   cat download.url | xargs wget --no-check-certificate -q
 endif
 

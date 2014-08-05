@@ -38,17 +38,19 @@ public:
   
   void setProcess(TVar::Process myModel, TVar::MatrixElement myME, TVar::Production myProduction);
   void setMelaHiggsWidth(float myHiggsWidth=-1);
-  
- void computeP(float mZZ, float mZ1, float mZ2, // input kinematics
-    float costhetastar,
-    float costheta1,
-    float costheta2,
-    float phi,
-    float phi1,
-    int flavor,
-    float& prob       ,            // output probability
+  void setMelaLeptonInterference(TVar::LeptonInterference myLepInterf = TVar::DefaultLeptonInterf);
+  void resetMCFM_EWKParameters(double ext_Gf, double ext_aemmz, double ext_mW, double ext_mZ);
+
+  void computeP(float mZZ, float mZ1, float mZ2, // input kinematics
+		float costhetastar,
+		float costheta1,
+		float costheta2,
+		float phi,
+		float phi1,
+		int flavor,
+		float& prob,            // output probability
 		bool useConstant=1
-    );
+		);
 
   void computeP(float mZZ, float mZ1, float mZ2, // input kinematics
 		float costhetastar,
@@ -57,40 +59,44 @@ public:
 		float phi,
 		float phi1,
 		int flavor,
-    double selfDHvvcoupl[30][2],
+	    double selfDHvvcoupl[SIZE_HVV][2],
 		float& prob                   // output probability
 		);
 
-void computeD_CP(float mZZ, float mZ1, float mZ2, // input kinematics
-           float costhetastar,
-           float costheta1,
-           float costheta2,
-           float phi,
-           float phi1,
-           int flavor,
-           TVar::MatrixElement myME,
-           TVar::Process myType ,
-           float& prob);
+  void computeD_CP(float mZZ, float mZ1, float mZ2, // input kinematics
+		float costhetastar,
+		float costheta1,
+		float costheta2,
+		float phi,
+		float phi1,
+		int flavor,
+		TVar::MatrixElement myME,
+		TVar::Process myType,
+		float& prob
+		);
 
-void computeP_selfDspin2(float mZZ, float mZ1, float mZ2, // spin 2 arbitray coupling 
+  void computeP_selfDspin2(float mZZ, float mZ1, float mZ2, // spin 2 arbitray coupling 
         float costhetastar,
         float costheta1,
         float costheta2,
         float phi,
         float phi1,
         int flavor,
-        double selfDGggcoupl[5][2], double selfDGvvcoupl[10][2],
-        float& prob);
+        double selfDGggcoupl[SIZE_GGG][2],
+		double selfDGvvcoupl[SIZE_GVV][2],
+        float& prob
+		);
 
-void computeP_selfDspin1(float mZZ, float mZ1, float mZ2, // arbitrary spin 1 coupling 
+  void computeP_selfDspin1(float mZZ, float mZ1, float mZ2, // arbitrary spin 1 coupling 
         float costhetastar,
         float costheta1,
         float costheta2,
         float phi,
         float phi1,
         int flavor,
-        double selfDZvvcoupl[2][2],
-        float& prob);
+        double selfDZvvcoupl[SIZE_ZVV][2],
+        float& prob
+		);
 
   void computeP(float mZZ, float mZ1, float mZ2, // input kinematics
 		float costhetastar,
@@ -99,7 +105,7 @@ void computeP_selfDspin1(float mZZ, float mZ1, float mZ2, // arbitrary spin 1 co
 		float phi,
 		float phi1,
 		int flavor,
-		double couplingvals[2],
+		double couplingvals[SIZE_HVV_FREENORM],
 		float& prob                   // output probability
 		);
     
@@ -114,52 +120,69 @@ void computeP_selfDspin1(float mZZ, float mZ1, float mZ2, // arbitrary spin 1 co
 		TLorentzVector Z1_lept2, int Z1_lept2Id,  // 
 		TLorentzVector Z2_lept1, int Z2_lept1Id,
 		TLorentzVector Z2_lept2, int Z2_lept2Id,
-		double couplingvals[2],
+		double couplingvals[SIZE_HVV_FREENORM],
 		float& prob                             // output probability
 		);
   
   void computeProdP(TLorentzVector Jet1, int Jet1_Id,
-		    TLorentzVector Jet2, int Jet2_Id,
-		    TLorentzVector Decay1, int Decay1_Id,
-		    TLorentzVector Decay2, int Decay2_Id,
-		    float& prob);
+		TLorentzVector Jet2, int Jet2_Id,
+		TLorentzVector Decay1, int Decay1_Id,
+		TLorentzVector Decay2, int Decay2_Id,
+		double selfDHggcoupl[SIZE_HGG][2],
+		double selfDHvvcoupl[SIZE_HVV_VBF][2],
+		double selfDHwwcoupl[SIZE_HWW_VBF][2],
+		float& prob
+		);
+
+  void computeProdP(TLorentzVector Jet1, int Jet1_Id,
+		TLorentzVector Jet2, int Jet2_Id,
+		TLorentzVector Decay1, int Decay1_Id,
+		TLorentzVector Decay2, int Decay2_Id,
+		float& prob
+		);
 
   void computePM4l(float mZZ,
-		   TVar::LeptonFlavor flavor,
-		   TVar::SuperMelaSyst syst, 
-		   float& prob); //SuperMela
+		TVar::LeptonFlavor flavor,
+		TVar::SuperMelaSyst syst, 
+		float& prob
+		); //SuperMela
+
   void computePM4l(TLorentzVector Z1_lept1, int Z1_lept1Id,  // input 4-vectors
-		   TLorentzVector Z1_lept2, int Z1_lept2Id,  // 
-		   TLorentzVector Z2_lept1, int Z2_lept1Id,
-		   TLorentzVector Z2_lept2, int Z2_lept2Id,
-		   TVar::SuperMelaSyst syst, 
-		   float& prob); //SuperMela
+		TLorentzVector Z1_lept2, int Z1_lept2Id,  // 
+		TLorentzVector Z2_lept1, int Z2_lept1Id,
+		TLorentzVector Z2_lept2, int Z2_lept2Id,
+		TVar::SuperMelaSyst syst, 
+		float& prob
+		); //SuperMela
   
   
   // Ordering of Z1/Z2 according to internal convention
   void checkZorder(float& z1mass, float& z2mass, float& costhetastar, float& costheta1, float& costheta2, float& phi, float& phistar1);
 
+  // Access ZZMEs Calculate4Momentum
+  std::vector<TLorentzVector> calculate4Momentum(double Mx,double M1,double M2,double theta,double theta1,double theta2,double Phi1,double Phi);
 
   // Calculation weight to correct for lepton interference
   void computeWeight(float mZZ, float mZ1, float mZ2, 
-		     float costhetastar,
-		     float costheta1, 
-		     float costheta2,
-		     float phi,
-		     float phi1,
-		     // return variables:
-		     float& w
-		     );
+		float costhetastar,
+		float costheta1, 
+		float costheta2,
+		float phi,
+		float phi1,
+		// return variables:
+		float& w
+		);
+
   void computeWeight(float mZZ, float mZ1, float mZ2, 
-		     float costhetastar,
-		     float costheta1, 
-		     float costheta2,
-		     float phi,
-		     float phi1,
-		     double couplingvals[2],
-		     // return variables:
-		     float& w
-		     );
+		float costhetastar,
+		float costheta1, 
+		float costheta2,
+		float phi,
+		float phi1,
+		double couplingvals[SIZE_HVV_FREENORM],
+		// return variables:
+		float& w
+		);
 
   RooAbsPdf* pdf;
   AngularPdfFactory* spin0Model;
@@ -185,22 +208,23 @@ void computeP_selfDspin1(float mZZ, float mZ1, float mZ2, // arbitrary spin 1 co
   TGraph* vaScale_4mu;
   TGraph* vaScale_2e2mu;
   TGraph* DggZZ_scalefactor;
-	void setCTotalBkgGraphs(TFile* fcontainer, TGraph* tgC[]);
-	void constructDggr(float mzz, int flavor, float bkg_VAMCFM_noscale, float ggzz_VAMCFM_noscale, float ggHZZ_prob_pure_noscale, float ggHZZ_prob_int_noscale, float& myDggr);
+  void setCTotalBkgGraphs(TFile* fcontainer, TGraph* tgC[]);
+  void constructDggr(float mzz, int flavor, float bkg_VAMCFM_noscale, float ggzz_VAMCFM_noscale, float ggHZZ_prob_pure_noscale, float ggHZZ_prob_int_noscale, float& myDggr);
 	
-	TGraph* tgtotalbkg[3];
-	void computeD_gg(float mZZ, float mZ1, float mZ2, // input kinematics
-           float costhetastar,
-           float costheta1,
-           float costheta2,
-           float phi,
-           float phi1,
-           int flavor,
-           TVar::MatrixElement myME,
-           TVar::Process myType ,
-           float& prob);
+  TGraph* tgtotalbkg[3];
+  void computeD_gg(float mZZ, float mZ1, float mZ2, // input kinematics
+        float costhetastar,
+        float costheta1,
+        float costheta2,
+        float phi,
+        float phi1,
+        int flavor,
+        TVar::MatrixElement myME,
+        TVar::Process myType ,
+        float& prob
+		);
 
- private:
+private:
 
   // 
   // data memmbers 

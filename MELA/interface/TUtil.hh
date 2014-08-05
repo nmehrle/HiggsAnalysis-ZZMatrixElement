@@ -24,15 +24,16 @@
 
 using namespace std;
 TString DbnEventLepSelName(int i);
-void My_choose(TVar::Process process, TVar::Production production, int flavor);
-void SetEwkCoupligParameters();
+void My_choose(TVar::Process process, TVar::Production production, TVar::LeptonInterference leptonInterf, int flavor);
+void SetEwkCouplingParameters();
 void SetAlphaS(double Q, int mynloop, int mynflav, string mypartons);
-bool My_smalls(double s[][12], int npart);
-double SumMatrixElementPDF(TVar::Process procees, TVar::Production production,TVar::MatrixElement myME,mcfm_event_type* mcfm_event,double flavor_msq[][11],double* flux,double EBEAM, double coupling[2]);
+void SetMCFMHiggsDecayCouplings(bool useBSM, double Hvvcoupl[SIZE_HVV][2]);
+bool My_smalls(double s[][mxpart], int npart);
+double SumMatrixElementPDF(TVar::Process procees, TVar::Production production,TVar::MatrixElement myME,mcfm_event_type* mcfm_event,double flavor_msq[][11],double* flux,double EBEAM, double coupling[SIZE_HVV_FREENORM]);
 double JHUGenMatEl(TVar::Process process, TVar::Production production, mcfm_event_type* mcfm_event, double MReso, double GaReso, 
-		   double Hggcoupl[3][2], double Hvvcoupl[30][2], double Zqqcoupl[2][2], double Zvvcoupl[2][2],
-		   double Gqqcoupl[2][2], double Gggcoupl[5][2], double Gvvcoupl[10][2]);
-double HJJMatEl(TVar::Process process,TVar::Production production, const TLorentzVector p[5], double Hggcoupl[3][2], double Hvvcoupl[30][2], TVar::VerbosityLevel verb, double EBEAM);
+		   double Hggcoupl[SIZE_HGG][2], double Hvvcoupl[SIZE_HVV][2], double Zqqcoupl[SIZE_ZQQ][2], double Zvvcoupl[SIZE_ZVV][2],
+		   double Gqqcoupl[SIZE_GQQ][2], double Gggcoupl[SIZE_GGG][2], double Gvvcoupl[SIZE_GVV][2]);
+double HJJMatEl(TVar::Process process,TVar::Production production, const TLorentzVector p[5], double Hggcoupl[SIZE_HGG][2], double Hvvcoupl[SIZE_HVV_VBF][2], double Hwwcoupl[SIZE_HWW_VBF][2], TVar::VerbosityLevel verb, double EBEAM);
 double SumMEPDF(const TLorentzVector p0, const TLorentzVector p1, double flavor_msq[nmsq][nmsq],  TVar::VerbosityLevel verbosity, double EBEAM);
 
 #endif

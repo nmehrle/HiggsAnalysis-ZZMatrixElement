@@ -10,7 +10,10 @@ newZZMatrixElement::newZZMatrixElement(const char* pathtoHiggsCSandWidth,
   hzz4l_event(),
   EBEAM(ebeam)
 				       {
+// Set default parameters explicitly
   mHiggs = 125.6;
+  wHiggs = -1;
+  myLeptonInterference = TVar::DefaultLeptonInterf;
 
   //std::cout << "TEST" << std::endl;
 }
@@ -77,27 +80,33 @@ void newZZMatrixElement::set_mHiggs(float myPoleMass){
 void newZZMatrixElement::set_wHiggs(float myPoleWidth){
 	wHiggs = myPoleWidth;
 }
+void newZZMatrixElement::set_LeptonInterference(TVar::LeptonInterference myLepInterf){
+	myLeptonInterference = myLepInterf;
+}
+void newZZMatrixElement::reset_MCFM_EWKParameters(double ext_Gf, double ext_aemmz, double ext_mW, double ext_mZ){
+	Xcal2.ResetMCFM_EWKParameters(ext_Gf, ext_aemmz, ext_mW, ext_mZ);
+}
+
 
 void newZZMatrixElement::computeXS(float mZZ, float mZ1, float mZ2,
-				   float costhetastar,
-				   float costheta1,
-				   float costheta2,
-				   float phi,
-				   float phistar1,
-				   int flavor,
-				   TVar::Process myModel,
-				   TVar::MatrixElement myME,
-				   TVar::Production myProduction,
-				   double couplingvals[2],
-					 double selfDHvvcoupl[30][2],
-					 double selfDZqqcoupl[2][2], 
-					 double selfDZvvcoupl[2][2], 
-					 double selfDGqqcoupl[2][2], 
-					 double selfDGggcoupl[5][2],
-					 double selfDGvvcoupl[10][2],
-				   float &mevalue
-//					 float wHiggs
-				   ){
+				 float costhetastar,
+				 float costheta1,
+				 float costheta2,
+				 float phi,
+				 float phistar1,
+				 int flavor,
+				 TVar::Process myModel,
+				 TVar::MatrixElement myME,
+				 TVar::Production myProduction,
+				 double couplingvals[SIZE_HVV_FREENORM],
+				 double selfDHvvcoupl[SIZE_HVV][2],
+				 double selfDZqqcoupl[SIZE_ZQQ][2],
+				 double selfDZvvcoupl[SIZE_ZVV][2],
+				 double selfDGqqcoupl[SIZE_GQQ][2],
+				 double selfDGggcoupl[SIZE_GGG][2],
+				 double selfDGvvcoupl[SIZE_GVV][2],
+				 float &mevalue
+			){
   std::vector<TLorentzVector> p;
   p=Calculate4Momentum(mZZ,mZ1,mZ2,acos(costhetastar),acos(costheta1),acos(costheta2),phistar1,phi);
   TLorentzVector Z1_lept1 = p[0];
@@ -167,13 +176,18 @@ void newZZMatrixElement::computeXS(float mZZ, float mZ1, float mZ2,
   Xcal2.SetMatrixElement(myME);
   Xcal2.SetProduction(myProduction);
   Xcal2.SetProcess(myModel);
+  Xcal2.SetLeptonInterf(myLeptonInterference);
   mevalue = Xcal2.XsecCalc(myModel,myProduction,hzz4l_event,verb,couplingvals,selfDHvvcoupl,selfDZqqcoupl,selfDZvvcoupl,selfDGqqcoupl,selfDGggcoupl,selfDGvvcoupl);
   if (wHiggs>=0){
 //	  cout << "Protection commencing" << endl;
 	  set_wHiggs(-1); // Protection against forgetfulness; custom width has to be set per-event
 	  Xcal2.SetHiggsMass(mHiggs,-1);
 //	  cout << "Protection successful" << endl;
-  };
+  }
+  if( myLeptonInterference != TVar::DefaultLeptonInterf ){
+	  set_LeptonInterference(TVar::DefaultLeptonInterf); // Return back to default lepton interference settings after each calculation
+	  Xcal2.SetLeptonInterf(TVar::DefaultLeptonInterf);
+  }
   return;
 }
 
@@ -183,13 +197,21 @@ void newZZMatrixElement::computeProdXS(TLorentzVector jet1,
 				       TLorentzVector higgs,
 				       TVar::Process myModel,
 				       TVar::Production myProduction,
+					   double selfDHggcoupl[SIZE_HGG][2],
+					   double selfDHvvcoupl[SIZE_HVV_VBF][2],
+					   double selfDHwwcoupl[SIZE_HWW_VBF][2],
 				       float &mevalue){
 
   TLorentzVector p4[3];
   p4[0]=jet1;
   p4[1]=jet2;
   p4[2]=higgs;
-  mevalue  = Xcal2.XsecCalcXJJ(myModel,myProduction, p4,verb);
+  mevalue  = Xcal2.XsecCalcXJJ(myModel,myProduction, p4,
+	  verb,
+	  selfDHggcoupl,
+	  selfDHvvcoupl,
+	  selfDHwwcoupl
+	  );
   
   return;
 

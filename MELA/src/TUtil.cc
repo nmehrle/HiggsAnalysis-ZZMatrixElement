@@ -7,14 +7,21 @@
 
 using namespace std;
 
-void SetEwkCoupligParameters(){
-  
+void SetEwkCouplingParameters(){
+
   ewinput_.Gf_inp=1.16639E-05;
   ewinput_.aemmz_inp=7.81751E-03;
   ewinput_.wmass_inp=80.385;
   ewinput_.zmass_inp=91.1876;
-  ewinput_.xw_inp=0.23116864;
-
+  ewinput_.xw_inp=0.23116864; // Not used in the compiled MCFM ewcheme
+/*
+// SETTINGS TO MATCH JHUGen MEs:
+  ewinput_.Gf_inp=1.16639E-05;
+  ewinput_.aemmz_inp=7.81751E-03;
+  ewinput_.wmass_inp=79.9549392; // Slightly differnt mW to set xW to match JHUGen
+  ewinput_.zmass_inp=91.1876;
+  ewinput_.xw_inp=0.23119;
+*/
 }
 
 void SetAlphaS (double Q, int mynloop, int mynflav, string mypartons){
@@ -64,11 +71,190 @@ void SetAlphaS (double Q, int mynloop, int mynflav, string mypartons){
 }
 
 
-void My_choose(TVar::Process process, TVar::Production production, int flavor){
+void SetMCFMHiggsDecayCouplings(bool useBSM, double Hvvcoupl[SIZE_HVV][2]){
+	if (!useBSM){
+		spinzerohiggs_anomcoupl_.AllowAnomalousCouplings = false;
+		spinzerohiggs_anomcoupl_.ghz1[0] =  1; 
+		spinzerohiggs_anomcoupl_.ghz2[0] =  0; 
+		spinzerohiggs_anomcoupl_.ghz3[0] =  0;
+		spinzerohiggs_anomcoupl_.ghz4[0] =  0;
+		/*
+		spinzerohiggs_anomcoupl_.ghzgs2[0] = 0; 
+		spinzerohiggs_anomcoupl_.ghzgs3[0] = 0;  
+		spinzerohiggs_anomcoupl_.ghzgs4[0] = 0;  
+		spinzerohiggs_anomcoupl_.ghgsgs2[0] = 0;
+		spinzerohiggs_anomcoupl_.ghgsgs3[0] = 0; 
+		spinzerohiggs_anomcoupl_.ghgsgs4[0] = 0;       
+		*/
+		spinzerohiggs_anomcoupl_.ghz1_prime[0] = 0; 
+		spinzerohiggs_anomcoupl_.ghz1_prime2[0] = 0; 
+		spinzerohiggs_anomcoupl_.ghz1_prime3[0] = 0;
+		spinzerohiggs_anomcoupl_.ghz1_prime4[0] = 0;
+		spinzerohiggs_anomcoupl_.ghz1_prime5[0] = 0;
+		spinzerohiggs_anomcoupl_.ghz1_prime6[0] = 0;
+		spinzerohiggs_anomcoupl_.ghz1_prime7[0] = 0;
+		spinzerohiggs_anomcoupl_.ghz2_prime[0] = 0; 
+		spinzerohiggs_anomcoupl_.ghz2_prime2[0] = 0;
+		spinzerohiggs_anomcoupl_.ghz2_prime3[0] = 0;
+		spinzerohiggs_anomcoupl_.ghz2_prime4[0] = 0;
+		spinzerohiggs_anomcoupl_.ghz2_prime5[0] = 0;
+		spinzerohiggs_anomcoupl_.ghz2_prime6[0] = 0;
+		spinzerohiggs_anomcoupl_.ghz2_prime7[0] = 0;
+		spinzerohiggs_anomcoupl_.ghz3_prime[0] = 0;
+		spinzerohiggs_anomcoupl_.ghz3_prime2[0] = 0;
+		spinzerohiggs_anomcoupl_.ghz3_prime3[0] = 0;
+		spinzerohiggs_anomcoupl_.ghz3_prime4[0] = 0;
+		spinzerohiggs_anomcoupl_.ghz3_prime5[0] = 0;
+		spinzerohiggs_anomcoupl_.ghz3_prime6[0] = 0;
+		spinzerohiggs_anomcoupl_.ghz3_prime7[0] = 0;
+		spinzerohiggs_anomcoupl_.ghz4_prime[0] = 0;
+		spinzerohiggs_anomcoupl_.ghz4_prime2[0] = 0;
+		spinzerohiggs_anomcoupl_.ghz4_prime3[0] = 0;
+		spinzerohiggs_anomcoupl_.ghz4_prime4[0] = 0;
+		spinzerohiggs_anomcoupl_.ghz4_prime5[0] = 0;
+		spinzerohiggs_anomcoupl_.ghz4_prime6[0] = 0;
+		spinzerohiggs_anomcoupl_.ghz4_prime7[0] = 0;
+//		spinzerohiggs_anomcoupl_.ghzgs1_prime2[0] = 0;
+
+		spinzerohiggs_anomcoupl_.ghz1[1] =  0; 
+		spinzerohiggs_anomcoupl_.ghz2[1] =  0; 
+		spinzerohiggs_anomcoupl_.ghz3[1] =  0;
+		spinzerohiggs_anomcoupl_.ghz4[1] =  0;
+		/*
+		spinzerohiggs_anomcoupl_.ghzgs2[1] = 0; 
+		spinzerohiggs_anomcoupl_.ghzgs3[1] = 0;  
+		spinzerohiggs_anomcoupl_.ghzgs4[1] = 0;  
+		spinzerohiggs_anomcoupl_.ghgsgs2[1] = 0;
+		spinzerohiggs_anomcoupl_.ghgsgs3[1] = 0; 
+		spinzerohiggs_anomcoupl_.ghgsgs4[1] = 0;       
+		*/
+		spinzerohiggs_anomcoupl_.ghz1_prime[1] = 0; 
+		spinzerohiggs_anomcoupl_.ghz1_prime2[1] = 0; 
+		spinzerohiggs_anomcoupl_.ghz1_prime3[1] = 0;
+		spinzerohiggs_anomcoupl_.ghz1_prime4[1] = 0;
+		spinzerohiggs_anomcoupl_.ghz1_prime5[1] = 0;
+		spinzerohiggs_anomcoupl_.ghz1_prime6[1] = 0;
+		spinzerohiggs_anomcoupl_.ghz1_prime7[1] = 0;
+		spinzerohiggs_anomcoupl_.ghz2_prime[1] = 0; 
+		spinzerohiggs_anomcoupl_.ghz2_prime2[1] = 0;
+		spinzerohiggs_anomcoupl_.ghz2_prime3[1] = 0;
+		spinzerohiggs_anomcoupl_.ghz2_prime4[1] = 0;
+		spinzerohiggs_anomcoupl_.ghz2_prime5[1] = 0;
+		spinzerohiggs_anomcoupl_.ghz2_prime6[1] = 0;
+		spinzerohiggs_anomcoupl_.ghz2_prime7[1] = 0;
+		spinzerohiggs_anomcoupl_.ghz3_prime[1] = 0;
+		spinzerohiggs_anomcoupl_.ghz3_prime2[1] = 0;
+		spinzerohiggs_anomcoupl_.ghz3_prime3[1] = 0;
+		spinzerohiggs_anomcoupl_.ghz3_prime4[1] = 0;
+		spinzerohiggs_anomcoupl_.ghz3_prime5[1] = 0;
+		spinzerohiggs_anomcoupl_.ghz3_prime6[1] = 0;
+		spinzerohiggs_anomcoupl_.ghz3_prime7[1] = 0;
+		spinzerohiggs_anomcoupl_.ghz4_prime[1] = 0;
+		spinzerohiggs_anomcoupl_.ghz4_prime2[1] = 0;
+		spinzerohiggs_anomcoupl_.ghz4_prime3[1] = 0;
+		spinzerohiggs_anomcoupl_.ghz4_prime4[1] = 0;
+		spinzerohiggs_anomcoupl_.ghz4_prime5[1] = 0;
+		spinzerohiggs_anomcoupl_.ghz4_prime6[1] = 0;
+		spinzerohiggs_anomcoupl_.ghz4_prime7[1] = 0;
+//		spinzerohiggs_anomcoupl_.ghzgs1_prime2[1] = 0;
+//
+	}
+	else{
+		spinzerohiggs_anomcoupl_.AllowAnomalousCouplings=true;
+		spinzerohiggs_anomcoupl_.ghz1[0] =  Hvvcoupl[0][0]; 
+		spinzerohiggs_anomcoupl_.ghz2[0] =  Hvvcoupl[1][0];
+		spinzerohiggs_anomcoupl_.ghz3[0] =  Hvvcoupl[2][0];
+		spinzerohiggs_anomcoupl_.ghz4[0] =  Hvvcoupl[3][0];
+		/*
+		spinzerohiggs_anomcoupl_.ghzgs2[0] = Hvvcoupl[4][0]; 
+		spinzerohiggs_anomcoupl_.ghzgs3[0] = Hvvcoupl[5][0]; 
+		spinzerohiggs_anomcoupl_.ghzgs4[0] = Hvvcoupl[6][0]; 
+		spinzerohiggs_anomcoupl_.ghgsgs2[0] = Hvvcoupl[7][0];
+		spinzerohiggs_anomcoupl_.ghgsgs3[0] = Hvvcoupl[8][0];
+		spinzerohiggs_anomcoupl_.ghgsgs4[0] = Hvvcoupl[9][0];      
+		*/
+		spinzerohiggs_anomcoupl_.ghz1_prime[0] = Hvvcoupl[10][0];
+		spinzerohiggs_anomcoupl_.ghz1_prime2[0] = Hvvcoupl[11][0];
+		spinzerohiggs_anomcoupl_.ghz1_prime3[0] = Hvvcoupl[12][0];
+		spinzerohiggs_anomcoupl_.ghz1_prime4[0] = Hvvcoupl[13][0];
+		spinzerohiggs_anomcoupl_.ghz1_prime5[0] = Hvvcoupl[14][0];
+		spinzerohiggs_anomcoupl_.ghz2_prime[0] = Hvvcoupl[15][0];
+		spinzerohiggs_anomcoupl_.ghz2_prime2[0] = Hvvcoupl[16][0];
+		spinzerohiggs_anomcoupl_.ghz2_prime3[0] = Hvvcoupl[17][0];
+		spinzerohiggs_anomcoupl_.ghz2_prime4[0] = Hvvcoupl[18][0];
+		spinzerohiggs_anomcoupl_.ghz2_prime5[0] = Hvvcoupl[19][0];
+		spinzerohiggs_anomcoupl_.ghz3_prime[0] = Hvvcoupl[20][0];
+		spinzerohiggs_anomcoupl_.ghz3_prime2[0] = Hvvcoupl[21][0];
+		spinzerohiggs_anomcoupl_.ghz3_prime3[0] = Hvvcoupl[22][0];
+		spinzerohiggs_anomcoupl_.ghz3_prime4[0] = Hvvcoupl[23][0];
+		spinzerohiggs_anomcoupl_.ghz3_prime5[0] = Hvvcoupl[24][0];
+		spinzerohiggs_anomcoupl_.ghz4_prime[0] = Hvvcoupl[25][0];
+		spinzerohiggs_anomcoupl_.ghz4_prime2[0] = Hvvcoupl[26][0];
+		spinzerohiggs_anomcoupl_.ghz4_prime3[0] = Hvvcoupl[27][0];
+		spinzerohiggs_anomcoupl_.ghz4_prime4[0] = Hvvcoupl[28][0];
+		spinzerohiggs_anomcoupl_.ghz4_prime5[0] = Hvvcoupl[29][0];
+//		spinzerohiggs_anomcoupl_.ghzgs1_prime2[0] = Hvvcoupl[30][0];
+		spinzerohiggs_anomcoupl_.ghz1_prime6[0] = Hvvcoupl[31][0];
+		spinzerohiggs_anomcoupl_.ghz1_prime7[0] = Hvvcoupl[32][0];
+		spinzerohiggs_anomcoupl_.ghz2_prime6[0] = Hvvcoupl[33][0];
+		spinzerohiggs_anomcoupl_.ghz2_prime7[0] = Hvvcoupl[34][0];
+		spinzerohiggs_anomcoupl_.ghz3_prime6[0] = Hvvcoupl[35][0];
+		spinzerohiggs_anomcoupl_.ghz3_prime7[0] = Hvvcoupl[36][0];
+		spinzerohiggs_anomcoupl_.ghz4_prime6[0] = Hvvcoupl[37][0];
+		spinzerohiggs_anomcoupl_.ghz4_prime7[0] = Hvvcoupl[38][0];
+
+		spinzerohiggs_anomcoupl_.ghz1[1] =  Hvvcoupl[0][1];
+		spinzerohiggs_anomcoupl_.ghz2[1] =  Hvvcoupl[1][1];
+		spinzerohiggs_anomcoupl_.ghz3[1] =  Hvvcoupl[2][1];
+		spinzerohiggs_anomcoupl_.ghz4[1] =  Hvvcoupl[3][1];
+		/*
+		spinzerohiggs_anomcoupl_.ghzgs2[1] = Hvvcoupl[4][1]; 
+		spinzerohiggs_anomcoupl_.ghzgs3[1] = Hvvcoupl[5][1]; 
+		spinzerohiggs_anomcoupl_.ghzgs4[1] = Hvvcoupl[6][1];  
+		spinzerohiggs_anomcoupl_.ghgsgs2[1] = Hvvcoupl[7][1];
+		spinzerohiggs_anomcoupl_.ghgsgs3[1] = Hvvcoupl[8][1];
+		spinzerohiggs_anomcoupl_.ghgsgs4[1] = Hvvcoupl[9][1];      
+		*/
+		spinzerohiggs_anomcoupl_.ghz1_prime[1] = Hvvcoupl[10][1];
+		spinzerohiggs_anomcoupl_.ghz1_prime2[1] = Hvvcoupl[11][1];
+		spinzerohiggs_anomcoupl_.ghz1_prime3[1] = Hvvcoupl[12][1];
+		spinzerohiggs_anomcoupl_.ghz1_prime4[1] = Hvvcoupl[13][1];
+		spinzerohiggs_anomcoupl_.ghz1_prime5[1] = Hvvcoupl[14][1];
+		spinzerohiggs_anomcoupl_.ghz2_prime[1] = Hvvcoupl[15][1];
+		spinzerohiggs_anomcoupl_.ghz2_prime2[1] = Hvvcoupl[16][1];
+		spinzerohiggs_anomcoupl_.ghz2_prime3[1] = Hvvcoupl[17][1];
+		spinzerohiggs_anomcoupl_.ghz2_prime4[1] = Hvvcoupl[18][1];
+		spinzerohiggs_anomcoupl_.ghz2_prime5[1] = Hvvcoupl[19][1];
+		spinzerohiggs_anomcoupl_.ghz3_prime[1] = Hvvcoupl[20][1];
+		spinzerohiggs_anomcoupl_.ghz3_prime2[1] = Hvvcoupl[21][1];
+		spinzerohiggs_anomcoupl_.ghz3_prime3[1] = Hvvcoupl[22][1];
+		spinzerohiggs_anomcoupl_.ghz3_prime4[1] = Hvvcoupl[23][1];
+		spinzerohiggs_anomcoupl_.ghz3_prime5[1] = Hvvcoupl[24][1];
+		spinzerohiggs_anomcoupl_.ghz4_prime[1] = Hvvcoupl[25][1];
+		spinzerohiggs_anomcoupl_.ghz4_prime2[1] = Hvvcoupl[26][1];
+		spinzerohiggs_anomcoupl_.ghz4_prime3[1] = Hvvcoupl[27][1];
+		spinzerohiggs_anomcoupl_.ghz4_prime4[1] = Hvvcoupl[28][1];
+		spinzerohiggs_anomcoupl_.ghz4_prime5[1] = Hvvcoupl[29][1];
+//		spinzerohiggs_anomcoupl_.ghzgs1_prime2[1] = Hvvcoupl[30][1];
+		spinzerohiggs_anomcoupl_.ghz1_prime6[1] = Hvvcoupl[31][1];
+		spinzerohiggs_anomcoupl_.ghz1_prime7[1] = Hvvcoupl[32][1];
+		spinzerohiggs_anomcoupl_.ghz2_prime6[1] = Hvvcoupl[33][1];
+		spinzerohiggs_anomcoupl_.ghz2_prime7[1] = Hvvcoupl[34][1];
+		spinzerohiggs_anomcoupl_.ghz3_prime6[1] = Hvvcoupl[35][1];
+		spinzerohiggs_anomcoupl_.ghz3_prime7[1] = Hvvcoupl[36][1];
+		spinzerohiggs_anomcoupl_.ghz4_prime6[1] = Hvvcoupl[37][1];
+		spinzerohiggs_anomcoupl_.ghz4_prime7[1] = Hvvcoupl[38][1];
+//
+	}
+}
+
+
+
+void My_choose(TVar::Process process, TVar::Production production, TVar::LeptonInterference leptonInterf, int flavor){
+//void My_choose(TVar::Process process, TVar::Production production, int flavor){
  
 //ZZ_4l
-//if(process==TVar::bkgZZ && (production == TVar::ZZGG || ( (production == TVar::ZZQQB || production == TVar::ZZINDEPENDENT) && flavor==3) )){ 
-if(process==TVar::bkgZZ && (production == TVar::ZZQQB || production == TVar::ZZINDEPENDENT) ){ 
+if(process==TVar::bkgZZ && (production == TVar::ZZQQB || production == TVar::ZZQQB_STU || production == TVar::ZZQQB_S || production == TVar::ZZQQB_TU || production == TVar::ZZINDEPENDENT) ){ 
     //81 '  f(p1)+f(p2) --> Z^0(-->mu^-(p3)+mu^+(p4)) + Z^0(-->e^-(p5)+e^+(p6))'
     //86 '  f(p1)+f(p2) --> Z^0(-->e^-(p5)+e^+(p6))+Z^0(-->mu^-(p3)+mu^+(p4)) (NO GAMMA*)'
     //90 '  f(p1)+f(p2) --> Z^0(-->e^-(p3)+e^+(p4)) + Z^0(-->e^-(p5)+e^+(p6))' 'L'
@@ -82,15 +268,16 @@ if(process==TVar::bkgZZ && (production == TVar::ZZQQB || production == TVar::ZZI
     vsymfact_.vsymfact=1.0;                                                                                                               
     interference_.interference=false;
 
-	if( flavor == 1 || flavor == 0 ){
+	if( (flavor == 1 || flavor == 0) && (leptonInterf==TVar::DefaultLeptonInterf || leptonInterf==TVar::InterfOn) ){
+//	if( (flavor == 1 || flavor == 0) ){
     //90 '  f(p1)+f(p2) --> Z^0(-->e^-(p3)+e^+(p4)) + Z^0(-->e^-(p5)+e^+(p6))' 'L'
-		vsymfact_.vsymfact=0.25;
+		vsymfact_.vsymfact=0.125; // MELA FACTOR (0.25 in MCFM 6.8)  --->   Result of just removing if(bw34_56) statements in FORTRAN code and not doing anything else
+//		vsymfact_.vsymfact=0.25; // MELA FACTOR (Same 0.25 in MCFM 6.7)
 		interference_.interference=true;
 	}
 
     nwz_.nwz=0;
     bveg1_mcfm_.ndim=10;
-//    masses_mcfm_.mb=0;
     breit_.n2=1;
     breit_.n3=1;
 
@@ -99,11 +286,11 @@ if(process==TVar::bkgZZ && (production == TVar::ZZQQB || production == TVar::ZZI
     breit_.mass3=masses_mcfm_.zmass;
     breit_.width3=masses_mcfm_.zwidth;
 
-    zcouple_.q1=-1.0;
+    zcouple_.q1=-1.0; // Pretty important for MCFM 6.8+, does not matter for earlier versions
     zcouple_.l1=zcouple_.le;
     zcouple_.r1=zcouple_.re;
 
-    zcouple_.q2=-1.0;
+    zcouple_.q2=-1.0; // Pretty important for MCFM 6.8+, does not matter for earlier versions
     zcouple_.l2=zcouple_.le;
     zcouple_.r2=zcouple_.re;
 
@@ -112,21 +299,28 @@ if(process==TVar::bkgZZ && (production == TVar::ZZQQB || production == TVar::ZZI
 
     // 114 '  f(p1)+f(p2) --> H(--> Z^0(mu^-(p3)+mu^+(p4)) + Z^0(e^-(p5)+e^+(p6))' 'N'
 /*
+nprocs:
 c--- 128 '  f(p1)+f(p2) --> H(--> Z^0(e^-(p3)+e^+(p4)) + Z^0(mu^-(p5)+mu^+(p6)) [top, bottom loops, exact]' 'L'
 c--- 129 '  f(p1)+f(p2) --> H(--> Z^0(e^-(p3)+e^+(p4)) + Z^0(mu^-(p5)+mu^+(p6)) [only H, gg->ZZ intf.]' 'L' -> NOT IMPLEMENTED
 c--- 130 '  f(p1)+f(p2) --> H(--> Z^0(e^-(p3)+e^+(p4)) + Z^0(mu^-(p5)+mu^+(p6)) [H squared and H, gg->ZZ intf.]' 'L'
 c--- 131 '  f(p1)+f(p2) --> Z^0(e^-(p3)+e^+(p4)) + Z^0(mu^-(p5)+mu^+(p6) [gg only, (H + gg->ZZ) squared]' 'L'
 c--- 132 '  f(p1)+f(p2) --> Z^0(e^-(p3)+e^+(p4)) + Z^0(mu^-(p5)+mu^+(p6) [(gg->ZZ) squared]' 'L'
 */
-// nproc_.nproc=any of the above;
      
      npart_.npart=4;
      nqcdjets_.nqcdjets=0;
 
      bveg1_mcfm_.ndim=10;
-//     masses_mcfm_.mb=4.75;
 
-     breit_.n2=1;
+     vsymfact_.vsymfact=1.0;                                                                                                               
+     interference_.interference=false;
+
+	 if( (flavor == 1 || flavor == 0) && (leptonInterf==TVar::InterfOn) ){ // Notice, default lepton interf. is off for this calculation
+	 	 vsymfact_.vsymfact=0.5;
+		 interference_.interference=true;
+ 	 }
+
+	 breit_.n2=1;
      breit_.n3=1;
 
      breit_.mass2 =masses_mcfm_.zmass;
@@ -148,7 +342,7 @@ c--- 132 '  f(p1)+f(p2) --> Z^0(e^-(p3)+e^+(p4)) + Z^0(mu^-(p5)+mu^+(p6) [(gg->Z
  } 
 }
 
-bool My_masscuts(double s[][12],TVar::Process process){
+bool My_masscuts(double s[][mxpart],TVar::Process process){
 
  double minZmassSqr=10*10;
 
@@ -161,7 +355,7 @@ bool My_masscuts(double s[][12],TVar::Process process){
 }
 
 
-bool My_smalls(double s[][12],int npart){
+bool My_smalls(double s[][mxpart],int npart){
 
 // Reject event if any s(i,j) is too small
 // cutoff is defined in technical.Dat
@@ -207,13 +401,15 @@ bool My_smalls(double s[][12],int npart){
 // 2. PartonEnergy Fraction minimum<x0,x1<1
 // 3. number of final state particle is defined
 //
-double SumMatrixElementPDF(TVar::Process process, TVar::Production production, TVar::MatrixElement myME, mcfm_event_type* mcfm_event,double flavor_msq[nmsq][nmsq],double* flux, double EBEAM, double coupling[2]){
+double SumMatrixElementPDF(TVar::Process process, TVar::Production production, TVar::MatrixElement myME, mcfm_event_type* mcfm_event,double flavor_msq[nmsq][nmsq],double* flux, double EBEAM, double coupling[SIZE_HVV_FREENORM]){
 
   int NPart=npart_.npart+2;
   double p4[4][mxpart];
+  double s[mxpart][mxpart] = { { 0 } };
   double fx1[nmsq];
   double fx2[nmsq];
   double msq[nmsq][nmsq];
+  int channeltoggle=0;
   
   
   //Parton Density Function is always evalualted at pT=0 frame
@@ -255,7 +451,6 @@ double SumMatrixElementPDF(TVar::Process process, TVar::Production production, T
 	invariantP[2] += p4[0][ipar];
 	invariantP[3] += p4[1][ipar];
 	invariantP[4] += p4[2][ipar];
-
   }
 
   invariantP[0] = pow(invariantP[1],2.0);
@@ -269,7 +464,6 @@ double SumMatrixElementPDF(TVar::Process process, TVar::Production production, T
   SetAlphaS( invariantP[0]*0.5 , 1 , 5 , "cteq6_l"); // Set AlphaS(|Q|/2, mynloop, mynflav, mypartonPDF) for MCFM ME-related calculations
 
   //calculate invariant masses between partons/final state particles
-  double s[12][12];
   for(int jdx=0;jdx< NPart ;jdx++){
     s[jdx][jdx]=0;
     for(int kdx=jdx+1;kdx<NPart;kdx++){
@@ -290,8 +484,26 @@ double SumMatrixElementPDF(TVar::Process process, TVar::Production production, T
   //Always pass address through fortran function
   fdist_ (&density_.ih1, &xx[0], &scale_.scale, fx1); 
   fdist_ (&density_.ih2, &xx[1], &scale_.scale, fx2); 
-  
-  if( (production == TVar::ZZINDEPENDENT ||production == TVar::ZZQQB ) && process == TVar::bkgZZ)      qqb_zz_(p4[0],msq[0]);
+/*
+  if (process == TVar::bkgZZ && (production == TVar::ZZQQB_STU || production == TVar::ZZQQB_S || production == TVar::ZZQQB_TU)){
+	  if (production == TVar::ZZQQB_STU) cout << "STU" << endl;
+	  if (production == TVar::ZZQQB_S) cout << "S" << endl;
+	  if (production == TVar::ZZQQB_TU) cout << "TU" << endl;
+  };
+*/
+  if( (production == TVar::ZZINDEPENDENT || production == TVar::ZZQQB) && process == TVar::bkgZZ)      qqb_zz_(p4[0],msq[0]);
+  if( production == TVar::ZZQQB_STU && process == TVar::bkgZZ){
+	  channeltoggle=0;
+	  qqb_zz_stu_(p4[0], msq[0], &channeltoggle);
+  };
+  if( production == TVar::ZZQQB_S && process == TVar::bkgZZ){
+	  channeltoggle=1;
+	  qqb_zz_stu_(p4[0], msq[0], &channeltoggle);
+  };
+  if( production == TVar::ZZQQB_TU && process == TVar::bkgZZ){
+	  channeltoggle=2;
+	  qqb_zz_stu_(p4[0], msq[0], &channeltoggle);
+  };
   //if( process==TVar::HZZ_4l)     qqb_hzz_(p4[0],msq[0]);
   // the subroutine for the calculations including the interfenrence             
   // ME =  sig + inter (sign, bkg)              
@@ -326,14 +538,21 @@ double SumMatrixElementPDF(TVar::Process process, TVar::Production production, T
   // C++ convention     0     1   2    3    4   5 6 7 8 9 10
   //
   msqjk=msq[5][5];
-  if( process==TVar::bkgZZ && (production == TVar::ZZQQB || production ==TVar::ZZINDEPENDENT)) msqjk=msq[3][7]+msq[7][3];
-  // special for the GGZZ 
+  if( process==TVar::bkgZZ && (production == TVar::ZZQQB || production == TVar::ZZQQB_STU || production == TVar::ZZQQB_S || production == TVar::ZZQQB_TU || production ==TVar::ZZINDEPENDENT)) msqjk=msq[3][7]+msq[7][3];
+/*
+  if (process == TVar::bkgZZ && (production == TVar::ZZQQB_STU || production == TVar::ZZQQB_S || production == TVar::ZZQQB_TU)){
+	  for (int ix = 0; ix < 10; ix++){
+		  for (int iy = 0; iy < 10; iy++) cout << msq[ix][iy] << '\t';
+		  cout << endl;
+	  }
+  }
+*/  // special for the GGZZ 
   if( process==TVar::bkgZZ && production == TVar::ZZGG ) msqjk=msqgg;      
   
   (*flux)=fbGeV2/(8*xx[0]*xx[1]*EBEAM*EBEAM);
 
   if(msqjk != msqjk || flux!=flux ){
-    cout << "SumMatrixPDF: "<< TVar::ProcessName(process) << " msqjk="  << msqjk << " flux="<< flux <<endl;
+    cout << "SumMatrixPDF: "<< TVar::ProcessName(process) << " msqjk="  << msqjk << " flux="<< *flux <<endl;
     msqjk=0;
     flux=0;
   }
@@ -347,8 +566,8 @@ double SumMatrixElementPDF(TVar::Process process, TVar::Production production, T
 // Test code from Markus to calculate the HZZ cross-section
 // 
 double JHUGenMatEl(TVar::Process process, TVar::Production production, mcfm_event_type* mcfm_event, double MReso, double GaReso, 
-		   double Hggcoupl[3][2], double Hvvcoupl[30][2], double Zqqcoupl[2][2], double Zvvcoupl[2][2],
-		   double Gqqcoupl[2][2], double Gggcoupl[5][2], double Gvvcoupl[10][2])
+		   double Hggcoupl[SIZE_HGG][2], double Hvvcoupl[SIZE_HVV][2], double Zqqcoupl[SIZE_ZQQ][2], double Zvvcoupl[SIZE_ZVV][2],
+		   double Gqqcoupl[SIZE_GQQ][2], double Gggcoupl[SIZE_GGG][2], double Gvvcoupl[SIZE_GVV][2])
 {
   // input unit = GeV/100 such that 125GeV is 1.25 in the code
   // this needs to be applied for all the p4
@@ -405,7 +624,18 @@ double JHUGenMatEl(TVar::Process process, TVar::Production production, mcfm_even
   }
 
   //if ( process == TVar::HZZ_4l || process == TVar::PSHZZ_4l || process == TVar::HDHZZ_4l || process == TVar::HZZ_4l_MIXCP   || process == TVar::CPMixHZZ_4l || process == TVar::PSHZZ_g4star || process == TVar::HDHZZ_4l_g2star || process == TVar::HDMixHZZ_4l_pi_2|| process== TVar::HDMixHZZ_4l || process == TVar::CPMixHZZ_4l_pi_2 || process == TVar::SelfDefine || process == TVar::H_g1prime2) {
-  if ( process == TVar::HSMHiggs || process == TVar::H0minus || process == TVar::H0hplus || process == TVar::SelfDefine_spin0 || process == TVar::H0_g1prime2 || process== TVar::H0_Zgs || process ==TVar::H0_gsgs || process ==TVar::H0_Zgs_PS || process ==TVar::H0_gsgs_PS) {
+  if ( 
+	  process == TVar::HSMHiggs
+	  || process == TVar::H0minus
+	  || process == TVar::H0hplus
+	  || process == TVar::SelfDefine_spin0
+	  || process == TVar::H0_g1prime2
+	  || process== TVar::H0_Zgs
+	  || process ==TVar::H0_gsgs
+	  || process ==TVar::H0_Zgs_PS
+	  || process ==TVar::H0_gsgs_PS
+	  || process ==TVar::H0_Zgsg1prime2
+	  ) {
     __modhiggs_MOD_evalamp_gg_h_vv(p4, &MReso,  &GaReso, Hggcoupl, Hvvcoupl, MYIDUP, &MatElSq);
 
   }
@@ -475,7 +705,7 @@ double JHUGenMatEl(TVar::Process process, TVar::Production production, mcfm_even
 }
 
 
-double HJJMatEl(TVar::Process process, TVar::Production production, const TLorentzVector p[5], double Hggcoupl[3][2], double Hvvcoupl[30][2], TVar::VerbosityLevel verbosity, double EBEAM)
+double HJJMatEl(TVar::Process process, TVar::Production production, const TLorentzVector p[5], double Hggcoupl[SIZE_HGG][2], double Hvvcoupl[SIZE_HVV_VBF][2], double Hwwcoupl[SIZE_HWW_VBF][2], TVar::VerbosityLevel verbosity, double EBEAM)
 {
 
   // by default assume only gg productions 
@@ -520,7 +750,7 @@ double HJJMatEl(TVar::Process process, TVar::Production production, const TLoren
     __modhiggsjj_MOD_evalamp_sbfh(p4, Hggcoupl, MatElsq);
   }
   if ( production == TVar::JJVBF) {
-    __modhiggsjj_MOD_evalamp_wbfh(p4, Hvvcoupl, MatElsq);
+    __modhiggsjj_MOD_evalamp_wbfh(p4, Hvvcoupl, Hwwcoupl, MatElsq);
   }
 
   //    FOTRAN convention    -5    -4   -3   -2   -1    0   1   2   3  4  5
