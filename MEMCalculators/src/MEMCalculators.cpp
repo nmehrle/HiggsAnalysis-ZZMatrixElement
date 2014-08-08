@@ -49,7 +49,7 @@ const TString MEMs::m_processNameMEKD[MEMNames::NUM_PROCESSES] = {
 	"ggSpin2Ph7", "qqSpin2Ph7", "Spin2Ph7",
 	"ggSpin2Mh9", "qqSpin2Mh9", "Spin2Mh9",
 	"ggSpin2Mh10", "qqSpin2Mh10", "Spin2Mh10",
-	"ggHZZ_10", "ggHZgs", "ggHgsgs", "ggHZgs_PS", "ggHgsgs_PS",
+	"ggHZZ_10", "ggHZgs", "ggHgsgs", "ggHZgs_PS", "ggHgsgs_PS", "ggHZgsLambda1",
 	"qqZ4l_Signal", "qqZ4l_Background",
 	
 	"ggSpin0Pm_2f", "Spin0Pm_2f",
@@ -107,6 +107,8 @@ MEMs::MEMs(double collisionEnergy, double sKD_mass, string PDFName, bool debug_)
     MELAprocMap[k2h10minus_qqbar]    =TVar::H2_g10;
     MELAprocMap[k2h10minus_prodIndep]=TVar::H2_g10;
     MELAprocMap[kqqZZ]            =TVar::bkgZZ;
+    MELAprocMap[kqqZ4l_s]            =TVar::bkgZZ;
+    MELAprocMap[kqqZ4l_t]            =TVar::bkgZZ;
     MELAprocMap[kqqZZ_prodIndep]  =TVar::bkgZZ;
     MELAprocMap[kggZZ]            =TVar::bkgZZ;
     MELAprocMap[kggZZ_SMHiggs]		=TVar::bkgZZ_SMHiggs;
@@ -132,6 +134,7 @@ MEMs::MEMs(double collisionEnergy, double sKD_mass, string PDFName, bool debug_)
     MELAprocMap[k0_gsgs]		=TVar::H0_gsgs;
     MELAprocMap[k0_Zgs_PS]		=TVar::H0_Zgs_PS;
     MELAprocMap[k0_gsgs_PS]		=TVar::H0_gsgs_PS;
+    MELAprocMap[k0_Zgs_g1prime2]		=TVar::H0_Zgsg1prime2;
 
 	MELAprocIntMap[kg1g4]			=TVar::D_g1g4;
 	MELAprocIntMap[kg1g2]			=TVar::D_g1g2;
@@ -142,6 +145,8 @@ MEMs::MEMs(double collisionEnergy, double sKD_mass, string PDFName, bool debug_)
 	MELAprocIntMap[kzzgg]	=TVar::D_zzgg;
 	MELAprocIntMap[kzzzg_PS]	=TVar::D_zzzg_PS;
 	MELAprocIntMap[kzzgg_PS]	=TVar::D_zzgg_PS;
+	MELAprocIntMap[kzzzg_g1prime2]	=TVar::D_zzzg_g1prime2;
+	MELAprocIntMap[kzzzg_g1prime2_pi_2]	=TVar::D_zzzg_g1prime2_pi_2;
     
     /// Mapping between MEMs process enums and MELA production enums 
     /// - initialisation (to be updated)
@@ -184,6 +189,8 @@ MEMs::MEMs(double collisionEnergy, double sKD_mass, string PDFName, bool debug_)
     MELAprodMap[k2h10minus_prodIndep]=TVar::ZZINDEPENDENT;
 
     MELAprodMap[kqqZZ]            =TVar::ZZQQB;
+    MELAprodMap[kqqZ4l_s]            =TVar::ZZQQB_S;
+    MELAprodMap[kqqZ4l_t]            =TVar::ZZQQB_TU;
     MELAprodMap[kqqZZ_prodIndep]  =TVar::ZZINDEPENDENT;
     MELAprodMap[kggZZ]            =TVar::ZZGG;
     MELAprodMap[kggZZ_SMHiggs]    =TVar::ZZGG;
@@ -193,6 +200,7 @@ MEMs::MEMs(double collisionEnergy, double sKD_mass, string PDFName, bool debug_)
     MELAprodMap[k0_gsgs]      =TVar::ZZGG;
     MELAprodMap[k0_Zgs_PS]      =TVar::ZZGG;
     MELAprodMap[k0_gsgs_PS]      =TVar::ZZGG;
+    MELAprodMap[k0_Zgs_g1prime2]		=TVar::ZZGG;
 	
 	MELAprodMap[kSpin0_gg]			=TVar::ZZGG;
 	MELAprodMap[kSpin0_prodIndep]	=TVar::ZZINDEPENDENT;
@@ -219,6 +227,8 @@ MEMs::MEMs(double collisionEnergy, double sKD_mass, string PDFName, bool debug_)
     MELAprodIntMap[kzzgg]	=TVar::ZZGG;
     MELAprodIntMap[kzzzg_PS]	=TVar::ZZGG;
     MELAprodIntMap[kzzgg_PS]	=TVar::ZZGG;
+    MELAprodIntMap[kzzzg_g1prime2]		=TVar::ZZGG;
+    MELAprodIntMap[kzzzg_g1prime2_pi_2]		=TVar::ZZGG;
 	
     /// Mapping between MEMs calculator enums and MELA MatrixElement enums 
     /// - initialisation (to be updated)
@@ -675,9 +685,9 @@ int MEMs::Check_Couplings( Processes process, vector<complex<double> > *ProdCoup
 	}
 	if( process==kSpin0_gg || process==kSpin0_prodIndep )	// checking Spin-0 case
 	{
-		if( ProdCouplings!=(vector<complex<double> >*) NULL && (*DecayCouplings).size() != 4 && (*DecayCouplings).size() != 30)
+		if( ProdCouplings!=(vector<complex<double> >*) NULL && (*DecayCouplings).size() != 4 && (*DecayCouplings).size() != SIZE_HVV)
 		{
-			if( debug ) cout << "MEMs::Check_Couplings. Error in provided decay couplings. Expected size: 4 or 30 (form-factor case), provided: "  << (*DecayCouplings).size() << endl;
+			if( debug ) cout << "MEMs::Check_Couplings. Error in provided decay couplings. Expected size: 4 or SIZE_HVV (form-factor case), provided: "  << (*DecayCouplings).size() << endl;
 			return 1;
 		}
 		
@@ -685,14 +695,14 @@ int MEMs::Check_Couplings( Processes process, vector<complex<double> > *ProdCoup
 	}
 	else if( process==kSpin1_qqbar || process==kSpin1_prodIndep )	// checking Spin-1 case
 	{
-		if( process==kSpin1_qqbar && (*ProdCouplings).size() != 2 )
+		if( process==kSpin1_qqbar && (*ProdCouplings).size() != SIZE_ZQQ )
 		{
-			if( debug ) cout << "MEMs::Check_Couplings. Error in provided prod. couplings. Expected size: 4, provided: "  << (*ProdCouplings).size() << endl;
+			if( debug ) cout << "MEMs::Check_Couplings. Error in provided prod. couplings. Expected size: SIZE_ZQQ, provided: "  << (*ProdCouplings).size() << endl;
 			return 1;
 		}
-		if( (*DecayCouplings).size() != 2 )
+		if( (*DecayCouplings).size() != SIZE_ZVV )
 		{
-			if( debug ) cout << "MEMs::Check_Couplings. Error in provided decay couplings. Expected size: 2, provided: "  << (*DecayCouplings).size() << endl;
+			if( debug ) cout << "MEMs::Check_Couplings. Error in provided decay couplings. Expected size: SIZE_ZVV, provided: "  << (*DecayCouplings).size() << endl;
 			return 1;
 		}
 		
@@ -700,9 +710,9 @@ int MEMs::Check_Couplings( Processes process, vector<complex<double> > *ProdCoup
 	}
 	else if( process==kSpin2_gg || process==kSpin2_qqbar || process==kSpin2_prodIndep )	// checking Spin-2 case
 	{
-		if( process==kSpin2_gg && (*ProdCouplings).size() != 10 && (*ProdCouplings).size() != 5)
+		if( process==kSpin2_gg && (*ProdCouplings).size() != 10 && (*ProdCouplings).size() != SIZE_GGG)
 		{
-			if( debug ) cout << "MEMs::Check_Couplings. Error in provided prod. couplings. Expected size: 10 for MEKD, 5 for MELA, provided: "  << (*ProdCouplings).size() << endl;
+			if( debug ) cout << "MEMs::Check_Couplings. Error in provided prod. couplings. Expected size: 10 for MEKD, SIZE_GGG for MELA, provided: "  << (*ProdCouplings).size() << endl;
 			return 1;
 		}
 		if( process==kSpin2_qqbar && (*ProdCouplings).size() != 4 )
@@ -710,7 +720,7 @@ int MEMs::Check_Couplings( Processes process, vector<complex<double> > *ProdCoup
 			if( debug ) cout << "MEMs::Check_Couplings. Error in provided prod. couplings. Expected size: 4, provided: "  << (*ProdCouplings).size() << endl;
 			return 1;
 		}
-		if( (*DecayCouplings).size() != 10 )
+		if( (*DecayCouplings).size() != SIZE_GVV )
 		{
 			if( debug ) cout << "MEMs::Check_Couplings. Error in provided decay couplings. Expected size: 10, provided: "  << (*DecayCouplings).size() << endl;
 			return 1;
@@ -865,8 +875,9 @@ int MEMs::cacheMELAcalculation(int process, MEMCalcs calculator, vector<TLorentz
   if(process == kJJ_SMHiggs_VBF || process == kJJ_0minus_VBF || process == kJJ_SMHiggs_GG || process == kJJ_0minus_GG || process == kJJ_0minus_VH || process == kJJ_SMHiggs_VH)
 	{
 		float me2process_float;
+		TLorentzVector nullVector(0,0,0,0); // For CMSSW 7.1.x+
 		m_MELA->setProcess(MELAprocMap[static_cast<Processes>(process)],MELAcalcMap[calculator],MELAprodMap[static_cast<Processes>(process)]);
-		m_MELA->computeProdP(partP[4],2,partP[5],2,ZZ,25,0.,0,me2process_float);
+		m_MELA->computeProdP(partP[4],2,partP[5],2,ZZ,25,nullVector,0,me2process_float);
 		me2process = (double) me2process_float;
 	}
 	else
@@ -902,7 +913,7 @@ int MEMs::cacheMELAcalculation(int process, MEMCalcs calculator, vector<TLorentz
 		{
 			if( process==kSpin0_gg || process==kSpin0_prodIndep )
 			{
-				double translation[30][2];
+				double translation[SIZE_HVV][2];
 				if( (*DecayCouplings).size() == 4 )
 				{
 					for(int i=0;i<4;i++)
@@ -910,15 +921,15 @@ int MEMs::cacheMELAcalculation(int process, MEMCalcs calculator, vector<TLorentz
 						translation[i][0] = (*DecayCouplings)[i].real();
 						translation[i][1] = (*DecayCouplings)[i].imag();
 					}
-					for(int i=4;i<30;i++)
+					for(int i=4;i<SIZE_HVV;i++)
 					{
 						translation[i][0] = 0.;
 						translation[i][1] = 0.; 
 					}
 				}
-				else if( (*DecayCouplings).size() == 30 )
+				else if( (*DecayCouplings).size() == SIZE_HVV )
 				{
-					for(int i=0;i<30;i++)
+					for(int i=0;i<SIZE_HVV;i++)
 					{
 						translation[i][0] = (*DecayCouplings)[i].real();
 						translation[i][1] = (*DecayCouplings)[i].imag();
@@ -926,7 +937,7 @@ int MEMs::cacheMELAcalculation(int process, MEMCalcs calculator, vector<TLorentz
 				}
 				else
 				{
-					cout<< "expect 4/30 decay couplings for mela"<<endl;
+					cout<< "expect 4 or SIZE_HVV decay couplings for mela"<<endl;
 				}
 				
 				//                 TVar::Process        TVar::MatrixElement     TVar::Production
@@ -939,10 +950,10 @@ int MEMs::cacheMELAcalculation(int process, MEMCalcs calculator, vector<TLorentz
 			}
 			else if (process == kSpin1_qqbar || process ==kSpin1_prodIndep)
 			{
-				 double translation[2][2];
-				 if((*DecayCouplings).size() == 2)
+				 double translation[SIZE_ZVV][2];
+				 if((*DecayCouplings).size() == SIZE_ZVV)
 				 {
-					for(int i=0;i<2;i++)
+					for(int i=0;i<SIZE_ZVV;i++)
 					{
 						 translation[i][0] = (*DecayCouplings)[i].real();
 						 translation[i][1] = (*DecayCouplings)[i].imag();
@@ -958,16 +969,16 @@ int MEMs::cacheMELAcalculation(int process, MEMCalcs calculator, vector<TLorentz
 			}
 			else if(process==kSpin2_gg || process==kSpin2_qqbar || process==kSpin2_prodIndep )
 			{
-				double translation[10][2];
-				double translationProd[5][2];
-				if((*DecayCouplings).size() == 10 && (*ProdCouplings).size()==5 )
+				double translation[SIZE_GVV][2];
+				double translationProd[SIZE_GGG][2];
+				if((*DecayCouplings).size() == SIZE_GVV && (*ProdCouplings).size()==SIZE_GVV )
 				{
-					for(int i=0;i<10;i++)
+					for(int i=0;i<SIZE_GVV;i++)
 					{
 						translation[i][0] = (*DecayCouplings)[i].real();
 						translation[i][1] = (*DecayCouplings)[i].imag();
 					}
-					for(int i=0;i<5;i++)
+					for(int i=0;i<SIZE_GGG;i++)
 					{
 						translationProd[i][0] = (*ProdCouplings)[i].real();
 						translationProd[i][1] = (*ProdCouplings)[i].imag();
@@ -984,7 +995,7 @@ int MEMs::cacheMELAcalculation(int process, MEMCalcs calculator, vector<TLorentz
 		else if (process==kggZZ_SMHiggs)
 		{
           m_MELA->setProcess( MELAprocMap[static_cast<Processes>(process)], MELAcalcMap[calculator], MELAprodMap[static_cast<Processes>(process)] );
-			double translation[2];
+			double translation[SIZE_HVV_FREENORM];
        if(DecayCouplings!= (vector<complex<double> >*) NULL  )
         {
 					translation[0] = (*DecayCouplings)[0].real();
@@ -1078,11 +1089,11 @@ int MEMs::Convert_couplings_a_to_kappa( Processes process, vector<complex<double
 		(*DecayCouplings_kappa)[3] = -1.0*(*DecayCouplings_a)[3];
 		
 		if( (*DecayCouplings_kappa).size()==4 ) return NO_ERR;
-		
-		(*DecayCouplings_kappa)[0] +=  0.5*XZZ_form_factor( (*DecayCouplings_a)[4], (*DecayCouplings_a)[5], (*DecayCouplings_a)[6], (*DecayCouplings_a)[7], m_mZ1, m_mZ2, m_Lambda_z1 );
-		(*DecayCouplings_kappa)[1] += -1.0*XZZ_form_factor( (*DecayCouplings_a)[8], (*DecayCouplings_a)[9], (*DecayCouplings_a)[10], (*DecayCouplings_a)[11], m_mZ1, m_mZ2, m_Lambda_z2 );
-		(*DecayCouplings_kappa)[2] += -1.0*XZZ_form_factor( (*DecayCouplings_a)[12], (*DecayCouplings_a)[13], (*DecayCouplings_a)[14], (*DecayCouplings_a)[15], m_mZ1, m_mZ2, m_Lambda_z3 );
-		(*DecayCouplings_kappa)[3] += -1.0*XZZ_form_factor( (*DecayCouplings_a)[16], (*DecayCouplings_a)[17], (*DecayCouplings_a)[18], (*DecayCouplings_a)[19], m_mZ1, m_mZ2, m_Lambda_z4 );
+		// |q1**2+q2**2|**2 is no longer supported in JHUGenMELA or analyticalMELA; prime5==(q1**4 + q2**4) and prime6==(q1**4 - q2**4) are supported instead
+		(*DecayCouplings_kappa)[0] +=  0.5*XZZ_form_factor( (*DecayCouplings_a)[10], (*DecayCouplings_a)[11], 0, (*DecayCouplings_a)[32], m_mZ1, m_mZ2, m_Lambda_z1 );
+		(*DecayCouplings_kappa)[1] += -1.0*XZZ_form_factor( (*DecayCouplings_a)[15], (*DecayCouplings_a)[16], 0, (*DecayCouplings_a)[34], m_mZ1, m_mZ2, m_Lambda_z2 );
+		(*DecayCouplings_kappa)[2] += -1.0*XZZ_form_factor( (*DecayCouplings_a)[20], (*DecayCouplings_a)[21], 0, (*DecayCouplings_a)[36], m_mZ1, m_mZ2, m_Lambda_z3 );
+		(*DecayCouplings_kappa)[3] += -1.0*XZZ_form_factor( (*DecayCouplings_a)[25], (*DecayCouplings_a)[26], 0, (*DecayCouplings_a)[38], m_mZ1, m_mZ2, m_Lambda_z4 );
 		
 		return NO_ERR;
 	}
@@ -1173,14 +1184,14 @@ int MEMs::Convert_couplings_kappa_to_a( Processes process, vector<complex<double
 	}
 	else if( process==kSpin1_qqbar || process==kSpin1_prodIndep )	// WARNING NOT well defined yet
 	{
-		if( (*DecayCouplings_a).size()!=2 ) (*DecayCouplings_a).resize( 2, complex<double>(0.0, 0.0) );
+		if( (*DecayCouplings_a).size()!=SIZE_ZVV ) (*DecayCouplings_a).resize( SIZE_ZVV, complex<double>(0.0, 0.0) );
 		(*DecayCouplings_a)[0] =  1.0*(*DecayCouplings_kappa)[0];
 		(*DecayCouplings_a)[1] =  1.0*(*DecayCouplings_kappa)[1];
 		
 		// Production
 		if( process==kSpin1_qqbar )
 		{
-			if( (*ProdCouplings_a).size()!=2 ) (*ProdCouplings_a).resize( 2, complex<double>(0.0, 0.0) );
+			if( (*ProdCouplings_a).size()!=SIZE_ZVV ) (*ProdCouplings_a).resize( SIZE_ZVV, complex<double>(0.0, 0.0) );
 			
 			(*ProdCouplings_a)[0] =  1.0*(*ProdCouplings_kappa)[0];
 			(*ProdCouplings_a)[1] =  1.0*(*ProdCouplings_kappa)[1];
@@ -1190,7 +1201,7 @@ int MEMs::Convert_couplings_kappa_to_a( Processes process, vector<complex<double
 	}
 	else if( process==kSpin2_gg || process==kSpin2_qqbar || process==kSpin2_prodIndep )	// WARNING NOT well defined yet
 	{
-		if( (*DecayCouplings_a).size()!=10 ) (*DecayCouplings_a).resize( 10, complex<double>(0.0, 0.0) );
+		if( (*DecayCouplings_a).size()!=SIZE_GVV ) (*DecayCouplings_a).resize( SIZE_GVV, complex<double>(0.0, 0.0) );
 		
 		(*DecayCouplings_a)[0] = -1.0*(*DecayCouplings_kappa)[0];
 		(*DecayCouplings_a)[1] =  1.0*(*DecayCouplings_kappa)[1];
@@ -1206,7 +1217,7 @@ int MEMs::Convert_couplings_kappa_to_a( Processes process, vector<complex<double
 		// Production
 		if( process==kSpin2_gg )
 		{
-			if( (*ProdCouplings_a).size()!=5 ) (*ProdCouplings_a).resize( 5, complex<double>(0.0, 0.0) );
+			if( (*ProdCouplings_a).size()!=SIZE_GGG ) (*ProdCouplings_a).resize( SIZE_GGG, complex<double>(0.0, 0.0) );
 			
 			(*ProdCouplings_a)[0] = -1.0*(*ProdCouplings_kappa)[0];
 			(*ProdCouplings_a)[1] =  1.0*(*ProdCouplings_kappa)[1];
@@ -1217,7 +1228,7 @@ int MEMs::Convert_couplings_kappa_to_a( Processes process, vector<complex<double
 		if( process==kSpin2_qqbar )
 		{
 			if( (*ProdCouplings_kappa).size()!=2 ) (*ProdCouplings_kappa).resize( 2, complex<double>(0.0, 0.0) );
-			
+			// ????
 			(*ProdCouplings_a)[0] =  1.0*(*ProdCouplings_a)[0];
 			(*ProdCouplings_a)[1] =  1.0*(*ProdCouplings_a)[1];
 		}

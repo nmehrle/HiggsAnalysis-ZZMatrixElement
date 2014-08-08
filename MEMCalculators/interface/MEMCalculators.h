@@ -63,7 +63,7 @@ namespace MEMNames {
 		k2h9minus_gg, k2h9minus_qqbar, k2h9minus_prodIndep,
 		k2h10minus_gg, k2h10minus_qqbar, k2h10minus_prodIndep,
 		
-		kggHZZ_10, k0_Zgs, k0_gsgs, k0_Zgs_PS, k0_gsgs_PS,
+		kggHZZ_10, k0_Zgs, k0_gsgs, k0_Zgs_PS, k0_gsgs_PS, k0_Zgs_g1prime2,
 		kqqZ4l_s, kqqZ4l_t,
 		
 		k0plus_2f_gg, k0plus_2f_prodIndep,
@@ -78,7 +78,7 @@ namespace MEMNames {
 	enum MEMCalcs    {kAnalytical, kMEKD, kJHUGen, kMCFM, kMELA_HCP, NUM_MEMCALCS};
 	
 	enum SuperKDsyst {kNone, kScaleUp, kScaleDown, kResolUp, kResolDown, NUM_SuperKDsyst};
-	enum Processes_int {kg1g4=1000, kg1g2, kg1g4_pi_2, kg1g2_pi_2, k_g1g1prime2, kzzzg, kzzgg, kzzzg_PS, kzzgg_PS};
+	enum Processes_int {kg1g4=1000, kg1g2, kg1g4_pi_2, kg1g2_pi_2, k_g1g1prime2, kzzzg, kzzgg, kzzzg_PS, kzzgg_PS, kzzzg_g1prime2, kzzzg_g1prime2_pi_2};
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -459,8 +459,9 @@ const bool MEMs::isProcSupported[MEMNames::NUM_PROCESSES][MEMNames::NUM_MEMCALCS
   {0,            0,          1,          0,          0},	// k0_Zgs
   {0,            0,          1,          0,          0},	// k0_gsgs_PS
   {0,            0,          1,          0,          0},	// k0_Zgs_PS
-  {0,            1,          0,          0,          0},	// kqqZ4l_s
-  {0,            1,          0,          0,          0},	// kqqZ4l_t
+  {0,            0,          1,          0,          0},	// k0_Zgs_g1prime2
+  {0,            1,          0,          1,          0},	// kqqZ4l_s
+  {0,            1,          0,          1,          0},	// kqqZ4l_t
   {0,            1,          0,          0,          0},	// k0plus_2f_gg
   {0,            1,          0,          0,          0},	// k0plus_2f_prodIndep
   {0,            1,          0,          0,          0},	// k0minus_2f_gg
