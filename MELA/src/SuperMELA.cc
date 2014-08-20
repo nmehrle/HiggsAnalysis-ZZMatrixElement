@@ -53,7 +53,8 @@ SuperMELA::SuperMELA(double mH,string channel,int LHCsqrts){
   mH_rrv_=new RooRealVar("mH","mH",mHVal_,0.0,sqrts_);
   strChan_=channel;
  
-  pathToCards_="../../../HiggsAnalysis/HZZ4L_CombinationPy/CreateDatacards/SM_inputs_8TeV/";
+//  pathToCards_="../../../HiggsAnalysis/HZZ4L_CombinationPy/CreateDatacards/SM_inputs_8TeV/";
+  pathToCards_="../data/CombinationInputs/SM_inputs_8TeV/";
   //  init();
 
 }

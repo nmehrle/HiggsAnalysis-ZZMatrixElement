@@ -2047,6 +2047,163 @@ void testME_FullMELA_MCFMBSMHiggs_Ping(int flavor=1){
 	finput->Close();
 }
 
+
+void testME_FullMELA_MCFMBSMHiggs_SignalReweight(int flavor=0){
+	int erg_tev=8;
+	float mPOLE=125.6;
+	float wPOLE=4.15e-3;
+	char TREE_NAME[] = "GenTree";
+
+//	TVar::VerbosityLevel verbosity = TVar::INFO;
+
+	Mela mela(erg_tev,mPOLE);
+//	mela.resetMCFM_EWKParameters(1.16639E-05,7.81751E-03,79.9549392,91.1876);
+
+	TFile* finput = new TFile(Form("/afs/cern.ch/work/u/usarica/WidthAnalysis/LHC_8TeV/%s/Sig/HZZ4l-125_6-8TeV-Sig.root",(flavor==0 ? "2mu2e" : "4e")),"read");
+	TFile* foutput = new TFile(Form("HZZ4l-125_6-8TeV-Sig_%s_MCFMSignalReweighting.root",(flavor==0 ? "2mu2e" : "4e")),"recreate");
+
+	float p0plus_VAJHU_NEW;
+	float p0plus_VAJHU;
+	float p0hplus_VAJHU_NEW;
+	float p0minus_VAJHU_NEW;
+	float p0_g1prime2_VAJHU_NEW;
+	float p0_g1prime4_VAJHU_NEW;
+	float p0_g1prime4_VAJHU_NEW2;
+	float pg1g1prime2_VAJHU_NEW;
+	float pg1g1prime2_pi2_VAJHU_NEW;
+	float pg1g2_VAJHU_NEW;
+	float pg1g2_pi2_VAJHU_NEW;
+	float pg1g4_VAJHU_NEW;
+	float pg1g4_pi2_VAJHU_NEW;
+
+	float ggHZZ_prob_pure,ggHZZ_prob_int,ggZZ_prob_Total;
+	float bkg_VAMCFM,ggzz_VAMCFM;
+	float ggHZZ_prob_pure_NEW,ggHZZ_prob_int_NEW,ggZZ_prob_Total_NEW;
+	float bkg_VAMCFM_NEW,ggzz_VAMCFM_NEW;
+	float bkg_VAMCFM_STU,bkg_VAMCFM_TU,bkg_VAMCFM_S;
+
+	float p0plus_m4l, p0plus_m4l_ScaleUp, p0plus_m4l_ScaleDown, p0plus_m4l_ResUp, p0plus_m4l_ResDown;
+	float bkg_m4l, bkg_m4l_ScaleUp, bkg_m4l_ScaleDown, bkg_m4l_ResUp, bkg_m4l_ResDown;
+
+	float mzz = 126.; 
+	float m1 = 91.471450;
+	float m2 = 12.139782;
+	float h1 = 0.2682896;
+	float h2 = 0.1679779;
+	float phi = 1.5969792;
+	float hs = -0.727181;
+	float phi1 = 1.8828257;
+	float GenLep1Id,GenLep2Id,GenLep3Id,GenLep4Id;
+
+	TTree* tree = (TTree*) finput->Get(TREE_NAME);
+	tree->SetBranchAddress("GenZZMass", &mzz);
+	tree->SetBranchAddress("GenZ1Mass", &m1);
+	tree->SetBranchAddress("GenZ2Mass", &m2);
+	tree->SetBranchAddress("GenhelcosthetaZ1", &h1);
+	tree->SetBranchAddress("GenhelcosthetaZ2", &h2);
+	tree->SetBranchAddress("Genhelphi", &phi);
+	tree->SetBranchAddress("Gencosthetastar", &hs);
+	tree->SetBranchAddress("GenphistarZ1", &phi1);
+	tree->SetBranchAddress("GenLep1Id", &GenLep1Id);
+	tree->SetBranchAddress("GenLep2Id", &GenLep2Id);
+	tree->SetBranchAddress("GenLep3Id", &GenLep3Id);
+	tree->SetBranchAddress("GenLep4Id", &GenLep4Id);
+
+	TTree* newtree = new TTree("TestTree","");
+	newtree->Branch("GenZZMass", &mzz);
+	newtree->Branch("GenZ1Mass", &m1);
+	newtree->Branch("GenZ2Mass", &m2);
+	newtree->Branch("GenhelcosthetaZ1", &h1);
+	newtree->Branch("GenhelcosthetaZ2", &h2);
+	newtree->Branch("Genhelphi", &phi);
+	newtree->Branch("Gencosthetastar", &hs);
+	newtree->Branch("GenphistarZ1", &phi1);
+	newtree->Branch("GenLep1Id", &GenLep1Id);
+	newtree->Branch("GenLep2Id", &GenLep2Id);
+	newtree->Branch("GenLep3Id", &GenLep3Id);
+	newtree->Branch("GenLep4Id", &GenLep4Id);
+
+	newtree->Branch("p0plus_VAJHU_NEW",&p0plus_VAJHU_NEW);
+	newtree->Branch("p0plus_VAJHU",&p0plus_VAJHU);
+	newtree->Branch("p0hplus_VAJHU_NEW",&p0hplus_VAJHU_NEW);
+	newtree->Branch("p0minus_VAJHU_NEW",&p0minus_VAJHU_NEW);
+	newtree->Branch("p0_g1prime2_VAJHU_NEW",&p0_g1prime2_VAJHU_NEW);
+	newtree->Branch("p0_g1prime4_VAJHU_NEW",&p0_g1prime4_VAJHU_NEW);
+	newtree->Branch("p0_g1prime4_VAJHU_NEW2",&p0_g1prime4_VAJHU_NEW2);
+
+	int nEntries = tree->GetEntries();
+	double selfDHvvcoupl[SIZE_HVV][2] = { { 0 } };
+	double ggvvcoupl[2]={0,0};
+//	for (int ev = 0; ev < nEntries; ev++){
+	for (int ev = 0; ev < 1000; ev++){
+		tree->GetEntry(ev);
+
+		int lepIdOrdered[4] = { GenLep1Id, GenLep2Id, GenLep3Id, GenLep4Id };
+		float angularOrdered[8] = { mzz, m1, m2, hs, h1, h2, phi, phi1 };
+
+		mela.setProcess(TVar::HSMHiggs, TVar::MCFM, TVar::ZZGG);
+		for (int ii = 0; ii < SIZE_HVV; ii++){ for (int jj = 0; jj < 2; jj++) selfDHvvcoupl[ii][jj] = 0; }
+		selfDHvvcoupl[0][0]=1;
+		mela.setMelaLeptonInterference(TVar::InterfOn);
+		mela.setMelaHiggsWidth(wPOLE);
+		p0plus_VAJHU_NEW = getJHUGenMELAWeight(mela, lepIdOrdered, angularOrdered, selfDHvvcoupl);
+
+		for (int ii = 0; ii < SIZE_HVV; ii++){ for (int jj = 0; jj < 2; jj++) selfDHvvcoupl[ii][jj] = 0; }
+		selfDHvvcoupl[1][0]=1.638;
+		mela.setMelaLeptonInterference(TVar::InterfOn);
+		mela.setMelaHiggsWidth(wPOLE);
+		p0hplus_VAJHU_NEW = getJHUGenMELAWeight(mela, lepIdOrdered, angularOrdered, selfDHvvcoupl);
+
+		for (int ii = 0; ii < SIZE_HVV; ii++){ for (int jj = 0; jj < 2; jj++) selfDHvvcoupl[ii][jj] = 0; }
+		selfDHvvcoupl[3][0]=2.521;
+		mela.setMelaLeptonInterference(TVar::InterfOn);
+		mela.setMelaHiggsWidth(wPOLE);
+		p0minus_VAJHU_NEW = getJHUGenMELAWeight(mela, lepIdOrdered, angularOrdered, selfDHvvcoupl);
+
+		for (int ii = 0; ii < SIZE_HVV; ii++){ for (int jj = 0; jj < 2; jj++) selfDHvvcoupl[ii][jj] = 0; }
+		selfDHvvcoupl[11][0]=-12046.01;
+		mela.setMelaLeptonInterference(TVar::InterfOn);
+		mela.setMelaHiggsWidth(wPOLE);
+		p0_g1prime2_VAJHU_NEW = getJHUGenMELAWeight(mela, lepIdOrdered, angularOrdered, selfDHvvcoupl);
+
+		for (int ii = 0; ii < SIZE_HVV; ii++){ for (int jj = 0; jj < 2; jj++) selfDHvvcoupl[ii][jj] = 0; }
+		selfDHvvcoupl[13][0]=-pow(10000.0/mPOLE,2);
+		mela.setMelaLeptonInterference(TVar::InterfOn);
+		mela.setMelaHiggsWidth(wPOLE);
+		p0_g1prime4_VAJHU_NEW = getJHUGenMELAWeight(mela, lepIdOrdered, angularOrdered, selfDHvvcoupl);
+
+
+		mela.setProcess(TVar::SelfDefine_spin0, TVar::JHUGen, TVar::ZZGG);
+
+		for (int ii = 0; ii < SIZE_HVV; ii++){ for (int jj = 0; jj < 2; jj++) selfDHvvcoupl[ii][jj] = 0; }
+		selfDHvvcoupl[13][0]=-pow(10000.0/mPOLE,2);
+		mela.setMelaLeptonInterference(TVar::InterfOn);
+		mela.setMelaHiggsWidth(wPOLE);
+		p0_g1prime4_VAJHU_NEW2 = getJHUGenMELAWeight(mela, lepIdOrdered, angularOrdered, selfDHvvcoupl);
+
+		for (int ii = 0; ii < SIZE_HVV; ii++){ for (int jj = 0; jj < 2; jj++) selfDHvvcoupl[ii][jj] = 0; }
+		selfDHvvcoupl[0][0]=1;
+		mela.setMelaLeptonInterference(TVar::InterfOn);
+		mela.setMelaHiggsWidth(wPOLE);
+		p0plus_VAJHU = getJHUGenMELAWeight(mela, lepIdOrdered, angularOrdered, selfDHvvcoupl);
+
+		p0hplus_VAJHU_NEW/=p0plus_VAJHU_NEW;
+		p0minus_VAJHU_NEW/=p0plus_VAJHU_NEW;
+		p0_g1prime2_VAJHU_NEW/=p0plus_VAJHU_NEW;
+		p0_g1prime4_VAJHU_NEW/=p0plus_VAJHU_NEW;
+		p0_g1prime4_VAJHU_NEW2/=p0plus_VAJHU;
+
+
+		newtree->Fill();
+	};
+
+
+	foutput->WriteTObject(newtree);
+	foutput->Close();
+	finput->Close();
+};
+
+
 void testME_FullMELA_FullSimMCValidation_NonSpin0(int flavor=1){
 	int erg_tev=8;
 	float mPOLE=125.6;
@@ -2781,7 +2938,338 @@ void testME_FullMELA_FullSimMC_VBFValidation (int flavor=1){
 				mela.setProcess(TVar::SelfDefine_spin0, TVar::JHUGen, TVar::JJGG);
 				mela.computeProdP(jet1, 2, jet2, 2, higgs, 25, nullFourVector, 0, selfDHggcoupl, selfDHvvcoupl, selfDHwwcoupl, phjj0minus_VAJHU_old_NEW_selfD);
 
+				newtree->Fill();
+				recorded++;
+			}
+		}
+	}
 
+
+	foutput->WriteTObject(newtree);
+	foutput->Close();
+	finput->Close();
+};
+
+void testME_FullMELA_FullSimMC_HJValidation (int flavor=1){
+	int erg_tev=8;
+	float mPOLE=125.6;
+	float wPOLE=4.15e-3;
+	char TREE_NAME[] = "SelectedTree";
+
+//	TVar::VerbosityLevel verbosity = TVar::INFO;
+
+	Mela mela(erg_tev,mPOLE);
+	TGraph* vaScale_4e = mela.vaScale_4e;
+	TGraph* vaScale_4mu = mela.vaScale_4mu;
+	TGraph* vaScale_2e2mu = mela.vaScale_2e2mu;
+	TGraph* DggZZ_scalefactor = mela.DggZZ_scalefactor;
+
+	TFile* finput = new TFile(Form("/afs/cern.ch/work/u/usarica/HZZ4l-125p6-FullAnalysis/LHC_8TeV/%s/HZZ4lTree_ZZTo%s.root",(flavor==0 ? "2mu2e" : "4e"),(flavor==0 ? "2e2mu" : "4e")),"read");
+	TFile* foutput = new TFile(Form("HZZ4lTree_ZZTo%s_hjMELATest.root",(flavor==0 ? "2e2mu" : "4e")),"recreate");
+
+	TLorentzVector nullFourVector(0,0,0,0);
+
+	float phj_VAJHU_old_NEW;
+	float phj0minus_VAJHU_old_NEW;
+
+
+	float jet1Pt,jet2Pt;
+	float jet1px,jet1py,jet1pz,jet1E;
+	float jet2px,jet2py,jet2pz,jet2E;
+	float ZZPx,ZZPy,ZZPz,ZZE,dR;
+	short NJets30;
+	std::vector<double> * JetPt=0;
+	std::vector<double> * JetEta=0;
+	std::vector<double> * JetPhi=0;
+	std::vector<double> * JetMass=0;
+	std::vector<double> myJetPt;
+	std::vector<double> myJetEta;
+	std::vector<double> myJetPhi;
+	std::vector<double> myJetMass;
+	TBranch* bJetPt=0;
+	TBranch* bJetEta=0;
+	TBranch* bJetPhi=0;
+	TBranch* bJetMass=0;
+
+	float mzz = 126.; 
+	float m1 = 91.471450;
+	float m2 = 12.139782;
+	float h1 = 0.2682896;
+	float h2 = 0.1679779;
+	float phi = 1.5969792;
+	float hs = -0.727181;
+	float phi1 = 1.8828257;
+	int GenLep1Id,GenLep2Id,GenLep3Id,GenLep4Id;
+
+	TTree* tree = (TTree*) finput->Get(TREE_NAME);
+	tree->SetBranchAddress("NJets30",&NJets30);
+	tree->SetBranchAddress("JetPt",&JetPt,&bJetPt);
+	tree->SetBranchAddress("JetEta", &JetEta,&bJetEta);
+	tree->SetBranchAddress("JetPhi", &JetPhi,&bJetPhi);
+	tree->SetBranchAddress("JetMass", &JetMass,&bJetMass);
+	tree->SetBranchAddress("ZZMass", &mzz);
+	tree->SetBranchAddress("Z1Mass", &m1);
+	tree->SetBranchAddress("Z2Mass", &m2);
+	tree->SetBranchAddress("helcosthetaZ1", &h1);
+	tree->SetBranchAddress("helcosthetaZ2", &h2);
+	tree->SetBranchAddress("helphi", &phi);
+	tree->SetBranchAddress("costhetastar", &hs);
+	tree->SetBranchAddress("phistarZ1", &phi1);
+
+	TTree* newtree = new TTree("TestTree","");
+	newtree->Branch("phj_VAJHU_old_NEW",&phj_VAJHU_old_NEW);
+	newtree->Branch("phj0minus_VAJHU_old_NEW",&phj0minus_VAJHU_old_NEW);
+	newtree->Branch("jet1Pt",&jet1Pt);
+	newtree->Branch("jet2Pt",&jet2Pt);
+	newtree->Branch("JetPt",&myJetPt);
+	newtree->Branch("JetEta",&myJetEta);
+	newtree->Branch("JetPhi",&myJetPhi);
+	newtree->Branch("JetMass",&myJetMass);
+
+	int nEntries = tree->GetEntries();
+	double selfDHggcoupl[SIZE_HGG][2] = { { 0 } };
+	double selfDHvvcoupl[SIZE_HVV_VBF][2] = { { 0 } };
+	double selfDHwwcoupl[SIZE_HWW_VBF][2] = { { 0 } };
+	double ggvvcoupl[2]={0,0};
+	mela.setProcess(TVar::SelfDefine_spin0, TVar::JHUGen, TVar::ZZGG);
+	int recorded=0;
+	for (int ev = 0; ev < nEntries; ev++){
+		if(recorded>=1000) break;
+		tree->GetEntry(ev);
+		if (flavor == 1){
+			GenLep1Id=11;
+			GenLep2Id=-11;
+			GenLep3Id=11;
+			GenLep4Id=-11;
+		}
+		else{
+			GenLep1Id=13;
+			GenLep2Id=-13;
+			GenLep3Id=11;
+			GenLep4Id=-11;
+		}
+
+		myJetPt.clear();
+		myJetEta.clear();
+		myJetPhi.clear();
+		myJetMass.clear();
+		TLorentzVector jet1(0,0,1e-3,1e-3),jet2(0,0,1e-3,1e-3),higgs(0,0,0,0);
+		TLorentzVector p4[3],jets[1];
+		for (int i = 0; i < JetPt->size(); i++){
+			myJetPt.push_back(JetPt->at(i));
+			myJetEta.push_back(JetEta->at(i));
+			myJetPhi.push_back(JetPhi->at(i));
+			myJetMass.push_back(JetMass->at(i));
+		}
+		if (myJetPt.size()>=1){
+			int filled = 0;
+			jets[0].SetPxPyPzE(0,0,1,1);
+			for (int i = 0; i < myJetPt.size(); i++){
+				jets[filled].SetPtEtaPhiM(myJetPt[i], myJetEta[i], myJetPhi[i], myJetMass[i]);
+				double jetE = jets[filled].Energy();
+				double jetP = jets[filled].P();
+
+				if (filled == 0){
+					if (jets[filled].Pt()>jet1.Pt()){
+						jet1.SetPxPyPzE(jets[filled].Px(), jets[filled].Py(), jets[filled].Pz(), jetE);
+						jet1Pt = jet1.Pt();
+					}
+					if (i == myJetPt.size() - 1){
+						filled++;
+						jet2=nullFourVector;
+					}
+				}
+				else break;
+			}
+			if (filled == 1){
+				vector<TLorentzVector> p = mela.calculate4Momentum(mzz, m1, m2, acos(hs), acos(h1), acos(h2), phi1, phi);
+				TLorentzVector pZ1 = p[0] + p[1];
+				TLorentzVector pZ2 = p[3] + p[2];
+				higgs = pZ1 + pZ2;
+				mela.setProcess(TVar::HSMHiggs, TVar::JHUGen, TVar::JH);
+				mela.computeProdP(jet1, 2, jet2, 0, higgs, 25, nullFourVector, 0, phj_VAJHU_old_NEW);
+				mela.setProcess(TVar::H0minus, TVar::JHUGen, TVar::JH);
+				mela.computeProdP(jet1, 2, jet2, 0, higgs, 25, nullFourVector, 0, phj0minus_VAJHU_old_NEW);
+
+				newtree->Fill();
+				recorded++;
+			}
+		}
+	}
+
+
+	foutput->WriteTObject(newtree);
+	foutput->Close();
+	finput->Close();
+};
+
+void testME_FullMELA_FullSimMC_VHValidation (int flavor=1){
+	int erg_tev=8;
+	float mPOLE=125.6;
+	float wPOLE=4.15e-3;
+	char TREE_NAME[] = "SelectedTree";
+
+//	TVar::VerbosityLevel verbosity = TVar::INFO;
+
+	Mela mela(erg_tev,mPOLE);
+	TGraph* vaScale_4e = mela.vaScale_4e;
+	TGraph* vaScale_4mu = mela.vaScale_4mu;
+	TGraph* vaScale_2e2mu = mela.vaScale_2e2mu;
+	TGraph* DggZZ_scalefactor = mela.DggZZ_scalefactor;
+
+	TFile* finput = new TFile(Form("/afs/cern.ch/work/u/usarica/HZZ4l-125p6-FullAnalysis/LHC_8TeV/%s/HZZ4lTree_ZZTo%s.root",(flavor==0 ? "2mu2e" : "4e"),(flavor==0 ? "2e2mu" : "4e")),"read");
+	TFile* foutput = new TFile(Form("HZZ4lTree_ZZTo%s_vhMELATest.root",(flavor==0 ? "2e2mu" : "4e")),"recreate");
+
+	TLorentzVector nullFourVector(0,0,0,0);
+
+	float pzh_VAJHU_old_NEW;
+	float pzh0minus_VAJHU_old_NEW;
+	float pwh_VAJHU_old_NEW;
+	float pwh0minus_VAJHU_old_NEW;
+
+
+	float jet1Pt,jet2Pt;
+	float jet1px,jet1py,jet1pz,jet1E;
+	float jet2px,jet2py,jet2pz,jet2E;
+	float ZZPx,ZZPy,ZZPz,ZZE,dR;
+	short NJets30;
+	std::vector<double> * JetPt=0;
+	std::vector<double> * JetEta=0;
+	std::vector<double> * JetPhi=0;
+	std::vector<double> * JetMass=0;
+	std::vector<double> myJetPt;
+	std::vector<double> myJetEta;
+	std::vector<double> myJetPhi;
+	std::vector<double> myJetMass;
+	TBranch* bJetPt=0;
+	TBranch* bJetEta=0;
+	TBranch* bJetPhi=0;
+	TBranch* bJetMass=0;
+
+	float mzz = 126.; 
+	float m1 = 91.471450;
+	float m2 = 12.139782;
+	float h1 = 0.2682896;
+	float h2 = 0.1679779;
+	float phi = 1.5969792;
+	float hs = -0.727181;
+	float phi1 = 1.8828257;
+	int GenLep1Id,GenLep2Id,GenLep3Id,GenLep4Id;
+
+	TTree* tree = (TTree*) finput->Get(TREE_NAME);
+	tree->SetBranchAddress("NJets30",&NJets30);
+	tree->SetBranchAddress("JetPt",&JetPt,&bJetPt);
+	tree->SetBranchAddress("JetEta", &JetEta,&bJetEta);
+	tree->SetBranchAddress("JetPhi", &JetPhi,&bJetPhi);
+	tree->SetBranchAddress("JetMass", &JetMass,&bJetMass);
+	tree->SetBranchAddress("ZZMass", &mzz);
+	tree->SetBranchAddress("Z1Mass", &m1);
+	tree->SetBranchAddress("Z2Mass", &m2);
+	tree->SetBranchAddress("helcosthetaZ1", &h1);
+	tree->SetBranchAddress("helcosthetaZ2", &h2);
+	tree->SetBranchAddress("helphi", &phi);
+	tree->SetBranchAddress("costhetastar", &hs);
+	tree->SetBranchAddress("phistarZ1", &phi1);
+
+	TTree* newtree = new TTree("TestTree","");
+	newtree->Branch("pzh_VAJHU_old_NEW",&pzh_VAJHU_old_NEW);
+	newtree->Branch("pzh0minus_VAJHU_old_NEW",&pzh0minus_VAJHU_old_NEW);
+	newtree->Branch("pwh_VAJHU_old_NEW",&pwh_VAJHU_old_NEW);
+	newtree->Branch("pwh0minus_VAJHU_old_NEW",&pwh0minus_VAJHU_old_NEW);
+	newtree->Branch("jet1Pt",&jet1Pt);
+	newtree->Branch("jet2Pt",&jet2Pt);
+	newtree->Branch("JetPt",&myJetPt);
+	newtree->Branch("JetEta",&myJetEta);
+	newtree->Branch("JetPhi",&myJetPhi);
+	newtree->Branch("JetMass",&myJetMass);
+
+	int nEntries = tree->GetEntries();
+	double selfDHggcoupl[SIZE_HGG][2] = { { 0 } };
+	double selfDHvvcoupl[SIZE_HVV_VBF][2] = { { 0 } };
+	double selfDHwwcoupl[SIZE_HWW_VBF][2] = { { 0 } };
+	double ggvvcoupl[2]={0,0};
+	mela.setProcess(TVar::SelfDefine_spin0, TVar::JHUGen, TVar::ZZGG);
+	int recorded=0;
+	for (int ev = 0; ev < nEntries; ev++){
+		if(recorded>=1000) break;
+		tree->GetEntry(ev);
+		if (flavor == 1){
+			GenLep1Id=11;
+			GenLep2Id=-11;
+			GenLep3Id=11;
+			GenLep4Id=-11;
+		}
+		else{
+			GenLep1Id=13;
+			GenLep2Id=-13;
+			GenLep3Id=11;
+			GenLep4Id=-11;
+		}
+		int LepIds[4] = { 
+			GenLep1Id,
+			GenLep2Id,
+			GenLep3Id,
+			GenLep4Id
+		};
+
+		myJetPt.clear();
+		myJetEta.clear();
+		myJetPhi.clear();
+		myJetMass.clear();
+		TLorentzVector jet1(0,0,1e-3,1e-3),jet2(0,0,1e-3,1e-3),higgs(0,0,0,0);
+		TLorentzVector p4[3],jets[2];
+		for (int i = 0; i < JetPt->size(); i++){
+			myJetPt.push_back(JetPt->at(i));
+			myJetEta.push_back(JetEta->at(i));
+			myJetPhi.push_back(JetPhi->at(i));
+			myJetMass.push_back(JetMass->at(i));
+		}
+		if (myJetPt.size()>1){
+			int filled = 0;
+			jets[0].SetPxPyPzE(0,0,1,1);
+			jets[1].SetPxPyPzE(0,0,1,1);
+			for (int i = 0; i < myJetPt.size(); i++){
+				jets[filled].SetPtEtaPhiM(myJetPt[i], myJetEta[i], myJetPhi[i], myJetMass[i]);
+				double jetE = jets[filled].Energy();
+				double jetP = jets[filled].P();
+
+				if (filled == 0){
+					if (jets[filled].Pt()>jet1.Pt()){
+						jet1.SetPxPyPzE(jets[filled].Px(), jets[filled].Py(), jets[filled].Pz(), jetE);
+						jet1Pt = jet1.Pt();
+					}
+					if (i == myJetPt.size() - 1){
+						filled++;
+						i = 0;
+					}
+				}
+				else{
+					if(jets[filled].Pt()<jet1.Pt() && jets[filled].Pt()>jet2.Pt()){
+						jet2.SetPxPyPzE(jets[filled].Px(), jets[filled].Py(), jets[filled].Pz(), jetE);
+						jet2Pt = jet2.Pt();
+					}
+					if (i == myJetPt.size() - 1){
+						filled++;
+					}
+				}
+				if (filled == 2) break;
+			}
+			if (filled == 2){
+				vector<TLorentzVector> p = mela.calculate4Momentum(mzz, m1, m2, acos(hs), acos(h1), acos(h2), phi1, phi);
+				TLorentzVector pZ1 = p[0] + p[1];
+				TLorentzVector pZ2 = p[3] + p[2];
+				higgs = pZ1 + pZ2;
+				TLorentzVector myjets[2] = { jet1, jet2 };
+				TLorentzVector myHleptons[4] = { p[0],p[1],p[2],p[3] };
+				int vdaughters[2] = { 0,0 };
+				mela.setProcess(TVar::HSMHiggs, TVar::JHUGen, TVar::ZH);
+				mela.computeProdP(myjets, myHleptons, vdaughters, LepIds, 0, selfDHvvcoupl, pzh_VAJHU_old_NEW);
+				mela.setProcess(TVar::H0minus, TVar::JHUGen, TVar::ZH);
+				mela.computeProdP(myjets, myHleptons, vdaughters, LepIds, 0, selfDHvvcoupl, pzh0minus_VAJHU_old_NEW);
+				mela.setProcess(TVar::HSMHiggs, TVar::JHUGen, TVar::WH);
+				mela.computeProdP(myjets, myHleptons, vdaughters, LepIds, 0, selfDHvvcoupl, pwh_VAJHU_old_NEW);
+				mela.setProcess(TVar::H0minus, TVar::JHUGen, TVar::WH);
+				mela.computeProdP(myjets, myHleptons, vdaughters, LepIds, 0, selfDHvvcoupl, pwh0minus_VAJHU_old_NEW);
 
 				newtree->Fill();
 				recorded++;

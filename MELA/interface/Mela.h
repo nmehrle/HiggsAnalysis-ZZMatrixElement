@@ -141,6 +141,16 @@ public:
 		float& prob
 		);
 
+  void computeProdP(
+		TLorentzVector V_daughter[2],
+		TLorentzVector Higgs_daughter[4],
+		int V_daughter_pdgid[2],
+		int Higgs_daughter_pdgid[4],
+		bool includeHiggsDecay,
+		double selfDHvvcoupl[SIZE_HVV_VBF][2],
+		float& prob
+		);
+
   void computePM4l(float mZZ,
 		TVar::LeptonFlavor flavor,
 		TVar::SuperMelaSyst syst, 

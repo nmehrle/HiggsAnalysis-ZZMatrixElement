@@ -106,7 +106,8 @@ Mela::Mela(int LHCsqrts, float mh)
   
   super = new SuperMELA(mh,"4mu",LHCsqrts); // preliminary intialization, we adjust the flavor later
   char cardpath[500];
-  sprintf(cardpath,"HZZ4L_Combination/CombinationPy/CreateDatacards/SM_inputs_%dTeV/inputs_4mu.txt",LHCsqrts);
+//  sprintf(cardpath,"HZZ4L_Combination/CombinationPy/CreateDatacards/SM_inputs_%dTeV/inputs_4mu.txt",LHCsqrts);
+  sprintf(cardpath,"ZZMatrixElement/MELA/data/CombinationInputs/SM_inputs_%dTeV/inputs_4mu.txt",LHCsqrts);
   //std::cout << "before supermela, pathToCards: " <<cardpath<< std::endl;
   edm::FileInPath cardfile(cardpath);
   std::string cpath=cardfile.fullPath();
@@ -157,8 +158,8 @@ void Mela::setProcess(TVar::Process myModel, TVar::MatrixElement myME, TVar::Pro
   // 
 
   if(myModel_==TVar::bkgZZ)  pdf = qqZZmodel;
-	else if(myProduction == TVar::JJGG || myProduction == TVar::JJVBF) ;
-  else if(myProduction == TVar::JJVH ) cout<<"Placeholder for VH"<<endl;
+  else if(myProduction == TVar::JJGG || myProduction == TVar::JJVBF) ;
+  else if(myProduction == TVar::ZH || myProduction == TVar::WH ) ;
   else if(!spin0Model->configure(myModel_)) pdf = spin0Model->PDF;
   else if(!spin1Model->configure(myModel_)) pdf = spin1Model->PDF;
   else if(!spin2Model->configure(myModel_,myProduction_)) pdf = spin2Model->PDF;
@@ -1290,31 +1291,32 @@ void Mela::computeProdP(TLorentzVector Jet1, int Jet1_Id,
   else{
     higgs=Decay1+Decay2;
   }
-  //float rdiff=Jet1.DeltaR(Jet2);
-//  if(higgs.M()<100) failedEvent=true;
-//  //if(Jet1.Pt()<30. || fabs(Jet1.Eta())>4.7 || Jet2.Pt()<30. || fabs(Jet2.Eta())>4.7 || rdiff<0.5) failedEvent=true;
-//  if(failedEvent) prob=-99.;
-  //else{
     energy = Jet1.Energy();
     p3sq = sqrt(Jet1.Px()*Jet1.Px()+Jet1.Py()*Jet1.Py()+Jet1.Pz()*Jet1.Pz());
-    ratio = energy / p3sq;
+    ratio = (p3sq>0 ? (energy / p3sq) : 1);
     jet1massless.SetPxPyPzE(Jet1.Px()*ratio,Jet1.Py()*ratio,Jet1.Pz()*ratio,energy);
     energy = Jet2.Energy();
     p3sq = sqrt(Jet2.Px()*Jet2.Px()+Jet2.Py()*Jet2.Py()+Jet2.Pz()*Jet2.Pz());
-    ratio = energy / p3sq;
+    ratio = (p3sq>0 ? (energy / p3sq) : 1);
     jet2massless.SetPxPyPzE(Jet2.Px()*ratio,Jet2.Py()*ratio,Jet2.Pz()*ratio,energy);
     TLorentzVector total=jet1massless+jet2massless+higgs;
-    jet1massless.Boost(-total.BoostVector().x(),-total.BoostVector().y(),0.);
-    jet2massless.Boost(-total.BoostVector().x(),-total.BoostVector().y(),0.);
-    higgs.Boost(-total.BoostVector().x(),-total.BoostVector().y(),0.);
-    ZZME->computeProdXS(jet1massless,jet2massless,higgs,
+    jet1massless.Boost(-total.BoostVector().x(),-total.BoostVector().y(),0);
+    jet2massless.Boost(-total.BoostVector().x(),-total.BoostVector().y(),0);
+    higgs.Boost(-total.BoostVector().x(),-total.BoostVector().y(),0);
+    if (myProduction_ == TVar::JJGG || myProduction_ == TVar::JJVBF) ZZME->computeProdXS_JJH(jet1massless,jet2massless,higgs,
 		myModel_,myProduction_,
 		selfDHggcoupl,
 		selfDHvvcoupl,
 		selfDHwwcoupl,
 		prob
-		);
-  //}
+		); // Higgs + 2 jets: SBF or WBF
+	else if(myProduction_ == TVar::JH) ZZME->computeProdXS_JH(
+		jet1massless,
+		higgs,
+		myModel_,
+		myProduction_,
+		prob
+		); // Higgs + 1 jet; only SM is supported for now.
 
 	if(myME_==TVar::JHUGen){
 		if (myProduction_ == TVar::JJGG){
@@ -1350,6 +1352,57 @@ void Mela::computeProdP(TLorentzVector Jet1, int Jet1_Id,
 				selfDHvvcoupl,
 				selfDHwwcoupl,
 				prob);
+}
+
+
+void Mela::computeProdP(
+			TLorentzVector V_daughter[2],
+			TLorentzVector Higgs_daughter[4],
+			int V_daughter_pdgid[2],
+			int Higgs_daughter_pdgid[4],
+
+			bool includeHiggsDecay,
+
+			double selfDHvvcoupl[SIZE_HVV_VBF][2],
+			float& prob){
+    // Dedicated function for VH ME
+
+    float constant=1;
+    double energy,p3sq,ratio;
+	if (abs(V_daughter_pdgid[0]) <= 6){
+		energy = V_daughter[0].E();
+		p3sq = V_daughter[0].P();
+		ratio = (p3sq > 0 ? (energy / p3sq) : 1);
+		V_daughter[0] = V_daughter[0] * ratio;
+	}
+	if (abs(V_daughter_pdgid[1]) <= 6){
+		energy = V_daughter[1].E();
+		p3sq = V_daughter[1].P();
+		ratio = (p3sq > 0 ? (energy / p3sq) : 1);
+		V_daughter[1] = V_daughter[1] * ratio;
+	}
+
+    if (myProduction_ == TVar::ZH || myProduction_ == TVar::WH) ZZME->computeProdXS_VH(
+		V_daughter,
+		Higgs_daughter,
+		V_daughter_pdgid,
+		Higgs_daughter_pdgid,
+		includeHiggsDecay,
+		myModel_,
+		myME_,
+		myProduction_,
+		selfDHvvcoupl,
+		prob
+		); // VH
+
+	if(myME_==TVar::JHUGen){
+		constant = 1; // No c-constant yet
+	}
+	else if(myME_==TVar::ANALYTICAL){
+	//To be added later
+	}
+
+	prob*=constant;
 }
 
 

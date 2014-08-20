@@ -17,11 +17,12 @@ real(8), parameter :: alphas = 0.13229060d0         ! strong coupling
 real(8), parameter :: sitW = dsqrt(0.23119d0)       ! sin(Theta_Weinberg) (PDG-2008)
 
 
-integer, parameter :: DecayMode1=0
-integer, parameter :: DecayMode2=0
-logical, parameter :: includeInterference=.true.
-logical, parameter :: OffShellReson=.false.
-logical, parameter :: includeGammaStar = .true. 
+integer, parameter :: DecayMode1 = 0
+integer, parameter :: DecayMode2 = 0
+logical, parameter :: includeInterference = .true.
+logical, parameter :: OffShellReson = .false.
+logical, parameter :: includeGammaStar = .true.
+logical, parameter :: H_DK = .false.                 ! set to false so H in V* > VH does not decay
 
 
 !-- momentum-dependent form factors
@@ -68,5 +69,12 @@ real(8), parameter :: lambda_z2 = 10000d0 * GeV
 real(8), parameter :: lambda_z3 = 10000d0 * GeV
 real(8), parameter :: lambda_z4 = 10000d0 * GeV
 real(8), parameter :: lambda_z5 = 10000d0 * GeV
-real(8), parameter :: lambda_Q = 10000d0 * GeV
+real(8), parameter :: lambda_Q  = 10000d0 * GeV
 
+real(8), parameter :: scale_alpha_Z_uu = 1.04282d0 ! scaling factor of alpha (~partial width) for Z > u u~
+real(8), parameter :: scale_alpha_Z_dd = 1.04282d0 ! scaling factor of alpha (~partial width) for Z > d d~
+real(8), parameter :: scale_alpha_Z_ll = 1d0 ! scaling factor of alpha (~partial width) for Z > l+ l-
+real(8), parameter :: scale_alpha_Z_nn = 1d0 ! scaling factor of alpha (~partial width) for Z > nu nu~
+real(8), parameter :: scale_alpha_W_ud = 1.0993819d0 ! scaling factor of alpha (~partial width) for W > u d
+real(8), parameter :: scale_alpha_W_cs = 1.0993819d0 ! scaling factor of alpha (~partial width) for W > c s
+real(8), parameter :: scale_alpha_W_ln = 1d0 ! scaling factor of alpha (~partial width) for W > l nu

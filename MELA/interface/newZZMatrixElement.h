@@ -37,7 +37,7 @@ public:
 				 float &mevalue
 			 );
 
-  void computeProdXS(TLorentzVector jet1,
+  void computeProdXS_JJH(TLorentzVector jet1,
 		     TLorentzVector jet2,
 		     TLorentzVector higgs,
 		     TVar::Process myModel,
@@ -47,6 +47,27 @@ public:
 			 double selfDHwwcoupl[SIZE_HWW_VBF][2],
 		     float &mevalue
 		     );
+
+  void computeProdXS_JH(TLorentzVector singleJet,
+			 TLorentzVector higgs,
+			 TVar::Process myModel,
+			 TVar::Production myProduction,
+			 float &mevalue
+			 );
+
+  void computeProdXS_VH(
+					   TLorentzVector V_daughter[2],
+				       TLorentzVector Higgs_daughter[4],
+					   int V_daughter_pdgid[2],
+				       int Higgs_daughter_pdgid[4],
+					   bool includeHiggsDecay,
+					   TVar::Process myModel,
+					   TVar::MatrixElement myME,
+					   TVar::Production myProduction,
+					   double selfDHvvcoupl[SIZE_HVV_VBF][2],
+				       float &mevalue
+					   );
+
 
   void set_mHiggs(float myPoleMass);
   void set_wHiggs(float myPoleWidth);
@@ -62,6 +83,7 @@ private:
   TVar::VerbosityLevel verb;
   TEvtProb Xcal2;
   hzz4l_event_type hzz4l_event;
+  vh_event_type vh_event;
   float mHiggs;
   float wHiggs;
   double EBEAM;
