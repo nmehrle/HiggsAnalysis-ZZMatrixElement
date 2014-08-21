@@ -1081,8 +1081,6 @@ void Mela::computeP_selfDspin1(float mZZ, float mZ1, float mZ2, // input kinemat
 		);
   }
 else if (myME_ == TVar::ANALYTICAL){
- for (int i =0 ;i<SIZE_ZVV;i++){
-
   costhetastar_rrv->setVal(costhetastar);
   costheta1_rrv->setVal(costheta1);
   costheta2_rrv->setVal(costheta2);
@@ -1093,6 +1091,7 @@ else if (myME_ == TVar::ANALYTICAL){
    z2mass_rrv->setVal(mZ2);
    mzz_rrv->setVal(mZZ);
 
+ for (int i =0 ;i<SIZE_ZVV;i++){
     if(selfDZvvcoupl[i][1]!=0){
       cout << "Error: MELA does not support complex coupling for the moment! "<<endl;
       return;
