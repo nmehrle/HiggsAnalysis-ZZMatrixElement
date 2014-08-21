@@ -36,40 +36,7 @@ RooXZsZs_5D::RooXZsZs_5D(const char *name, const char *title,
 					RooRealVar* _g2List[],
 					RooRealVar* _g3List[],
 					RooRealVar* _g4List[],
-/*
-					RooAbsReal& _g1Val,
-					RooAbsReal& _g2Val,
-					RooAbsReal& _g3Val,
-					RooAbsReal& _g4Val,
-					RooAbsReal& _g1_primeVal,
-					RooAbsReal& _g2_primeVal,
-					RooAbsReal& _g3_primeVal,
-					RooAbsReal& _g4_primeVal,
-					RooAbsReal& _g1_prime2Val,
-					RooAbsReal& _g2_prime2Val,
-					RooAbsReal& _g3_prime2Val,
-					RooAbsReal& _g4_prime2Val,
-					RooAbsReal& _g1_prime3Val,
-					RooAbsReal& _g2_prime3Val,
-					RooAbsReal& _g3_prime3Val,
-					RooAbsReal& _g4_prime3Val,
-					RooAbsReal& _g1_prime4Val,
-					RooAbsReal& _g2_prime4Val,
-					RooAbsReal& _g3_prime4Val,
-					RooAbsReal& _g4_prime4Val,
-					RooAbsReal& _g1_prime5Val,
-					RooAbsReal& _g2_prime5Val,
-					RooAbsReal& _g3_prime5Val,
-					RooAbsReal& _g4_prime5Val,
-					RooAbsReal& _g1_prime6Val,
-					RooAbsReal& _g2_prime6Val,
-					RooAbsReal& _g3_prime6Val,
-					RooAbsReal& _g4_prime6Val,
-					RooAbsReal& _g1_prime7Val,
-					RooAbsReal& _g2_prime7Val,
-					RooAbsReal& _g3_prime7Val,
-					RooAbsReal& _g4_prime7Val,
-*/
+
 						RooAbsReal& _mZ,
                         RooAbsReal& _gamZ,
                         RooAbsReal& _mX,
@@ -89,86 +56,45 @@ a3Val("a3Val","a3Val",this,_a3Val),
 phi3Val("phi3Val","phi3Val",this,_phi3Val),
 
 useGTerm("useGTerm","useGTerm",this,_useGTerm),
-/*
-g1Val("g1Val","g1Val",this,_g1Val),
-g2Val("g2Val","g2Val",this,_g2Val),
-g3Val("g3Val","g3Val",this,_g3Val),
-g4Val("g4Val","g4Val",this,_g4Val),
+g1Val("g1Val","g1Val",this,(RooAbsReal&) *(_g1List[0]) ),
+g2Val("g2Val","g2Val",this,(RooAbsReal&) *(_g2List[0]) ),
+g3Val("g3Val","g3Val",this,(RooAbsReal&) *(_g3List[0]) ),
+g4Val("g4Val","g4Val",this,(RooAbsReal&) *(_g4List[0]) ),
 
-g1_primeVal("g1_primeVal","g1_primeVal",this,_g1_primeVal),
-g2_primeVal("g2_primeVal","g2_primeVal",this,_g2_primeVal),
-g3_primeVal("g3_primeVal","g3_primeVal",this,_g3_primeVal),
-g4_primeVal("g4_primeVal","g4_primeVal",this,_g4_primeVal),
+g1_primeVal("g1_primeVal","g1_primeVal",this,(RooAbsReal&) *(_g1List[1]) ),
+g2_primeVal("g2_primeVal","g2_primeVal",this,(RooAbsReal&) *(_g2List[1]) ),
+g3_primeVal("g3_primeVal","g3_primeVal",this,(RooAbsReal&) *(_g3List[1]) ),
+g4_primeVal("g4_primeVal","g4_primeVal",this,(RooAbsReal&) *(_g4List[1]) ),
 
-g1_prime2Val("g1_prime2Val","g1_prime2Val",this,_g1_prime2Val),
-g2_prime2Val("g2_prime2Val","g2_prime2Val",this,_g2_prime2Val),
-g3_prime2Val("g3_prime2Val","g3_prime2Val",this,_g3_prime2Val),
-g4_prime2Val("g4_prime2Val","g4_prime2Val",this,_g4_prime2Val),
+g1_prime2Val("g1_prime2Val","g1_prime2Val",this,(RooAbsReal&) *(_g1List[2]) ),
+g2_prime2Val("g2_prime2Val","g2_prime2Val",this,(RooAbsReal&) *(_g2List[2]) ),
+g3_prime2Val("g3_prime2Val","g3_prime2Val",this,(RooAbsReal&) *(_g3List[2]) ),
+g4_prime2Val("g4_prime2Val","g4_prime2Val",this,(RooAbsReal&) *(_g4List[2]) ),
 
-g1_prime3Val("g1_prime3Val","g1_prime3Val",this,_g1_prime3Val),
-g2_prime3Val("g2_prime3Val","g2_prime3Val",this,_g2_prime3Val),
-g3_prime3Val("g3_prime3Val","g3_prime3Val",this,_g3_prime3Val),
-g4_prime3Val("g4_prime3Val","g4_prime3Val",this,_g4_prime3Val),
+g1_prime3Val("g1_prime3Val","g1_prime3Val",this,(RooAbsReal&) *(_g1List[3]) ),
+g2_prime3Val("g2_prime3Val","g2_prime3Val",this,(RooAbsReal&) *(_g2List[3]) ),
+g3_prime3Val("g3_prime3Val","g3_prime3Val",this,(RooAbsReal&) *(_g3List[3]) ),
+g4_prime3Val("g4_prime3Val","g4_prime3Val",this,(RooAbsReal&) *(_g4List[3]) ),
 
-g1_prime4Val("g1_prime4Val","g1_prime4Val",this,_g1_prime4Val),
-g2_prime4Val("g2_prime4Val","g2_prime4Val",this,_g2_prime4Val),
-g3_prime4Val("g3_prime4Val","g3_prime4Val",this,_g3_prime4Val),
-g4_prime4Val("g4_prime4Val","g4_prime4Val",this,_g4_prime4Val),
+g1_prime4Val("g1_prime4Val","g1_prime4Val",this,(RooAbsReal&) *(_g1List[4]) ),
+g2_prime4Val("g2_prime4Val","g2_prime4Val",this,(RooAbsReal&) *(_g2List[4]) ),
+g3_prime4Val("g3_prime4Val","g3_prime4Val",this,(RooAbsReal&) *(_g3List[4]) ),
+g4_prime4Val("g4_prime4Val","g4_prime4Val",this,(RooAbsReal&) *(_g4List[4]) ),
 
-g1_prime5Val("g1_prime5Val","g1_prime5Val",this,_g1_prime5Val),
-g2_prime5Val("g2_prime5Val","g2_prime5Val",this,_g2_prime5Val),
-g3_prime5Val("g3_prime5Val","g3_prime5Val",this,_g3_prime5Val),
-g4_prime5Val("g4_prime5Val","g4_prime5Val",this,_g4_prime5Val),
+g1_prime5Val("g1_prime5Val","g1_prime5Val",this,(RooAbsReal&) *(_g1List[5]) ),
+g2_prime5Val("g2_prime5Val","g2_prime5Val",this,(RooAbsReal&) *(_g2List[5]) ),
+g3_prime5Val("g3_prime5Val","g3_prime5Val",this,(RooAbsReal&) *(_g3List[5]) ),
+g4_prime5Val("g4_prime5Val","g4_prime5Val",this,(RooAbsReal&) *(_g4List[5]) ),
 
-g1_prime6Val("g1_prime6Val","g1_prime6Val",this,_g1_prime6Val),
-g2_prime6Val("g2_prime6Val","g2_prime6Val",this,_g2_prime6Val),
-g3_prime6Val("g3_prime6Val","g3_prime6Val",this,_g3_prime6Val),
-g4_prime6Val("g4_prime6Val","g4_prime6Val",this,_g4_prime6Val),
+g1_prime6Val("g1_prime6Val","g1_prime6Val",this,(RooAbsReal&) *(_g1List[6]) ),
+g2_prime6Val("g2_prime6Val","g2_prime6Val",this,(RooAbsReal&) *(_g2List[6]) ),
+g3_prime6Val("g3_prime6Val","g3_prime6Val",this,(RooAbsReal&) *(_g3List[6]) ),
+g4_prime6Val("g4_prime6Val","g4_prime6Val",this,(RooAbsReal&) *(_g4List[6]) ),
 
-g1_prime7Val("g1_prime7Val","g1_prime7Val",this,_g1_prime7Val),
-g2_prime7Val("g2_prime7Val","g2_prime7Val",this,_g2_prime7Val),
-g3_prime7Val("g3_prime7Val","g3_prime7Val",this,_g3_prime7Val),
-g4_prime7Val("g4_prime7Val","g4_prime7Val",this,_g4_prime7Val),
-*/
-g1Val("g1Val","g1Val",this,(_g1List[0]) ),
-g2Val("g2Val","g2Val",this,(_g2List[0]) ),
-g3Val("g3Val","g3Val",this,(_g3List[0]) ),
-g4Val("g4Val","g4Val",this,(_g4List[0]) ),
-
-g1_primeVal("g1_primeVal","g1_primeVal",this,(_g1List[1]) ),
-g2_primeVal("g2_primeVal","g2_primeVal",this,(_g2List[1]) ),
-g3_primeVal("g3_primeVal","g3_primeVal",this,(_g3List[1]) ),
-g4_primeVal("g4_primeVal","g4_primeVal",this,(_g4List[1]) ),
-
-g1_prime2Val("g1_prime2Val","g1_prime2Val",this,(_g1List[2]) ),
-g2_prime2Val("g2_prime2Val","g2_prime2Val",this,(_g2List[2]) ),
-g3_prime2Val("g3_prime2Val","g3_prime2Val",this,(_g3List[2]) ),
-g4_prime2Val("g4_prime2Val","g4_prime2Val",this,(_g4List[2]) ),
-
-g1_prime3Val("g1_prime3Val","g1_prime3Val",this,(_g1List[3]) ),
-g2_prime3Val("g2_prime3Val","g2_prime3Val",this,(_g2List[3]) ),
-g3_prime3Val("g3_prime3Val","g3_prime3Val",this,(_g3List[3]) ),
-g4_prime3Val("g4_prime3Val","g4_prime3Val",this,(_g4List[3]) ),
-
-g1_prime4Val("g1_prime4Val","g1_prime4Val",this,(_g1List[4]) ),
-g2_prime4Val("g2_prime4Val","g2_prime4Val",this,(_g2List[4]) ),
-g3_prime4Val("g3_prime4Val","g3_prime4Val",this,(_g3List[4]) ),
-g4_prime4Val("g4_prime4Val","g4_prime4Val",this,(_g4List[4]) ),
-
-g1_prime5Val("g1_prime5Val","g1_prime5Val",this,(_g1List[5]) ),
-g2_prime5Val("g2_prime5Val","g2_prime5Val",this,(_g2List[5]) ),
-g3_prime5Val("g3_prime5Val","g3_prime5Val",this,(_g3List[5]) ),
-g4_prime5Val("g4_prime5Val","g4_prime5Val",this,(_g4List[5]) ),
-
-g1_prime6Val("g1_prime6Val","g1_prime6Val",this,(_g1List[6]) ),
-g2_prime6Val("g2_prime6Val","g2_prime6Val",this,(_g2List[6]) ),
-g3_prime6Val("g3_prime6Val","g3_prime6Val",this,(_g3List[6]) ),
-g4_prime6Val("g4_prime6Val","g4_prime6Val",this,(_g4List[6]) ),
-
-g1_prime7Val("g1_prime7Val","g1_prime7Val",this,(_g1List[7]) ),
-g2_prime7Val("g2_prime7Val","g2_prime7Val",this,(_g2List[7]) ),
-g3_prime7Val("g3_prime7Val","g3_prime7Val",this,(_g3List[7]) ),
-g4_prime7Val("g4_prime7Val","g4_prime7Val",this,(_g4List[7]) ),
+g1_prime7Val("g1_prime7Val","g1_prime7Val",this,(RooAbsReal&) *(_g1List[7]) ),
+g2_prime7Val("g2_prime7Val","g2_prime7Val",this,(RooAbsReal&) *(_g2List[7]) ),
+g3_prime7Val("g3_prime7Val","g3_prime7Val",this,(RooAbsReal&) *(_g3List[7]) ),
+g4_prime7Val("g4_prime7Val","g4_prime7Val",this,(RooAbsReal&) *(_g4List[7]) ),
 
 mZ("mZ","mZ",this,_mZ),
 gamZ("gamZ","gamZ",this,_gamZ),
@@ -281,8 +207,7 @@ Double_t RooXZsZs_5D::evaluate() const
     // stupid calculation to avoid compiler warnings
     phi1=phi1; phi2=phi2; phi3=phi3;
 
-    if(useGTerm>0.0){
-			
+	if(useGTerm>0.0){
 		double g1_dyn = g1Val
 								+   g1_primeVal * pow(Lambda_z1,4)/( pow(Lambda_z1,2) + pow(m1,2) )/( pow(Lambda_z1,2) + pow(m2,2)) 
                     		    +   g1_prime2Val* ( pow(m1,2) + pow(m2,2) )/pow(Lambda_z1,2)                                  
@@ -310,7 +235,6 @@ Double_t RooXZsZs_5D::evaluate() const
                     		    +   g3_prime6Val* ( pow(m1,4) - pow(m2,4) )/pow(Lambda_z3,4)
                     		    +   g3_prime7Val* ( pow(m1,2) * pow(m2,2) )/pow(Lambda_z3,4);
 
-
 		double g4_dyn = g4Val
 								+   g4_primeVal * pow(Lambda_z4,4)/( pow(Lambda_z4,2) + pow(m1,2) )/( pow(Lambda_z4,2) + pow(m2,2)) 
                     		    +   g4_prime2Val* ( pow(m1,2) + pow(m2,2) )/pow(Lambda_z4,2)                                  
@@ -326,7 +250,7 @@ Double_t RooXZsZs_5D::evaluate() const
       phi2 = atan2(0.,a2);
       a3 = -2.*g4_dyn;
       phi3 = atan2(0.,a3);
-      
+
     }else{
       a1=a1Val;
       phi1=phi1Val;
@@ -402,9 +326,7 @@ Double_t RooXZsZs_5D::evaluate() const
     Double_t term1 = betaVal*term1Coeff*term2Coeff*(term1A+term1B+term1C+term1D+term1E+term1F);
 
     Double_t accp = 1.;
-    return term1*accp;
-    
-    
+    return term1*accp;    
 } 
 
 

@@ -166,16 +166,6 @@ public:
     PDF = new RooXZsZs_5D("PDF","PDF",*m1,*m2,*h1,*h2,*Phi,
 		*a1Val,*phi1Val,*a2Val,*phi2Val,*a3Val,*phi3Val,
 		*useGTerm,
-/*
-		*g1Val,*g2Val,*g3Val,*g4Val,
-		*g1_primeVal,*g2_primeVal,*g3_primeVal,*g4_primeVal,
-		*g1_prime2Val,*g2_prime2Val,*g3_prime2Val,*g4_prime2Val,
-		*g1_prime3Val,*g2_prime3Val,*g3_prime3Val,*g4_prime3Val,
-		*g1_prime4Val,*g2_prime4Val,*g3_prime4Val,*g4_prime4Val,
-		*g1_prime5Val,*g2_prime5Val,*g3_prime5Val,*g4_prime5Val,
-		*g1_prime6Val,*g2_prime6Val,*g3_prime6Val,*g4_prime6Val,
-		*g1_prime7Val,*g2_prime7Val,*g3_prime7Val,*g4_prime7Val,
-*/
 
 		g1List,
 		g2List,

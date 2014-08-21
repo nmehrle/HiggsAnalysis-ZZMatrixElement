@@ -3282,3 +3282,200 @@ void testME_FullMELA_FullSimMC_VHValidation (int flavor=1){
 	foutput->Close();
 	finput->Close();
 };
+
+void testME_FullMELA_FullSimMC_analyticalMELAValidation(int flavor=1){
+	int erg_tev=8;
+	float mPOLE=125.6;
+	float wPOLE=4.15e-3;
+	char TREE_NAME[] = "SelectedTree";
+
+//	TVar::VerbosityLevel verbosity = TVar::INFO;
+
+	Mela mela(erg_tev,mPOLE);
+	TGraph* vaScale_4e = mela.vaScale_4e;
+	TGraph* vaScale_4mu = mela.vaScale_4mu;
+	TGraph* vaScale_2e2mu = mela.vaScale_2e2mu;
+	TGraph* DggZZ_scalefactor = mela.DggZZ_scalefactor;
+
+	TFile* finput = new TFile(Form("/afs/cern.ch/work/u/usarica/HZZ4l-125p6-FullAnalysis/LHC_8TeV/%s/HZZ4lTree_powheg15jhuGenV3-0PMH125.6.root",(flavor==0 ? "2mu2e" : "4e")),"read");
+	TFile* foutput = new TFile(Form("HZZ4lTree_powheg15jhuGenV3-0PMH125.6_%s_Original_analyticalMELAValidationTestOnly.root",(flavor==0 ? "2mu2e" : "4e")),"recreate");
+
+	float p0plus_mela;
+	float p0hplus_mela;
+	float p0minus_mela;
+	float p0_g1prime2_mela;
+	float pg1g1prime2_mela;
+	float pg1g1prime2_pi2_mela;
+	float pg1g2_mela;
+	float pg1g2_pi2_mela;
+	float pg1g4_mela;
+	float pg1g4_pi2_mela;
+
+	float p0plus_mela_NEW;
+	float p0hplus_mela_NEW;
+	float p0minus_mela_NEW;
+	float p0_g1prime2_mela_NEW;
+	float pg1g1prime2_mela_NEW;
+	float pg1g1prime2_pi2_mela_NEW;
+	float pg1g2_mela_NEW;
+	float pg1g2_pi2_mela_NEW;
+	float pg1g4_mela_NEW;
+	float pg1g4_pi2_mela_NEW;
+
+
+	float ggHZZ_prob_pure,ggHZZ_prob_int,ggZZ_prob_Total;
+	float bkg_VAMCFM,ggzz_VAMCFM;
+	float ggHZZ_prob_pure_NEW,ggHZZ_prob_int_NEW,ggZZ_prob_Total_NEW,p0plus_VAMCFM_NEW_BSMOn;
+	float bkg_VAMCFM_NEW,ggzz_VAMCFM_NEW;
+	float bkg_VAMCFM_STU,bkg_VAMCFM_TU,bkg_VAMCFM_S;
+
+	float p0plus_m4l, p0plus_m4l_ScaleUp, p0plus_m4l_ScaleDown, p0plus_m4l_ResUp, p0plus_m4l_ResDown;
+	float bkg_m4l, bkg_m4l_ScaleUp, bkg_m4l_ScaleDown, bkg_m4l_ResUp, bkg_m4l_ResDown;
+
+	float mzz = 126.; 
+	float m1 = 91.471450;
+	float m2 = 12.139782;
+	float h1 = 0.2682896;
+	float h2 = 0.1679779;
+	float phi = 1.5969792;
+	float hs = -0.727181;
+	float phi1 = 1.8828257;
+	int GenLep1Id,GenLep2Id,GenLep3Id,GenLep4Id;
+
+	TTree* tree = (TTree*) finput->Get(TREE_NAME);
+	tree->SetBranchAddress("ZZMass", &mzz);
+	tree->SetBranchAddress("Z1Mass", &m1);
+	tree->SetBranchAddress("Z2Mass", &m2);
+	tree->SetBranchAddress("helcosthetaZ1", &h1);
+	tree->SetBranchAddress("helcosthetaZ2", &h2);
+	tree->SetBranchAddress("helphi", &phi);
+	tree->SetBranchAddress("costhetastar", &hs);
+	tree->SetBranchAddress("phistarZ1", &phi1);
+	tree->SetBranchAddress("Lep1ID", &GenLep1Id);
+	tree->SetBranchAddress("Lep2ID", &GenLep2Id);
+	tree->SetBranchAddress("Lep3ID", &GenLep3Id);
+	tree->SetBranchAddress("Lep4ID", &GenLep4Id);
+	tree->SetBranchAddress("pg1g2_mela",&pg1g2_mela);
+	tree->SetBranchAddress("pg1g4_mela",&pg1g4_mela);
+	tree->SetBranchAddress("pg1g1prime2_mela",&pg1g1prime2_mela);
+
+	TTree* newtree = new TTree("TestTree","");
+	newtree->Branch("ZZMass", &mzz);
+	newtree->Branch("Z1Mass", &m1);
+	newtree->Branch("Z2Mass", &m2);
+	newtree->Branch("helcosthetaZ1", &h1);
+	newtree->Branch("helcosthetaZ2", &h2);
+	newtree->Branch("helphi", &phi);
+	newtree->Branch("costhetastar", &hs);
+	newtree->Branch("phistarZ1", &phi1);
+	newtree->Branch("Lep1Id", &GenLep1Id);
+	newtree->Branch("Lep2Id", &GenLep2Id);
+	newtree->Branch("Lep3Id", &GenLep3Id);
+	newtree->Branch("Lep4Id", &GenLep4Id);
+
+	newtree->Branch("pg1g2_mela",&pg1g2_mela);
+	newtree->Branch("pg1g4_mela",&pg1g4_mela);
+	newtree->Branch("pg1g1prime2_mela",&pg1g1prime2_mela);
+
+	newtree->Branch("p0plus_mela_NEW",&p0plus_mela_NEW);
+	newtree->Branch("p0hplus_mela_NEW",&p0hplus_mela_NEW);
+	newtree->Branch("p0minus_mela_NEW",&p0minus_mela_NEW);
+	newtree->Branch("p0_g1prime2_mela_NEW",&p0_g1prime2_mela_NEW);
+	newtree->Branch("pg1g2_mela_NEW",&pg1g2_mela_NEW);
+	newtree->Branch("pg1g4_mela_NEW",&pg1g4_mela_NEW);
+	newtree->Branch("pg1g1prime2_mela_NEW",&pg1g1prime2_mela_NEW);
+
+	int nEntries = tree->GetEntries();
+	double selfDHvvcoupl[SIZE_HVV][2] = { { 0 } };
+	double ggvvcoupl[2]={0,0};
+	mela.setProcess(TVar::SelfDefine_spin0, TVar::JHUGen, TVar::ZZGG);
+//	for (int ev = 0; ev < nEntries; ev++){
+//	for (int ev = 0; ev < 100; ev++){
+	for (int ev = 0; ev < 1000; ev++){
+		tree->GetEntry(ev);
+
+		int lepIdOrdered[4]={ 11,-11,11,-11 };
+		if (flavor == 0){
+			lepIdOrdered[0]=13;lepIdOrdered[1]=-13;
+		};
+		float angularOrdered[8] = { mzz, m1, m2, hs, h1, h2, phi, phi1 };
+//		for(int k=0;k<8;k++) cout << angularOrdered[k] << '\t';
+//		cout << endl;
+
+		mela.setProcess(TVar::SelfDefine_spin0, TVar::ANALYTICAL, TVar::ZZGG);
+		selfDHvvcoupl[0][0]=1;
+		selfDHvvcoupl[0][0]=1;
+		selfDHvvcoupl[1][0]=0;
+		selfDHvvcoupl[1][1]=0;
+		selfDHvvcoupl[3][0]=0;
+		selfDHvvcoupl[3][1]=0;
+		selfDHvvcoupl[11][0]=0;
+		selfDHvvcoupl[11][1]=0;
+//		cout << "p0plus" << endl;
+		p0plus_mela_NEW = getJHUGenMELAWeight(mela, lepIdOrdered, angularOrdered, selfDHvvcoupl);
+
+		selfDHvvcoupl[0][0]=0;
+		selfDHvvcoupl[1][0]=1;
+		selfDHvvcoupl[1][1]=0;
+		selfDHvvcoupl[3][0]=0;
+		selfDHvvcoupl[3][1]=0;
+		selfDHvvcoupl[11][0]=0;
+//		cout << "p0hplus" << endl;
+		p0hplus_mela_NEW = getJHUGenMELAWeight(mela, lepIdOrdered, angularOrdered, selfDHvvcoupl);
+
+		selfDHvvcoupl[0][0]=0;
+		selfDHvvcoupl[1][0]=0;
+		selfDHvvcoupl[1][1]=0;
+		selfDHvvcoupl[3][0]=1;
+		selfDHvvcoupl[3][1]=0;
+		selfDHvvcoupl[11][0]=0;
+//		cout << "p0minus" << endl;
+		p0minus_mela_NEW = getJHUGenMELAWeight(mela, lepIdOrdered, angularOrdered, selfDHvvcoupl);
+
+		selfDHvvcoupl[0][0]=0;
+		selfDHvvcoupl[1][0]=0;
+		selfDHvvcoupl[1][1]=0;
+		selfDHvvcoupl[3][0]=0;
+		selfDHvvcoupl[3][1]=0;
+		selfDHvvcoupl[11][0]=-12046.01;
+//		cout << "p0g1prime2" << endl;
+		p0_g1prime2_mela_NEW = getJHUGenMELAWeight(mela, lepIdOrdered, angularOrdered, selfDHvvcoupl);
+
+		selfDHvvcoupl[0][0]=1;
+		selfDHvvcoupl[1][0]=1.638;
+		selfDHvvcoupl[1][1]=0;
+		selfDHvvcoupl[3][0]=0;
+		selfDHvvcoupl[3][1]=0;
+		selfDHvvcoupl[11][0]=0;
+//		cout << "pg1g2" << endl;
+		pg1g2_mela_NEW = getJHUGenMELAWeight(mela, lepIdOrdered, angularOrdered, selfDHvvcoupl);
+		pg1g2_mela_NEW -= (p0plus_mela_NEW + pow(1.638,2)*p0hplus_mela_NEW);
+
+		selfDHvvcoupl[0][0]=1;
+		selfDHvvcoupl[1][0]=0;
+		selfDHvvcoupl[1][1]=0;
+		selfDHvvcoupl[3][0]=2.521;
+		selfDHvvcoupl[3][1]=0;
+		selfDHvvcoupl[11][0]=0;
+//		cout << "pg1g4" << endl;
+		pg1g4_mela_NEW = getJHUGenMELAWeight(mela, lepIdOrdered, angularOrdered, selfDHvvcoupl);
+		pg1g4_mela_NEW -= (p0plus_mela_NEW + pow(2.521,2)*p0minus_mela_NEW);
+
+		selfDHvvcoupl[0][0]=1;
+		selfDHvvcoupl[1][0]=0;
+		selfDHvvcoupl[1][1]=0;
+		selfDHvvcoupl[3][0]=0;
+		selfDHvvcoupl[3][1]=0;
+		selfDHvvcoupl[11][0]=12046.01;
+//		cout << "pg1g1prime2" << endl;
+		pg1g1prime2_mela_NEW = getJHUGenMELAWeight(mela, lepIdOrdered, angularOrdered, selfDHvvcoupl);
+		pg1g1prime2_mela_NEW -= (p0plus_mela_NEW + p0_g1prime2_mela_NEW);
+
+		newtree->Fill();
+	};
+
+
+	foutput->WriteTObject(newtree);
+	foutput->Close();
+	finput->Close();
+};
