@@ -214,8 +214,8 @@ MEMs::MEMs(double collisionEnergy, double sKD_mass, string PDFName, bool debug_)
     MELAprodMap[kJJ_0minus_VBF]		=TVar::JJVBF;
     MELAprodMap[kJJ_SMHiggs_GG]		=TVar::JJGG;
     MELAprodMap[kJJ_0minus_GG]		=TVar::JJGG;
-    MELAprodMap[kJJ_SMHiggs_VH]		=TVar::JJZH;
-    MELAprodMap[kJJ_0minus_VH]		=TVar::JJZH;
+    MELAprodMap[kJJ_SMHiggs_VH]		=TVar::ZH;
+    MELAprodMap[kJJ_0minus_VH]		=TVar::ZH;
 
 	
     MELAprodIntMap[kg1g4]			=TVar::ZZGG;
