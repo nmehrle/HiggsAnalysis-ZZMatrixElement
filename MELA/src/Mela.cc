@@ -30,6 +30,7 @@ using namespace RooFit;
 Mela::Mela(int LHCsqrts, float mh) 
 {
   if(LHCsqrts!=8 && LHCsqrts!=7) assert(0);
+  setRemoveLeptonMasses(false); // Use Run I scheme for not removing lepton masses
 
   // Create symlinks to the required files, if these are not already present (do nothing otherwse)
   edm::FileInPath mcfmInput1("ZZMatrixElement/MELA/data/input.DAT");
@@ -128,6 +129,8 @@ Mela::Mela(int LHCsqrts, float mh)
 
 Mela::~Mela(){ 
   //std::cout << "begin destructor" << std::endl;  
+  setRemoveLeptonMasses(false); // Use Run I scheme for not removing lepton masses. Notice the switch itself is defined as an extern, so it has to be set to default value at the destructor!
+
   delete mzz_rrv;
   delete z1mass_rrv; 
   delete z2mass_rrv; 
@@ -179,6 +182,8 @@ void Mela::setMelaLeptonInterference(TVar::LeptonInterference myLepInterf){
 void Mela::resetMCFM_EWKParameters(double ext_Gf, double ext_aemmz, double ext_mW, double ext_mZ){
 	ZZME->reset_MCFM_EWKParameters(ext_Gf, ext_aemmz, ext_mW, ext_mZ);
 }
+
+void Mela::setRemoveLeptonMasses(bool MasslessLeptonSwitch){ mela::applyLeptonMassCorrection(MasslessLeptonSwitch); }
 
 
 // Re-order masses and angles as needed by likelihoodDiscriminant. 
@@ -960,7 +965,7 @@ void Mela::computeP_selfDspin2(float mZZ, float mZ1, float mZ2, // input kinemat
         float phi1,
         int flavor,
         double selfDGggcoupl[SIZE_GGG][2],
-		double selfDGvvcoupl[SIZE_GVV][2], 
+        double selfDGvvcoupl[SIZE_GVV][2], 
         float& prob){
 
    double couplingvals_NOTggZZ[SIZE_HVV_FREENORM] = { 0 };
@@ -1210,6 +1215,12 @@ void Mela::computeP(TLorentzVector Z1_lept1, int Z1_lept1Id,  // input 4-vectors
   // PASS FOUR-VECTORS IN WRONG ORDER.  FOR NOW ASSUMING                
   // THEY ARE PASSED AS e-,e+,mu-,mu+                                   
   // ------------------ channel ------------------------                
+
+  if (mela::forbidMassiveLeptons){
+    mela::constrainedRemoveLeptonMass(Z1_lept1,Z1_lept2);
+    mela::constrainedRemoveLeptonMass(Z2_lept1,Z2_lept2);
+  }
+
   int flavor;
 
   if(abs(Z1_lept1Id)==abs(Z1_lept2Id)&&
@@ -1256,7 +1267,12 @@ void Mela::computeP(TLorentzVector Z1_lept1, int Z1_lept1Id,  // input 4-vectors
 		    TLorentzVector Z2_lept2, int Z2_lept2Id,
 		    double couplingvals[SIZE_HVV_FREENORM],
 		    float& prob){                             // output probability
-  
+
+  if (mela::forbidMassiveLeptons){
+    mela::constrainedRemoveLeptonMass(Z1_lept1,Z1_lept2);
+    mela::constrainedRemoveLeptonMass(Z2_lept1,Z2_lept2);
+  }
+
   if(myME_==TVar::JHUGen && myModel_==TVar::bkgZZ_SMHiggs){
     int flavor;
     
@@ -1323,12 +1339,12 @@ void Mela::computeProdP(TLorentzVector Jet1, int Jet1_Id,
   else{
     higgs=Decay1+Decay2;
   }
-    energy = Jet1.Energy();
-    p3sq = sqrt(Jet1.Px()*Jet1.Px()+Jet1.Py()*Jet1.Py()+Jet1.Pz()*Jet1.Pz());
+    energy = Jet1.T();
+    p3sq = Jet1.P();
     ratio = (p3sq>0 ? (energy / p3sq) : 1);
     jet1massless.SetPxPyPzE(Jet1.Px()*ratio,Jet1.Py()*ratio,Jet1.Pz()*ratio,energy);
-    energy = Jet2.Energy();
-    p3sq = sqrt(Jet2.Px()*Jet2.Px()+Jet2.Py()*Jet2.Py()+Jet2.Pz()*Jet2.Pz());
+    energy = Jet2.T();
+    p3sq = Jet2.P();
     ratio = (p3sq>0 ? (energy / p3sq) : 1);
     jet2massless.SetPxPyPzE(Jet2.Px()*ratio,Jet2.Py()*ratio,Jet2.Pz()*ratio,energy);
     TLorentzVector total=jet1massless+jet2massless+higgs;
@@ -1401,18 +1417,34 @@ void Mela::computeProdP(
 
     float constant=1;
     double energy,p3sq,ratio;
-	if (abs(V_daughter_pdgid[0]) <= 6){
-		energy = V_daughter[0].E();
-		p3sq = V_daughter[0].P();
-		ratio = (p3sq > 0 ? (energy / p3sq) : 1);
-		V_daughter[0] = V_daughter[0] * ratio;
-	}
-	if (abs(V_daughter_pdgid[1]) <= 6){
-		energy = V_daughter[1].E();
-		p3sq = V_daughter[1].P();
-		ratio = (p3sq > 0 ? (energy / p3sq) : 1);
-		V_daughter[1] = V_daughter[1] * ratio;
-	}
+    if (abs(V_daughter_pdgid[0]) <= 6){
+      energy = V_daughter[0].T();
+      p3sq = V_daughter[0].P();
+      ratio = (p3sq > 0 ? (energy / p3sq) : 1);
+      V_daughter[0].SetVect(V_daughter[0].Vect() * ratio);
+    }
+    if (abs(V_daughter_pdgid[1]) <= 6){
+      energy = V_daughter[1].T();
+      p3sq = V_daughter[1].P();
+      ratio = (p3sq > 0 ? (energy / p3sq) : 1);
+      V_daughter[1].SetVect(V_daughter[1].Vect() * ratio);
+    }
+
+    if ( abs(V_daughter_pdgid[0]) <= 16 && abs(V_daughter_pdgid[0]) >= 11 && abs(V_daughter_pdgid[1]) <= 16 && abs(V_daughter_pdgid[1]) >= 11){
+      if (mela::forbidMassiveLeptons){
+        mela::constrainedRemoveLeptonMass(V_daughter[0],V_daughter[1]);
+      }
+    }
+    if ( abs(Higgs_daughter_pdgid[0]) <= 16 && abs(Higgs_daughter_pdgid[0]) >= 11 && abs(Higgs_daughter_pdgid[1]) <= 16 && abs(Higgs_daughter_pdgid[1]) >= 11){
+      if (mela::forbidMassiveLeptons){
+        mela::constrainedRemoveLeptonMass(Higgs_daughter[0],Higgs_daughter[1]);
+      }
+    }
+    if ( abs(Higgs_daughter_pdgid[2]) <= 16 && abs(Higgs_daughter_pdgid[2]) >= 11 && abs(Higgs_daughter_pdgid[3]) <= 16 && abs(Higgs_daughter_pdgid[3]) >= 11){
+      if (mela::forbidMassiveLeptons){
+        mela::constrainedRemoveLeptonMass(Higgs_daughter[2],Higgs_daughter[3]);
+      }
+    }
 
     if (myProduction_ == TVar::ZH || myProduction_ == TVar::WH) ZZME->computeProdXS_VH(
 		V_daughter,
@@ -1446,6 +1478,7 @@ void Mela::computePM4l(TLorentzVector Z1_lept1, int Z1_lept1Id,  // input 4-vect
 		       TVar::SuperMelaSyst syst, 
 		       float& prob){
 
+  // Notice: No need to correct lepton masses here since m4l is the only information entered. m4l is not supposed to change after mass corrections.
   TLorentzVector ZZ = (Z1_lept1 + Z1_lept2 + Z2_lept1 + Z2_lept2);
   float mzz = ZZ.M();
   TVar::LeptonFlavor flavor = TVar::Flavor_Dummy;

@@ -334,7 +334,10 @@ public:
 	/// MEM calculators: MEKD (FeynRules+MadGraph5_v1) and MELA (Analytic, JHUGen, MCFM). Placed here for the expert use.
 	MEKD* m_MEKD;
 	Mela* m_MELA;
-	
+
+  /// Enable removing of lepton masses from the MEs
+  void removeLeptonMasses(bool doRemove = false){ m_MELA->setRemoveLeptonMasses(doRemove); }
+
 private:
 	/// For error handling and supported precalculations
 	int m_err, NUM_PROCESSES_PRECALC;

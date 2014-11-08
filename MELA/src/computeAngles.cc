@@ -13,6 +13,54 @@
 
 using namespace std;
 
+namespace mela{
+  bool forbidMassiveLeptons = false;
+}
+
+void mela::applyLeptonMassCorrection(bool flag){ mela::forbidMassiveLeptons = flag; }
+
+void mela::constrainedRemoveLeptonMass(TLorentzVector& p1, TLorentzVector& p2){
+  TLorentzVector pZ_old = p1 + p2;
+  TLorentzVector p1_new = p1;
+  TLorentzVector p2_new = p2;
+
+  double energy = p1.T();
+  double mom = p1.P();
+  double mom_new = (energy + mom) / 2.;
+  if (mom != 0){
+    double x_new = p1.X()*mom_new / mom;
+    double y_new = p1.Y()*mom_new / mom;
+    double z_new = p1.Z()*mom_new / mom;
+    p1_new.SetXYZT(x_new, y_new, z_new, mom_new);
+  }
+  energy = p2.T();
+  mom = p2.P();
+  mom_new = (energy + mom) / 2.;
+  if (mom != 0){
+    double x_new = p2.X()*mom_new / mom;
+    double y_new = p2.Y()*mom_new / mom;
+    double z_new = p2.Z()*mom_new / mom;
+    p2_new.SetXYZT(x_new, y_new, z_new, mom_new);
+  }
+  TLorentzVector pZ_new = p1_new + p2_new;
+  double delta_mZ=pZ_old.M()-pZ_new.M();
+
+  p1_new.Boost(-(pZ_new.BoostVector()) );
+  mom = p1_new.T();
+  mom_new = mom + delta_mZ / 2.;
+  if(mom!=0) p1_new *= mom_new/mom;
+  p1_new.Boost( (pZ_old.BoostVector()) );
+
+  p2_new.Boost(-(pZ_new.BoostVector()) );
+  mom = p2_new.T();
+  mom_new = mom + delta_mZ / 2.;
+  if(mom!=0) p2_new *= mom_new/mom;
+  p2_new.Boost( (pZ_old.BoostVector()) );
+
+  p1=p1_new;p2=p2_new;
+}
+
+
 void mela::computeAngles(TLorentzVector p4M11, int Z1_lept1Id,
 			 TLorentzVector p4M12, int Z1_lept2Id,
 			 TLorentzVector p4M21, int Z2_lept1Id,
@@ -22,6 +70,11 @@ void mela::computeAngles(TLorentzVector p4M11, int Z1_lept1Id,
 			 float& costheta2, 
 			 float& Phi, 
 			 float& Phi1){
+
+  if (mela::forbidMassiveLeptons){
+    mela::constrainedRemoveLeptonMass(p4M11,p4M12);
+    mela::constrainedRemoveLeptonMass(p4M21,p4M22);
+  }
 
   //build Z 4-vectors
   TLorentzVector p4Z1 = p4M11 + p4M12;
@@ -154,7 +207,11 @@ void mela::computeAnglesCS(TLorentzVector p4M11, int Z1_lept1Id,
 						 float& costheta2, 
 						 float& Phi, 
 						 float& Phi1){
-	
+
+  if (mela::forbidMassiveLeptons){
+    mela::constrainedRemoveLeptonMass(p4M11,p4M12);
+    mela::constrainedRemoveLeptonMass(p4M21,p4M22);
+  }
 
 	TVector3 LabXaxis( 1.0, 0.0, 0.0 );
 	TVector3 LabYaxis( 0.0, 1.0, 0.0 );

@@ -39,6 +39,7 @@ public:
   void setProcess(TVar::Process myModel, TVar::MatrixElement myME, TVar::Production myProduction);
   void setMelaHiggsWidth(float myHiggsWidth=-1);
   void setMelaLeptonInterference(TVar::LeptonInterference myLepInterf = TVar::DefaultLeptonInterf);
+  void setRemoveLeptonMasses(bool MasslessLeptonSwitch = false);
   void resetMCFM_EWKParameters(double ext_Gf, double ext_aemmz, double ext_mW, double ext_mZ);
 
   void computeP(float mZZ, float mZ1, float mZ2, // input kinematics
@@ -59,7 +60,7 @@ public:
 		float phi,
 		float phi1,
 		int flavor,
-	    double selfDHvvcoupl[SIZE_HVV][2],
+    double selfDHvvcoupl[SIZE_HVV][2],
 		float& prob                   // output probability
 		);
 
@@ -83,7 +84,7 @@ public:
         float phi1,
         int flavor,
         double selfDGggcoupl[SIZE_GGG][2],
-		double selfDGvvcoupl[SIZE_GVV][2],
+        double selfDGvvcoupl[SIZE_GVV][2],
         float& prob
 		);
 
@@ -200,7 +201,7 @@ public:
   TensorPdfFactory* spin2Model;
   RooqqZZ_JHU_ZgammaZZ_fast* qqZZmodel;
   SuperMELA* super;
-  TRandom3 *myR; // random number for resolution szstematics
+  TRandom3 *myR; // random number for resolution systematics
 
 
   RooRealVar* mzz_rrv;

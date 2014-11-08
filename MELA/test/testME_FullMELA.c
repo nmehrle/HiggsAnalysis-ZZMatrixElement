@@ -2616,7 +2616,7 @@ void testME_FullMELA_PingWithFourMomenta(int flavor=0){
 	float hs = -0.727181;
 	float phi1 = 1.8828257;
 	float GenLep1Id,GenLep2Id,GenLep3Id,GenLep4Id;
-
+/*
 	const int nEntries = 3;
 	double l1_array[nEntries][4] = {
 		{1365.4973807340846,        10.289826593755228,        25.205694382277809,       -1365.2259480507332},
@@ -2638,13 +2638,52 @@ void testME_FullMELA_PingWithFourMomenta(int flavor=0){
 		{95.655512770627581,       -13.986023919404957,       -37.960063551193414,       -86.679881365440792},
 		{49.137252081251319,       -19.463268758477309,       -28.879247017597017,       -34.664676589120688}
 	};
-
+*/
+	const int nEntries = 6;
+	double l1_array[nEntries][4] = {
+		{51.374202,	25.924766,	12.290178,	42.616376},
+		{51.374202,	25.924766,	12.290178,	42.616376},
+		{1365.4973807340846,        10.289826593755228,        25.205694382277809,       -1365.2259480507332}, // Massless
+		{1365.4973807340846,        10.289826593755228,        25.205694382277809,       -1365.2259480507332}, // Massless
+		{1365.4973848483,        10.289826593755228,        25.205694382277809,       -1365.2259480507332}, // Muon via E
+		{1365.4973848483,        10.289826593755228,        25.205694382277809,       -1365.2259480507332} // Muon via E
+	};
+	double l2_array[nEntries][4] = {
+		{271.875752,	70.427173,	-11.138146,	261.769598},
+		{21.481452,	9.489680,	-9.336587,	16.858699},
+		{22.786181013986834,      -0.15136300982222117,      -0.90077551414353962,       -22.767866345236371},
+		{471.71918486784784,       -35.976267906053060,        4.5169691019519895,       -470.32360615864354},
+		{22.7864275656,      -0.15136300982222117,      -0.90077551414353962,       -22.767866345236371},
+		{471.7191967775,       -35.976267906053060,        4.5169691019519895,       -470.32360615864354}
+	};
+	double l3_array[nEntries][4] = {
+		{75.823478,	-16.640412,	23.246999,	70.227220},
+		{75.823478,	-16.640412,	23.246999,	70.227220},
+		{1895.7562628816693,        25.837804322120054,       -28.821887970086259,       -1895.3610513294620},
+		{1895.7562628816693,        25.837804322120054,       -28.821887970086259,       -1895.3610513294620},
+		{1895.7562658451,        25.837804322120054,       -28.821887970086259,       -1895.3610513294620},
+		{1895.7562658451,        25.837804322120054,       -28.821887970086259,       -1895.3610513294620}
+	};
+	double l4_array[nEntries][4] = {
+		{21.481452,	9.489680,	-9.336587,	16.858699},
+		{271.875752,	70.427173,	-11.138146,	261.769598},
+		{471.71918486784784,       -35.976267906053060,        4.5169691019519895,       -470.32360615864354},
+		{22.786181013986834,      -0.15136300982222117,      -0.90077551414353962,       -22.767866345236371},
+		{471.7191967775,       -35.976267906053060,        4.5169691019519895,       -470.32360615864354},
+		{22.7864275656,      -0.15136300982222117,      -0.90077551414353962,       -22.767866345236371}
+	};
 
 	double selfDHvvcoupl[SIZE_HVV][2] = { { 0 } };
 	double ggvvcoupl[2]={0,0};
 	mela.setProcess(TVar::SelfDefine_spin0, TVar::JHUGen, TVar::ZZGG);
 	for (int ev = 0; ev < nEntries; ev++){
-		if (flavor == 1){
+		if (flavor == 2){
+			GenLep1Id=13;
+			GenLep2Id=-13;
+			GenLep3Id=11;
+			GenLep4Id=-11;
+		}
+		else if (flavor == 1){
 			GenLep1Id=11;
 			GenLep2Id=-11;
 			GenLep3Id=11;
@@ -2653,8 +2692,8 @@ void testME_FullMELA_PingWithFourMomenta(int flavor=0){
 		else{
 			GenLep1Id=13;
 			GenLep2Id=-13;
-			GenLep3Id=11;
-			GenLep4Id=-11;
+			GenLep3Id=13;
+			GenLep4Id=-13;
 		}
 		int lepIdOrdered[4] = { GenLep1Id, GenLep2Id, GenLep3Id, GenLep4Id };
 		TLorentzVector p1(l1_array[ev][1],l1_array[ev][2],l1_array[ev][3],l1_array[ev][0]);
@@ -2706,7 +2745,7 @@ void testME_FullMELA_PingWithFourMomenta(int flavor=0){
 		selfDHvvcoupl[3][1]=2.6;
 		mela.setMelaHiggsWidth(wPOLE);
 		pVAJHU = getJHUGenMELAWeight(mela, lepIdOrdered, angularOrdered, selfDHvvcoupl);
-
+/*
 		cout << "BSM:\n";
 		cout << "MCFM:\t";
 		cout << pVAMCFM/1.45e-8 << endl;
@@ -2714,7 +2753,7 @@ void testME_FullMELA_PingWithFourMomenta(int flavor=0){
 		cout << pVAJHU/1.45e-8 << endl;
 		cout << "JHUGen/MCFM:\t";
 		cout << pVAJHU/pVAMCFM << endl;
-
+*/
 		mela.setProcess(TVar::HSMHiggs, TVar::MCFM, TVar::ZZGG);
 
 		for (int ii = 0; ii < SIZE_HVV; ii++){ for (int jj = 0; jj < 2; jj++) selfDHvvcoupl[ii][jj] = 0; }
@@ -2732,9 +2771,11 @@ void testME_FullMELA_PingWithFourMomenta(int flavor=0){
 
 		cout << "SM:\n";
 		cout << "MCFM:\t";
-		cout << pVAMCFM_SM/1.45e-8 << endl;
+//		cout << pVAMCFM_SM/1.45e-8 << endl;
+		cout << pVAMCFM_SM << endl;
 		cout << "JHUGen:\t";
-		cout << pVAJHU_SM/1.45e-8 << endl;
+//		cout << pVAJHU_SM/1.45e-8 << endl;
+		cout << pVAJHU_SM << endl;
 		cout << "JHUGen/MCFM:\t";
 		cout << pVAJHU_SM/pVAMCFM_SM << endl;
 
@@ -2742,6 +2783,199 @@ void testME_FullMELA_PingWithFourMomenta(int flavor=0){
 		cout << (pVAJHU/pVAMCFM)/(pVAJHU_SM/pVAMCFM_SM) << endl;
 	}
 }
+
+
+void testME_FullMELA_MassiveLeptonFourMomenta(int flavor=0){
+	int erg_tev=8;
+	float mPOLE=125.0;
+	float wPOLE=4.165e-3;
+
+//	TVar::VerbosityLevel verbosity = TVar::INFO;
+
+	Mela mela(erg_tev,mPOLE);
+
+	float mzz = 125.; 
+	float m1 = 91.471450;
+	float m2 = 12.139782;
+	float h1 = 0.2682896;
+	float h2 = 0.1679779;
+	float phi = 1.5969792;
+	float hs = -0.727181;
+	float phi1 = 1.8828257;
+  float GenLep1Id,GenLep2Id,GenLep3Id,GenLep4Id;
+
+  const int nEntries = 2;
+	double l1_array[nEntries][4] = {
+		{51.374202,	25.924766,	12.290178,	42.616376}, // Massive
+		{1365.4973807340846,        10.289826593755228,        25.205694382277809,       -1365.2259480507332} // Massless
+	};
+	double l2_array[nEntries][4] = {
+		{271.875752,	70.427173,	-11.138146,	261.769598},
+		{22.786181013986834,      -0.15136300982222117,      -0.90077551414353962,       -22.767866345236371}
+	};
+	double l3_array[nEntries][4] = {
+		{75.823478,	-16.640412,	23.246999,	70.227220},
+		{1895.7562628816693,        25.837804322120054,       -28.821887970086259,       -1895.3610513294620}
+	};
+	double l4_array[nEntries][4] = {
+		{21.481452,	9.489680,	-9.336587,	16.858699},
+		{471.71918486784784,       -35.976267906053060,        4.5169691019519895,       -470.32360615864354}
+	};
+
+	for (int ev = 0; ev < nEntries; ev++){
+		if (flavor == 2){
+			GenLep1Id=13;
+			GenLep2Id=-13;
+			GenLep3Id=11;
+			GenLep4Id=-11;
+		}
+		else if (flavor == 1){
+			GenLep1Id=11;
+			GenLep2Id=-11;
+			GenLep3Id=11;
+			GenLep4Id=-11;
+		}
+		else{
+			GenLep1Id=13;
+			GenLep2Id=-13;
+			GenLep3Id=13;
+			GenLep4Id=-13;
+		}
+		int lepIdOrdered[4] = { GenLep1Id, GenLep2Id, GenLep3Id, GenLep4Id };
+		TLorentzVector p1(l1_array[ev][1],l1_array[ev][2],l1_array[ev][3],l1_array[ev][0]);
+		TLorentzVector p2(l2_array[ev][1],l2_array[ev][2],l2_array[ev][3],l2_array[ev][0]);
+		TLorentzVector p3(l3_array[ev][1],l3_array[ev][2],l3_array[ev][3],l3_array[ev][0]);
+		TLorentzVector p4(l4_array[ev][1],l4_array[ev][2],l4_array[ev][3],l4_array[ev][0]);
+    TLorentzVector pZ1 = p1+p2;
+    TLorentzVector pZ2 = p3+p4;
+
+    std::vector<TLorentzVector> pF;
+    pF.push_back(p1);
+    pF.push_back(p2);
+    pF.push_back(p3);
+    pF.push_back(p4);
+
+    TLorentzVector p1_new = p1;
+    TLorentzVector p2_new = p2;
+    TLorentzVector p3_new = p3;
+    TLorentzVector p4_new = p4;
+
+    std::vector<TLorentzVector> pF_new;
+    TLorentzVector pZ1_new;
+    TLorentzVector pZ2_new;
+    pF_new.push_back(p1_new);
+    pF_new.push_back(p2_new);
+    pF_new.push_back(p3_new);
+    pF_new.push_back(p4_new);
+/*
+    for (int v = 0; v < 4; v++){
+      double energy = pF_new[v].T();
+      double mom = pF_new[v].P();
+      double energy_new = (energy + mom) / 2.;
+      if (mom != 0){
+        double x_new = pF_new[v].X()*energy_new / mom;
+        double y_new = pF_new[v].Y()*energy_new / mom;
+        double z_new = pF_new[v].Z()*energy_new / mom;
+
+        pF_new[v].SetXYZT(x_new, y_new, z_new, energy_new);
+      }
+    }
+    pZ1_new = pF_new[0]+pF_new[1];
+    pZ2_new = pF_new[2]+pF_new[3];
+    double delta_m1=pZ1.M()-pZ1_new.M();
+    double delta_m2=pZ2.M()-pZ2_new.M();
+    TVector3 boostForwardZ1 = -(pZ1_new.BoostVector());
+    TVector3 boostForwardZ2 = -(pZ2_new.BoostVector());
+    TVector3 boostOldZ1 = -(pZ1.BoostVector());
+    TVector3 boostOldZ2 = -(pZ2.BoostVector());
+    for (int v = 0; v < 2; v++){
+      pF_new[v].Boost(boostForwardZ1);
+      double mag = pF_new[v].T();
+      double mag_new = mag + delta_m1 / 2.;
+      if (mag != 0) pF_new[v] *= mag_new / mag;
+      pF_new[v].Boost(-boostOldZ1);
+    }
+    for (int v = 2; v < 4; v++){
+      pF_new[v].Boost(boostForwardZ2);
+      double mag = pF_new[v].T();
+      double mag_new = mag + delta_m2 / 2.;
+      if (mag != 0) pF_new[v] *= mag_new / mag;
+      pF_new[v].Boost(-boostOldZ2);
+    }
+*/
+
+    mela::constrainedRemoveLeptonMass(pF_new[0],pF_new[1]);
+    mela::constrainedRemoveLeptonMass(pF_new[2],pF_new[3]);
+    if(mela::forbidMassiveLeptons) cout << "Lepton masses already forbidden!" << endl;
+    mela::computeAngles(pF[0], GenLep1Id,
+			 pF[1], GenLep2Id,
+			 pF[2], GenLep3Id,
+			 pF[3], GenLep4Id,
+			 hs, 
+			 h1, 
+			 h2, 
+			 phi, 
+			 phi1);
+    mzz = (pF[0]+pF[1]+pF[2]+pF[3]).M();
+    m1 = pZ1.M();
+    m2 = pZ2.M();
+
+    for (int v = 0; v < 4; v++){
+      cout << "Vector " << v << ":\n"
+        << "Initial E: " << pF[v].T() << " ... Final E: " << pF_new[v].T() << '\n'
+        << "Initial X: " << pF[v].X() << " ... Final X: " << pF_new[v].X() << '\n'
+        << "Initial Y: " << pF[v].Y() << " ... Final Y: " << pF_new[v].Y() << '\n'
+        << "Initial Z: " << pF[v].Z() << " ... Final Z: " << pF_new[v].Z() << '\n'
+        << "Initial M: " << pF[v].M() << " ... Final M: " << pF_new[v].M() << endl;
+    }
+    cout << "Old mZZ: " << mzz << endl;
+    cout << "Old m1: " << m1 << endl;
+    cout << "Old m2: " << m2 << endl;
+    cout << "Old hs: " << hs << endl;
+    cout << "Old h1: " << h1 << endl;
+    cout << "Old h2: " << h2 << endl;
+    cout << "Old phi1: " << phi1 << endl;
+    cout << "Old phi: " << phi << endl;
+    mela.setRemoveLeptonMasses(true);
+    mela::computeAngles(pF_new[0], GenLep1Id,
+			 pF_new[1], GenLep2Id,
+			 pF_new[2], GenLep3Id,
+			 pF_new[3], GenLep4Id,
+			 hs, 
+			 h1, 
+			 h2, 
+			 phi, 
+			 phi1);
+    mzz = (pF_new[0]+pF_new[1]+pF_new[2]+pF_new[3]).M();
+    pZ1_new = pF_new[0]+pF_new[1];
+    pZ2_new = pF_new[2]+pF_new[3];
+    m1 = pZ1_new.M();
+    m2 = pZ2_new.M();
+    cout << "New mZZ: " << mzz << endl;
+    cout << "New m1: " << m1 << endl;
+    cout << "New m2: " << m2 << endl;
+    cout << "New hs: " << hs << endl;
+    cout << "New h1: " << h1 << endl;
+    cout << "New h2: " << h2 << endl;
+    cout << "New phi1: " << phi1 << endl;
+    cout << "New phi: " << phi << endl;
+    mela.setRemoveLeptonMasses(false);
+  }
+
+  if(mela::forbidMassiveLeptons) cout << "Lepton masses already forbidden!" << endl;
+  else{
+    cout << "Lepton masses not forbidden yet!" << endl;
+    mela.setRemoveLeptonMasses(true);
+    if (mela::forbidMassiveLeptons) cout << "Lepton masses now forbidden!" << endl;
+    else cout << "Switch didn't work" << endl;
+  }
+  mela.setRemoveLeptonMasses(false);
+  if (!mela::forbidMassiveLeptons) cout << "Lepton masses not forbidden again." << endl;
+  mela::applyLeptonMassCorrection(true);
+  if (mela::forbidMassiveLeptons) cout << "Lepton masses forbidden again." << endl;
+  mela::applyLeptonMassCorrection(false);
+}
+
 
 void testME_FullMELA_FullSimMC_VBFValidation (int flavor=1){
 	int erg_tev=8;

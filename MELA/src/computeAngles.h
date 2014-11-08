@@ -11,6 +11,12 @@
 #include "TLorentzVector.h"
 
 namespace mela {
+  /// Leptons have to be massless for ME calculations.
+  /// Remove lepton mass with constraint on mV if the flag is set to true
+  extern bool forbidMassiveLeptons;
+  void applyLeptonMassCorrection(bool flag=false);
+  void constrainedRemoveLeptonMass(TLorentzVector& p1, TLorentzVector& p2);
+
   /// Compute decay angles from the lepton four-vectors and pdgIds.  
   /// Theta1 is the angle corresponding to Z1.
   /// Z1_lept1 and  Z1_lept2 are supposed to come from the same Z.
