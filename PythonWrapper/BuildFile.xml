@@ -1,0 +1,10 @@
+<use name="boost"/>
+<use name="rootcintex"/>
+<use name="rootrflx"/>
+<use name="roofitcore"/>
+<use name="FWCore/PythonParameterSet"/>
+<use name="ZZMatrixElement/MEMCalculators"/>
+<use name="root"/>
+<export>
+  <lib   name="1"/>
+</export>
