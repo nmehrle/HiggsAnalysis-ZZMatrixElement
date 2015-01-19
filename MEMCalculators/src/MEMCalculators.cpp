@@ -1294,4 +1294,7 @@ void MEMs::computePm4l(vector<TLorentzVector> partP,
 
 }
 
+void MEMs::removeLeptonMasses(bool doRemove){ m_MELA->setRemoveLeptonMasses(doRemove); }
+
+
 #endif

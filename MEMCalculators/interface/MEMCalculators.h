@@ -336,7 +336,7 @@ public:
 	Mela* m_MELA;
 
   /// Enable removing of lepton masses from the MEs
-  void removeLeptonMasses(bool doRemove = false){ m_MELA->setRemoveLeptonMasses(doRemove); }
+  void removeLeptonMasses(bool doRemove = false);
 
 private:
 	/// For error handling and supported precalculations
