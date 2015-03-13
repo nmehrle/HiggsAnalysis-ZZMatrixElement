@@ -29,7 +29,8 @@ using namespace RooFit;
 
 Mela::Mela(int LHCsqrts, float mh) 
 {
-  if(LHCsqrts!=8 && LHCsqrts!=7) assert(0);
+  int maxSqrts = 8;
+//  if(LHCsqrts!=8 && LHCsqrts!=7) assert(0);
   setRemoveLeptonMasses(false); // Use Run I scheme for not removing lepton masses
 
   // Create symlinks to the required files, if these are not already present (do nothing otherwse)
@@ -105,10 +106,11 @@ Mela::Mela(int LHCsqrts, float mh)
   myR=new TRandom3(35797);
   //  std::cout << "before supermela" << std::endl;
   
-  super = new SuperMELA(mh,"4mu",LHCsqrts); // preliminary intialization, we adjust the flavor later
+  int superMELA_LHCsqrts = LHCsqrts;
+  if (superMELA_LHCsqrts > maxSqrts) superMELA_LHCsqrts = maxSqrts;
+  super = new SuperMELA(mh, "4mu", superMELA_LHCsqrts); // preliminary intialization, we adjust the flavor later
   char cardpath[500];
-//  sprintf(cardpath,"HZZ4L_Combination/CombinationPy/CreateDatacards/SM_inputs_%dTeV/inputs_4mu.txt",LHCsqrts);
-  sprintf(cardpath,"ZZMatrixElement/MELA/data/CombinationInputs/SM_inputs_%dTeV/inputs_4mu.txt",LHCsqrts);
+  sprintf(cardpath, "ZZMatrixElement/MELA/data/CombinationInputs/SM_inputs_%dTeV/inputs_4mu.txt", superMELA_LHCsqrts);
   //std::cout << "before supermela, pathToCards: " <<cardpath<< std::endl;
   edm::FileInPath cardfile(cardpath);
   std::string cpath=cardfile.fullPath();
@@ -121,15 +123,22 @@ Mela::Mela(int LHCsqrts, float mh)
  	edm::FileInPath CTotBkgFile("ZZMatrixElement/MELA/data/ZZ4l-C_TotalBkgM4lGraph.root");
 	TFile* finput_ctotbkg = TFile::Open(CTotBkgFile.fullPath().c_str(),"read");
 	for (int i=0;i<3;i++){
-		tgtotalbkg[i] = new TGraph();
+		tgtotalbkg[i] = 0;
 	} 
 	setCTotalBkgGraphs(finput_ctotbkg, tgtotalbkg);
 	finput_ctotbkg->Close(); 
+  for (int i=0; i<3; i++){
+    assert(tgtotalbkg[i]);
+  }
 }
 
 Mela::~Mela(){ 
   //std::cout << "begin destructor" << std::endl;  
   setRemoveLeptonMasses(false); // Use Run I scheme for not removing lepton masses. Notice the switch itself is defined as an extern, so it has to be set to default value at the destructor!
+
+  for (int i=0; i<3; i++){
+    if (tgtotalbkg[i] != 0) delete tgtotalbkg[i];
+  }
 
   delete mzz_rrv;
   delete z1mass_rrv; 

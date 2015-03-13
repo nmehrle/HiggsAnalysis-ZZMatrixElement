@@ -763,7 +763,7 @@ double TEvtProb::XsecCalc_VX(TVar::Process proc, TVar::Production production, vh
 							if (abs(outgoing2) == abs(outgoing1)) continue;
 							Vdecay_id[0] = outgoing1;
 							Vdecay_id[1] = outgoing2;
-							msqjk += (VHiggsMatEl(proc, production, pVH, pHdaughter, Vdecay_id, _hmass, _hwidth, Hvvcoupl, verbosity, EBEAM)) / 12.; // Average over quark flavors; CAUTION about 12: Depends on nf
+							msqjk += (VHiggsMatEl(proc, production, pVH, pHdaughter, Vdecay_id, _hmass, _hwidth, Hvvcoupl, verbosity, EBEAM)) / 12.; // Average over quark flavors; CAUTION about 12: Depends on nf, (nf+1)*(nf-1)/2 or nf**2/2
 						}
 					}
 					if (outgoing1 == -2 || outgoing1 == -4){ // u-bar or c-bar to d, b or s
