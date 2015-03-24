@@ -63,7 +63,7 @@ int MEKD::processParameters()
 	MEKD_MG_Calc.Use_PDF_w_pT0 = m_usePDF;
 	
     /// Check if sqrt(s) is 7 or 8 TeV
-	if (m_collisionEnergy!=7 && m_collisionEnergy!=8) cerr << "WARNING! You have set energy to be " << m_collisionEnergy << " TeV\n";
+	if (m_collisionEnergy!=7 && m_collisionEnergy!=8 && m_collisionEnergy!=13) cerr << "WARNING! You have set energy to be " << m_collisionEnergy << " TeV\n";
 	
     return 0;
 }
