@@ -1,11 +1,12 @@
 #include "ZZMatrixElement/MEMCalculators/interface/MEMCalculators.h"
+#include "ZZMatrixElement/MELA/src/computeAngles.h"
 
 
 class MEMCalculatorsWrapper 
 {
  public:
-  MEMCalculatorsWrapper() {
-    mem_ = new MEMs(8);
+  MEMCalculatorsWrapper(double collisionEnergy = 8, double sKD_mass = 125.6) {
+    mem_ = new MEMs(collisionEnergy,sKD_mass);
   }
 
 
@@ -13,6 +14,23 @@ class MEMCalculatorsWrapper
     if(mem_ !=0) delete mem_;
   }
 
+
+  struct Angles {
+    float costhetastar,costheta1,costheta2,phi,phistar1;
+  };
+  Angles computeAngles(TLorentzVector Z1_lept1, int Z1_lept1Id,
+		   TLorentzVector Z1_lept2, int Z1_lept2Id,
+		   TLorentzVector Z2_lept1, int Z2_lept1Id,
+		   TLorentzVector Z2_lept2, int Z2_lept2Id) 
+  {
+    Angles ret;
+    mela::computeAngles(Z1_lept1,Z1_lept1Id,
+                        Z1_lept2,Z1_lept2Id,
+                        Z2_lept1,Z2_lept1Id,
+                        Z2_lept2,Z2_lept2Id,
+                    ret.costhetastar,ret.costheta1,ret.costheta2,ret.phi,ret.phistar1);
+    return ret;
+  }
 
   void  computeAll(TLorentzVector Z1_lept1, int Z1_lept1Id,
 		   TLorentzVector Z1_lept2, int Z1_lept2Id,
