@@ -1,3 +1,4 @@
 <lcgdict>
- <class name="MEMCalculatorsWrapper"/>
+ <class name="MEMCalculatorsWrapper" transient="true" />
+ <class name="MEMCalculatorsWrapper::Angles" transient="true" />
 </lcgdict>

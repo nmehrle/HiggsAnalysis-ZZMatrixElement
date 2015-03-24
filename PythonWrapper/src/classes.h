@@ -3,6 +3,7 @@
 
 namespace {
   struct ZZMatrixElement_PythonWrapper {
-    class MEMCalculatorsWrapper;
+    MEMCalculatorsWrapper w;
+    MEMCalculatorsWrapper::Angles a;
   };
 }
