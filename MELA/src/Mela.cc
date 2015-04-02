@@ -170,7 +170,7 @@ void Mela::setProcess(TVar::Process myModel, TVar::MatrixElement myME, TVar::Pro
   // 
 
   if(myModel_==TVar::bkgZZ)  pdf = qqZZmodel;
-  else if(myProduction == TVar::JJGG || myProduction == TVar::JJVBF) ;
+  else if(myProduction == TVar::JJGG || myProduction == TVar::JJVBF || myProduction == TVar::JVBF) ;
   else if(myProduction == TVar::ZH || myProduction == TVar::WH ) ;
   else if(!spin0Model->configure(myModel_)) pdf = spin0Model->PDF;
   else if(!spin1Model->configure(myModel_)) pdf = spin1Model->PDF;
@@ -1352,35 +1352,78 @@ void Mela::computeProdP(TLorentzVector Jet1, int Jet1_Id,
     p3sq = Jet1.P();
     ratio = (p3sq>0 ? (energy / p3sq) : 1);
     jet1massless.SetPxPyPzE(Jet1.Px()*ratio,Jet1.Py()*ratio,Jet1.Pz()*ratio,energy);
-    energy = Jet2.T();
-    p3sq = Jet2.P();
-    ratio = (p3sq>0 ? (energy / p3sq) : 1);
-    jet2massless.SetPxPyPzE(Jet2.Px()*ratio,Jet2.Py()*ratio,Jet2.Pz()*ratio,energy);
-    TLorentzVector total=jet1massless+jet2massless+higgs;
-    jet1massless.Boost(-total.BoostVector().x(),-total.BoostVector().y(),0);
-    jet2massless.Boost(-total.BoostVector().x(),-total.BoostVector().y(),0);
-    higgs.Boost(-total.BoostVector().x(),-total.BoostVector().y(),0);
-    if (myProduction_ == TVar::JJGG || myProduction_ == TVar::JJVBF) ZZME->computeProdXS_JJH(jet1massless,jet2massless,higgs,
-		myModel_,myProduction_,
-		selfDHggcoupl,
-		selfDHvvcoupl,
-		selfDHwwcoupl,
-		prob
-		); // Higgs + 2 jets: SBF or WBF
-	else if(myProduction_ == TVar::JH) ZZME->computeProdXS_JH(
-		jet1massless,
-		higgs,
-		myModel_,
-		myProduction_,
-		prob
-		); // Higgs + 1 jet; only SM is supported for now.
+
+    if(myProduction_ == TVar::JVBF) 
+    {
+      TLorentzVector unboostedJet1,unboostedHiggs;
+
+      unboostedJet1  = jet1massless;
+      unboostedHiggs = higgs;
+
+      float jet2Px,jet2Py,jet2Pz,jet2Pt;
+      jet2Px = -1*(higgs.Px()+Jet1.Px());
+      jet2Py = -1*(higgs.Py()+Jet1.Py());
+      jet2Pt = sqrt(jet2Px*jet2Px+jet2Py*jet2Py);
+      int etaCount=0;
+      float intProb=0;
+      for(double eta = -5; eta<=5.01; eta+=0.2)
+      {
+        etaCount+=1;
+        float thisProb=0;
+        jet2Pz = jet2Pt*sinh(eta);
+        Jet2.SetXYZM(jet2Px,jet2Py,jet2Pz,0);
+
+        energy = Jet2.T();
+        p3sq = Jet2.P();
+        ratio = (p3sq>0 ? (energy / p3sq) : 1);
+        jet2massless.SetPxPyPzE(Jet2.Px()*ratio,Jet2.Py()*ratio,Jet2.Pz()*ratio,energy);
+
+        TLorentzVector total=jet1massless+jet2massless+higgs;
+        jet1massless.Boost(-total.BoostVector().x(),-total.BoostVector().y(),0);
+        jet2massless.Boost(-total.BoostVector().x(),-total.BoostVector().y(),0);
+        higgs.Boost(-total.BoostVector().x(),-total.BoostVector().y(),0);
+
+        ZZME->computeProdXS_JJH(jet1massless,jet2massless,higgs,myModel_,TVar::JJVBF,selfDHggcoupl,selfDHvvcoupl,selfDHwwcoupl,thisProb);
+        intProb+=thisProb;
+
+        jet1massless= unboostedJet1;
+        higgs = unboostedHiggs;
+      }
+      intProb/=etaCount;
+      prob=intProb;
+    }
+
+    else {
+      energy = Jet2.T();
+      p3sq = Jet2.P();
+      ratio = (p3sq>0 ? (energy / p3sq) : 1);
+      jet2massless.SetPxPyPzE(Jet2.Px()*ratio,Jet2.Py()*ratio,Jet2.Pz()*ratio,energy);
+      TLorentzVector total=jet1massless+jet2massless+higgs;
+      jet1massless.Boost(-total.BoostVector().x(),-total.BoostVector().y(),0);
+      jet2massless.Boost(-total.BoostVector().x(),-total.BoostVector().y(),0);
+      higgs.Boost(-total.BoostVector().x(),-total.BoostVector().y(),0);
+      if (myProduction_ == TVar::JJGG || myProduction_ == TVar::JJVBF) ZZME->computeProdXS_JJH(jet1massless,jet2massless,higgs,
+      myModel_,myProduction_,
+      selfDHggcoupl,
+      selfDHvvcoupl,
+      selfDHwwcoupl,
+      prob
+      ); // Higgs + 2 jets: SBF or WBF
+    else if(myProduction_ == TVar::JH) ZZME->computeProdXS_JH(
+      jet1massless,
+      higgs,
+      myModel_,
+      myProduction_,
+      prob
+		  ); // Higgs + 1 jet; only SM is supported for now.
+    }
 
 	if(myME_==TVar::JHUGen){
 		if (myProduction_ == TVar::JJGG){
 			constant = 1.8e-5;
 			if (myModel_ == TVar::H0minus) constant *= 1.0017;
 		}
-		if (myProduction_ == TVar::JJVBF){
+		if (myProduction_ == TVar::JJVBF || myProduction_ == TVar::JVBF){
 			if (myModel_ == TVar::H0minus) constant = 0.067;
 		}
 	}

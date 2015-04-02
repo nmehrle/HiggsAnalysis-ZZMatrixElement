@@ -49,6 +49,7 @@ public:
     ZZINDEPENDENT= 5,
     JJGG = 6, // SBF
     JJVBF = 7, // WBF
+    JVBF = 11, //VBF 1 Jet
     JH = 8, // H + 1 jet
     ZH = 9, // ZH
     WH = 10 // W(+/-)H
