@@ -18,6 +18,7 @@
 #include <TH3F.h>
 #include <TGraph.h>
 #include <vector>
+#include <TProfile.h>
 
 #include <string>
 #include <unistd.h>
@@ -94,6 +95,18 @@ Mela::Mela(int LHCsqrts, float mh)
   assert(vaScale_2e2mu);
   assert(DggZZ_scalefactor);
   
+
+  //
+  //cosThetaDist for JVBF Probability Calculations
+  //
+  edm::FileInPath CosThetaDistFile("ZZMatrixElement/MELA/data/vbfH125_CosTheta.root");
+  TFile* ctdfile = new TFile(CosThetaDistFile.fullPath().c_str(),"r");
+
+  TProfile* tmp = (TProfile*) ctdfile->Get("cosThetaDist");
+  cosThetaDistJVBF = (TProfile*) tmp->Clone("cosThetaDist_Clone");
+  delete tmp;
+  ctdfile->Close();
+  assert(cosThetaDistJVBF);
   //
   // setup supermela
   //
@@ -157,6 +170,8 @@ Mela::~Mela(){
   delete ZZME;
   delete super;
   delete myR;
+
+  delete cosThetaDistJVBF;
 }
 
 void Mela::setProcess(TVar::Process myModel, TVar::MatrixElement myME, TVar::Production myProduction)
@@ -1712,4 +1727,29 @@ void Mela::computeD_gg(float mZZ, float mZ1, float mZ2, // input kinematics
 	float myDggr;
 	constructDggr(mZZ, flavor, bkg_VAMCFM_noscale, ggzz_VAMCFM_noscale, ggHZZ_prob_pure_noscale, ggHZZ_prob_int_noscale, myDggr);
 	prob=myDggr;
+}
+
+//JVBF Probability Calculation
+void Mela::ComputeP_JVBF(TLorentzVector Jet1, TLorentzVector Higgs, float &prob){
+  float Jet2Px,Jet2Py,Jet2Pz,Jet2CosTheta;
+  float naivePvbf;
+  Jet2Px = -1*(Jet1.Px() + Higgs.Px());
+  Jet2Py = -1*(Jet1.Py() + Higgs.Py());
+  Jet2Pz = -1*(Jet1.Pz() + Higgs.Pz());
+
+  TLorentzVector Jet2(0,0,0,0);
+  TLorentzVector nullFourVector(0,0,0,0);
+  Jet2.SetXYZM(Jet2Px,Jet2Py,Jet2Pz,0);
+
+  Jet2CosTheta = Jet2.CosTheta(); 
+
+  setProcess(TVar::HSMHiggs, TVar::JHUGen, TVar::JJVBF);
+  computeProdP(Jet1,2,Jet2,2,Higgs,25,nullFourVector,0,naivePvbf);
+
+  float integral = cosThetaDistJVBF->Integral("width");
+  printf(cosThetaDistJVBF->GetName());
+  int thisBin = cosThetaDistJVBF->FindBin(Jet2CosTheta);
+  float thisBinVal = cosThetaDistJVBF->GetBinContent(thisBin);
+
+  prob = naivePvbf/(integral * thisBinVal);
 }

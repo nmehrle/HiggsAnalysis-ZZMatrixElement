@@ -19,6 +19,7 @@ class TensorPdfFactory;
 class RooqqZZ_JHU_ZgammaZZ_fast;
 class newZZMatrixElement;
 class TGraph;
+class TProfile;
 class SuperMELA;
 
 #include <ZZMatrixElement/MELA/interface/TVar.hh>
@@ -219,6 +220,7 @@ public:
   TGraph* vaScale_4mu;
   TGraph* vaScale_2e2mu;
   TGraph* DggZZ_scalefactor;
+
   void setCTotalBkgGraphs(TFile* fcontainer, TGraph* tgC[]);
   void constructDggr(float mzz, int flavor, float bkg_VAMCFM_noscale, float ggzz_VAMCFM_noscale, float ggHZZ_prob_pure_noscale, float ggHZZ_prob_int_noscale, float& myDggr);
 	
@@ -235,6 +237,10 @@ public:
         float& prob
 		);
 
+
+  //JVBF calculations
+  TProfile* cosThetaDistJVBF;
+  void ComputeP_JVBF(TLorentzVector Jet1, TLorentzVector Higgs, float &prob);
 private:
 
   // 
