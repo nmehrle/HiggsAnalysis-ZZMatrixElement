@@ -171,7 +171,6 @@ Mela::~Mela(){
   delete super;
   delete myR;
 
-  delete cosThetaDistJVBF;
 }
 
 void Mela::setProcess(TVar::Process myModel, TVar::MatrixElement myME, TVar::Production myProduction)
