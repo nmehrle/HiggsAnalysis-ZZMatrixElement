@@ -99,14 +99,12 @@ Mela::Mela(int LHCsqrts, float mh)
   //
   //cosThetaDist for JVBF Probability Calculations
   //
-  edm::FileInPath CosThetaDistFile("ZZMatrixElement/MELA/data/vbfH125_CosTheta.root");
-  TFile* ctdfile = new TFile(CosThetaDistFile.fullPath().c_str(),"r");
-
-  TProfile* tmp = (TProfile*) ctdfile->Get("cosThetaDist");
-  cosThetaDistJVBF = (TProfile*) tmp->Clone("cosThetaDist_Clone");
-  delete tmp;
-  ctdfile->Close();
+  edm::FileInPath CosThetaFilePath("ZZMatrixElement/MELA/data/vbfH125_CosTheta.root");
+  cosThetaFile = new TFile(CosThetaFilePath.fullPath().c_str(),"r");
+  cosThetaDistJVBF = (TProfile*) cosThetaFile->Get("cosThetaDist");
   assert(cosThetaDistJVBF);
+
+  testHist = new TH1F("testHist","testHist",400,-5,5);
   //
   // setup supermela
   //
@@ -170,6 +168,8 @@ Mela::~Mela(){
   delete ZZME;
   delete super;
   delete myR;
+
+  cosThetaFile->Close();
 
 }
 
@@ -1740,15 +1740,43 @@ void Mela::ComputeP_JVBF(TLorentzVector Jet1, TLorentzVector Higgs, float &prob)
   TLorentzVector nullFourVector(0,0,0,0);
   Jet2.SetXYZM(Jet2Px,Jet2Py,Jet2Pz,0);
 
-  Jet2CosTheta = Jet2.CosTheta(); 
+  Jet2CosTheta = Jet2.CosTheta();
 
   setProcess(TVar::HSMHiggs, TVar::JHUGen, TVar::JJVBF);
   computeProdP(Jet1,2,Jet2,2,Higgs,25,nullFourVector,0,naivePvbf);
 
   float integral = cosThetaDistJVBF->Integral("width");
-  printf(cosThetaDistJVBF->GetName());
   int thisBin = cosThetaDistJVBF->FindBin(Jet2CosTheta);
   float thisBinVal = cosThetaDistJVBF->GetBinContent(thisBin);
 
   prob = naivePvbf/(integral * thisBinVal);
 }
+
+
+void Mela::ComputeP_JVBF_test(TLorentzVector Jet1, TLorentzVector Higgs, float &prob){
+  float Jet2Px,Jet2Py,Jet2Pz;
+  float Jet2Eta;
+  float naivePvbf;
+  Jet2Px = -1*(Jet1.Px() + Higgs.Px());
+  Jet2Py = -1*(Jet1.Py() + Higgs.Py());
+  Jet2Pz = -1*(Jet1.Pz() + Higgs.Pz());
+
+  TLorentzVector Jet2(0,0,0,0);
+  TLorentzVector nullFourVector(0,0,0,0);
+  Jet2.SetXYZM(Jet2Px,Jet2Py,Jet2Pz,0);
+
+  Jet2Eta = Jet2.Eta();
+
+  setProcess(TVar::HSMHiggs, TVar::JHUGen, TVar::JJVBF);
+  computeProdP(Jet1,2,Jet2,2,Higgs,25,nullFourVector,0,naivePvbf);
+
+  testHist->Fill(Jet2Eta,naivePvbf);
+
+  float integral = testHist->Integral("width");
+  int thisBin = testHist->FindBin(Jet2Eta);
+  float thisBinVal = testHist->GetBinContent(thisBin);
+
+  prob = naivePvbf/(integral * thisBinVal);
+}
+
+

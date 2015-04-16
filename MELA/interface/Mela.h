@@ -239,8 +239,11 @@ public:
 
 
   //JVBF calculations
+  TFile* cosThetaFile;
   TProfile* cosThetaDistJVBF;
+  TH1F* testHist;
   void ComputeP_JVBF(TLorentzVector Jet1, TLorentzVector Higgs, float &prob);
+  void ComputeP_JVBF_test(TLorentzVector Jet1, TLorentzVector Higgs, float &prob);
 private:
 
   // 
